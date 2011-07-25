@@ -38,9 +38,13 @@ public class Menu extends Activity {
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		boutons.add(new Bouton(intent, R.string.commentaires, R.drawable.commentaire));
 
-        intent = new Intent(getApplicationContext(), ProfilActivity.class);
+        //intent = new Intent(getApplicationContext(), ProfilActivity.class);
+		//intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		//boutons.add(new Bouton(intent, R.string.profil, android.R.drawable.ic_menu_preferences));
+
+        intent = new Intent(getApplicationContext(), ReservationsActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		boutons.add(new Bouton(intent, R.string.profil, android.R.drawable.ic_menu_preferences));
+		boutons.add(new Bouton(intent, R.string.reservations,R.drawable.book));
 
         Log.i("MENU","menu loaded");
     }

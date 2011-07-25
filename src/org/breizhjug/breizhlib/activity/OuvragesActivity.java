@@ -25,9 +25,9 @@ public class OuvragesActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ouvrage_list);
+        setContentView(R.layout.items);
 
-        ouvragesListView = (ListView) findViewById(R.id.ouvrages);
+        ouvragesListView = (ListView) findViewById(R.id.items);
 
         ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
         HashMap<String, String> map;

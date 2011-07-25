@@ -13,6 +13,7 @@
             </intent-filter>
         </activity>
         <activity android:name="org.breizhjug.breizhlib.activity.OuvragesActivity" android:label="BreizhLib Ouvrages"></activity>
+        <activity android:name="org.breizhjug.breizhlib.activity.ReservationsActivity" android:label="BreizhLib Reservations"></activity>
         <activity android:name="org.breizhjug.breizhlib.activity.Menu" android:label="BreizhLib"></activity>
         <activity android:name="org.breizhjug.breizhlib.activity.CommentairesActivity" android:label="BreizhLib Commentaires"/>
         <activity android:name="org.breizhjug.breizhlib.activity.ProfilActivity" android:label="BreizhLib Profil"/>

@@ -23,10 +23,10 @@ public class CommentairesActivity extends Activity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.commentaire_list);
+        setContentView(R.layout.items);
 
 
-        commentairesListView = (ListView) findViewById(R.id.commentaires);
+        commentairesListView = (ListView) findViewById(R.id.items);
 
         ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
         HashMap<String, String> map;
