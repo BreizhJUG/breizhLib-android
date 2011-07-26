@@ -18,5 +18,6 @@
         <activity android:name="org.breizhjug.breizhlib.activity.CommentairesActivity" android:label="BreizhLib Commentaires"/>
         <activity android:name="org.breizhjug.breizhlib.activity.ProfilActivity" android:label="BreizhLib Profil"/>
         <activity android:name="org.breizhjug.breizhlib.activity.LivreActivity" android:label="BreizhLib Ouvrage"/>
+        <activity android:name="org.breizhjug.breizhlib.activity.ScanActivity" android:label="Ouvrage Scan"/>
     </application>
 </manifest> 

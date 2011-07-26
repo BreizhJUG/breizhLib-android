@@ -6,13 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import org.breizhjub.breizhlib.R;
+import org.breizhjug.breizhlib.adapter.OuvrageAdapter;
 import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.remote.OuvrageService;
+import org.breizhjug.breizhlib.remote.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -20,7 +19,7 @@ public class OuvragesActivity extends Activity {
 
     private ListView ouvragesListView;
 
-
+    private Service<Livre> remoteCall = new OuvrageService();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,22 +28,9 @@ public class OuvragesActivity extends Activity {
 
         ouvragesListView = (ListView) findViewById(R.id.items);
 
-        ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
-        HashMap<String, String> map;
-
-        OuvrageService remoteCall = new OuvrageService();
         List<Livre> books = remoteCall.load();
 
-        for (Livre livre : books) {
-            map = new HashMap<String, String>();
-            map.put("titre", livre.getTitre());
-            map.put("editeur", livre.getEditeur());
-            map.put("img", livre.getImgUrl());
-            listItem.add(map);
-        }
-
-        SimpleAdapter mSchedule = new SimpleAdapter(this.getBaseContext(), listItem, R.layout.ouvrage,
-                new String[]{"img", "titre", "editeur"}, new int[]{R.id.img, R.id.titre, R.id.editeur});
+        OuvrageAdapter mSchedule = new OuvrageAdapter(this.getBaseContext(), books);
 
         ouvragesListView.setAdapter(mSchedule);
 
@@ -52,11 +38,11 @@ public class OuvragesActivity extends Activity {
             @SuppressWarnings("unchecked")
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
 
-                HashMap<String, String> map = (HashMap<String, String>) ouvragesListView.getItemAtPosition(position);
+                Livre livre = (Livre) ouvragesListView.getItemAtPosition(position);
                 Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-                intent.putExtra("titre",map.get("titre"));
-                intent.putExtra("editeur",map.get("editeur"));
-                intent.putExtra("img",map.get("img"));
+                intent.putExtra("titre",livre.getTitre());
+                intent.putExtra("editeur",livre.getEditeur());
+                intent.putExtra("img",livre.getImgUrl());
                 OuvragesActivity.this.startActivity(intent);
             }
         });

@@ -6,13 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import org.breizhjub.breizhlib.R;
+import org.breizhjug.breizhlib.adapter.ReservationsAdapter;
 import org.breizhjug.breizhlib.model.Reservation;
 import org.breizhjug.breizhlib.remote.ReservationService;
+import org.breizhjug.breizhlib.remote.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -20,7 +19,7 @@ public class ReservationsActivity extends Activity {
 
     private ListView reservationsListView;
 
-
+    private Service<Reservation> remoteCall = new ReservationService();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,23 +28,9 @@ public class ReservationsActivity extends Activity {
 
         reservationsListView = (ListView) findViewById(R.id.items);
 
-        ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
-        HashMap<String, String> map;
-
-        ReservationService remoteCall = new ReservationService();
         List<Reservation> reservations = remoteCall.load();
 
-        for (Reservation reservation : reservations) {
-            map = new HashMap<String, String>();
-            map.put("livre", reservation.getLivre());
-            map.put("nom", reservation.getNom()+" "+reservation.getPrenom());
-            map.put("isbn", reservation.getiSBN());
-            map.put("image", reservation.getImgUrl());
-            listItem.add(map);
-        }
-
-        SimpleAdapter mSchedule = new SimpleAdapter(this.getBaseContext(), listItem, R.layout.reservation,
-                new String[]{"image", "livre", "nom"}, new int[]{R.id.img, R.id.livre, R.id.nom});
+        ReservationsAdapter mSchedule = new ReservationsAdapter(this.getBaseContext(), reservations);
 
         reservationsListView.setAdapter(mSchedule);
 
@@ -53,10 +38,10 @@ public class ReservationsActivity extends Activity {
             @SuppressWarnings("unchecked")
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
 
-                HashMap<String, String> map = (HashMap<String, String>) reservationsListView.getItemAtPosition(position);
+                Reservation reservation = (Reservation) reservationsListView.getItemAtPosition(position);
                 Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-                intent.putExtra("titre",map.get("livre"));
-                intent.putExtra("img",map.get("image"));
+                intent.putExtra("titre",reservation.getLivre());
+                intent.putExtra("img",reservation.getImgUrl());
                 ReservationsActivity.this.startActivity(intent);
             }
         });

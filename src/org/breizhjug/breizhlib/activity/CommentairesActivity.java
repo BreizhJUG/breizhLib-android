@@ -6,20 +6,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import org.breizhjub.breizhlib.R;
+import org.breizhjug.breizhlib.adapter.CommentairesAdapter;
 import org.breizhjug.breizhlib.model.Commentaire;
 import org.breizhjug.breizhlib.remote.CommentaireService;
+import org.breizhjug.breizhlib.remote.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class CommentairesActivity extends Activity {
 
     private ListView commentairesListView;
 
-
+    private Service<Commentaire> remoteCall = new CommentaireService();
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,34 +27,19 @@ public class CommentairesActivity extends Activity {
 
         commentairesListView = (ListView) findViewById(R.id.items);
 
-        ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
-        HashMap<String, String> map;
-
-        CommentaireService remoteCall = new CommentaireService();
-
         List<Commentaire> commentaires = remoteCall.load();
 
-        for (Commentaire commentaire : commentaires) {
-            map = new HashMap<String, String>();
-            map.put("user", commentaire.getNom());
-            map.put("titre", commentaire.getLivre());
-            map.put("description", commentaire.getCommentaire());
-            map.put("img", "");
-            listItem.add(map);
-        }
-
-        SimpleAdapter mSchedule = new SimpleAdapter(this.getBaseContext(), listItem, R.layout.commentaire,
-                new String[]{"img", "user", "titre","description"}, new int[]{R.id.img, R.id.user, R.id.titre, R.id.description});
+        CommentairesAdapter mSchedule = new CommentairesAdapter(this.getBaseContext(), commentaires);
         commentairesListView.setAdapter(mSchedule);
 
         commentairesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
         	@SuppressWarnings("unchecked")
          	public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-        		HashMap<String, String> map = (HashMap<String, String>) commentairesListView.getItemAtPosition(position);
+        		Commentaire commentaire = (Commentaire) commentairesListView.getItemAtPosition(position);
         		AlertDialog.Builder adb = new AlertDialog.Builder(CommentairesActivity.this);
-        		adb.setTitle("Commentaire de l'ouvrage "+map.get("titre"));
+        		adb.setTitle("Commentaire de l'ouvrage "+commentaire.getLivre());
 
-        		adb.setMessage(map.get("description"));
+        		adb.setMessage(commentaire.getCommentaire());
         		adb.setPositiveButton("Ok", null);
         		adb.show();
         	}
