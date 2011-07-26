@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import org.breizhjub.breizhlib.R;
 
 
@@ -38,6 +39,8 @@ public class ScanActivity extends Activity {
                 String contents = intent.getStringExtra("SCAN_RESULT");
                 String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
                 // Handle successful scan
+                TextView value =  (TextView)findViewById(R.id.value);
+                value.setText(contents);
             } else if (resultCode == RESULT_CANCELED) {
                 // Handle cancel
             }
