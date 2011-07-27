@@ -1,6 +1,5 @@
 package org.breizhjug.breizhlib.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,7 +14,7 @@ import org.breizhjug.breizhlib.remote.Service;
 import java.util.List;
 
 
-public class ReservationsActivity extends Activity {
+public class ReservationsActivity extends AsyncActivity {
 
     private ListView reservationsListView;
 
@@ -25,7 +24,10 @@ public class ReservationsActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.items);
+    }
 
+     @Override
+    public void init(Intent intent) {
         reservationsListView = (ListView) findViewById(R.id.items);
 
         List<Reservation> reservations = remoteCall.load();

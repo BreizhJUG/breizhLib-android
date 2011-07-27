@@ -1,7 +1,7 @@
 package org.breizhjug.breizhlib.activity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,7 +14,7 @@ import org.breizhjug.breizhlib.remote.Service;
 
 import java.util.List;
 
-public class CommentairesActivity extends Activity {
+public class CommentairesActivity extends AsyncActivity {
 
     private ListView commentairesListView;
 
@@ -23,28 +23,27 @@ public class CommentairesActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.items);
+    }
 
-
+    public void init(Intent intent){
         commentairesListView = (ListView) findViewById(R.id.items);
 
-        List<Commentaire> commentaires = remoteCall.load();
+                List<Commentaire> commentaires = remoteCall.load();
 
-        CommentairesAdapter mSchedule = new CommentairesAdapter(this.getBaseContext(), commentaires);
-        commentairesListView.setAdapter(mSchedule);
+                CommentairesAdapter mSchedule = new CommentairesAdapter(this.getBaseContext(), commentaires);
+                commentairesListView.setAdapter(mSchedule);
 
-        commentairesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @SuppressWarnings("unchecked")
-            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-                Commentaire commentaire = (Commentaire) commentairesListView.getItemAtPosition(position);
-                AlertDialog.Builder adb = new AlertDialog.Builder(CommentairesActivity.this);
-                adb.setTitle("Commentaire de l'ouvrage " + commentaire.getLivre());
+                commentairesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @SuppressWarnings("unchecked")
+                    public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+                        Commentaire commentaire = (Commentaire) commentairesListView.getItemAtPosition(position);
+                        AlertDialog.Builder adb = new AlertDialog.Builder(CommentairesActivity.this);
+                        adb.setTitle("Commentaire de l'ouvrage " + commentaire.getLivre());
 
-                adb.setMessage(commentaire.getCommentaire());
-                adb.setPositiveButton("Ok", null);
-                adb.show();
-            }
-        });
-
-
+                        adb.setMessage(commentaire.getCommentaire());
+                        adb.setPositiveButton("Ok", null);
+                        adb.show();
+                    }
+                });
     }
 }
