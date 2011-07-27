@@ -20,7 +20,7 @@ public class SplashScreen extends Activity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case STOPSPLASH:
-            //remove SplashScreen from view
+                    //remove SplashScreen from view
                     Intent intent = new Intent(SplashScreen.this, Menu.class);
                     startActivity(intent);
                     break;

@@ -4,11 +4,14 @@ package org.breizhjug.breizhlib.remote;
 import android.util.Log;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.breizhjug.breizhlib.model.Commentaire;
+import org.apache.http.message.BasicNameValuePair;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,14 +31,14 @@ public abstract class Service<T> {
 
     public abstract String url();
 
-     public List<T> load() {
-		if (cache == null) {
-			cache = load(url());
-		}
-		return cache != null ? new ArrayList<T>(cache) : cache;
-	}
+    public List<T> load() {
+        if (cache == null) {
+            cache = load(url());
+        }
+        return cache != null ? new ArrayList<T>(cache) : cache;
+    }
 
-    private String convertStreamToString(InputStream is) {
+    public static String convertStreamToString(InputStream is) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         StringBuilder sb = new StringBuilder();
         String line = null;
@@ -53,6 +56,39 @@ public abstract class Service<T> {
             }
         }
         return sb.toString();
+    }
+
+    protected String queryPostRESTurl(String url, String isbn) {
+        // URLConnection connection;
+        HttpPost httpPost = new HttpPost();
+
+
+        HttpResponse response;
+        try {
+
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+            nameValuePairs.add(new BasicNameValuePair("iSBN", isbn));
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+            httpPost.setURI(new URI(url));
+            response = httpclient.execute(httpPost);
+            Log.i("REST", "Status:[" + response.getStatusLine().toString() + "]");
+            HttpEntity entity = response.getEntity();
+            if (entity != null) {
+                InputStream instream = entity.getContent();
+                String result = convertStreamToString(instream);
+                Log.i("REST", "Result of converstion: [" + result + "]");
+                instream.close();
+                return result;
+            }
+        } catch (ClientProtocolException e) {
+            Log.e("REST", "There was a protocol based error", e);
+        } catch (IOException e) {
+            Log.e("REST", "There was an IO Stream related error", e);
+        } catch (URISyntaxException e) {
+            Log.e("REST", "There was an IO Stream related error", e);
+        }
+        return null;
     }
 
 

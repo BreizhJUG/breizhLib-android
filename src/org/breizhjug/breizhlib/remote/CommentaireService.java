@@ -10,13 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CommentaireService extends Service<Commentaire>{
+public class CommentaireService extends Service<Commentaire> {
 
     private static String URL_COMMENTS = "http://breizh-lib.appspot.com/commentaires.json";
 
     @Override
     public List<Commentaire> load(String urlString) {
-       Log.i("REST", urlString);
+        Log.i("REST", urlString);
         String result = queryRESTurl(urlString);
         ArrayList<Commentaire> commentaires = new ArrayList<Commentaire>();
         if (result != null) {
@@ -25,7 +25,7 @@ public class CommentaireService extends Service<Commentaire>{
                 Commentaire commentaire = null;
                 for (int a = 0; a < commentairesArray.length(); a++) {
                     JSONObject item = commentairesArray.getJSONObject(a);
-                    commentaire = new Commentaire((String) item.get("nom"), (String) item.get("description"), Integer.valueOf((String)item.get("note")).intValue(), (String) item.get("livre"));
+                    commentaire = new Commentaire((String) item.get("nom"), (String) item.get("description"), Integer.valueOf((String) item.get("note")).intValue(), (String) item.get("livre"));
                     commentaires.add(commentaire);
                 }
                 return commentaires;

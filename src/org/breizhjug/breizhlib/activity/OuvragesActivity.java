@@ -7,9 +7,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import org.breizhjub.breizhlib.R;
+import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.adapter.OuvrageAdapter;
 import org.breizhjug.breizhlib.model.Livre;
-import org.breizhjug.breizhlib.remote.OuvrageService;
 import org.breizhjug.breizhlib.remote.Service;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public class OuvragesActivity extends Activity {
 
     private ListView ouvragesListView;
 
-    private Service<Livre> remoteCall = new OuvrageService();
+    private Service<Livre> remoteCall = BreizhLib.getOuvrageService();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,9 +40,9 @@ public class OuvragesActivity extends Activity {
 
                 Livre livre = (Livre) ouvragesListView.getItemAtPosition(position);
                 Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-                intent.putExtra("titre",livre.getTitre());
-                intent.putExtra("editeur",livre.getEditeur());
-                intent.putExtra("img",livre.getImgUrl());
+                intent.putExtra("titre", livre.getTitre());
+                intent.putExtra("editeur", livre.getEditeur());
+                intent.putExtra("img", livre.getImgUrl());
                 OuvragesActivity.this.startActivity(intent);
             }
         });

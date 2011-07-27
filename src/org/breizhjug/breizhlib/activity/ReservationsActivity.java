@@ -7,9 +7,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import org.breizhjub.breizhlib.R;
+import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.adapter.ReservationsAdapter;
 import org.breizhjug.breizhlib.model.Reservation;
-import org.breizhjug.breizhlib.remote.ReservationService;
 import org.breizhjug.breizhlib.remote.Service;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public class ReservationsActivity extends Activity {
 
     private ListView reservationsListView;
 
-    private Service<Reservation> remoteCall = new ReservationService();
+    private Service<Reservation> remoteCall = BreizhLib.getReservationService();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,8 +40,8 @@ public class ReservationsActivity extends Activity {
 
                 Reservation reservation = (Reservation) reservationsListView.getItemAtPosition(position);
                 Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-                intent.putExtra("titre",reservation.getLivre());
-                intent.putExtra("img",reservation.getImgUrl());
+                intent.putExtra("titre", reservation.getLivre());
+                intent.putExtra("img", reservation.getImgUrl());
                 ReservationsActivity.this.startActivity(intent);
             }
         });

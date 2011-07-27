@@ -11,7 +11,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReservationService extends Service<Reservation>{
+public class ReservationService extends Service<Reservation> {
 
     private static String URL_BOOKS = "http://breizh-lib.appspot.com/reservations.json";
 
@@ -39,7 +39,7 @@ public class ReservationService extends Service<Reservation>{
             }
         }
 
-        Reservation livre = new Reservation("","",String.valueOf(R.drawable.book),"","No reservation found");
+        Reservation livre = new Reservation("", "", String.valueOf(R.drawable.book), "", "No reservation found");
         BOOKS.add(livre);
         return BOOKS;
     }

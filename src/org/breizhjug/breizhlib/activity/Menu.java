@@ -17,86 +17,90 @@ import java.util.List;
 public class Menu extends Activity {
 
     @Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
         loadMenu();
-	}
+    }
 
     protected void loadMenu() {
         GridView grid = (GridView) findViewById(R.id.grilleBoutons);
-		List<Bouton> boutons = new ArrayList<Bouton>();
-		grid.setAdapter(getBoutonAdapter(boutons));
+        List<Bouton> boutons = new ArrayList<Bouton>();
+        grid.setAdapter(getBoutonAdapter(boutons));
 
 
         Intent intent = new Intent(getApplicationContext(), OuvragesActivity.class);
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		boutons.add(new Bouton(intent, R.string.ouvrages, R.drawable.book));
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        boutons.add(new Bouton(intent, R.string.ouvrages, R.drawable.book));
 
 
         intent = new Intent(getApplicationContext(), CommentairesActivity.class);
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		boutons.add(new Bouton(intent, R.string.commentaires, R.drawable.commentaire));
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        boutons.add(new Bouton(intent, R.string.commentaires, R.drawable.commentaire));
 
         //intent = new Intent(getApplicationContext(), ProfilActivity.class);
-		//intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		//boutons.add(new Bouton(intent, R.string.profil, android.R.drawable.ic_menu_preferences));
+        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        //boutons.add(new Bouton(intent, R.string.profil, android.R.drawable.ic_menu_preferences));
 
         intent = new Intent(getApplicationContext(), ReservationsActivity.class);
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		boutons.add(new Bouton(intent, R.string.reservations,R.drawable.book));
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        boutons.add(new Bouton(intent, R.string.reservations, R.drawable.book));
 
         intent = new Intent(getApplicationContext(), ScanActivity.class);
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		boutons.add(new Bouton(intent, R.string.scanner,R.drawable.scan));
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        boutons.add(new Bouton(intent, R.string.scanner, R.drawable.scan));
 
-        Log.i("MENU","menu loaded");
+        //intent = new Intent(getApplicationContext(), CompteList.class);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        //boutons.add(new Bouton(intent, R.string.compte, android.R.drawable.ic_menu_preferences));
+
+        Log.i("MENU", "menu loaded");
     }
 
 
     class Bouton {
-		public int libelle;
-		public int icone;
-		public Intent intent;
+        public int libelle;
+        public int icone;
+        public Intent intent;
 
-		Bouton(Intent intent, int libelle, int icone) {
-			this.intent = intent;
-			this.libelle = libelle;
-			this.icone = icone;
-		}
-	}
+        Bouton(Intent intent, int libelle, int icone) {
+            this.intent = intent;
+            this.libelle = libelle;
+            this.icone = icone;
+        }
+    }
 
     protected ListAdapter getBoutonAdapter(List<Bouton> boutons) {
-		return new ArrayAdapter<Bouton>(this, 0, boutons) {
+        return new ArrayAdapter<Bouton>(this, 0, boutons) {
 
-			@Override
-			public View getView(int position, View convertView, ViewGroup parent) {
-				View view = convertView;
-				if (view == null) {
-					LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-					view = vi.inflate(R.layout.bouton, null);
-				}
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = convertView;
+                if (view == null) {
+                    LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    view = vi.inflate(R.layout.bouton, null);
+                }
 
-				final Bouton bouton = getItem(position);
+                final Bouton bouton = getItem(position);
 
-				TextView name = (TextView) view.findViewById(R.id.name);
-				name.setText(bouton.libelle);
+                TextView name = (TextView) view.findViewById(R.id.name);
+                name.setText(bouton.libelle);
 
-				ImageView icone = (ImageView) view.findViewById(R.id.icon);
-				icone.setImageResource(bouton.icone);
+                ImageView icone = (ImageView) view.findViewById(R.id.icon);
+                icone.setImageResource(bouton.icone);
 
-				view.setOnClickListener(new View.OnClickListener() {
+                view.setOnClickListener(new View.OnClickListener() {
 
-					public void onClick(View v) {
-						Menu.this.startActivity(bouton.intent);
-					}
+                    public void onClick(View v) {
+                        Menu.this.startActivity(bouton.intent);
+                    }
 
-				});
+                });
 
-				return view;
-			}
+                return view;
+            }
 
-		};
-	}
+        };
+    }
 
 }

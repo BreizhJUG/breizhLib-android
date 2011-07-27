@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS"></uses-permission>
     <uses-permission android:name="android.permission.USE_CREDENTIALS"></uses-permission>
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"></uses-permission>
     <application android:label="@string/app_name" android:icon="@drawable/icon">
         <activity android:name="org.breizhjug.breizhlib.activity.SplashScreen"
                    android:theme="@android:style/Theme.NoTitleBar">
@@ -21,6 +22,7 @@
         <activity android:name="org.breizhjug.breizhlib.activity.ProfilActivity" android:label="BreizhLib Profil"/>
         <activity android:name="org.breizhjug.breizhlib.activity.LivreActivity" android:label="BreizhLib Ouvrage"/>
         <activity android:name="org.breizhjug.breizhlib.activity.ScanActivity" android:label="Ouvrage Scan"/>
-
+        <activity android:name="org.breizhjug.breizhlib.activity.compte.CompteList" android:label="Comptes"/>
+        <activity android:name="org.breizhjug.breizhlib.activity.compte.AppInfo" android:label="Comptes"/>
     </application>
 </manifest> 

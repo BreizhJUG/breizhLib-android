@@ -3,15 +3,15 @@ package org.breizhjug.breizhlib.model;
 
 public class Reservation {
 
-   private String nom;
+    private String nom;
 
-   private String prenom;
+    private String prenom;
 
-   private String livre;
+    private String livre;
 
-   private String iSBN;
+    private String iSBN;
 
-   private String imgUrl;
+    private String imgUrl;
 
     public Reservation(String nom, String prenom, String imgUrl, String iSBN, String livre) {
         this.nom = nom;
