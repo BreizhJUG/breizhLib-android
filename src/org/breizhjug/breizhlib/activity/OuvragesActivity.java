@@ -46,6 +46,7 @@ public class OuvragesActivity extends AsyncActivity {
                 intent.putExtra("titre", livre.getTitre());
                 intent.putExtra("editeur", livre.getEditeur());
                 intent.putExtra("img", livre.getImgUrl());
+                intent.putExtra("add", livre.add);
                 OuvragesActivity.this.startActivity(intent);
             }
         });

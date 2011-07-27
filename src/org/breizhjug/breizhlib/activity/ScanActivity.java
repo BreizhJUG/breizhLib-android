@@ -51,6 +51,7 @@ public class ScanActivity extends Activity {
                 intent.putExtra("titre", livre.getTitre());
                 intent.putExtra("editeur", livre.getEditeur());
                 intent.putExtra("img", livre.getImgUrl());
+                intent.putExtra("add", livre.add);
                 startActivity(intent);
             }
         }

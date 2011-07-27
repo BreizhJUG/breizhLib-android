@@ -34,6 +34,7 @@ public class OuvrageService extends Service<Livre> {
                 JSONArray booksArray = new JSONArray(result);
                 JSONObject item = booksArray.getJSONObject(0);
                 Livre livre = new Livre((String) item.get("titre"), (String) item.get("isbn"), (String) item.get("editeur"), (String) item.get("image"));
+                livre.add = ((String) item.get("aAjouter")).equals("true");
                 return livre;
             } catch (JSONException e) {
                 Log.e("JSON", "There was an error parsing the JSON", e);

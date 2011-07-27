@@ -2,6 +2,7 @@ package org.breizhjug.breizhlib.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import org.breizhjub.breizhlib.R;
@@ -20,6 +21,7 @@ public class LivreActivity extends Activity {
         String titre = getIntent().getStringExtra("titre");
         String editeur = getIntent().getStringExtra("editeur");
         String img = getIntent().getStringExtra("img");
+        boolean add = getIntent().getBooleanExtra("add",false);
 
         TextView titreView = (TextView) findViewById(R.id.titre);
         titreView.setText(titre);
@@ -29,6 +31,18 @@ public class LivreActivity extends Activity {
 
         ImageView icone = (ImageView) findViewById(R.id.img);
         imageDownloader.download(img, icone);
+
+        Button button = (Button) findViewById(R.id.add);
+        if(add){
+
+            button.setText("Ajouter");
+
+            //TODO gestion de l'ajout
+        } else {
+            button.setEnabled(false);
+            button.setText("Réserver");
+            // TODO gestion de la reservation
+        }
 
     }
 
