@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import org.breizhjub.breizhlib.R;
+import org.breizhjug.breizhlib.activity.compte.CompteList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,9 +51,9 @@ public class Menu extends Activity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         boutons.add(new Bouton(intent, R.string.scanner, R.drawable.scan));
 
-        //intent = new Intent(getApplicationContext(), CompteList.class);
-        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        //boutons.add(new Bouton(intent, R.string.compte, android.R.drawable.ic_menu_preferences));
+        intent = new Intent(getApplicationContext(), CompteList.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        boutons.add(new Bouton(intent, R.string.compte, android.R.drawable.ic_menu_preferences));
 
         Log.i("MENU", "menu loaded");
     }

@@ -35,6 +35,12 @@ public class OuvrageService extends Service<Livre> {
                 JSONObject item = booksArray.getJSONObject(0);
                 Livre livre = new Livre((String) item.get("titre"), (String) item.get("isbn"), (String) item.get("editeur"), (String) item.get("image"));
                 livre.add = ((String) item.get("aAjouter")).equals("true");
+                try {
+                    livre.etat = (String) item.get("etat");
+                } catch (JSONException e) {
+                    Log.e("JSON", "There was an error parsing the JSON", e);
+                    livre.etat = "RESERVE";
+                }
                 return livre;
             } catch (JSONException e) {
                 Log.e("JSON", "There was an error parsing the JSON", e);
@@ -54,6 +60,12 @@ public class OuvrageService extends Service<Livre> {
                 for (int a = 0; a < booksArray.length(); a++) {
                     JSONObject item = booksArray.getJSONObject(a);
                     livre = new Livre((String) item.get("titre"), (String) item.get("isbn"), (String) item.get("editeur"), (String) item.get("image"));
+                    try {
+                        livre.etat = (String) item.get("etat");
+                    } catch (JSONException e) {
+                        Log.e("JSON", "There was an error parsing the JSON", e);
+                        livre.etat = "RESERVE";
+                    }
                     BOOKS.add(livre);
                 }
                 return BOOKS;

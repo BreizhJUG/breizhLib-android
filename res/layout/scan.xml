@@ -5,19 +5,4 @@
     android:layout_height="wrap_content"
     >
 
-    <Button
-            android:id="@+id/scanbtn"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="scan"
-
-            />
-
-    <TextView android:id="@+id/value"
-	         android:layout_width="fill_parent"
-	         android:layout_height="fill_parent"
-	         android:textSize="16px"
-	         android:textStyle="bold"
-	         />
-
 </LinearLayout>

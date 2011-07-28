@@ -7,6 +7,7 @@ public class Livre {
     private String imgUrl;
     private String iSBN;
     public boolean add;
+    public String etat;
 
     public Livre(String titre, String iSBN, String editeur, String imgurl) {
         this.editeur = editeur;

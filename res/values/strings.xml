@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">BreizhLibAndroid</string>
+    <string name="app_name">BreizhLib</string>
     <string name="splash_text">BreizhLib</string>
     <string name="bunjix">BreizhJug application</string>
     <string name="server_url">http://breizh-lib.appspot.com/</string>

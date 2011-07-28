@@ -2,7 +2,6 @@ package org.breizhjug.breizhlib.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import org.breizhjub.breizhlib.R;
@@ -21,6 +20,12 @@ public class ProfilActivity extends AsyncActivity {
 
      }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), Menu.class);
+		startActivity(intent);
+    }
+
     public void init(Intent intent){
         String email = (String) getIntent().getExtras().get("email");
 
@@ -37,12 +42,6 @@ public class ProfilActivity extends AsyncActivity {
         username.setText("sguernion");
 
         ImageView icone = (ImageView) findViewById(R.id.avatar);
-        imageDownloader.download(getImageUrl(email), icone);
-    }
-
-    public String getImageUrl(String email) {
-        if (TextUtils.isEmpty(email)) return null;
-        String emailHash = Utils.md5Hex(email.toLowerCase().trim());
-        return "http://www.gravatar.com/avatar/" + emailHash;
+        imageDownloader.download(Utils.getGravatarImage(email), icone);
     }
 }

@@ -1,5 +1,7 @@
 package org.breizhjug.breizhlib.utils;
 
+import android.text.TextUtils;
+
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -23,5 +25,11 @@ public class Utils {
         } catch (UnsupportedEncodingException e) {
         }
         return null;
+    }
+
+    public static String getGravatarImage(String email) {
+        if (TextUtils.isEmpty(email)) return null;
+        String emailHash = Utils.md5Hex(email.toLowerCase().trim());
+        return "http://www.gravatar.com/avatar/" + emailHash;
     }
 }

@@ -44,6 +44,7 @@ public class ReservationsActivity extends AsyncActivity {
                 Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
                 intent.putExtra("titre", reservation.getLivre());
                 intent.putExtra("img", reservation.getImgUrl());
+                intent.putExtra("etat", "RESERVE");
                 ReservationsActivity.this.startActivity(intent);
             }
         });

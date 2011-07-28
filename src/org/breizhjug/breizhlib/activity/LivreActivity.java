@@ -1,6 +1,7 @@
 package org.breizhjug.breizhlib.activity;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,6 +22,7 @@ public class LivreActivity extends Activity {
         String titre = getIntent().getStringExtra("titre");
         String editeur = getIntent().getStringExtra("editeur");
         String img = getIntent().getStringExtra("img");
+        String etat = getIntent().getStringExtra("etat");
         boolean add = getIntent().getBooleanExtra("add",false);
 
         TextView titreView = (TextView) findViewById(R.id.titre);
@@ -40,8 +42,18 @@ public class LivreActivity extends Activity {
             //TODO gestion de l'ajout
         } else {
             button.setEnabled(false);
-            button.setText("Réserver");
-            // TODO gestion de la reservation
+            if(etat.equals("RESERVE")){
+                button.setText("Réservé");
+                // TODO gestion de la reservation
+            }else  if(etat.equals("DISP0NIBLE")){
+                button.setEnabled(true);
+                button.setText("Réserver");
+                button.setBackgroundColor(Color.GREEN);
+                // TODO gestion de la reservation
+            } else{
+               button.setText("Indisponible");
+                button.setBackgroundColor(Color.RED);
+            }
         }
 
     }
