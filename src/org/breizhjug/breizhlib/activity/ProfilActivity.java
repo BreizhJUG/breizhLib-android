@@ -5,14 +5,11 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 import org.breizhjub.breizhlib.R;
-import org.breizhjug.breizhlib.BreizhLib;
-import org.breizhjug.breizhlib.utils.ImageDownloader;
 import org.breizhjug.breizhlib.utils.Utils;
 
 
 public class ProfilActivity extends AsyncActivity {
 
-    private final ImageDownloader imageDownloader = BreizhLib.getImageDownloader();
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +39,6 @@ public class ProfilActivity extends AsyncActivity {
         username.setText("sguernion");
 
         ImageView icone = (ImageView) findViewById(R.id.avatar);
-        imageDownloader.download(Utils.getGravatarImage(email), icone);
+        breizhLib.getImageDownloader().download(Utils.getGravatarImage(email), icone);
     }
 }

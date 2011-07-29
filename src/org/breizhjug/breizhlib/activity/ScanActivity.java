@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.remote.OuvrageService;
 
@@ -28,17 +29,14 @@ public class ScanActivity extends Activity {
 
 
         public void onClick(DialogInterface dialogInterface, int i) {
-            OuvrageService service = new OuvrageService();
+            OuvrageService service = BreizhLib.getInstance(ScanActivity.this).getOuvrageService();
 
             Livre livre = service.find(isbn);
 
             if (livre != null) {
-                Log.d("ISBN", livre.getTitre());
+                Log.d(TAG, livre.getTitre());
                 Intent intent = new Intent(ScanActivity.this, LivreActivity.class);
-                intent.putExtra("titre", livre.getTitre());
-                intent.putExtra("editeur", livre.getEditeur());
-                intent.putExtra("img", livre.getImgUrl());
-                intent.putExtra("add", livre.add);
+                Populator.populate(intent, livre);
                 startActivity(intent);
             }
         }
@@ -51,7 +49,7 @@ public class ScanActivity extends Activity {
             if (resultCode == RESULT_OK) {
                 String contents = intent.getStringExtra("SCAN_RESULT");
                 String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
-                if (format.equals("EAN_13") && contents.length() == 13 && (contents.startsWith("978") || contents.startsWith("979"))) {
+                if (format.equals("EAN_13") && isIsbn13(contents)) {
                     isbn = contents;
                     AlertDialog.Builder adb = new AlertDialog.Builder(ScanActivity.this);
                     adb.setTitle("Isbn identifié");
@@ -70,5 +68,9 @@ public class ScanActivity extends Activity {
                 // Handle cancel
             }
         }
+    }
+
+    public boolean isIsbn13(String isbn){
+       return isbn.length() == 13 && (isbn.startsWith("978") || isbn.startsWith("979"));
     }
 }

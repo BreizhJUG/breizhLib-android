@@ -10,13 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import org.breizhjub.breizhlib.R;
 import org.breizhjug.breizhlib.BreizhLib;
-import org.breizhjug.breizhlib.utils.ImageDownloader;
 import org.breizhjug.breizhlib.utils.Utils;
 
 
 public class AccountsAdapter extends ArrayAdapter<Account> {
-
-    private final ImageDownloader imageDownloader = BreizhLib.getImageDownloader();
 
     public AccountsAdapter(Context context, Account[] list) {
         super(context, 0, list);
@@ -37,7 +34,7 @@ public class AccountsAdapter extends ArrayAdapter<Account> {
         text.setText(item.name);
 
         ImageView icone = (ImageView) view.findViewById(R.id.avatar);
-        imageDownloader.download(Utils.getGravatarImage(item.name), icone);
+        BreizhLib.getInstance(null).getImageDownloader().download(Utils.getGravatarImage(item.name), icone);
         return view;
     }
 }

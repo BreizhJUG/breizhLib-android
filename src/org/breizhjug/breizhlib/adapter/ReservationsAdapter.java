@@ -10,14 +10,12 @@ import android.widget.TextView;
 import org.breizhjub.breizhlib.R;
 import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.model.Reservation;
-import org.breizhjug.breizhlib.utils.ImageDownloader;
 
 import java.util.List;
 
 
 public class ReservationsAdapter extends ArrayAdapter<Reservation> {
 
-    private final ImageDownloader imageDownloader = BreizhLib.getImageDownloader();
 
     public ReservationsAdapter(Context context, List<Reservation> reservations) {
         super(context, 0, reservations);
@@ -41,7 +39,7 @@ public class ReservationsAdapter extends ArrayAdapter<Reservation> {
         text.setText(reservation.getNom() + " " + reservation.getPrenom());
 
         ImageView icone = (ImageView) view.findViewById(R.id.img);
-        imageDownloader.download(reservation.getImgUrl(), icone);
+        BreizhLib.getInstance(null).getImageDownloader().download(reservation.getImgUrl(), icone);
 
         return view;
     }

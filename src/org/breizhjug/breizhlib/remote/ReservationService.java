@@ -1,6 +1,7 @@
 package org.breizhjug.breizhlib.remote;
 
 
+import android.content.Context;
 import android.util.Log;
 import org.breizhjub.breizhlib.R;
 import org.breizhjug.breizhlib.model.Reservation;
@@ -43,4 +44,17 @@ public class ReservationService extends Service<Reservation> {
         BOOKS.add(livre);
         return BOOKS;
     }
+
+    private static ReservationService instance;
+
+    public ReservationService(Context context) {
+        super();
+    }
+
+    public static synchronized ReservationService getInstance(Context context) {
+		if (instance == null) {
+			instance = new ReservationService(context);
+		}
+		return instance;
+	}
 }

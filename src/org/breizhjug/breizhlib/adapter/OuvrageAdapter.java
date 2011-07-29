@@ -10,15 +10,12 @@ import android.widget.TextView;
 import org.breizhjub.breizhlib.R;
 import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.model.Livre;
-import org.breizhjug.breizhlib.utils.ImageDownloader;
 
 import java.util.List;
 
 
 public class OuvrageAdapter extends ArrayAdapter<Livre> {
 
-
-    private final ImageDownloader imageDownloader = BreizhLib.getImageDownloader();
 
     public OuvrageAdapter(Context context, List<Livre> ouvrages) {
         super(context, 0, ouvrages);
@@ -42,7 +39,7 @@ public class OuvrageAdapter extends ArrayAdapter<Livre> {
         text.setText(livre.getEditeur());
 
         ImageView icone = (ImageView) view.findViewById(R.id.img);
-        imageDownloader.download(livre.getImgUrl(), icone);
+        BreizhLib.getInstance(null).getImageDownloader().download(livre.getImgUrl(), icone);
 
         return view;
     }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import org.breizhjub.breizhlib.R;
+import org.breizhjug.breizhlib.BreizhLib;
 
 public class SplashScreen extends Activity {
 
@@ -35,7 +36,7 @@ public class SplashScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen);
         Message msg = new Message();
-
+        BreizhLib.getInstance(this);
         msg.what = STOPSPLASH;
         splashHandler.sendMessageDelayed(msg, SPLASHTIME);
     }

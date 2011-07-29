@@ -18,8 +18,6 @@ public class OuvragesActivity extends AsyncActivity {
 
     private ListView ouvragesListView;
 
-    private Service<Livre> remoteCall = BreizhLib.getOuvrageService();
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +29,7 @@ public class OuvragesActivity extends AsyncActivity {
     public void init(Intent intent) {
         ouvragesListView = (ListView) findViewById(R.id.items);
 
-        List<Livre> books = remoteCall.load();
+        List<Livre> books = breizhLib.getOuvrageService().load();
 
         OuvrageAdapter mSchedule = new OuvrageAdapter(this.getBaseContext(), books);
 
@@ -43,11 +41,7 @@ public class OuvragesActivity extends AsyncActivity {
 
                 Livre livre = (Livre) ouvragesListView.getItemAtPosition(position);
                 Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-                intent.putExtra("titre", livre.getTitre());
-                intent.putExtra("editeur", livre.getEditeur());
-                intent.putExtra("img", livre.getImgUrl());
-                intent.putExtra("add", livre.add);
-                intent.putExtra("etat", livre.etat);
+                Populator.populate(intent, livre);
                 OuvragesActivity.this.startActivity(intent);
             }
         });

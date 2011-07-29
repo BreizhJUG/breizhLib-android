@@ -7,18 +7,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import org.breizhjub.breizhlib.R;
-import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.adapter.CommentairesAdapter;
 import org.breizhjug.breizhlib.model.Commentaire;
-import org.breizhjug.breizhlib.remote.Service;
 
 import java.util.List;
 
 public class CommentairesActivity extends AsyncActivity {
 
     private ListView commentairesListView;
-
-    private Service<Commentaire> remoteCall = BreizhLib.getCommentaireService();
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +24,7 @@ public class CommentairesActivity extends AsyncActivity {
     public void init(Intent intent){
         commentairesListView = (ListView) findViewById(R.id.items);
 
-                List<Commentaire> commentaires = remoteCall.load();
+                List<Commentaire> commentaires = breizhLib.getCommentaireService().load();
 
                 CommentairesAdapter mSchedule = new CommentairesAdapter(this.getBaseContext(), commentaires);
                 commentairesListView.setAdapter(mSchedule);

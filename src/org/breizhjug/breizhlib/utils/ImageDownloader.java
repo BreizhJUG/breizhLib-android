@@ -16,6 +16,7 @@ package org.breizhjug.breizhlib.utils;
  * limitations under the License.
  */
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -403,4 +404,17 @@ public class ImageDownloader {
         purgeHandler.removeCallbacks(purger);
         purgeHandler.postDelayed(purger, DELAY_BEFORE_PURGE);
     }
+
+     private static ImageDownloader instance;
+
+    public ImageDownloader(Context context) {
+        super();
+    }
+
+    public static synchronized ImageDownloader getInstance(Context context) {
+		if (instance == null) {
+			instance = new ImageDownloader(context);
+		}
+		return instance;
+	}
 }

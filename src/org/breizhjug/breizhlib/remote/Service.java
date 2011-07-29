@@ -12,6 +12,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -58,7 +59,7 @@ public abstract class Service<T> {
         return sb.toString();
     }
 
-    protected String queryPostRESTurl(String url, String isbn) {
+    protected String queryPostRESTurl(String url, Param ...params) {
         // URLConnection connection;
         HttpPost httpPost = new HttpPost();
 
@@ -66,8 +67,11 @@ public abstract class Service<T> {
         HttpResponse response;
         try {
 
-            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-            nameValuePairs.add(new BasicNameValuePair("iSBN", isbn));
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(params.length);
+             for(Param param : params){
+                 nameValuePairs.add(new BasicNameValuePair(param.key,param.value.toString()));
+            }
+
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
             httpPost.setURI(new URI(url));
@@ -91,13 +95,25 @@ public abstract class Service<T> {
         return null;
     }
 
+    public class Param {
+        public String key;
+        public Object value;
+    }
 
-    protected String queryRESTurl(String url) {
+
+    protected String queryRESTurl(String url, Param ...params ){
         // URLConnection connection;
         HttpGet httpget = new HttpGet();
 
         HttpResponse response;
         try {
+
+            BasicHttpParams httpParams = new BasicHttpParams();
+            for(Param param : params){
+                httpParams.setParameter(param.key,param.value);
+            }
+            httpget.setParams(httpParams);
+
             httpget.setURI(new URI(url));
             response = httpclient.execute(httpget);
             Log.i("REST", "Status:[" + response.getStatusLine().toString() + "]");

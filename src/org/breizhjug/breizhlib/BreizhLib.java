@@ -1,5 +1,6 @@
 package org.breizhjug.breizhlib;
 
+import android.content.Context;
 import org.breizhjug.breizhlib.remote.CommentaireService;
 import org.breizhjug.breizhlib.remote.OuvrageService;
 import org.breizhjug.breizhlib.remote.ReservationService;
@@ -7,28 +8,47 @@ import org.breizhjug.breizhlib.utils.ImageDownloader;
 
 public class BreizhLib {
 
-    private static final ImageDownloader imageDownloader = new ImageDownloader();
+    private ImageDownloader imageDownloader;
 
-    private static final CommentaireService commentaireService = new CommentaireService();
+    private CommentaireService commentaireService;
 
-    private static final OuvrageService ouvrageService = new OuvrageService();
+    private OuvrageService ouvrageService;
 
-    private static final ReservationService reservationService = new ReservationService();
+    private ReservationService reservationService;
+
+    private BreizhLib(Context context) {
+        imageDownloader = ImageDownloader.getInstance(context);
+
+        commentaireService = new CommentaireService(context);
+        ouvrageService = new OuvrageService(context);
+
+        reservationService = new ReservationService(context);
+    }
 
 
-    public static ImageDownloader getImageDownloader() {
+    public ImageDownloader getImageDownloader() {
         return imageDownloader;
     }
 
-    public static CommentaireService getCommentaireService() {
+    public CommentaireService getCommentaireService() {
         return commentaireService;
     }
 
-    public static ReservationService getReservationService() {
+    public ReservationService getReservationService() {
         return reservationService;
     }
 
-    public static OuvrageService getOuvrageService() {
+    public OuvrageService getOuvrageService() {
         return ouvrageService;
+    }
+
+
+    private static BreizhLib instance;
+
+    public static synchronized BreizhLib getInstance(Context context) {
+        if (instance == null) {
+            instance = new BreizhLib(context);
+        }
+        return instance;
     }
 }

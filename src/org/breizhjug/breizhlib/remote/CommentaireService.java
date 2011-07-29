@@ -1,5 +1,6 @@
 package org.breizhjug.breizhlib.remote;
 
+import android.content.Context;
 import android.util.Log;
 import org.breizhjug.breizhlib.model.Commentaire;
 import org.json.JSONArray;
@@ -14,6 +15,7 @@ public class CommentaireService extends Service<Commentaire> {
 
     private static String URL_COMMENTS = "http://breizh-lib.appspot.com/commentaires.json";
 
+    
     @Override
     public List<Commentaire> load(String urlString) {
         Log.i("REST", urlString);
@@ -43,4 +45,17 @@ public class CommentaireService extends Service<Commentaire> {
     public String url() {
         return URL_COMMENTS;
     }
+
+    private static CommentaireService instance;
+
+    public CommentaireService(Context context) {
+        super();
+    }
+
+    public static synchronized CommentaireService getInstance(Context context) {
+		if (instance == null) {
+			instance = new CommentaireService(context);
+		}
+		return instance;
+	}
 }

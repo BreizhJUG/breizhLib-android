@@ -6,10 +6,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import org.breizhjub.breizhlib.R;
-import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.adapter.ReservationsAdapter;
 import org.breizhjug.breizhlib.model.Reservation;
-import org.breizhjug.breizhlib.remote.Service;
 
 import java.util.List;
 
@@ -17,8 +15,6 @@ import java.util.List;
 public class ReservationsActivity extends AsyncActivity {
 
     private ListView reservationsListView;
-
-    private Service<Reservation> remoteCall = BreizhLib.getReservationService();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,7 +26,7 @@ public class ReservationsActivity extends AsyncActivity {
     public void init(Intent intent) {
         reservationsListView = (ListView) findViewById(R.id.items);
 
-        List<Reservation> reservations = remoteCall.load();
+        List<Reservation> reservations = breizhLib.getReservationService().load();
 
         ReservationsAdapter mSchedule = new ReservationsAdapter(this.getBaseContext(), reservations);
 
@@ -42,9 +38,7 @@ public class ReservationsActivity extends AsyncActivity {
 
                 Reservation reservation = (Reservation) reservationsListView.getItemAtPosition(position);
                 Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-                intent.putExtra("titre", reservation.getLivre());
-                intent.putExtra("img", reservation.getImgUrl());
-                intent.putExtra("etat", "RESERVE");
+                Populator.populate(intent,reservation);
                 ReservationsActivity.this.startActivity(intent);
             }
         });

@@ -6,13 +6,17 @@ import android.app.ProgressDialog;
 import android.content.*;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import org.breizhjug.breizhlib.BreizhLib;
 
 
 public abstract class AsyncActivity extends Activity{
 
     protected BroadcastReceiver receiver;
     protected LayoutInflater layoutInflater;
+
+    protected BreizhLib breizhLib;
 
     public abstract void init(Intent intent);
 
@@ -40,6 +44,12 @@ public abstract class AsyncActivity extends Activity{
 
 			@Override
 			protected Boolean doInBackground(Void... params) {
+                try {
+					breizhLib = BreizhLib.getInstance(AsyncActivity.this);
+				} catch (Exception ex) {
+                    Log.d("ASYNC",ex.toString());
+					return false;
+				}
 				return true;
 			}
 
