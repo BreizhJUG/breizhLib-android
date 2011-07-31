@@ -28,13 +28,13 @@ public abstract class Service<T> {
     private static HttpClient httpclient = new DefaultHttpClient();
     private List<T> cache = null;
 
-    public abstract List<T> load(String urlString);
+    public abstract List<T> load(String authCookie, String urlString);
 
     public abstract String url();
 
-    public List<T> load() {
+    public List<T> load(String authCookie) {
         if (cache == null) {
-            cache = load(url());
+            cache = load(authCookie, url());
         }
         return cache != null ? new ArrayList<T>(cache) : cache;
     }
@@ -59,7 +59,7 @@ public abstract class Service<T> {
         return sb.toString();
     }
 
-    protected String queryPostRESTurl(String url, Param ...params) {
+    protected String queryPostRESTurl(String auth, String url, Param... params) {
         // URLConnection connection;
         HttpPost httpPost = new HttpPost();
 
@@ -68,11 +68,12 @@ public abstract class Service<T> {
         try {
 
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(params.length);
-             for(Param param : params){
-                 nameValuePairs.add(new BasicNameValuePair(param.key,param.value.toString()));
+            for (Param param : params) {
+                nameValuePairs.add(new BasicNameValuePair(param.key, param.value.toString()));
             }
 
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            httpPost.addHeader("Cookie", auth);
 
             httpPost.setURI(new URI(url));
             response = httpclient.execute(httpPost);
@@ -101,7 +102,7 @@ public abstract class Service<T> {
     }
 
 
-    protected String queryRESTurl(String url, Param ...params ){
+    protected String queryRESTurl(String auth, String url, Param... params) {
         // URLConnection connection;
         HttpGet httpget = new HttpGet();
 
@@ -109,10 +110,12 @@ public abstract class Service<T> {
         try {
 
             BasicHttpParams httpParams = new BasicHttpParams();
-            for(Param param : params){
-                httpParams.setParameter(param.key,param.value);
+            for (Param param : params) {
+                httpParams.setParameter(param.key, param.value);
             }
             httpget.setParams(httpParams);
+
+            httpget.addHeader("Cookie", auth);
 
             httpget.setURI(new URI(url));
             response = httpclient.execute(httpget);

@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import org.breizhjub.breizhlib.R;
 import org.breizhjug.breizhlib.BreizhLib;
+import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.model.Livre;
 
 import java.util.List;
@@ -33,13 +33,13 @@ public class OuvrageAdapter extends ArrayAdapter<Livre> {
         }
 
         TextView text = (TextView) view.findViewById(R.id.titre);
-        text.setText(livre.getTitre());
+        text.setText(livre.titre);
 
         text = (TextView) view.findViewById(R.id.editeur);
-        text.setText(livre.getEditeur());
+        text.setText(livre.editeur);
 
         ImageView icone = (ImageView) view.findViewById(R.id.img);
-        BreizhLib.getInstance(null).getImageDownloader().download(livre.getImgUrl(), icone);
+        BreizhLib.getInstance().getImageDownloader().download(livre.imgUrl, icone);
 
         return view;
     }

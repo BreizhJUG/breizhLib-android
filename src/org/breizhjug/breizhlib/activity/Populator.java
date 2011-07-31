@@ -8,17 +8,13 @@ import org.breizhjug.breizhlib.model.Reservation;
 public class Populator {
 
     public static void populate(Intent intent, Livre livre) {
-        intent.putExtra("titre", livre.getTitre());
-        intent.putExtra("editeur", livre.getEditeur());
-        intent.putExtra("img", livre.getImgUrl());
-        intent.putExtra("isbn", livre.getiSBN());
-        intent.putExtra("add", livre.add);
-        intent.putExtra("etat", livre.etat);
+        intent.putExtra("livre", livre);
+        intent.putExtra("isbn", livre.iSBN);
     }
 
     public static void populate(Intent intent, Reservation reservation) {
-        intent.putExtra("titre", reservation.getLivre());
-        intent.putExtra("img", reservation.getImgUrl());
+        intent.putExtra("titre", reservation.livre);
+        intent.putExtra("img", reservation.imgUrl);
         intent.putExtra("etat", "RESERVE");
     }
 }

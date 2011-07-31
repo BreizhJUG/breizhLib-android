@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import org.breizhjub.breizhlib.R;
+import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.model.Commentaire;
 
 import java.util.List;
@@ -31,13 +31,13 @@ public class CommentairesAdapter extends ArrayAdapter<Commentaire> {
         }
 
         TextView text = (TextView) view.findViewById(R.id.titre);
-        text.setText(commentaire.getLivre());
+        text.setText(commentaire.livre);
 
         text = (TextView) view.findViewById(R.id.user);
-        text.setText(commentaire.getNom());
+        text.setText(commentaire.nom);
 
         text = (TextView) view.findViewById(R.id.description);
-        text.setText(commentaire.getCommentaire());
+        text.setText(commentaire.commentaire);
 
         return view;
     }

@@ -1,20 +1,19 @@
 package org.breizhjug.breizhlib.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import org.breizhjub.breizhlib.R;
-import org.breizhjug.breizhlib.BreizhLib;
+import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.adapter.OuvrageAdapter;
 import org.breizhjug.breizhlib.model.Livre;
-import org.breizhjug.breizhlib.remote.Service;
 
 import java.util.List;
 
 
-public class OuvragesActivity extends AsyncActivity {
+public class OuvragesActivity extends AbstractActivity {
 
     private ListView ouvragesListView;
 
@@ -25,11 +24,12 @@ public class OuvragesActivity extends AsyncActivity {
 
     }
 
-     @Override
+    @Override
     public void init(Intent intent) {
         ouvragesListView = (ListView) findViewById(R.id.items);
-
-        List<Livre> books = breizhLib.getOuvrageService().load();
+        SharedPreferences prefs = breizhLib.getSharedPreferences(this);
+        String authCookie = prefs.getString(breizhLib.AUTH_COOKIE, null);
+        List<Livre> books = breizhLib.getOuvrageService().load(authCookie);
 
         OuvrageAdapter mSchedule = new OuvrageAdapter(this.getBaseContext(), books);
 

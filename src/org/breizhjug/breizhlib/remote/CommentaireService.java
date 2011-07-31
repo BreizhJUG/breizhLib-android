@@ -1,7 +1,7 @@
 package org.breizhjug.breizhlib.remote;
 
-import android.content.Context;
 import android.util.Log;
+import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.model.Commentaire;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,13 +13,13 @@ import java.util.List;
 
 public class CommentaireService extends Service<Commentaire> {
 
-    private static String URL_COMMENTS = "http://breizh-lib.appspot.com/commentaires.json";
+    private static String URL_COMMENTS = BreizhLib.SERVER_URL + "commentaires.json";
 
-    
+
     @Override
-    public List<Commentaire> load(String urlString) {
+    public List<Commentaire> load(String authCookie, String urlString) {
         Log.i("REST", urlString);
-        String result = queryRESTurl(urlString);
+        String result = queryRESTurl(authCookie, urlString);
         ArrayList<Commentaire> commentaires = new ArrayList<Commentaire>();
         if (result != null) {
             try {
@@ -48,14 +48,14 @@ public class CommentaireService extends Service<Commentaire> {
 
     private static CommentaireService instance;
 
-    public CommentaireService(Context context) {
+    private CommentaireService() {
         super();
     }
 
-    public static synchronized CommentaireService getInstance(Context context) {
-		if (instance == null) {
-			instance = new CommentaireService(context);
-		}
-		return instance;
-	}
+    public static synchronized CommentaireService getInstance() {
+        if (instance == null) {
+            instance = new CommentaireService();
+        }
+        return instance;
+    }
 }

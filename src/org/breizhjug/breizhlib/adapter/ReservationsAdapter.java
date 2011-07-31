@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import org.breizhjub.breizhlib.R;
 import org.breizhjug.breizhlib.BreizhLib;
+import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.model.Reservation;
 
 import java.util.List;
@@ -33,13 +33,13 @@ public class ReservationsAdapter extends ArrayAdapter<Reservation> {
         }
 
         TextView text = (TextView) view.findViewById(R.id.livre);
-        text.setText(reservation.getLivre());
+        text.setText(reservation.livre);
 
         text = (TextView) view.findViewById(R.id.nom);
-        text.setText(reservation.getNom() + " " + reservation.getPrenom());
+        text.setText(reservation.nom + " " + reservation.prenom);
 
         ImageView icone = (ImageView) view.findViewById(R.id.img);
-        BreizhLib.getInstance(null).getImageDownloader().download(reservation.getImgUrl(), icone);
+        BreizhLib.getInstance().getImageDownloader().download(reservation.imgUrl, icone);
 
         return view;
     }

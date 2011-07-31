@@ -1,30 +1,37 @@
 package org.breizhjug.breizhlib.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-import org.breizhjub.breizhlib.R;
+import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.compte.CompteList;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Menu extends Activity {
+public class Menu extends AbstractActivity {
+
+    @Override
+    public void init(Intent intent) {
+        loadMenu();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        loadMenu();
+
     }
 
     protected void loadMenu() {
+        SharedPreferences prefs = breizhLib.getSharedPreferences(this);
+
         GridView grid = (GridView) findViewById(R.id.grilleBoutons);
         List<Bouton> boutons = new ArrayList<Bouton>();
         grid.setAdapter(getBoutonAdapter(boutons));
@@ -39,24 +46,25 @@ public class Menu extends Activity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         boutons.add(new Bouton(intent, R.string.commentaires, R.drawable.commentaire));
 
-        //intent = new Intent(getApplicationContext(), ProfilActivity.class);
-        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        //boutons.add(new Bouton(intent, R.string.profil, android.R.drawable.ic_menu_preferences));
+        if (prefs.getBoolean(breizhLib.USER_ADMIN, false)) {
+            intent = new Intent(getApplicationContext(), ReservationsActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            boutons.add(new Bouton(intent, R.string.reservations, R.drawable.book));
 
-        intent = new Intent(getApplicationContext(), ReservationsActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        boutons.add(new Bouton(intent, R.string.reservations, R.drawable.book));
-
+        }
         intent = new Intent(getApplicationContext(), ScanActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         boutons.add(new Bouton(intent, R.string.scanner, R.drawable.scan));
 
+
         intent = new Intent(getApplicationContext(), CompteList.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        boutons.add(new Bouton(intent, R.string.compte, android.R.drawable.ic_menu_preferences));
+        boutons.add(new Bouton(intent, R.string.profil, android.R.drawable.ic_menu_preferences));
 
         Log.i("MENU", "menu loaded");
     }
+
+
 
 
     class Bouton {

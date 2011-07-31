@@ -10,4 +10,10 @@
     <string name="reservations">Reservations</string>
     <string name="scanner">Scanner</string>
     <string name="compte">Compte</string>
+
+
+
+    <string name="credits">Application Android BreizhLib</string>
+    <string name="contact">Auteur : Guernion Sylvain</string>
+    <string name="contactWeb">Site : <a href="http://breizh-lib.appspot.com/android">breizh-lib.appspot.com</a></string>
 </resources>

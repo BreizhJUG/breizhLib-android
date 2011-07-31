@@ -1,9 +1,9 @@
 package org.breizhjug.breizhlib.remote;
 
 
-import android.content.Context;
 import android.util.Log;
-import org.breizhjub.breizhlib.R;
+import org.breizhjug.breizhlib.BreizhLib;
+import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.model.Reservation;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,16 +14,16 @@ import java.util.List;
 
 public class ReservationService extends Service<Reservation> {
 
-    private static String URL_BOOKS = "http://breizh-lib.appspot.com/reservations.json";
+    private static String URL_BOOKS = BreizhLib.SERVER_URL + "reservations.json";
 
     @Override
     public String url() {
         return URL_BOOKS;
     }
 
-    public List<Reservation> load(String urlString) {
+    public List<Reservation> load(String authCookie, String urlString) {
         Log.i("REST", urlString);
-        String result = queryRESTurl(urlString);
+        String result = queryRESTurl(authCookie, urlString);
         ArrayList<Reservation> BOOKS = new ArrayList<Reservation>();
         if (result != null) {
             try {
@@ -47,14 +47,14 @@ public class ReservationService extends Service<Reservation> {
 
     private static ReservationService instance;
 
-    public ReservationService(Context context) {
+    private ReservationService() {
         super();
     }
 
-    public static synchronized ReservationService getInstance(Context context) {
-		if (instance == null) {
-			instance = new ReservationService(context);
-		}
-		return instance;
-	}
+    public static synchronized ReservationService getInstance() {
+        if (instance == null) {
+            instance = new ReservationService();
+        }
+        return instance;
+    }
 }

@@ -1,18 +1,19 @@
 package org.breizhjug.breizhlib.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import org.breizhjub.breizhlib.R;
+import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.adapter.ReservationsAdapter;
 import org.breizhjug.breizhlib.model.Reservation;
 
 import java.util.List;
 
 
-public class ReservationsActivity extends AsyncActivity {
+public class ReservationsActivity extends AbstractActivity {
 
     private ListView reservationsListView;
 
@@ -22,11 +23,12 @@ public class ReservationsActivity extends AsyncActivity {
         setContentView(R.layout.items);
     }
 
-     @Override
+    @Override
     public void init(Intent intent) {
         reservationsListView = (ListView) findViewById(R.id.items);
-
-        List<Reservation> reservations = breizhLib.getReservationService().load();
+        SharedPreferences prefs = breizhLib.getSharedPreferences(this);
+        String authCookie = prefs.getString(breizhLib.AUTH_COOKIE, null);
+        List<Reservation> reservations = breizhLib.getReservationService().load(authCookie);
 
         ReservationsAdapter mSchedule = new ReservationsAdapter(this.getBaseContext(), reservations);
 
@@ -38,7 +40,7 @@ public class ReservationsActivity extends AsyncActivity {
 
                 Reservation reservation = (Reservation) reservationsListView.getItemAtPosition(position);
                 Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-                Populator.populate(intent,reservation);
+                Populator.populate(intent, reservation);
                 ReservationsActivity.this.startActivity(intent);
             }
         });
