@@ -39,7 +39,8 @@ public class BreizhLib {
     public static final String USER_ADMIN = "userAdmin";
     public static final String USER_NOM = "user_nom";
     public static final String USER_PRENOM = "user_prenom";
-
+    public static final String LOAD_IMG = "img_loading";
+    public static final String GRID = "ouvrages_grid";
 
 
     private BreizhLib() {

@@ -13,6 +13,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,7 +27,8 @@ import java.util.List;
 
 public abstract class Service<T> {
 
-    private static HttpClient httpclient = new DefaultHttpClient();
+    private static final int CONNECTION_TIMEOUT = 20000;
+    private static HttpClient httpclient = getHttpClient();
     private List<T> cache = null;
 
     public abstract List<T> load(String authCookie, String urlString);
@@ -37,6 +40,10 @@ public abstract class Service<T> {
             cache = load(authCookie, url());
         }
         return cache != null ? new ArrayList<T>(cache) : cache;
+    }
+
+    public void clearCache(){
+        cache = null;
     }
 
     public static String convertStreamToString(InputStream is) {
@@ -136,5 +143,13 @@ public abstract class Service<T> {
             Log.e("REST", "There was an IO Stream related error", e);
         }
         return null;
+    }
+
+    public static HttpClient getHttpClient() {
+        HttpParams myHttpParams = new BasicHttpParams();
+        HttpConnectionParams.setConnectionTimeout(myHttpParams,
+                CONNECTION_TIMEOUT);
+        HttpConnectionParams.setSoTimeout(myHttpParams, CONNECTION_TIMEOUT);
+        return new DefaultHttpClient(myHttpParams);
     }
 }

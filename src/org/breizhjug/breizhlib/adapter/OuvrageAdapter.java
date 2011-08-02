@@ -1,6 +1,7 @@
 package org.breizhjug.breizhlib.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +17,13 @@ import java.util.List;
 
 public class OuvrageAdapter extends ArrayAdapter<Livre> {
 
+    SharedPreferences prefs;
+    int resource;
 
-    public OuvrageAdapter(Context context, List<Livre> ouvrages) {
+    public OuvrageAdapter(Context context, List<Livre> ouvrages,int resource,SharedPreferences prefs) {
         super(context, 0, ouvrages);
+        this.prefs = prefs;
+        this.resource = resource;
     }
 
 
@@ -29,17 +34,23 @@ public class OuvrageAdapter extends ArrayAdapter<Livre> {
 
         if (view == null) {
             LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = vi.inflate(R.layout.ouvrage, null);
+            view = vi.inflate(resource, null);
         }
 
         TextView text = (TextView) view.findViewById(R.id.titre);
-        text.setText(livre.titre);
+        if(text != null){
+            text.setText(livre.titre);
+        }
 
         text = (TextView) view.findViewById(R.id.editeur);
-        text.setText(livre.editeur);
+        if(text != null){
+            text.setText(livre.editeur);
+        }
 
-        ImageView icone = (ImageView) view.findViewById(R.id.img);
-        BreizhLib.getInstance().getImageDownloader().download(livre.imgUrl, icone);
+        if(prefs.getBoolean(BreizhLib.LOAD_IMG, false) || prefs.getBoolean(BreizhLib.GRID, false)){
+            ImageView icone = (ImageView) view.findViewById(R.id.img);
+            BreizhLib.getInstance().getImageDownloader().download(livre.imgUrl, icone);
+        }
 
         return view;
     }

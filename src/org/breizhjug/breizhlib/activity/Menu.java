@@ -29,6 +29,12 @@ public class Menu extends AbstractActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        init(getIntent());
+    }
+
     protected void loadMenu() {
         SharedPreferences prefs = breizhLib.getSharedPreferences(this);
 
@@ -36,8 +42,9 @@ public class Menu extends AbstractActivity {
         List<Bouton> boutons = new ArrayList<Bouton>();
         grid.setAdapter(getBoutonAdapter(boutons));
 
+         Intent intent = null;
 
-        Intent intent = new Intent(getApplicationContext(), OuvragesActivity.class);
+        intent = new Intent(getApplicationContext(), OuvragesActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         boutons.add(new Bouton(intent, R.string.ouvrages, R.drawable.book));
 
@@ -59,7 +66,7 @@ public class Menu extends AbstractActivity {
 
         intent = new Intent(getApplicationContext(), CompteList.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        boutons.add(new Bouton(intent, R.string.profil, android.R.drawable.ic_menu_preferences));
+        boutons.add(new Bouton(intent, R.string.profil, R.drawable.profile));
 
         Log.i("MENU", "menu loaded");
     }

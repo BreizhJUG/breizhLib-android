@@ -12,7 +12,7 @@ import java.util.List;
 
 public class UtilisateurService extends Service<Utilisateur> {
 
-    private static String URL_USER = BreizhLib.SERVER_URL + "userprofil";
+    private static String URL_USER = BreizhLib.SERVER_URL + "api/profil";
 
     @Override
     public String url() {
@@ -29,8 +29,9 @@ public class UtilisateurService extends Service<Utilisateur> {
 
     private Utilisateur find(String authCookie, String urlString) {
         String result = queryRESTurl(authCookie, urlString);
-        Log.i("REST", result);
+
         if (result != null) {
+            Log.i("REST", result);
             try {
                 JSONArray booksArray = new JSONArray(result);
                 JSONObject item = booksArray.getJSONObject(0);

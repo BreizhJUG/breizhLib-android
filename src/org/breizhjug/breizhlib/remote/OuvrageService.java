@@ -14,11 +14,11 @@ import java.util.List;
 
 public class OuvrageService extends Service<Livre> {
 
-    private static String URL_BOOKS = BreizhLib.SERVER_URL + "ouvrages.json";
+    private static String URL_BOOKS = BreizhLib.SERVER_URL + "api/ouvrages";
 
-    private static String URL_FIND_BOOKS = BreizhLib.SERVER_URL + "findisbn";
+    private static String URL_FIND_BOOKS = BreizhLib.SERVER_URL + "api/find";
 
-    private static String URL_ADD_BOOK = BreizhLib.SERVER_URL + "addbyisbn";
+    private static String URL_ADD_BOOK = BreizhLib.SERVER_URL + "api/add";
 
     @Override
     public String url() {

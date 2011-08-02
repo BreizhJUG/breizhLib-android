@@ -30,5 +30,7 @@
         <activity android:name="org.breizhjug.breizhlib.activity.compte.AppInfo" android:label="Comptes"/>
         <activity android:name="org.breizhjug.breizhlib.activity.ReservationActivity" android:label="Reserver"/>
         <activity android:name="org.breizhjug.breizhlib.activity.CreditsActivity" android:label="Crédits"/>
+        <activity android:name=".activity.ConfigurationActivity" android:label="Paramètres"/>
+        <activity android:name=".activity.AvisActivity" android:label="Avis"/>
     </application>
 </manifest> 

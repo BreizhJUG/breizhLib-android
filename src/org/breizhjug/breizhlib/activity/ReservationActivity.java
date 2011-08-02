@@ -2,7 +2,9 @@ package org.breizhjug.breizhlib.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,20 +13,22 @@ import org.breizhjug.breizhlib.R;
 
 
 public class ReservationActivity extends AbstractActivity {
-
+    private static final String TAG = ReservationActivity.class.getName();
 
     @Override
     public void init(Intent intent) {
-        SharedPreferences prefs = breizhLib.getSharedPreferences(this);
+        final String isbn = intent.getStringExtra("isbn");
+
+        final SharedPreferences prefs = breizhLib.getSharedPreferences(this);
 
 
-        EditText prenom = (EditText) findViewById(R.id.prenomEdit);
+        final EditText prenom = (EditText) findViewById(R.id.prenomEdit);
         prenom.setText(prefs.getString(breizhLib.USER_PRENOM, null));
 
-        EditText nom = (EditText) findViewById(R.id.nomEdit);
+        final EditText nom = (EditText) findViewById(R.id.nomEdit);
         nom.setText(prefs.getString(breizhLib.USER_NOM, null));
 
-        EditText email = (EditText) findViewById(R.id.emailEdit);
+        final EditText email = (EditText) findViewById(R.id.emailEdit);
         email.setText(prefs.getString(breizhLib.USER, null));
 
         Button button = (Button) findViewById(R.id.send);
@@ -32,7 +36,33 @@ public class ReservationActivity extends AbstractActivity {
         button.setOnClickListener(new Button.OnClickListener() {
 
             public void onClick(View view) {
-                Toast.makeText(ReservationActivity.this, "TODO send", Toast.LENGTH_SHORT).show();
+
+
+                final AsyncTask<Void, Void, Boolean> initTask = new AsyncTask<Void, Void, Boolean>() {
+
+                    @Override
+                    protected Boolean doInBackground(Void... params) {
+                        String authCookie = prefs.getString(breizhLib.AUTH_COOKIE, null);
+                        boolean result = breizhLib.getReservationService().reserver(authCookie, isbn, prenom.getText().toString(), nom.getText().toString(), email.getText().toString());
+                        Log.i(TAG, "result " + result);
+                        return result;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Boolean result) {
+                        if (result == null || !result) {
+                            // TODO afficher un message a l'utilisateur
+                            Intent intent = new Intent(getApplicationContext(), Menu.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        } else {
+                            Intent intent = new Intent(getApplicationContext(), Menu.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        }
+                    }
+                };
+                initTask.execute();
             }
         });
 

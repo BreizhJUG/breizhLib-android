@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:orientation="vertical"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	   	android:layout_gravity="top"
+	   	android:paddingLeft="0px"
+	    android:layout_weight="1"
+	    >
+
+    <TextView android:id="@+id/note"
+	         android:layout_width="fill_parent"
+	         android:layout_height="fill_parent"
+	         android:textSize="16px"
+	         android:textStyle="bold"
+             android:text="Note : "
+	         />
+    <Spinner
+        android:id="@+id/spinnerNote"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView android:id="@+id/nom"
+	         android:layout_width="fill_parent"
+	         android:layout_height="fill_parent"
+	         android:textSize="16px"
+	         android:textStyle="bold"
+             android:text="Votre Nom : "
+	         />
+    <EditText
+             android:id="@+id/nomEdit"
+             android:layout_width="fill_parent"
+	         android:layout_height="wrap_content"
+    />
+    <TextView android:id="@+id/avisLabel"
+	         android:layout_width="fill_parent"
+	         android:layout_height="fill_parent"
+	         android:textSize="16px"
+	         android:textStyle="bold"
+             android:text="Votre Avis : "
+	         />
+
+    <EditText
+            android:id="@+id/avisEdit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" android:gravity="left"
+            android:singleLine="false" android:lines="5"
+            android:layout_marginLeft="10dip" android:layout_marginRight="10dip"
+            />
+
+
+ <Button
+            android:id="@+id/send"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Valider"
+
+            />
+</LinearLayout>

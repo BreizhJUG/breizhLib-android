@@ -8,11 +8,14 @@ import android.os.Message;
 import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.R;
 
-public class SplashScreen extends AbstractActivity {
+public class SplashScreen extends BaseActivity {
 
     private static final int STOPSPLASH = 0;
     private static final long SPLASHTIME = 5000;
 
+    public void AbstractActivity(){
+        BreizhLib.getInstance();
+    }
 
     private Handler splashHandler = new Handler() {
 
@@ -29,18 +32,11 @@ public class SplashScreen extends AbstractActivity {
         }
     };
 
-
-    @Override
-    public void init(Intent intent) {
-
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen);
         Message msg = new Message();
-        BreizhLib.getInstance();
         msg.what = STOPSPLASH;
         splashHandler.sendMessageDelayed(msg, SPLASHTIME);
     }

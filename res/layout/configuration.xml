@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="5sp">
+
+<TextView android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/descriptionParametrage"
+    android:textSize="16sp"
+    android:padding="5sp" />
+
+<CheckBox android:layout_width="wrap_content"
+    android:text="@string/imgLoading"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:id="@+id/checkImg" />
+
+
+<CheckBox android:layout_width="wrap_content"
+    android:text="@string/ouvrageGrid"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:id="@+id/checkGrid" />
+
+<Button android:id="@+id/buttonValid"
+    android:text="@string/valider"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textSize="16sp"
+    android:textStyle="bold"
+    android:layout_gravity="center"
+    android:paddingLeft="20sp"
+    android:paddingRight="20sp"
+    android:layout_marginTop="20sp"
+    android:textColor="#111111"/>
+
+  <RelativeLayout  android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+          android:background="@color/ligth_theme_color">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cache"/>
+
+</RelativeLayout>
+
+   <Button android:id="@+id/buttonCache"
+    android:text="@string/cache"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textSize="16sp"
+    android:textStyle="bold"
+    android:layout_gravity="center"
+    android:paddingLeft="20sp"
+    android:paddingRight="20sp"
+    android:layout_marginTop="20sp"
+    android:textColor="#111111"/>
+</LinearLayout>
+</LinearLayout>

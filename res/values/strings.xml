@@ -11,9 +11,21 @@
     <string name="scanner">Scanner</string>
     <string name="compte">Compte</string>
 
-
+     <string name="ouvrageGrid">activer le mode Grid</string>
 
     <string name="credits">Application Android BreizhLib</string>
     <string name="contact">Auteur : Guernion Sylvain</string>
     <string name="contactWeb">Site : <a href="http://breizh-lib.appspot.com/android">breizh-lib.appspot.com</a></string>
+
+    <string name="shareText">BreizhLib, l\'application Android pour vous faciliter l\'utilisation de la bibliothèque du BreizhJug : http://goo.gl/9JXfD</string>
+
+
+
+
+    <string name="descriptionParametrage">Modifier les paramètres de l\'application</string>
+    <string name="imgLoading">Affichage des images dans les listes</string>
+    <string name="valider">Valider</string>
+    <string name="cache">Vider le cache</string>
+
+
 </resources>

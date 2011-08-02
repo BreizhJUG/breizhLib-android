@@ -1,6 +1,7 @@
 package org.breizhjug.breizhlib.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +17,11 @@ import java.util.List;
 
 public class ReservationsAdapter extends ArrayAdapter<Reservation> {
 
+    SharedPreferences prefs;
 
-    public ReservationsAdapter(Context context, List<Reservation> reservations) {
+    public ReservationsAdapter(Context context, List<Reservation> reservations,SharedPreferences prefs) {
         super(context, 0, reservations);
+        this.prefs = prefs;
     }
 
 
@@ -38,8 +41,10 @@ public class ReservationsAdapter extends ArrayAdapter<Reservation> {
         text = (TextView) view.findViewById(R.id.nom);
         text.setText(reservation.nom + " " + reservation.prenom);
 
+         if(prefs.getBoolean(BreizhLib.LOAD_IMG, false)){
         ImageView icone = (ImageView) view.findViewById(R.id.img);
         BreizhLib.getInstance().getImageDownloader().download(reservation.imgUrl, icone);
+         }
 
         return view;
     }

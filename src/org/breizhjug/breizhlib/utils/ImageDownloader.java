@@ -55,7 +55,7 @@ public class ImageDownloader {
 
     public enum Mode {NO_ASYNC_TASK, NO_DOWNLOADED_DRAWABLE, CORRECT}
 
-    private Mode mode = Mode.NO_ASYNC_TASK;
+    private Mode mode = Mode.NO_DOWNLOADED_DRAWABLE;
 
     /**
      * Download the specified image from the Internet and binds it to the provided ImageView. The
@@ -270,7 +270,7 @@ public class ImageDownloader {
                 BitmapDownloaderTask bitmapDownloaderTask = getBitmapDownloaderTask(imageView);
                 // Change bitmap only if this process is still associated with it
                 // Or if we don't use any bitmap to task association (NO_DOWNLOADED_DRAWABLE mode)
-                if ((this == bitmapDownloaderTask) || (mode != Mode.CORRECT)) {
+                if (((this == bitmapDownloaderTask) || (mode != Mode.CORRECT)) && imageView != null) {
                     imageView.setImageBitmap(bitmap);
                 }
             }

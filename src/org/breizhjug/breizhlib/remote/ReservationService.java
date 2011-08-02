@@ -13,12 +13,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReservationService extends Service<Reservation> {
+    private static final String TAG = ReservationService.class.getName();
 
-    private static String URL_BOOKS = BreizhLib.SERVER_URL + "reservations.json";
+    private static String URL_BOOKS = BreizhLib.SERVER_URL + "api/reservations";
+    private static String URL_RESA = BreizhLib.SERVER_URL + "api/book/reserver";
 
     @Override
     public String url() {
         return URL_BOOKS;
+    }
+
+    public boolean reserver(String authCookie,String isbn,String nom, String prenom,String email){
+        Param param = new Param();
+        param.key = "id";
+        param.value = isbn;
+        Param paramNom = new Param();
+        paramNom.key = "nom";
+        paramNom.value = nom;
+        Param paramPrenom = new Param();
+        paramPrenom.key = "prenom";
+        paramPrenom.value = prenom;
+        Param paramEmail = new Param();
+        paramEmail.key = "email";
+        paramEmail.value = email;
+        String result = queryPostRESTurl(authCookie, URL_RESA, param,paramNom,paramPrenom,paramEmail);
+        Log.i(TAG,result);
+        return result != null && result.startsWith("OK");
     }
 
     public List<Reservation> load(String authCookie, String urlString) {

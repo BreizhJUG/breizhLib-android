@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.model.Livre;
 
@@ -51,6 +52,23 @@ public class LivreActivity extends AbstractActivity {
         ImageView icone = (ImageView) findViewById(R.id.img);
         breizhLib.getImageDownloader().download(img, icone);
 
+        Button avis = (Button) findViewById(R.id.addComment);
+
+
+        if (prefs.getString(BreizhLib.ACCOUNT_NAME, null) != null) {
+            avis.setOnClickListener(new Button.OnClickListener(){
+
+                public void onClick(View view) {
+                   Intent pIntent = new Intent(getApplicationContext(), AvisActivity.class);
+                   pIntent.putExtra("isbn",isbn);
+                   LivreActivity.this.startActivity(pIntent);
+                }
+            });
+
+        }else{
+             avis.setEnabled(false);
+        }
+
         Button button = (Button) findViewById(R.id.add);
         if (add) {
            if (prefs.getBoolean(breizhLib.USER_ADMIN, false)) {
@@ -82,12 +100,12 @@ public class LivreActivity extends AbstractActivity {
             } else if (etat.equals("DISP0NIBLE")) {
                 button.setEnabled(true);
                 button.setText("Réserver");
-                button.setBackgroundColor(Color.GREEN);
                 if (prefs.getString(breizhLib.USER, null) != null) {
                     button.setOnClickListener(new Button.OnClickListener() {
 
                         public void onClick(View view) {
                             Intent intent = new Intent(getApplicationContext(), ReservationActivity.class);
+                            intent.putExtra("isbn",isbn);
                             LivreActivity.this.startActivity(intent);
                         }
                     });
