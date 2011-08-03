@@ -20,10 +20,10 @@ public class OuvragesActivity extends AbstractActivity {
 
     private AbsListView ouvragesListView;
 
-       @Override
-       public void onCreate(Bundle savedInstanceState) {
-           super.onCreate(savedInstanceState);
-       }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     protected void onResume() {
@@ -32,40 +32,38 @@ public class OuvragesActivity extends AbstractActivity {
     }
 
     @Override
-       public void init(Intent intent) {
-           int resource =  R.layout.ouvrage;
-           if (breizhLib.getSharedPreferences(this).getBoolean(BreizhLib.GRID, false)) {
-               setContentView(R.layout.main);
-               ouvragesListView = (GridView) findViewById(R.id.grilleBoutons);
-               ((GridView)ouvragesListView).setNumColumns(4);
-               resource = R.layout.ouvrage_simple;
-           }else{
-              setContentView(R.layout.items);
-              ouvragesListView = (ListView) findViewById(R.id.items);
-           }
+    public void init(Intent intent) {
+        int resource = R.layout.ouvrage;
+        if (breizhLib.getSharedPreferences(this).getBoolean(BreizhLib.GRID, false)) {
+            setContentView(R.layout.main);
+            ouvragesListView = (GridView) findViewById(R.id.grilleBoutons);
+            ((GridView) ouvragesListView).setNumColumns(4);
+            resource = R.layout.ouvrage_simple;
+        } else {
+            setContentView(R.layout.items);
+            ouvragesListView = (ListView) findViewById(R.id.items);
+        }
 
-           SharedPreferences prefs = breizhLib.getSharedPreferences(this);
-           String authCookie = prefs.getString(breizhLib.AUTH_COOKIE, null);
-           List<Livre> books = breizhLib.getOuvrageService().load(authCookie);
+        SharedPreferences prefs = breizhLib.getSharedPreferences(this);
+        String authCookie = prefs.getString(breizhLib.AUTH_COOKIE, null);
+        List<Livre> books = breizhLib.getOuvrageService().load(authCookie);
 
-           OuvrageAdapter mSchedule = new OuvrageAdapter(this.getBaseContext(), books,resource,breizhLib.getSharedPreferences(this));
+        OuvrageAdapter mSchedule = new OuvrageAdapter(this.getBaseContext(), books, resource, breizhLib.getSharedPreferences(this));
 
-           ouvragesListView.setAdapter(mSchedule);
+        ouvragesListView.setAdapter(mSchedule);
 
-           ouvragesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-               @SuppressWarnings("unchecked")
-               public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+        ouvragesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @SuppressWarnings("unchecked")
+            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
 
-                   Livre livre = (Livre) ouvragesListView.getItemAtPosition(position);
-                   Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-                   Populator.populate(intent, livre);
-                   OuvragesActivity.this.startActivity(intent);
-               }
-           });
+                Livre livre = (Livre) ouvragesListView.getItemAtPosition(position);
+                Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
+                Populator.populate(intent, livre);
+                OuvragesActivity.this.startActivity(intent);
+            }
+        });
 
-       }
-
-
+    }
 
 
 }

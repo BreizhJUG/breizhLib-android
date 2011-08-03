@@ -30,7 +30,7 @@ public class ReservationsActivity extends AbstractActivity {
         String authCookie = prefs.getString(breizhLib.AUTH_COOKIE, null);
         List<Reservation> reservations = breizhLib.getReservationService().load(authCookie);
 
-        ReservationsAdapter mSchedule = new ReservationsAdapter(this.getBaseContext(), reservations,prefs);
+        ReservationsAdapter mSchedule = new ReservationsAdapter(this.getBaseContext(), reservations, prefs);
 
         reservationsListView.setAdapter(mSchedule);
 

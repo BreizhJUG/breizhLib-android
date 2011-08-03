@@ -41,9 +41,9 @@ public class AvisActivity extends AbstractActivity {
 
             public void onClick(View view) {
                 String authCookie = prefs.getString(breizhLib.AUTH_COOKIE, null);
-                boolean  result = breizhLib.getCommentaireService().comment(authCookie,isbn,nomEdit.getText().toString(),avisEdit.getText().toString(),Integer.valueOf(""+note.getSelectedItem()));
-                 if(result){
-                    Toast.makeText(AvisActivity.this, "Commentaire enregistré", Toast.LENGTH_SHORT);
+                boolean result = breizhLib.getCommentaireService().comment(authCookie, isbn, nomEdit.getText().toString(), avisEdit.getText().toString(), Integer.valueOf("" + note.getSelectedItem()));
+                if (result) {
+                    Toast.makeText(AvisActivity.this, getString(R.string.commentaireSave), Toast.LENGTH_SHORT);
                 }
             }
         });

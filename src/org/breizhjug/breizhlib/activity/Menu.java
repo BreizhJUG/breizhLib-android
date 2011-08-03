@@ -42,7 +42,7 @@ public class Menu extends AbstractActivity {
         List<Bouton> boutons = new ArrayList<Bouton>();
         grid.setAdapter(getBoutonAdapter(boutons));
 
-         Intent intent = null;
+        Intent intent = null;
 
         intent = new Intent(getApplicationContext(), OuvragesActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -70,8 +70,6 @@ public class Menu extends AbstractActivity {
 
         Log.i("MENU", "menu loaded");
     }
-
-
 
 
     class Bouton {

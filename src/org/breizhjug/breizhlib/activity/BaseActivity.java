@@ -10,12 +10,13 @@ import android.view.MenuItem;
 import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.compte.CompteList;
+import org.breizhjug.breizhlib.utils.IntentSupport;
 
 
 public class BaseActivity extends Activity {
 
     public static final String ACTION_LOGOUT = "org.breizhjug.breizhlib.LOGOUT";
-    ;
+
 
     protected BreizhLib breizhLib;
 
@@ -32,7 +33,7 @@ public class BaseActivity extends Activity {
     protected void showError(String message, final boolean finish) {
         AlertDialog.Builder build = new AlertDialog.Builder(this);
         build.setMessage(message);
-        build.setPositiveButton("Ok",
+        build.setPositiveButton(getString(R.string.ok),
                 new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
@@ -52,11 +53,11 @@ public class BaseActivity extends Activity {
         String authCookie = prefs.getString(breizhLib.AUTH_COOKIE, null);
         if (authCookie == null) {
             MenuItem item = (MenuItem) menu.findItem(R.id.connexion);
-            String message = "Connexion";
+            String message = getString(R.string.connexion);
             item.setTitle(message);
         } else {
             MenuItem item = (MenuItem) menu.findItem(R.id.connexion);
-            String message = "Deconnexion";
+            String message = getString(R.string.deconnexion);
             item.setTitle(message);
         }
         return true;
@@ -96,18 +97,15 @@ public class BaseActivity extends Activity {
                 sendBroadcast(broadcastIntent);
                 return true;
             case R.id.share:
-                Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                shareIntent.setType("text/plain");
-                shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-                shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.shareText));
-                startActivity(Intent.createChooser(shareIntent, getString(R.string.app_name)));
+                Intent pIntent = IntentSupport.newShareIntent(this, getString(R.string.app_name), getString(R.string.shareText), getString(R.string.app_name));
+                startActivity(pIntent);
                 return true;
             case R.id.apropos:
-                Intent pIntent = new Intent(getApplicationContext(), CreditsActivity.class);
+                pIntent = new Intent(getApplicationContext(), CreditsActivity.class);
                 pIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(pIntent);
                 return true;
-             case R.id.parametre:
+            case R.id.parametre:
                 pIntent = new Intent(getApplicationContext(), ConfigurationActivity.class);
                 pIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(pIntent);

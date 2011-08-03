@@ -19,8 +19,8 @@ public class CommentaireService extends Service<Commentaire> {
 
     private static String URL_COMMENT = BreizhLib.SERVER_URL + "api/comment";
 
-    public boolean comment(String authCookie,String bookId,String nom, String content, int note){
-        Log.i(TAG,"b: "+bookId+" "+nom+" "+content+" "+note);
+    public boolean comment(String authCookie, String bookId, String nom, String content, int note) {
+        Log.i(TAG, "b: " + bookId + " " + nom + " " + content + " " + note);
         Param param = new Param();
         param.key = "bookId";
         param.value = bookId;
@@ -33,7 +33,7 @@ public class CommentaireService extends Service<Commentaire> {
         Param paramEmail = new Param();
         paramEmail.key = "note";
         paramEmail.value = note;
-        String result = queryPostRESTurl(authCookie, URL_COMMENT, param,paramNom,paramPrenom,paramEmail);
+        String result = queryPostRESTurl(authCookie, URL_COMMENT, param, paramNom, paramPrenom, paramEmail);
 
         return result != null && result.startsWith("OK");
 

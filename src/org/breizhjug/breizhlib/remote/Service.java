@@ -42,7 +42,7 @@ public abstract class Service<T> {
         return cache != null ? new ArrayList<T>(cache) : cache;
     }
 
-    public void clearCache(){
+    public void clearCache() {
         cache = null;
     }
 

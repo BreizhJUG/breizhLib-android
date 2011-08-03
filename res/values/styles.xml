@@ -1,17 +1,17 @@
 <resources>
-<color name="black_theme_color">#ff000000</color>
-<color name="black_text_color">#ffffffff</color>
-<style name="BlackTheme">
-    <item name="android:windowBackground">@color/black_theme_color</item>
-    <item name="android:colorBackground">@color/black_text_color</item>
-    <item name="android:textColor">@color/black_text_color</item>
-</style>
+    <color name="black_theme_color">#ff000000</color>
+    <color name="black_text_color">#ffffffff</color>
+    <style name="BlackTheme">
+        <item name="android:windowBackground">@color/black_theme_color</item>
+        <item name="android:colorBackground">@color/black_text_color</item>
+        <item name="android:textColor">@color/black_text_color</item>
+    </style>
 
-<color name="ligth_theme_color">#ffffffff</color>
-<color name="ligth_text_color">#ff000000</color>
-<style name="LigthTheme">
-    <item name="android:windowBackground">@color/ligth_theme_color</item>
-    <item name="android:colorBackground">@color/ligth_text_color</item>
-    <item name="android:textColor">@color/ligth_text_color</item>
-</style>
+    <color name="ligth_theme_color">#ffffffff</color>
+    <color name="ligth_text_color">#ff000000</color>
+    <style name="LigthTheme">
+        <item name="android:windowBackground">@color/ligth_theme_color</item>
+        <item name="android:colorBackground">@color/ligth_text_color</item>
+        <item name="android:textColor">@color/ligth_text_color</item>
+    </style>
 </resources>

@@ -19,7 +19,7 @@ public class ReservationsAdapter extends ArrayAdapter<Reservation> {
 
     SharedPreferences prefs;
 
-    public ReservationsAdapter(Context context, List<Reservation> reservations,SharedPreferences prefs) {
+    public ReservationsAdapter(Context context, List<Reservation> reservations, SharedPreferences prefs) {
         super(context, 0, reservations);
         this.prefs = prefs;
     }
@@ -41,10 +41,10 @@ public class ReservationsAdapter extends ArrayAdapter<Reservation> {
         text = (TextView) view.findViewById(R.id.nom);
         text.setText(reservation.nom + " " + reservation.prenom);
 
-         if(prefs.getBoolean(BreizhLib.LOAD_IMG, false)){
-        ImageView icone = (ImageView) view.findViewById(R.id.img);
-        BreizhLib.getInstance().getImageDownloader().download(reservation.imgUrl, icone);
-         }
+        if (prefs.getBoolean(BreizhLib.LOAD_IMG, false)) {
+            ImageView icone = (ImageView) view.findViewById(R.id.img);
+            BreizhLib.getInstance().getImageDownloader().download(reservation.imgUrl, icone);
+        }
 
         return view;
     }

@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
- <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	    android:orientation="vertical"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	   	android:layout_gravity="top"
-	   	android:paddingLeft="0px"
-	    android:layout_weight="1"
-	    >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:layout_gravity="top"
+              android:paddingLeft="0px"
+              android:layout_weight="1"
+        >
 
     <TextView android:id="@+id/note"
-	         android:layout_width="fill_parent"
-	         android:layout_height="fill_parent"
-	         android:textSize="16px"
-	         android:textStyle="bold"
-             android:text="Note : "
-	         />
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:textSize="16px"
+              android:textStyle="bold"
+              android:text="Note : "
+            />
     <Spinner
-        android:id="@+id/spinnerNote"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+            android:id="@+id/spinnerNote"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>
 
     <TextView android:id="@+id/nom"
-	         android:layout_width="fill_parent"
-	         android:layout_height="fill_parent"
-	         android:textSize="16px"
-	         android:textStyle="bold"
-             android:text="Votre Nom : "
-	         />
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:textSize="16px"
+              android:textStyle="bold"
+              android:text="@string/nom"
+            />
     <EditText
-             android:id="@+id/nomEdit"
-             android:layout_width="fill_parent"
-	         android:layout_height="wrap_content"
-    />
+            android:id="@+id/nomEdit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            />
     <TextView android:id="@+id/avisLabel"
-	         android:layout_width="fill_parent"
-	         android:layout_height="fill_parent"
-	         android:textSize="16px"
-	         android:textStyle="bold"
-             android:text="Votre Avis : "
-	         />
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:textSize="16px"
+              android:textStyle="bold"
+              android:text="@string/avis"
+            />
 
     <EditText
             android:id="@+id/avisEdit"
@@ -49,11 +49,11 @@
             />
 
 
- <Button
+    <Button
             android:id="@+id/send"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Valider"
+            android:text="@string/valider"
 
             />
 </LinearLayout>

@@ -20,41 +20,41 @@ public class ConfigurationActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.configuration);
 
-		final SharedPreferences prefs = BreizhLib.getInstance().getSharedPreferences(this);
+        final SharedPreferences prefs = BreizhLib.getInstance().getSharedPreferences(this);
 
-		final CheckBox checkImg = (CheckBox) findViewById(R.id.checkImg);
-		checkImg.setChecked(prefs.getBoolean(BreizhLib.LOAD_IMG, false));
+        final CheckBox checkImg = (CheckBox) findViewById(R.id.checkImg);
+        checkImg.setChecked(prefs.getBoolean(BreizhLib.LOAD_IMG, false));
 
         final CheckBox checkGrid = (CheckBox) findViewById(R.id.checkGrid);
-		checkGrid.setChecked(prefs.getBoolean(BreizhLib.GRID, false));
+        checkGrid.setChecked(prefs.getBoolean(BreizhLib.GRID, false));
 
         final Button button = (Button) findViewById(R.id.buttonValid);
-		button.setOnClickListener(new Button.OnClickListener() {
+        button.setOnClickListener(new Button.OnClickListener() {
 
 
-			public void onClick(View paramView) {
-				SharedPreferences.Editor editor = prefs.edit();
-				editor.putBoolean(BreizhLib.LOAD_IMG, checkImg.isChecked());
+            public void onClick(View paramView) {
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putBoolean(BreizhLib.LOAD_IMG, checkImg.isChecked());
                 editor.putBoolean(BreizhLib.GRID, checkGrid.isChecked());
-				editor.commit();
+                editor.commit();
 
-				setResult(RESULT_OK);
-				finish();
-			}
-		});
+                setResult(RESULT_OK);
+                finish();
+            }
+        });
 
         final Button cache = (Button) findViewById(R.id.buttonCache);
-		cache.setOnClickListener(new Button.OnClickListener() {
+        cache.setOnClickListener(new Button.OnClickListener() {
 
 
-			public void onClick(View paramView) {
+            public void onClick(View paramView) {
                 ImageDownloader.getInstance().clearCache();
                 CommentaireService.getInstance().clearCache();
                 OuvrageService.getInstance().clearCache();
                 ReservationService.getInstance().clearCache();
-				setResult(RESULT_OK);
-				finish();
-			}
-		});
+                setResult(RESULT_OK);
+                finish();
+            }
+        });
     }
 }

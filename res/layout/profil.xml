@@ -1,84 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
- <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	    android:orientation="vertical"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	   	android:layout_gravity="top"
-	   	android:paddingLeft="0px"
-	    android:layout_weight="1"
-	    >
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    >
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:layout_gravity="top"
+              android:paddingLeft="0px"
+              android:layout_weight="1"
+        >
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:orientation="horizontal"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+            >
 
-    <ImageView
-		android:id="@+id/avatar"
-        android:layout_width="110sp"
-        android:layout_height="110sp"
-	   	android:layout_gravity="center_vertical"
-	   	android:padding="10px"
-		/>
+        <ImageView
+                android:id="@+id/avatar"
+                android:layout_width="110sp"
+                android:layout_height="110sp"
+                android:layout_gravity="center_vertical"
+                android:padding="10px"
+                />
 
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	    android:orientation="vertical"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	   	android:layout_gravity="center_vertical"
-	   	android:paddingLeft="40px"
-	    android:layout_weight="1"
-	    >
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                      android:orientation="vertical"
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_gravity="center_vertical"
+                      android:paddingLeft="40px"
+                      android:layout_weight="1"
+                >
 
-	    <TextView android:id="@+id/nom"
-	         android:layout_width="fill_parent"
-	         android:layout_height="fill_parent"
-	         android:textSize="16px"
-	         android:textStyle="bold"
-             android:text="Nom"
-	         />
+            <TextView android:id="@+id/nom"
+                      android:layout_width="fill_parent"
+                      android:layout_height="fill_parent"
+                      android:textSize="16px"
+                      android:textStyle="bold"/>
 
-	    <TextView android:id="@+id/prenom"
-	         android:layout_width="fill_parent"
-	         android:layout_height="fill_parent"
-             android:textSize="16px"
-	         android:textStyle="bold"
-             android:text="Prenom"
-	         />
+            <TextView android:id="@+id/prenom"
+                      android:layout_width="fill_parent"
+                      android:layout_height="fill_parent"
+                      android:textSize="16px"
+                      android:textStyle="bold"/>
 
-        <TextView android:id="@+id/email"
-	         android:layout_width="fill_parent"
-	         android:layout_height="fill_parent"
-             android:text="email"
-	         />
+            <TextView android:id="@+id/email"
+                      android:layout_width="fill_parent"
+                      android:layout_height="fill_parent"/>
 
-        <TextView android:id="@+id/username"
-	         android:layout_width="fill_parent"
-	         android:layout_height="fill_parent"
-             android:text="username"
-	         />
+            <TextView android:id="@+id/username"
+                      android:layout_width="fill_parent"
+                      android:layout_height="fill_parent"/>
 
+
+        </LinearLayout>
 
     </LinearLayout>
 
-    </LinearLayout>
+    <TextView android:id="@+id/commentaires"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"/>
 
-     <TextView android:id="@+id/commentaires"
-	         android:layout_width="fill_parent"
-	         android:layout_height="fill_parent"
-             android:text="0 Commentaire"
-	         />
-
-        <TextView android:id="@+id/reservations"
-	         android:layout_width="fill_parent"
-	         android:layout_height="fill_parent"
-             android:text="Aucun ouvrage réservé"
-	         />
+    <TextView android:id="@+id/reservations"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"/>
 
     <TextView android:id="@+id/emprunts"
-	         android:layout_width="fill_parent"
-	         android:layout_height="fill_parent"
-             android:text="Aucun ouvrage en cours de lecture"
-	         />
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"/>
 
 </LinearLayout>

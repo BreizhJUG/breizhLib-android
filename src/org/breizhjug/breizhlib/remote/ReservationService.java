@@ -23,7 +23,7 @@ public class ReservationService extends Service<Reservation> {
         return URL_BOOKS;
     }
 
-    public boolean reserver(String authCookie,String isbn,String nom, String prenom,String email){
+    public boolean reserver(String authCookie, String isbn, String nom, String prenom, String email) {
         Param param = new Param();
         param.key = "id";
         param.value = isbn;
@@ -36,8 +36,8 @@ public class ReservationService extends Service<Reservation> {
         Param paramEmail = new Param();
         paramEmail.key = "email";
         paramEmail.value = email;
-        String result = queryPostRESTurl(authCookie, URL_RESA, param,paramNom,paramPrenom,paramEmail);
-        Log.i(TAG,result);
+        String result = queryPostRESTurl(authCookie, URL_RESA, param, paramNom, paramPrenom, paramEmail);
+        Log.i(TAG, result);
         return result != null && result.startsWith("OK");
     }
 

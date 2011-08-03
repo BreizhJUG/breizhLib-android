@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import org.breizhjug.breizhlib.BreizhLib;
+import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.remote.OuvrageService;
 
@@ -57,16 +58,16 @@ public class ScanActivity extends AbstractActivity {
                 if (format.equals("EAN_13") && isIsbn13(contents)) {
                     isbn = contents;
                     AlertDialog.Builder adb = new AlertDialog.Builder(ScanActivity.this);
-                    adb.setTitle("Isbn identifié");
-                    adb.setMessage("isbn : " + contents);
-                    adb.setNegativeButton("Retour", null);
-                    adb.setNeutralButton("Rechercher", mSend);
+                    adb.setTitle(getString(R.string.isbn_scan_titre_ok));
+                    adb.setMessage(getString(R.string.isbn_scan_msg_ok) + contents);
+                    adb.setNegativeButton(getString(R.string.retour), null);
+                    adb.setNeutralButton(getString(R.string.rechercher), mSend);
                     adb.show();
                 } else {
                     AlertDialog.Builder adb = new AlertDialog.Builder(ScanActivity.this);
-                    adb.setTitle("isbn non reconnu");
-                    adb.setMessage("Il ne s'agit pas d'un code isbn13");
-                    adb.setNegativeButton("Retour", null);
+                    adb.setTitle(getString(R.string.isbn_scan_titre_ko));
+                    adb.setMessage(getString(R.string.isbn_scan_msg_ko));
+                    adb.setNegativeButton(getString(R.string.retour), null);
                     adb.show();
                 }
             } else if (resultCode == RESULT_CANCELED) {

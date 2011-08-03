@@ -20,7 +20,7 @@ public class OuvrageAdapter extends ArrayAdapter<Livre> {
     SharedPreferences prefs;
     int resource;
 
-    public OuvrageAdapter(Context context, List<Livre> ouvrages,int resource,SharedPreferences prefs) {
+    public OuvrageAdapter(Context context, List<Livre> ouvrages, int resource, SharedPreferences prefs) {
         super(context, 0, ouvrages);
         this.prefs = prefs;
         this.resource = resource;
@@ -38,16 +38,16 @@ public class OuvrageAdapter extends ArrayAdapter<Livre> {
         }
 
         TextView text = (TextView) view.findViewById(R.id.titre);
-        if(text != null){
+        if (text != null) {
             text.setText(livre.titre);
         }
 
         text = (TextView) view.findViewById(R.id.editeur);
-        if(text != null){
+        if (text != null) {
             text.setText(livre.editeur);
         }
 
-        if(prefs.getBoolean(BreizhLib.LOAD_IMG, false) || prefs.getBoolean(BreizhLib.GRID, false)){
+        if (prefs.getBoolean(BreizhLib.LOAD_IMG, false) || prefs.getBoolean(BreizhLib.GRID, false)) {
             ImageView icone = (ImageView) view.findViewById(R.id.img);
             BreizhLib.getInstance().getImageDownloader().download(livre.imgUrl, icone);
         }

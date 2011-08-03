@@ -13,7 +13,7 @@ public class SplashScreen extends BaseActivity {
     private static final int STOPSPLASH = 0;
     private static final long SPLASHTIME = 5000;
 
-    public void AbstractActivity(){
+    public void AbstractActivity() {
         BreizhLib.getInstance();
     }
 

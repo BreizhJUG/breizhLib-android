@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/apropos"
-		  android:title="A propos"
-           android:icon="@android:drawable/ic_menu_info_details" />
-     <item android:id="@+id/parametre"
-		  android:title="Paramètres"
-           android:icon="@android:drawable/ic_menu_preferences" />
-	<group android:id="@+id/group1">
+          android:title="@string/apropos"
+          android:icon="@android:drawable/ic_menu_info_details"/>
+    <item android:id="@+id/parametre"
+          android:title="@string/parametres"
+          android:icon="@android:drawable/ic_menu_preferences"/>
+    <group android:id="@+id/group1">
         <item android:id="@+id/accueil"
-              android:title="Menu"
-              android:icon="@drawable/ic_menu_home"  />
+              android:title="@string/menu"
+              android:icon="@drawable/ic_menu_home"/>
         <item android:id="@+id/connexion"
-              android:title="Comptes"
+              android:title="@string/connexionBtn"
               android:icon="@drawable/connexion"/>
         <item android:id="@+id/quitter"
-              android:title="Quitter"
-              android:icon="@drawable/ic_menu_close_clear_cancel"
-              />
-         <item android:id="@+id/share"
-              android:title="Partager"
+              android:title="@string/exit"
+              android:icon="@drawable/ic_menu_close_clear_cancel"/>
+        <item android:id="@+id/share"
+              android:title="@string/share"
               android:icon="@android:drawable/ic_menu_share"/>
     </group>
 </menu>

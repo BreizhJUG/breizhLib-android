@@ -44,13 +44,13 @@ public class GoogleAuthentification {
         try {
             authTokenBundle = accountManagerFuture.getResult();
         } catch (OperationCanceledException e) {
-           Log.w(TAG, "Got OperationCanceledException " + e);
+            Log.w(TAG, "Got OperationCanceledException " + e);
             Log.w(TAG, Log.getStackTraceString(e));
         } catch (AuthenticatorException e) {
             Log.w(TAG, "Got AuthenticatorException " + e);
             Log.w(TAG, Log.getStackTraceString(e));
         } catch (IOException e) {
-           Log.w(TAG, "Got OperationCanceledException " + e);
+            Log.w(TAG, "Got OperationCanceledException " + e);
             Log.w(TAG, Log.getStackTraceString(e));
         }
         String authToken = authTokenBundle.get(AccountManager.KEY_AUTHTOKEN).toString();

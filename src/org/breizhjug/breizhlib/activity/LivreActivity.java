@@ -56,62 +56,60 @@ public class LivreActivity extends AbstractActivity {
 
 
         if (prefs.getString(BreizhLib.ACCOUNT_NAME, null) != null) {
-            avis.setOnClickListener(new Button.OnClickListener(){
+            avis.setOnClickListener(new Button.OnClickListener() {
 
                 public void onClick(View view) {
-                   Intent pIntent = new Intent(getApplicationContext(), AvisActivity.class);
-                   pIntent.putExtra("isbn",isbn);
-                   LivreActivity.this.startActivity(pIntent);
+                    Intent pIntent = new Intent(getApplicationContext(), AvisActivity.class);
+                    pIntent.putExtra("isbn", isbn);
+                    LivreActivity.this.startActivity(pIntent);
                 }
             });
 
-        }else{
-             avis.setEnabled(false);
+        } else {
+            avis.setEnabled(false);
         }
 
         Button button = (Button) findViewById(R.id.add);
         if (add) {
-           if (prefs.getBoolean(breizhLib.USER_ADMIN, false)) {
-            button.setText("Ajouter");
-            button.setOnClickListener(new Button.OnClickListener() {
+            if (prefs.getBoolean(breizhLib.USER_ADMIN, false)) {
+                button.setText(getString(R.string.ajouterBtn));
+                button.setOnClickListener(new Button.OnClickListener() {
 
-                public void onClick(View view) {
-                    SharedPreferences prefs = breizhLib.getSharedPreferences(LivreActivity.this);
-                    String authCookie = prefs.getString(breizhLib.AUTH_COOKIE, null);
-                    //TODO asynchrone call
-                    Livre livre = breizhLib.getOuvrageService().add(authCookie, isbn);
-                    Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-                    Toast.makeText(getApplicationContext(), "Livre Ajouté", Toast.LENGTH_SHORT).show();
-                    Populator.populate(intent, livre);
-                    LivreActivity.this.startActivity(intent);
-                }
-            });
-           } else {
-               button.setText("Non disponible");
-               button.setEnabled(false);
-               button.setBackgroundColor(Color.RED);
-           }
-            //TODO gestion de l'ajout
+                    public void onClick(View view) {
+                        SharedPreferences prefs = breizhLib.getSharedPreferences(LivreActivity.this);
+                        String authCookie = prefs.getString(breizhLib.AUTH_COOKIE, null);
+                        //TODO asynchrone call
+                        Livre livre = breizhLib.getOuvrageService().add(authCookie, isbn);
+                        Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
+                        Toast.makeText(getApplicationContext(), getString(R.string.ajoutOK), Toast.LENGTH_SHORT).show();
+                        Populator.populate(intent, livre);
+                        LivreActivity.this.startActivity(intent);
+                    }
+                });
+            } else {
+                button.setText(getString(R.string.nonDispoBtn));
+                button.setEnabled(false);
+                button.setBackgroundColor(Color.RED);
+            }
         } else {
             button.setEnabled(false);
             if (etat.equals("RESERVE")) {
-                button.setText("Réservé");
-                // TODO gestion de la reservation
+                button.setText(getString(R.string.reserveBtn));
             } else if (etat.equals("DISP0NIBLE")) {
                 button.setEnabled(true);
-                button.setText("Réserver");
+                button.setText(getString(R.string.reserverBtn));
                 if (prefs.getString(breizhLib.USER, null) != null) {
                     button.setOnClickListener(new Button.OnClickListener() {
 
                         public void onClick(View view) {
                             Intent intent = new Intent(getApplicationContext(), ReservationActivity.class);
-                            intent.putExtra("isbn",isbn);
+                            intent.putExtra("isbn", isbn);
                             LivreActivity.this.startActivity(intent);
                         }
                     });
                 }
             } else {
-                button.setText("Indisponible");
+                button.setText(getString(R.string.indispoBtn));
                 button.setBackgroundColor(Color.RED);
             }
         }

@@ -21,6 +21,6 @@ public class CreditsActivity extends AbstractActivity {
 
 
     public void web(View view) {
-		startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(BreizhLib.SERVER_URL+"android")));
-	}
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(BreizhLib.SERVER_URL + "android")));
+    }
 }

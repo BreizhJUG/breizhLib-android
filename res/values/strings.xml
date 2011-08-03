@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">BreizhLib</string>
+    <string name="server_url">http://breizh-lib.appspot.com/</string>
+
+    <!-- splash screen -->
     <string name="splash_text">BreizhLib</string>
     <string name="bunjix">BreizhJug application</string>
-    <string name="server_url">http://breizh-lib.appspot.com/</string>
+
+    <!-- Menu -->
     <string name="ouvrages">Ouvrages</string>
     <string name="commentaires">Commentaires</string>
     <string name="profil">Profil</string>
@@ -11,21 +15,71 @@
     <string name="scanner">Scanner</string>
     <string name="compte">Compte</string>
 
-     <string name="ouvrageGrid">activer le mode Grid</string>
+    <!-- livre -->
+    <string name="avisBtn">Votre Avi</string>
+    <string name="indispoBtn">Indisponible</string>
+    <string name="reserveBtn">Réservé</string>
+    <string name="nonDispoBtn">Non disponible</string>
+    <string name="ajoutOK">Livre Ajouté</string>
+    <string name="ajouterBtn">Ajouter</string>
 
+    <!-- commentaire-->
+    <string name="commentaireMsgTitle">Commentaire de l\'ouvrage </string>
+    <string name="commentaireSave">Commentaire enregistré</string>
+
+    <!-- credit -->
     <string name="credits">Application Android BreizhLib</string>
     <string name="contact">Auteur : Guernion Sylvain</string>
-    <string name="contactWeb">Site : <a href="http://breizh-lib.appspot.com/android">breizh-lib.appspot.com</a></string>
+    <string name="contactWeb">Site :
+        <a href="http://breizh-lib.appspot.com/android">breizh-lib.appspot.com</a>
+    </string>
 
-    <string name="shareText">BreizhLib, l\'application Android pour vous faciliter l\'utilisation de la bibliothèque du BreizhJug : http://goo.gl/9JXfD</string>
+    <!-- contextMenu -->
+    <string name="shareText">BreizhLib, l\'application Android pour vous faciliter l\'utilisation de la bibliothèque du
+        BreizhJug : http://goo.gl/9JXfD
+    </string>
+    <string name="share">Partager</string>
+    <string name="exit">Quitter</string>
+    <string name="connexionBtn">Comptes</string>
+    <string name="menu">Menu</string>
+    <string name="parametres">Paramètres</string>
+    <string name="apropos">A propos</string>
+
+
+    <!-- app_info -->
+    <string name="chargement_profil">Chargement de vos informations</string>
+
+    <!-- avis -->
+    <string name="nom">Nom :</string>
+    <string name="avis">Votre Avis :</string>
+
+    <!-- reservation -->
+    <string name="prenom">Prenom :</string>
+    <string name="email">Email :</string>
+    <string name="reserverBtn">Réserver</string>
 
 
 
-
+    <!-- configuration -->
     <string name="descriptionParametrage">Modifier les paramètres de l\'application</string>
     <string name="imgLoading">Affichage des images dans les listes</string>
-    <string name="valider">Valider</string>
+    <string name="ouvrageGrid">activer le mode Grid</string>
     <string name="cache">Vider le cache</string>
+    <string name="cacheTitre">Cache</string>
 
+    <!-- scan -->
+    <string name="isbn_scan_titre_ok">Isbn identifié</string>
+    <string name="isbn_scan_titre_ko">isbn non reconnu</string>
+    <string name="isbn_scan_msg_ko">Il ne s\'agit pas d\'un code isbn13</string>
+    <string name="isbn_scan_msg_ok">isbn : </string>
 
+    <!-- generique -->
+    <string name="valider">Valider</string>
+    <string name="retour">Retour</string>
+    <string name="rechercher">Rechercher</string>
+    <string name="ok">OK</string>
+    <string name="connexion">Connexion</string>
+    <string name="deconnexion">Deconnexion</string>
+    <string name="recherche">Recherche</string>
+    <string name="chargement">Chargement</string>
 </resources>
