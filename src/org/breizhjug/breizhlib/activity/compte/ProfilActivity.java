@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.AbstractActivity;
 import org.breizhjug.breizhlib.model.Utilisateur;
@@ -32,31 +33,36 @@ public class ProfilActivity extends AbstractActivity {
             editor.putString(breizhLib.USER_NOM, user.nom);
             editor.putString(breizhLib.USER_PRENOM, user.prenom);
             editor.commit();
+
+
+            TextView nom = (TextView) findViewById(R.id.nom);
+            nom.setText(user.nom);
+
+            TextView prenom = (TextView) findViewById(R.id.prenom);
+            prenom.setText(user.prenom);
+
+            TextView emailV = (TextView) findViewById(R.id.email);
+            emailV.setText(user.email);
+
+            TextView username = (TextView) findViewById(R.id.username);
+            username.setText(user.username);
+
+            TextView commentaires = (TextView) findViewById(R.id.commentaires);
+            commentaires.setText(user.commentairesLabel);
+
+            TextView emprunts = (TextView) findViewById(R.id.emprunts);
+            emprunts.setText(user.ouvragesEncoursLabel);
+
+            TextView reservations = (TextView) findViewById(R.id.reservations);
+            reservations.setText(user.reservationsLabel);
+
+            ImageView icone = (ImageView) findViewById(R.id.avatar);
+            breizhLib.getImageDownloader().download(Gravatar.getImage(user.email), icone);
+
+        } else {
+            //TODO message Dialogue
+            Toast.makeText(this, "information indisponible", Toast.LENGTH_SHORT);
         }
-
-        TextView nom = (TextView) findViewById(R.id.nom);
-        nom.setText(user.nom);
-
-        TextView prenom = (TextView) findViewById(R.id.prenom);
-        prenom.setText(user.prenom);
-
-        TextView emailV = (TextView) findViewById(R.id.email);
-        emailV.setText(user.email);
-
-        TextView username = (TextView) findViewById(R.id.username);
-        username.setText(user.username);
-
-        TextView commentaires = (TextView) findViewById(R.id.commentaires);
-        commentaires.setText(user.commentairesLabel);
-
-        TextView emprunts = (TextView) findViewById(R.id.emprunts);
-        emprunts.setText(user.ouvragesEncoursLabel);
-
-        TextView reservations = (TextView) findViewById(R.id.reservations);
-        reservations.setText(user.reservationsLabel);
-
-        ImageView icone = (ImageView) findViewById(R.id.avatar);
-        breizhLib.getImageDownloader().download(Gravatar.getImage(user.email), icone);
     }
 
 }

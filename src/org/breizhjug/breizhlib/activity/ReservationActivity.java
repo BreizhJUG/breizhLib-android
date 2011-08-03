@@ -47,7 +47,7 @@ public class ReservationActivity extends AbstractActivity {
             @Override
             protected Boolean doInBackground(Void... params) {
                 String authCookie = prefs.getString(breizhLib.AUTH_COOKIE, null);
-                boolean result = breizhLib.getReservationService().reserver(authCookie, isbn, prenom, nom, email);
+                boolean result = breizhLib.getReservationService().reserver(authCookie, isbn, nom,prenom, email);
                 Log.d(TAG, "result " + result);
                 return result;
             }

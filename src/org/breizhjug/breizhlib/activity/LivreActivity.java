@@ -52,6 +52,7 @@ public class LivreActivity extends AbstractActivity {
         Button button = (Button) findViewById(R.id.add);
         if (livre.add) {
             initAjout(button, livre.iSBN);
+            avis.setEnabled(false);
         } else {
             initReservation(button, livre.etat, livre.iSBN);
         }
