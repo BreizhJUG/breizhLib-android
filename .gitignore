@@ -4,3 +4,4 @@
 local.properties
 out/
 gen/
+*.apk

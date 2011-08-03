@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="org.breizhjug.breizhlib"
-      android:versionCode="1"
-      android:versionName="1.0">
+      android:versionCode="01000"
+      android:versionName="0.1.0"
+      android:installLocation="auto">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -33,4 +34,7 @@
         <activity android:name=".activity.ConfigurationActivity" android:label="Paramètres"/>
         <activity android:name=".activity.AvisActivity" android:label="Avis"/>
     </application>
+
+
+    <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="8"/>
 </manifest> 
