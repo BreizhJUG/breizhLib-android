@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.remote.OuvrageService;
@@ -28,17 +27,15 @@ public class ScanActivity extends AbstractActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     public DialogInterface.OnClickListener mSend = new DialogInterface.OnClickListener() {
 
 
         public void onClick(DialogInterface dialogInterface, int i) {
-            OuvrageService service = BreizhLib.getInstance().getOuvrageService();
+            OuvrageService service = breizhLib.getOuvrageService();
             SharedPreferences prefs = breizhLib.getSharedPreferences(ScanActivity.this);
-            String authCookie = prefs.getString(breizhLib.AUTH_COOKIE, null);
-            Livre livre = service.find(authCookie, isbn);
+            Livre livre = service.find(prefs.getString(breizhLib.AUTH_COOKIE, null), isbn);
 
             if (livre != null) {
                 Log.d(TAG, livre.titre);

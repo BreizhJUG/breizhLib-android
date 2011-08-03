@@ -90,4 +90,11 @@ public class BreizhLib {
     public SharedPreferences getSharedPreferences(Context context) {
         return context.getSharedPreferences(SHARED_PREFS, 0);
     }
+
+    public void clearCache() {
+        imageDownloader.clearCache();
+        commentaireService.clearCache();
+        ouvrageService.clearCache();
+        reservationService.clearCache();
+    }
 }

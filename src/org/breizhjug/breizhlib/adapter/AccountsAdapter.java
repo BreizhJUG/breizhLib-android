@@ -24,7 +24,7 @@ public class AccountsAdapter extends ArrayAdapter<String> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
-        final String item = getItem(position);
+        String email = getItem(position);
 
         if (view == null) {
             LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -32,10 +32,10 @@ public class AccountsAdapter extends ArrayAdapter<String> {
         }
 
         TextView text = (TextView) view.findViewById(R.id.welcomme);
-        text.setText(item);
+        text.setText(email);
 
         ImageView icone = (ImageView) view.findViewById(R.id.avatar);
-        BreizhLib.getInstance().getImageDownloader().download(Gravatar.getImage(item), icone);
+        BreizhLib.getInstance().getImageDownloader().download(Gravatar.getImage(email), icone);
         return view;
     }
 }

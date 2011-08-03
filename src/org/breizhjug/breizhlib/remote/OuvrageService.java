@@ -30,10 +30,7 @@ public class OuvrageService extends Service<Livre> {
     }
 
     private Livre find(String authCookie, String urlString, String isbn) {
-        Param param = new Param();
-        param.key = "iSBN";
-        param.value = isbn;
-        String result = queryPostRESTurl(authCookie, urlString, param);
+        String result = queryPostRESTurl(authCookie, urlString, new Param("iSBN",isbn));
         Log.i("REST", result);
         if (result != null) {
             try {
@@ -60,10 +57,7 @@ public class OuvrageService extends Service<Livre> {
     }
 
     private Livre add(String authCookie, String urlString, String isbn) {
-        Param param = new Param();
-        param.key = "iSBN";
-        param.value = isbn;
-        String result = queryPostRESTurl(authCookie, urlString, param);
+        String result = queryPostRESTurl(authCookie, urlString, new Param("iSBN",isbn));
         Log.i("REST", result);
         if (result != null) {
             try {

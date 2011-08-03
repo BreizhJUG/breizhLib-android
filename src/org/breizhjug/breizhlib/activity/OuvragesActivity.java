@@ -33,8 +33,9 @@ public class OuvragesActivity extends AbstractActivity {
 
     @Override
     public void init(Intent intent) {
+        SharedPreferences prefs = breizhLib.getSharedPreferences(this);
         int resource = R.layout.ouvrage;
-        if (breizhLib.getSharedPreferences(this).getBoolean(BreizhLib.GRID, false)) {
+        if (prefs.getBoolean(BreizhLib.GRID, true)) {
             setContentView(R.layout.main);
             ouvragesListView = (GridView) findViewById(R.id.grilleBoutons);
             ((GridView) ouvragesListView).setNumColumns(4);
@@ -44,25 +45,26 @@ public class OuvragesActivity extends AbstractActivity {
             ouvragesListView = (ListView) findViewById(R.id.items);
         }
 
-        SharedPreferences prefs = breizhLib.getSharedPreferences(this);
-        String authCookie = prefs.getString(breizhLib.AUTH_COOKIE, null);
-        List<Livre> books = breizhLib.getOuvrageService().load(authCookie);
 
-        OuvrageAdapter mSchedule = new OuvrageAdapter(this.getBaseContext(), books, resource, breizhLib.getSharedPreferences(this));
+        List<Livre> books = breizhLib.getOuvrageService().load(prefs.getString(breizhLib.AUTH_COOKIE, null));
+
+        OuvrageAdapter mSchedule = new OuvrageAdapter(this.getBaseContext(), books, resource, prefs);
 
         ouvragesListView.setAdapter(mSchedule);
 
         ouvragesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @SuppressWarnings("unchecked")
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-
-                Livre livre = (Livre) ouvragesListView.getItemAtPosition(position);
-                Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-                Populator.populate(intent, livre);
-                OuvragesActivity.this.startActivity(intent);
+                 onClick(position);
             }
         });
 
+    }
+
+    private void onClick(int position) {
+        Livre livre = (Livre) ouvragesListView.getItemAtPosition(position);
+        Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
+        Populator.populate(intent, livre);
+        OuvragesActivity.this.startActivity(intent);
     }
 
 

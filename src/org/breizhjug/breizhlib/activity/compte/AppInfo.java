@@ -16,10 +16,8 @@ public class AppInfo extends AbstractActivity {
 
     @Override
     public void init(Intent intent) {
-
         String account = (String) intent.getExtras().get("account");
         register(account);
-
     }
 
 

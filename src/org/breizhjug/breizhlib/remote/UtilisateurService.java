@@ -14,6 +14,9 @@ public class UtilisateurService extends Service<Utilisateur> {
 
     private static String URL_USER = BreizhLib.SERVER_URL + "api/profil";
 
+    private static UtilisateurService instance;
+
+
     @Override
     public String url() {
         return URL_USER;
@@ -53,8 +56,6 @@ public class UtilisateurService extends Service<Utilisateur> {
         }
         return null;
     }
-
-    private static UtilisateurService instance;
 
     private UtilisateurService() {
         super();

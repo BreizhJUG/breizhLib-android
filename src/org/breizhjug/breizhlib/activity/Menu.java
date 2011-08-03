@@ -57,8 +57,8 @@ public class Menu extends AbstractActivity {
             intent = new Intent(getApplicationContext(), ReservationsActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             boutons.add(new Bouton(intent, R.string.reservations, R.drawable.book));
-
         }
+
         intent = new Intent(getApplicationContext(), ScanActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         boutons.add(new Bouton(intent, R.string.scanner, R.drawable.scan));

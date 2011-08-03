@@ -106,6 +106,11 @@ public abstract class Service<T> {
     public class Param {
         public String key;
         public Object value;
+
+        public Param(String key,Object value){
+            this.key = key;
+            this.value = value;
+        }
     }
 
 

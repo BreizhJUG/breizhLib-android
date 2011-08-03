@@ -13,8 +13,6 @@ public class Populator {
     }
 
     public static void populate(Intent intent, Reservation reservation) {
-        intent.putExtra("titre", reservation.livre);
-        intent.putExtra("img", reservation.imgUrl);
-        intent.putExtra("etat", "RESERVE");
+        intent.putExtra("livre", reservation.livre);
     }
 }

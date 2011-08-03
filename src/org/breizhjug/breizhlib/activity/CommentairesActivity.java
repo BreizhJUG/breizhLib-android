@@ -25,24 +25,26 @@ public class CommentairesActivity extends AbstractActivity {
     public void init(Intent intent) {
         commentairesListView = (ListView) findViewById(R.id.items);
         SharedPreferences prefs = breizhLib.getSharedPreferences(this);
-        String authCookie = prefs.getString(breizhLib.AUTH_COOKIE, null);
 
-        List<Commentaire> commentaires = breizhLib.getCommentaireService().load(authCookie);
+        List<Commentaire> commentaires = breizhLib.getCommentaireService().load(prefs.getString(breizhLib.AUTH_COOKIE, null));
 
         CommentairesAdapter mSchedule = new CommentairesAdapter(this.getBaseContext(), commentaires);
         commentairesListView.setAdapter(mSchedule);
 
         commentairesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @SuppressWarnings("unchecked")
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-                Commentaire commentaire = (Commentaire) commentairesListView.getItemAtPosition(position);
-                AlertDialog.Builder adb = new AlertDialog.Builder(CommentairesActivity.this);
-                adb.setTitle(getString(R.string.commentaireMsgTitle) + commentaire.livre);
-
-                adb.setMessage(commentaire.commentaire);
-                adb.setPositiveButton(getString(R.string.ok), null);
-                adb.show();
+                onSend(position);
             }
         });
+    }
+
+
+    public void onSend(int position) {
+        Commentaire commentaire = (Commentaire) commentairesListView.getItemAtPosition(position);
+        AlertDialog.Builder adb = new AlertDialog.Builder(CommentairesActivity.this);
+        adb.setTitle(getString(R.string.commentaireMsgTitle) + commentaire.livre);
+        adb.setMessage(commentaire.commentaire);
+        adb.setPositiveButton(getString(R.string.ok), null);
+        adb.show();
     }
 }

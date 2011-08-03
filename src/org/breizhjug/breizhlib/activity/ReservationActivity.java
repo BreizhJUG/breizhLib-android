@@ -13,13 +13,13 @@ import org.breizhjug.breizhlib.R;
 
 public class ReservationActivity extends AbstractActivity {
     private static final String TAG = ReservationActivity.class.getName();
+    private SharedPreferences prefs;
 
     @Override
     public void init(Intent intent) {
         final String isbn = intent.getStringExtra("isbn");
 
-        final SharedPreferences prefs = breizhLib.getSharedPreferences(this);
-
+        prefs = breizhLib.getSharedPreferences(this);
 
         final EditText prenom = (EditText) findViewById(R.id.prenomEdit);
         prenom.setText(prefs.getString(breizhLib.USER_PRENOM, null));
@@ -31,41 +31,42 @@ public class ReservationActivity extends AbstractActivity {
         email.setText(prefs.getString(breizhLib.USER, null));
 
         Button button = (Button) findViewById(R.id.send);
-
         button.setOnClickListener(new Button.OnClickListener() {
 
             public void onClick(View view) {
-
-
-                final AsyncTask<Void, Void, Boolean> initTask = new AsyncTask<Void, Void, Boolean>() {
-
-                    @Override
-                    protected Boolean doInBackground(Void... params) {
-                        String authCookie = prefs.getString(breizhLib.AUTH_COOKIE, null);
-                        boolean result = breizhLib.getReservationService().reserver(authCookie, isbn, prenom.getText().toString(), nom.getText().toString(), email.getText().toString());
-                        Log.i(TAG, "result " + result);
-                        return result;
-                    }
-
-                    @Override
-                    protected void onPostExecute(Boolean result) {
-                        if (result == null || !result) {
-                            // TODO afficher un message a l'utilisateur
-                            Intent intent = new Intent(getApplicationContext(), Menu.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
-                        } else {
-                            Intent intent = new Intent(getApplicationContext(), Menu.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
-                        }
-                    }
-                };
-                initTask.execute();
+                onSend(isbn, prenom.getText().toString(), nom.getText().toString(), email.getText().toString());
             }
         });
 
 
+    }
+
+    private void onSend(final String isbn, final String prenom, final String nom, final String email) {
+        final AsyncTask<Void, Void, Boolean> initTask = new AsyncTask<Void, Void, Boolean>() {
+
+            @Override
+            protected Boolean doInBackground(Void... params) {
+                String authCookie = prefs.getString(breizhLib.AUTH_COOKIE, null);
+                boolean result = breizhLib.getReservationService().reserver(authCookie, isbn, prenom, nom, email);
+                Log.d(TAG, "result " + result);
+                return result;
+            }
+
+            @Override
+            protected void onPostExecute(Boolean result) {
+                if (result == null || !result) {
+                    // TODO afficher un message a l'utilisateur
+                    Intent intent = new Intent(getApplicationContext(), Menu.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), Menu.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+            }
+        };
+        initTask.execute();
     }
 
     public void onCreate(Bundle savedInstanceState) {

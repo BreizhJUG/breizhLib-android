@@ -23,7 +23,7 @@ public class CommentairesAdapter extends ArrayAdapter<Commentaire> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
-        final Commentaire commentaire = getItem(position);
+        Commentaire commentaire = getItem(position);
 
         if (view == null) {
             LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);

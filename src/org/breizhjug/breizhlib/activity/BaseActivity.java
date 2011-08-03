@@ -80,21 +80,12 @@ public class BaseActivity extends Activity {
                     pIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(pIntent);
                 } else {
-                    SharedPreferences.Editor editor = prefs.edit();
-                    editor.putString(BreizhLib.AUTH_COOKIE, null);
-                    editor.putString(BreizhLib.ACCOUNT_NAME, null);
-                    editor.putString(BreizhLib.USER, null);
-                    editor.putString(BreizhLib.USER_NOM, null);
-                    editor.putString(BreizhLib.USER_PRENOM, null);
-                    editor.putString(BreizhLib.USER_ADMIN, null);
-                    editor.commit();
+                    onLogout();
                     startActivity(intent);
                 }
                 return true;
             case R.id.quitter:
-                Intent broadcastIntent = new Intent();
-                broadcastIntent.setAction(ACTION_LOGOUT);
-                sendBroadcast(broadcastIntent);
+                 onExit();
                 return true;
             case R.id.share:
                 Intent pIntent = IntentSupport.newShareIntent(this, getString(R.string.app_name), getString(R.string.shareText), getString(R.string.app_name));
@@ -113,6 +104,23 @@ public class BaseActivity extends Activity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void onLogout() {
+        SharedPreferences.Editor editor = breizhLib.getSharedPreferences(this).edit();
+        editor.putString(BreizhLib.AUTH_COOKIE, null);
+        editor.putString(BreizhLib.ACCOUNT_NAME, null);
+        editor.putString(BreizhLib.USER, null);
+        editor.putString(BreizhLib.USER_NOM, null);
+        editor.putString(BreizhLib.USER_PRENOM, null);
+        editor.putString(BreizhLib.USER_ADMIN, null);
+        editor.commit();
+    }
+
+    private void onExit() {
+        Intent broadcastIntent = new Intent();
+        broadcastIntent.setAction(ACTION_LOGOUT);
+        sendBroadcast(broadcastIntent);
     }
 
 }

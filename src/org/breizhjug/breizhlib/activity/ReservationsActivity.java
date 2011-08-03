@@ -27,15 +27,13 @@ public class ReservationsActivity extends AbstractActivity {
     public void init(Intent intent) {
         reservationsListView = (ListView) findViewById(R.id.items);
         SharedPreferences prefs = breizhLib.getSharedPreferences(this);
-        String authCookie = prefs.getString(breizhLib.AUTH_COOKIE, null);
-        List<Reservation> reservations = breizhLib.getReservationService().load(authCookie);
+        List<Reservation> reservations = breizhLib.getReservationService().load(prefs.getString(breizhLib.AUTH_COOKIE, null));
 
         ReservationsAdapter mSchedule = new ReservationsAdapter(this.getBaseContext(), reservations, prefs);
 
         reservationsListView.setAdapter(mSchedule);
 
         reservationsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @SuppressWarnings("unchecked")
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
 
                 Reservation reservation = (Reservation) reservationsListView.getItemAtPosition(position);

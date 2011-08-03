@@ -36,14 +36,14 @@ public class ReservationsAdapter extends ArrayAdapter<Reservation> {
         }
 
         TextView text = (TextView) view.findViewById(R.id.livre);
-        text.setText(reservation.livre);
+        text.setText(reservation.livre.titre);
 
         text = (TextView) view.findViewById(R.id.nom);
         text.setText(reservation.nom + " " + reservation.prenom);
 
         if (prefs.getBoolean(BreizhLib.LOAD_IMG, false)) {
             ImageView icone = (ImageView) view.findViewById(R.id.img);
-            BreizhLib.getInstance().getImageDownloader().download(reservation.imgUrl, icone);
+            BreizhLib.getInstance().getImageDownloader().download(reservation.livre.imgUrl, icone);
         }
 
         return view;

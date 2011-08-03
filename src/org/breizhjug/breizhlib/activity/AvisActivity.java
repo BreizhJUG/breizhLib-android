@@ -28,8 +28,8 @@ public class AvisActivity extends AbstractActivity {
         adapter.add("5");
         note.setAdapter(adapter);
 
-        String nom = breizhLib.getSharedPreferences(this).getString(BreizhLib.USER_NOM, "") + " " +
-                breizhLib.getSharedPreferences(this).getString(BreizhLib.USER_PRENOM, "");
+        String nom = prefs.getString(BreizhLib.USER_NOM, "") + " " +
+                prefs.getString(BreizhLib.USER_PRENOM, "");
         final EditText nomEdit = (EditText) findViewById(R.id.nomEdit);
         nomEdit.setText(nom);
 
@@ -40,6 +40,7 @@ public class AvisActivity extends AbstractActivity {
         button.setOnClickListener(new Button.OnClickListener() {
 
             public void onClick(View view) {
+                //TODO Async call
                 String authCookie = prefs.getString(breizhLib.AUTH_COOKIE, null);
                 boolean result = breizhLib.getCommentaireService().comment(authCookie, isbn, nomEdit.getText().toString(), avisEdit.getText().toString(), Integer.valueOf("" + note.getSelectedItem()));
                 if (result) {

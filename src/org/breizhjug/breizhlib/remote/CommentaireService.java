@@ -21,18 +21,10 @@ public class CommentaireService extends Service<Commentaire> {
 
     public boolean comment(String authCookie, String bookId, String nom, String content, int note) {
         Log.i(TAG, "b: " + bookId + " " + nom + " " + content + " " + note);
-        Param param = new Param();
-        param.key = "bookId";
-        param.value = bookId;
-        Param paramNom = new Param();
-        paramNom.key = "nom";
-        paramNom.value = nom;
-        Param paramPrenom = new Param();
-        paramPrenom.key = "content";
-        paramPrenom.value = content;
-        Param paramEmail = new Param();
-        paramEmail.key = "note";
-        paramEmail.value = note;
+        Param param = new Param("bookId",bookId);
+        Param paramNom = new Param("nom",nom);
+        Param paramPrenom = new Param("content",content);
+        Param paramEmail = new Param("note",note);
         String result = queryPostRESTurl(authCookie, URL_COMMENT, param, paramNom, paramPrenom, paramEmail);
 
         return result != null && result.startsWith("OK");

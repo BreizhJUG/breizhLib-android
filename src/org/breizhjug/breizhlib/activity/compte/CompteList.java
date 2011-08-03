@@ -36,7 +36,6 @@ public class CompteList extends AbstractActivity {
             listView.setAdapter(new AccountsAdapter(this.getBaseContext(), accounts));
 
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @SuppressWarnings("unchecked")
                 public void onItemClick(AdapterView<?> a, View v, int position, long id) {
 
                     String account = (String) listView.getItemAtPosition(position);

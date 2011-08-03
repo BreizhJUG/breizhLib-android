@@ -9,6 +9,7 @@ import org.breizhjug.breizhlib.R;
 
 
 public class CreditsActivity extends AbstractActivity {
+
     @Override
     public void init(Intent intent) {
 
