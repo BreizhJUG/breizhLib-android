@@ -9,6 +9,8 @@ import android.util.Log;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.remote.OuvrageService;
+import org.breizhjug.breizhlib.utils.IntentIntegrator;
+import org.breizhjug.breizhlib.utils.IntentSupport;
 
 
 public class ScanActivity extends AbstractActivity {
@@ -19,10 +21,14 @@ public class ScanActivity extends AbstractActivity {
 
     @Override
     public void init(Intent intent) {
-        Intent pIntent = new Intent("com.google.zxing.client.android.SCAN");
-        pIntent.setPackage("com.google.zxing.client.android");
-        pIntent.putExtra("SCAN_MODE", "PRODUCT_MODE");
-        startActivityForResult(pIntent, 0);
+        if (IntentSupport.isIntentAvailable(this, "com.google.zxing.client.android.SCAN", null)) {
+            Intent pIntent = new Intent("com.google.zxing.client.android.SCAN");
+            pIntent.setPackage("com.google.zxing.client.android");
+            pIntent.putExtra("SCAN_MODE", "PRODUCT_MODE");
+            startActivityForResult(pIntent, 0);
+        } else {
+            IntentIntegrator.initiateScan(this);
+        }
     }
 
     public void onCreate(Bundle savedInstanceState) {

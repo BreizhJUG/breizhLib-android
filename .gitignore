@@ -5,3 +5,4 @@ local.properties
 out/
 gen/
 *.apk
+.idea/
