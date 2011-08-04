@@ -27,7 +27,7 @@ public class CommentairesActivity extends AbstractActivity {
         commentairesListView = (ListView) findViewById(R.id.items);
         SharedPreferences prefs = breizhLib.getSharedPreferences(this);
         commentaires = new ArrayList<Commentaire>();
-        commentaires.addAll( breizhLib.getCommentaireService().load(prefs.getString(breizhLib.AUTH_COOKIE, null)));
+        commentaires.addAll(breizhLib.getCommentaireService().load(prefs.getString(breizhLib.AUTH_COOKIE, null)));
 
         CommentairesAdapter mSchedule = new CommentairesAdapter(this.getBaseContext(), commentaires);
         commentairesListView.setAdapter(mSchedule);

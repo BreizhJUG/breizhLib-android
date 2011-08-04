@@ -13,12 +13,14 @@ import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.adapter.OuvrageAdapter;
 import org.breizhjug.breizhlib.model.Livre;
 
-import java.util.List;
+import java.util.ArrayList;
 
 
 public class OuvragesActivity extends AbstractActivity {
 
     private AbsListView ouvragesListView;
+
+    private ArrayList<Livre> ouvrages;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,10 +47,10 @@ public class OuvragesActivity extends AbstractActivity {
             ouvragesListView = (ListView) findViewById(R.id.items);
         }
 
+        ouvrages = new ArrayList<Livre>();
+        ouvrages.addAll(breizhLib.getOuvrageService().load(prefs.getString(breizhLib.AUTH_COOKIE, null)));
 
-        List<Livre> books = breizhLib.getOuvrageService().load(prefs.getString(breizhLib.AUTH_COOKIE, null));
-
-        OuvrageAdapter mSchedule = new OuvrageAdapter(this.getBaseContext(), books, resource, prefs);
+        OuvrageAdapter mSchedule = new OuvrageAdapter(this.getBaseContext(), ouvrages, resource, prefs);
 
         ouvragesListView.setAdapter(mSchedule);
 
@@ -63,6 +65,8 @@ public class OuvragesActivity extends AbstractActivity {
     private void onClick(int position) {
         Livre livre = (Livre) ouvragesListView.getItemAtPosition(position);
         Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
+        intent.putExtra("livres", ouvrages);
+        intent.putExtra("index", position);
         Populator.populate(intent, livre);
         OuvragesActivity.this.startActivity(intent);
     }

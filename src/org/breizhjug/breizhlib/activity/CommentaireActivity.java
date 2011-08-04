@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.model.Commentaire;
@@ -32,10 +33,11 @@ public class CommentaireActivity extends AbstractActivity {
         ImageView icone = (ImageView) findViewById(R.id.img);
         breizhLib.getImageDownloader().download(commentaire.livre.imgUrl, icone);
 
-
-        Button button = (Button) findViewById(R.id.previous);
-        if (index > 1) {
-            button.setOnClickListener(new Button.OnClickListener() {
+        LinearLayout nav = (LinearLayout) findViewById(R.id.nav);
+        Button previous = (Button) nav.getChildAt(0);
+        Button next = (Button) nav.getChildAt(1);
+        if (index > 0) {
+            previous.setOnClickListener(new Button.OnClickListener() {
 
                 public void onClick(View view) {
                     Commentaire commentaire = commentaires.get(index - 1);
@@ -47,11 +49,10 @@ public class CommentaireActivity extends AbstractActivity {
                 }
             });
         } else {
-            button.setEnabled(false);
+            previous.setEnabled(false);
         }
 
-        Button next = (Button) findViewById(R.id.next);
-        if (commentaires.size() - 2 > index) {
+        if (commentaires.size() - 1 > index) {
             next.setOnClickListener(new Button.OnClickListener() {
 
                 public void onClick(View view) {

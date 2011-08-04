@@ -41,8 +41,8 @@ public class CommentairesAdapter extends ArrayAdapter<Commentaire> {
         text = (TextView) view.findViewById(R.id.description);
         text.setText(commentaire.commentaire);
 
-         ImageView icone = (ImageView) view.findViewById(R.id.img);
-         BreizhLib.getInstance().getImageDownloader().download(commentaire.livre.imgUrl, icone);
+        ImageView icone = (ImageView) view.findViewById(R.id.img);
+        BreizhLib.getInstance().getImageDownloader().download(commentaire.livre.imgUrl, icone);
 
         return view;
     }

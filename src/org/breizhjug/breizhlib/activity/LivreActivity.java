@@ -6,13 +6,12 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.model.Livre;
+
+import java.util.ArrayList;
 
 
 public class LivreActivity extends AbstractActivity {
@@ -22,7 +21,8 @@ public class LivreActivity extends AbstractActivity {
 
         SharedPreferences prefs = breizhLib.getSharedPreferences(this);
         final Livre livre = (Livre) getIntent().getSerializableExtra("livre");
-
+        final ArrayList<Livre> ouvrages = (ArrayList<Livre>) getIntent().getSerializableExtra("livres");
+        final int index = (int) getIntent().getIntExtra("index", 0);
 
         TextView titreView = (TextView) findViewById(R.id.titre);
         titreView.setText(livre.titre);
@@ -32,6 +32,44 @@ public class LivreActivity extends AbstractActivity {
 
         ImageView icone = (ImageView) findViewById(R.id.img);
         breizhLib.getImageDownloader().download(livre.imgUrl, icone);
+
+
+        LinearLayout nav = (LinearLayout) findViewById(R.id.nav);
+        Button previous = (Button) nav.getChildAt(0);
+        Button next = (Button) nav.getChildAt(1);
+
+        if (index > 0) {
+            previous.setOnClickListener(new Button.OnClickListener() {
+
+                public void onClick(View view) {
+                    Livre livre = ouvrages.get(index - 1);
+                    Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
+                    intent.putExtra("livre", livre);
+                    intent.putExtra("livres", ouvrages);
+                    intent.putExtra("index", index - 1);
+                    startActivity(intent);
+                }
+            });
+        } else {
+            previous.setEnabled(false);
+        }
+
+        if (ouvrages.size() - 1 > index) {
+            next.setOnClickListener(new Button.OnClickListener() {
+
+                public void onClick(View view) {
+                    Livre livre = ouvrages.get(index + 1);
+                    Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
+                    intent.putExtra("livre", livre);
+                    intent.putExtra("livres", ouvrages);
+                    intent.putExtra("index", index + 1);
+                    startActivity(intent);
+                }
+            });
+        } else {
+            next.setEnabled(false);
+        }
+
 
         Button avis = (Button) findViewById(R.id.addComment);
 
@@ -70,18 +108,18 @@ public class LivreActivity extends AbstractActivity {
             button.setText(getString(R.string.reserveBtn));
         } else if (etat.equals("DISP0NIBLE")) {
             button.setText(getString(R.string.reserverBtn));
-            if(breizhLib.getSharedPreferences(this).getString(BreizhLib.ACCOUNT_NAME, null) != null){
-            button.setEnabled(true);
-            if (breizhLib.getSharedPreferences(this).getString(breizhLib.USER, null) != null) {
-                button.setOnClickListener(new Button.OnClickListener() {
+            if (breizhLib.getSharedPreferences(this).getString(BreizhLib.ACCOUNT_NAME, null) != null) {
+                button.setEnabled(true);
+                if (breizhLib.getSharedPreferences(this).getString(breizhLib.USER, null) != null) {
+                    button.setOnClickListener(new Button.OnClickListener() {
 
-                    public void onClick(View view) {
-                        Intent intent = new Intent(getApplicationContext(), ReservationActivity.class);
-                        intent.putExtra("isbn", isbn);
-                        LivreActivity.this.startActivity(intent);
-                    }
-                });
-            }
+                        public void onClick(View view) {
+                            Intent intent = new Intent(getApplicationContext(), ReservationActivity.class);
+                            intent.putExtra("isbn", isbn);
+                            LivreActivity.this.startActivity(intent);
+                        }
+                    });
+                }
             }
         } else {
             button.setText(getString(R.string.indispoBtn));

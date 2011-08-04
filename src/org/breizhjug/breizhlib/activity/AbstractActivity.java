@@ -12,7 +12,7 @@ import org.breizhjug.breizhlib.R;
 
 public abstract class AbstractActivity extends BaseActivity {
 
-    protected BroadcastReceiver receiver;
+
     protected LayoutInflater layoutInflater;
 
     public abstract void init(Intent intent);
@@ -22,18 +22,7 @@ public abstract class AbstractActivity extends BaseActivity {
 
         layoutInflater = this.getLayoutInflater();
 
-        receiver = new BroadcastReceiver() {
 
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                finish();
-            }
-
-        };
-
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(ACTION_LOGOUT);
-        registerReceiver(receiver, intentFilter);
 
         final ProgressDialog waitDialog = ProgressDialog.show(this, getString(R.string.recherche), getString(R.string.chargement), true, true);
 

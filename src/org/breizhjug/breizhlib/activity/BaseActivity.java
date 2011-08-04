@@ -2,9 +2,7 @@ package org.breizhjug.breizhlib.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.*;
 import android.os.Bundle;
 import android.view.MenuItem;
 import org.breizhjug.breizhlib.BreizhLib;
@@ -17,13 +15,27 @@ public class BaseActivity extends Activity {
 
     public static final String ACTION_LOGOUT = "org.breizhjug.breizhlib.LOGOUT";
 
-
+    protected BroadcastReceiver receiver;
     protected BreizhLib breizhLib;
 
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         breizhLib = BreizhLib.getInstance();
+
+
+        receiver = new BroadcastReceiver() {
+
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                finish();
+            }
+
+        };
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ACTION_LOGOUT);
+        registerReceiver(receiver, intentFilter);
     }
 
     protected void showError(String message) {
