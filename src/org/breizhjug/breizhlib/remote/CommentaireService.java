@@ -21,10 +21,10 @@ public class CommentaireService extends Service<Commentaire> {
 
     public boolean comment(String authCookie, String bookId, String nom, String content, int note) {
         Log.i(TAG, "b: " + bookId + " " + nom + " " + content + " " + note);
-        Param param = new Param("bookId",bookId);
-        Param paramNom = new Param("nom",nom);
-        Param paramPrenom = new Param("content",content);
-        Param paramEmail = new Param("note",note);
+        Param param = new Param("bookId", bookId);
+        Param paramNom = new Param("nom", nom);
+        Param paramPrenom = new Param("content", content);
+        Param paramEmail = new Param("note", note);
         String result = queryPostRESTurl(authCookie, URL_COMMENT, param, paramNom, paramPrenom, paramEmail);
 
         return result != null && result.startsWith("OK");
@@ -43,7 +43,7 @@ public class CommentaireService extends Service<Commentaire> {
                 Commentaire commentaire = null;
                 for (int a = 0; a < commentairesArray.length(); a++) {
                     JSONObject item = commentairesArray.getJSONObject(a);
-                    commentaire = new Commentaire((String) item.get("nom"), (String) item.get("avis"), Integer.valueOf((String) item.get("note")).intValue(), (String) item.get("titre"));
+                    commentaire = converter.convertCommentaire(item);
                     commentaires.add(commentaire);
                 }
                 return commentaires;

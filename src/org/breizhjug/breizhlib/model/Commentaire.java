@@ -17,6 +17,13 @@ public class Commentaire implements Serializable {
         this.nom = nom;
         this.commentaire = commentaire;
         this.note = note;
-        this.livre = new Livre(titre,null,null,null);
+        this.livre = new Livre(titre, null, null, null);
+    }
+
+    public Commentaire(String nom, String commentaire, int note, Livre livre) {
+        this.nom = nom;
+        this.commentaire = commentaire;
+        this.note = note;
+        this.livre = livre;
     }
 }

@@ -85,7 +85,7 @@ public class BaseActivity extends Activity {
                 }
                 return true;
             case R.id.quitter:
-                 onExit();
+                onExit();
                 return true;
             case R.id.share:
                 Intent pIntent = IntentSupport.newShareIntent(this, getString(R.string.app_name), getString(R.string.shareText), getString(R.string.app_name));

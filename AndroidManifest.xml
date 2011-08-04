@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="org.breizhjug.breizhlib"
-      android:versionCode="01001"
-      android:versionName="0.1.1"
+      android:versionCode="01002"
+      android:versionName="0.1.2"
       android:installLocation="auto">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -31,8 +31,9 @@
         <activity android:name="org.breizhjug.breizhlib.activity.compte.AppInfo" android:label="Comptes"/>
         <activity android:name="org.breizhjug.breizhlib.activity.ReservationActivity" android:label="Reserver"/>
         <activity android:name="org.breizhjug.breizhlib.activity.CreditsActivity" android:label="Crédits"/>
-        <activity android:name=".activity.ConfigurationActivity" android:label="Paramètres"/>
-        <activity android:name=".activity.AvisActivity" android:label="Avis"/>
+        <activity android:name="org.breizhjug.breizhlib.activity.ConfigurationActivity" android:label="Paramètres"/>
+        <activity android:name="org.breizhjug.breizhlib.activity.AvisActivity" android:label="Avis"/>
+        <activity android:name="org.breizhjug.breizhlib.activity.CommentaireActivity" android:label="Commentaires"/>
     </application>
 
 

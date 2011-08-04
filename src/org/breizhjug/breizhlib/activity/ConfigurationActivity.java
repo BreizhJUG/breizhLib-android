@@ -23,9 +23,6 @@ public class ConfigurationActivity extends Activity {
 
         SharedPreferences prefs = breizhLib.getSharedPreferences(this);
 
-        checkImg = (CheckBox) findViewById(R.id.checkImg);
-        checkImg.setChecked(prefs.getBoolean(BreizhLib.LOAD_IMG, false));
-
         checkGrid = (CheckBox) findViewById(R.id.checkGrid);
         checkGrid.setChecked(prefs.getBoolean(BreizhLib.GRID, false));
 
@@ -46,7 +43,6 @@ public class ConfigurationActivity extends Activity {
 
     public void onSave() {
         SharedPreferences.Editor editor = breizhLib.getSharedPreferences(this).edit();
-        editor.putBoolean(BreizhLib.LOAD_IMG, checkImg.isChecked());
         editor.putBoolean(BreizhLib.GRID, checkGrid.isChecked());
         editor.commit();
 

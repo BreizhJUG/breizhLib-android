@@ -27,7 +27,7 @@ public class BreizhLib {
 
     private GoogleAuthentification gAuth;
 
-    public static final String SERVER_URL = "http://breizh-lib.appspot.com/";
+    public static final String SERVER_URL = "http://0-1-2.breizh-lib.appspot.com/";
 
     /**
      * clés pour shared preferences.
@@ -39,7 +39,6 @@ public class BreizhLib {
     public static final String USER_ADMIN = "userAdmin";
     public static final String USER_NOM = "user_nom";
     public static final String USER_PRENOM = "user_prenom";
-    public static final String LOAD_IMG = "img_loading";
     public static final String GRID = "ouvrages_grid";
 
 

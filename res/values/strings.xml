@@ -24,7 +24,7 @@
     <string name="ajouterBtn">Ajouter</string>
 
     <!-- commentaire-->
-    <string name="commentaireMsgTitle">Commentaire de l\'ouvrage </string>
+    <string name="commentaireMsgTitle">Commentaire de l\'ouvrage  </string>
     <string name="commentaireSave">Commentaire enregistré</string>
 
     <!-- credit -->

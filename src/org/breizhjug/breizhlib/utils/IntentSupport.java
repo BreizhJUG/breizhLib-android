@@ -19,14 +19,10 @@ public class IntentSupport {
      * Checks whether there are applications installed which are able to handle the given
      * action/data.
      *
-     * @param context
-     *            the current context
-     * @param action
-     *            the action to check
-     * @param uri
-     *            that data URI to check (may be null)
-     * @param mimeType
-     *            the MIME type of the content (may be null)
+     * @param context  the current context
+     * @param action   the action to check
+     * @param uri      that data URI to check (may be null)
+     * @param mimeType the MIME type of the content (may be null)
      * @return true if there are apps which will respond to this action/data
      */
     public static boolean isIntentAvailable(Context context, String action, Uri uri, String mimeType) {
@@ -43,12 +39,9 @@ public class IntentSupport {
      * Checks whether there are applications installed which are able to handle the given
      * action/type.
      *
-     * @param context
-     *            the current context
-     * @param action
-     *            the action to check
-     * @param mimeType
-     *            the MIME type of the content (may be null)
+     * @param context  the current context
+     * @param action   the action to check
+     * @param mimeType the MIME type of the content (may be null)
      * @return true if there are apps which will respond to this action/type
      */
     public static boolean isIntentAvailable(Context context, String action, String mimeType) {
@@ -64,10 +57,8 @@ public class IntentSupport {
     /**
      * Checks whether there are applications installed which are able to handle the given intent.
      *
-     * @param context
-     *            the current context
-     * @param intent
-     *            the intent to check
+     * @param context the current context
+     * @param intent  the intent to check
      * @return true if there are apps which will respond to this intent
      */
     public static boolean isIntentAvailable(Context context, Intent intent) {

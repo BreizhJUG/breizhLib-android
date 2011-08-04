@@ -35,7 +35,7 @@ public class OuvragesActivity extends AbstractActivity {
     public void init(Intent intent) {
         SharedPreferences prefs = breizhLib.getSharedPreferences(this);
         int resource = R.layout.ouvrage;
-        if (prefs.getBoolean(BreizhLib.GRID, true)) {
+        if (prefs.getBoolean(BreizhLib.GRID, false)) {
             setContentView(R.layout.main);
             ouvragesListView = (GridView) findViewById(R.id.grilleBoutons);
             ((GridView) ouvragesListView).setNumColumns(4);
@@ -54,7 +54,7 @@ public class OuvragesActivity extends AbstractActivity {
 
         ouvragesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-                 onClick(position);
+                onClick(position);
             }
         });
 

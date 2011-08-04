@@ -38,18 +38,7 @@ public class UtilisateurService extends Service<Utilisateur> {
             try {
                 JSONArray booksArray = new JSONArray(result);
                 JSONObject item = booksArray.getJSONObject(0);
-                Utilisateur user = new Utilisateur();
-                user.email = (String) item.get("email");
-                user.nom = (String) item.get("nom");
-                user.prenom = (String) item.get("prenom");
-                user.username = (String) item.get("username");
-                user.commentairesLabel = (String) item.get("commentaires");
-                user.ouvragesEncoursLabel = (String) item.get("ouvragesEncours");
-                user.ouvragesLlabel = (String) item.get("ouvrages");
-                user.reservationsLabel = (String) item.get("reservations");
-                user.isAdmin = ((String) item.get("isAdmin")).equals("true");
-
-                return user;
+                return converter.convertUtilisateur(item);
             } catch (JSONException e) {
                 Log.e("JSON", "There was an error parsing the JSON", e);
             }

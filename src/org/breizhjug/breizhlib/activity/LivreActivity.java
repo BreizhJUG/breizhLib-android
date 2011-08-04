@@ -69,8 +69,9 @@ public class LivreActivity extends AbstractActivity {
         if (etat.equals("RESERVE")) {
             button.setText(getString(R.string.reserveBtn));
         } else if (etat.equals("DISP0NIBLE")) {
-            button.setEnabled(true);
             button.setText(getString(R.string.reserverBtn));
+            if(breizhLib.getSharedPreferences(this).getString(BreizhLib.ACCOUNT_NAME, null) != null){
+            button.setEnabled(true);
             if (breizhLib.getSharedPreferences(this).getString(breizhLib.USER, null) != null) {
                 button.setOnClickListener(new Button.OnClickListener() {
 
@@ -80,6 +81,7 @@ public class LivreActivity extends AbstractActivity {
                         LivreActivity.this.startActivity(intent);
                     }
                 });
+            }
             }
         } else {
             button.setText(getString(R.string.indispoBtn));

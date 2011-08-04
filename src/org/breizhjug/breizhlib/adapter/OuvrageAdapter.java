@@ -47,10 +47,8 @@ public class OuvrageAdapter extends ArrayAdapter<Livre> {
             text.setText(livre.editeur);
         }
 
-        if (prefs.getBoolean(BreizhLib.LOAD_IMG, false) || prefs.getBoolean(BreizhLib.GRID, false)) {
-            ImageView icone = (ImageView) view.findViewById(R.id.img);
-            BreizhLib.getInstance().getImageDownloader().download(livre.imgUrl, icone);
-        }
+        ImageView icone = (ImageView) view.findViewById(R.id.img);
+        BreizhLib.getInstance().getImageDownloader().download(livre.imgUrl, icone);
 
         return view;
     }

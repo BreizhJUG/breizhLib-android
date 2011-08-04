@@ -31,12 +31,14 @@ public abstract class Service<T> {
     private static HttpClient httpclient = getHttpClient();
     private List<T> cache = null;
 
+    protected static JsonConverter converter = new JsonConverter();
+
     public abstract List<T> load(String authCookie, String urlString);
 
     public abstract String url();
 
     public List<T> load(String authCookie) {
-        if (cache == null) {
+        if (cache == null || cache.isEmpty()) {
             cache = load(authCookie, url());
         }
         return cache != null ? new ArrayList<T>(cache) : cache;
@@ -107,7 +109,7 @@ public abstract class Service<T> {
         public String key;
         public Object value;
 
-        public Param(String key,Object value){
+        public Param(String key, Object value) {
             this.key = key;
             this.value = value;
         }

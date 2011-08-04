@@ -35,7 +35,7 @@ public abstract class AbstractActivity extends BaseActivity {
         intentFilter.addAction(ACTION_LOGOUT);
         registerReceiver(receiver, intentFilter);
 
-        final ProgressDialog waitDialog = ProgressDialog.show(this, getString(R.string.recherche),  getString(R.string.chargement), true, true);
+        final ProgressDialog waitDialog = ProgressDialog.show(this, getString(R.string.recherche), getString(R.string.chargement), true, true);
 
         final AsyncTask<Void, Void, Boolean> initTask = new AsyncTask<Void, Void, Boolean>() {
 

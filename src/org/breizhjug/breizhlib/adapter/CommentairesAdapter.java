@@ -5,7 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.model.Commentaire;
 
@@ -27,7 +29,7 @@ public class CommentairesAdapter extends ArrayAdapter<Commentaire> {
 
         if (view == null) {
             LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = vi.inflate(R.layout.commentaire, null);
+            view = vi.inflate(R.layout.commentaire_item, null);
         }
 
         TextView text = (TextView) view.findViewById(R.id.titre);
@@ -38,6 +40,9 @@ public class CommentairesAdapter extends ArrayAdapter<Commentaire> {
 
         text = (TextView) view.findViewById(R.id.description);
         text.setText(commentaire.commentaire);
+
+         ImageView icone = (ImageView) view.findViewById(R.id.img);
+         BreizhLib.getInstance().getImageDownloader().download(commentaire.livre.imgUrl, icone);
 
         return view;
     }

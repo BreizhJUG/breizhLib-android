@@ -6,11 +6,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.AbstractActivity;
-import org.breizhjug.breizhlib.activity.Menu;
 
 public class AppInfo extends AbstractActivity {
 

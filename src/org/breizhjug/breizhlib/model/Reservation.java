@@ -13,7 +13,7 @@ public class Reservation implements Serializable {
     public Reservation(String nom, String prenom, String imgUrl, String iSBN, String titre) {
         this.nom = nom;
         this.prenom = prenom;
-        this.livre = new Livre(titre, iSBN,"", imgUrl);
+        this.livre = new Livre(titre, iSBN, "", imgUrl);
         this.livre.etat = "RESERVE";
     }
 
@@ -21,7 +21,7 @@ public class Reservation implements Serializable {
         this.nom = nom;
         this.prenom = prenom;
         this.livre = livre;
-        if(livre !=null){
+        if (livre != null) {
             this.livre.etat = "RESERVE";
         }
     }
