@@ -11,12 +11,12 @@ public class Commentaire implements Serializable {
 
     public int note;
 
-    public String livre;
+    public Livre livre;
 
-    public Commentaire(String nom, String commentaire, int note, String livre) {
+    public Commentaire(String nom, String commentaire, int note, String titre) {
         this.nom = nom;
         this.commentaire = commentaire;
         this.note = note;
-        this.livre = livre;
+        this.livre = new Livre(titre,null,null,null);
     }
 }

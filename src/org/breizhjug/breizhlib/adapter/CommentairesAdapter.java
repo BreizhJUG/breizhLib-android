@@ -31,7 +31,7 @@ public class CommentairesAdapter extends ArrayAdapter<Commentaire> {
         }
 
         TextView text = (TextView) view.findViewById(R.id.titre);
-        text.setText(commentaire.livre);
+        text.setText(commentaire.livre.titre);
 
         text = (TextView) view.findViewById(R.id.user);
         text.setText(commentaire.nom);

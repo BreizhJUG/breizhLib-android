@@ -42,7 +42,7 @@ public class CommentairesActivity extends AbstractActivity {
     public void onSend(int position) {
         Commentaire commentaire = (Commentaire) commentairesListView.getItemAtPosition(position);
         AlertDialog.Builder adb = new AlertDialog.Builder(CommentairesActivity.this);
-        adb.setTitle(getString(R.string.commentaireMsgTitle) + commentaire.livre);
+        adb.setTitle(getString(R.string.commentaireMsgTitle) + commentaire.livre.titre);
         adb.setMessage(commentaire.commentaire);
         adb.setPositiveButton(getString(R.string.ok), null);
         adb.show();

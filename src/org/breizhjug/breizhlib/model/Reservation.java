@@ -16,4 +16,13 @@ public class Reservation implements Serializable {
         this.livre = new Livre(titre, iSBN,"", imgUrl);
         this.livre.etat = "RESERVE";
     }
+
+    public Reservation(String nom, String prenom, Livre livre) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.livre = livre;
+        if(livre !=null){
+            this.livre.etat = "RESERVE";
+        }
+    }
 }
