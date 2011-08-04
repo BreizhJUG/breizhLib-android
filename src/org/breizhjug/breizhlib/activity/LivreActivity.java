@@ -3,6 +3,7 @@ package org.breizhjug.breizhlib.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -92,14 +93,29 @@ public class LivreActivity extends AbstractActivity {
             button.setOnClickListener(new Button.OnClickListener() {
 
                 public void onClick(View view) {
-                    SharedPreferences prefs = breizhLib.getSharedPreferences(LivreActivity.this);
-                    String authCookie = prefs.getString(breizhLib.AUTH_COOKIE, null);
-                    //TODO asynchrone call
-                    Livre livre = breizhLib.getOuvrageService().add(authCookie, isbn);
-                    Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-                    Toast.makeText(getApplicationContext(), getString(R.string.ajoutOK), Toast.LENGTH_SHORT).show();
-                    Populator.populate(intent, livre);
-                    LivreActivity.this.startActivity(intent);
+                    final AsyncTask<Void, Void, Livre> initTask = new AsyncTask<Void, Void, Livre>() {
+
+                        @Override
+                        protected Livre doInBackground(Void... params) {
+                            SharedPreferences prefs = breizhLib.getSharedPreferences(LivreActivity.this);
+                            String authCookie = prefs.getString(breizhLib.AUTH_COOKIE, null);
+                            Livre livre = breizhLib.getOuvrageService().add(authCookie, isbn);
+                            return livre;
+                        }
+
+                        @Override
+                        protected void onPostExecute(Livre result) {
+                            if (result == null) {
+                                showError("Erreur lors de l'ajout", true);
+                            } else {
+                                Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
+                                Toast.makeText(getApplicationContext(), getString(R.string.ajoutOK), Toast.LENGTH_SHORT).show();
+                                Populator.populate(intent, result);
+                                LivreActivity.this.startActivity(intent);
+                            }
+                        }
+                    };
+                    initTask.execute();
                 }
             });
         } else {

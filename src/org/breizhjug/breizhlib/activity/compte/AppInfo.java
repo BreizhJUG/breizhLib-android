@@ -4,10 +4,13 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.AbstractActivity;
+import org.breizhjug.breizhlib.activity.Menu;
 
 public class AppInfo extends AbstractActivity {
 
@@ -31,14 +34,29 @@ public class AppInfo extends AbstractActivity {
 
         AccountManager mgr = AccountManager.get(getApplicationContext());
         Account[] accts = mgr.getAccountsByType("com.google");
-        for (Account acct : accts) {
+        for (final Account acct : accts) {
             if (acct.name.equals(accountName)) {
-                email = accountName;
-                String auth_token = breizhLib.getGAuth().getToken(this, acct);
-                String authCookie = breizhLib.getGAuth().getAuthCookie(auth_token);
-                prefs.edit().putString(breizhLib.AUTH_COOKIE, authCookie).commit();
-                Intent intent = new Intent(AppInfo.this, ProfilActivity.class);
-                startActivity(intent);
+                final AsyncTask<Void, Void, String> initTask = new AsyncTask<Void, Void, String>() {
+
+                    @Override
+                    protected String doInBackground(Void... params) {
+                        String auth_token = breizhLib.getGAuth().getToken(AppInfo.this, acct);
+                        String authCookie = breizhLib.getGAuth().getAuthCookie(auth_token);
+                        return authCookie;
+                    }
+
+                    @Override
+                    protected void onPostExecute(String result) {
+                        if (result == null) {
+                            showError("Error", true);
+                        } else {
+                            prefs.edit().putString(breizhLib.AUTH_COOKIE, result).commit();
+                            Intent intent = new Intent(AppInfo.this, ProfilActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+                };
+                initTask.execute();
             }
         }
     }

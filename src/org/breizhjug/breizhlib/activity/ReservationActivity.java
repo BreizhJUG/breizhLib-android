@@ -55,10 +55,7 @@ public class ReservationActivity extends AbstractActivity {
             @Override
             protected void onPostExecute(Boolean result) {
                 if (result == null || !result) {
-                    // TODO afficher un message a l'utilisateur
-                    Intent intent = new Intent(getApplicationContext(), Menu.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
+                    showError("Erreur lors de la réservation", true);
                 } else {
                     Intent intent = new Intent(getApplicationContext(), Menu.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

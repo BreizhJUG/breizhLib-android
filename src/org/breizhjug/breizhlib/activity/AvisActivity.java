@@ -2,6 +2,7 @@ package org.breizhjug.breizhlib.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
@@ -40,12 +41,28 @@ public class AvisActivity extends AbstractActivity {
         button.setOnClickListener(new Button.OnClickListener() {
 
             public void onClick(View view) {
-                //TODO Async call
-                String authCookie = prefs.getString(breizhLib.AUTH_COOKIE, null);
-                boolean result = breizhLib.getCommentaireService().comment(authCookie, isbn, nomEdit.getText().toString(), avisEdit.getText().toString(), Integer.valueOf("" + note.getSelectedItem()));
-                if (result) {
-                    Toast.makeText(AvisActivity.this, getString(R.string.commentaireSave), Toast.LENGTH_SHORT);
-                }
+                final AsyncTask<Void, Void, Boolean> initTask = new AsyncTask<Void, Void, Boolean>() {
+
+                    @Override
+                    protected Boolean doInBackground(Void... params) {
+                        String authCookie = prefs.getString(breizhLib.AUTH_COOKIE, null);
+                        boolean result = breizhLib.getCommentaireService().comment(authCookie, isbn, nomEdit.getText().toString(), avisEdit.getText().toString(), Integer.valueOf("" + note.getSelectedItem()));
+                        return result;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Boolean result) {
+                        if (result == null || !result) {
+                            showError("Erreur lors de l'envoi du commentaire", true);
+                        } else {
+                            Toast.makeText(AvisActivity.this, getString(R.string.commentaireSave), Toast.LENGTH_SHORT);
+                            Intent intent = new Intent(getApplicationContext(), Menu.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        }
+                    }
+                };
+                initTask.execute();
             }
         });
     }
