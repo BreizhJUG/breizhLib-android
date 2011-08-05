@@ -51,9 +51,6 @@ public class CommentaireService extends Service<Commentaire> {
                 Log.e("JSON", "There was an error parsing the JSON", e);
             }
         }
-
-        Commentaire commentaire = new Commentaire("No commentaire found", "", 0, "");
-        commentaires.add(commentaire);
         return commentaires;
     }
 

@@ -2,6 +2,7 @@ package org.breizhjug.breizhlib.remote;
 
 import org.breizhjug.breizhlib.model.Commentaire;
 import org.breizhjug.breizhlib.model.Livre;
+import org.breizhjug.breizhlib.model.Reservation;
 import org.breizhjug.breizhlib.model.Utilisateur;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,6 +27,15 @@ public class JsonConverter {
             commentaire = new Commentaire((String) item.get("nom"), (String) item.get("avis"), Integer.valueOf((String) item.get("note")).intValue(), livre);
         }
         return commentaire;
+    }
+
+    public Reservation convertReservation(JSONObject item) throws JSONException {
+        Reservation reservation = null;
+        if (item != null) {
+            Livre livre = convertLivre(item.getJSONObject("livre"));
+            reservation = new Reservation((String) item.get("nom"), (String) item.get("prenom"), livre);
+        }
+        return reservation;
     }
 
     public Utilisateur convertUtilisateur(JSONObject item) throws JSONException {

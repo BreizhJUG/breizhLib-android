@@ -45,7 +45,7 @@ public class ReservationService extends Service<Reservation> {
                 Reservation livre = null;
                 for (int a = 0; a < booksArray.length(); a++) {
                     JSONObject item = booksArray.getJSONObject(a);
-                    livre = new Reservation((String) item.get("nom"), (String) item.get("prenom"), (String) item.get("image"), (String) item.get("isbn"), (String) item.get("livre"));
+                    livre = converter.convertReservation(item);
                     BOOKS.add(livre);
                 }
                 return BOOKS;
@@ -53,9 +53,6 @@ public class ReservationService extends Service<Reservation> {
                 Log.e("JSON", "There was an error parsing the JSON", e);
             }
         }
-
-        Reservation livre = new Reservation("", "", String.valueOf(R.drawable.book), "", "No reservation found");
-        BOOKS.add(livre);
         return BOOKS;
     }
 
