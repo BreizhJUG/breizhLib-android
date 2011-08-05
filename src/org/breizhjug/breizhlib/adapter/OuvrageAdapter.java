@@ -48,7 +48,7 @@ public class OuvrageAdapter extends ArrayAdapter<Livre> {
         }
 
         ImageView icone = (ImageView) view.findViewById(R.id.img);
-        BreizhLib.getInstance().getImageDownloader().download(livre.imgUrl, icone);
+        BreizhLib.getImageDownloader().download(livre.imgUrl, icone);
 
         return view;
     }

@@ -16,12 +16,10 @@ public class BaseActivity extends Activity {
     public static final String ACTION_LOGOUT = "org.breizhjug.breizhlib.LOGOUT";
 
     protected BroadcastReceiver receiver;
-    protected BreizhLib breizhLib;
 
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        breizhLib = BreizhLib.getInstance();
 
 
         receiver = new BroadcastReceiver() {
@@ -61,8 +59,8 @@ public class BaseActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
-        SharedPreferences prefs = breizhLib.getSharedPreferences(this);
-        String authCookie = prefs.getString(breizhLib.AUTH_COOKIE, null);
+        SharedPreferences prefs = BreizhLib.getSharedPreferences(this);
+        String authCookie = prefs.getString(BreizhLib.AUTH_COOKIE, null);
         if (authCookie == null) {
             MenuItem item = (MenuItem) menu.findItem(R.id.connexion);
             String message = getString(R.string.connexion);
@@ -85,8 +83,8 @@ public class BaseActivity extends Activity {
                 startActivity(intent);
                 return true;
             case R.id.connexion:
-                SharedPreferences prefs = breizhLib.getSharedPreferences(this);
-                String authCookie = prefs.getString(breizhLib.AUTH_COOKIE, null);
+                SharedPreferences prefs = BreizhLib.getSharedPreferences(this);
+                String authCookie = prefs.getString(BreizhLib.AUTH_COOKIE, null);
                 if (authCookie == null) {
                     Intent pIntent = new Intent(getApplicationContext(), CompteList.class);
                     pIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -119,7 +117,7 @@ public class BaseActivity extends Activity {
     }
 
     private void onLogout() {
-        SharedPreferences.Editor editor = breizhLib.getSharedPreferences(this).edit();
+        SharedPreferences.Editor editor = BreizhLib.getSharedPreferences(this).edit();
         editor.putString(BreizhLib.AUTH_COOKIE, null);
         editor.putString(BreizhLib.ACCOUNT_NAME, null);
         editor.putString(BreizhLib.USER, null);

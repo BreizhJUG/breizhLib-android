@@ -1,12 +1,11 @@
 package org.breizhjug.breizhlib.activity;
 
 import android.app.ProgressDialog;
-import android.content.*;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.R;
 
 
@@ -30,14 +29,6 @@ public abstract class AbstractActivity extends BaseActivity {
 
             @Override
             protected Boolean doInBackground(Void... params) {
-                try {
-                    if (breizhLib == null) {
-                        breizhLib = BreizhLib.getInstance();
-                    }
-                } catch (Exception ex) {
-                    Log.d("ASYNC", ex.toString());
-                    return false;
-                }
                 return true;
             }
 

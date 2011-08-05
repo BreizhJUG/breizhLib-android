@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.model.Commentaire;
 
@@ -31,7 +32,7 @@ public class CommentaireActivity extends AbstractActivity {
         text.setText(commentaire.commentaire);
 
         ImageView icone = (ImageView) findViewById(R.id.img);
-        breizhLib.getImageDownloader().download(commentaire.livre.imgUrl, icone);
+        BreizhLib.getImageDownloader().download(commentaire.livre.imgUrl, icone);
 
         LinearLayout nav = (LinearLayout) findViewById(R.id.nav);
         Button previous = (Button) nav.getChildAt(0);

@@ -19,7 +19,7 @@ public class LivreActivity extends AbstractActivity {
     @Override
     public void init(Intent intent) {
 
-        SharedPreferences prefs = breizhLib.getSharedPreferences(this);
+        SharedPreferences prefs = BreizhLib.getSharedPreferences(this);
         final Livre livre = (Livre) getIntent().getSerializableExtra("livre");
         final ArrayList<Livre> ouvrages = (ArrayList<Livre>) getIntent().getSerializableExtra("livres");
         final int index = (int) getIntent().getIntExtra("index", 0);
@@ -31,13 +31,14 @@ public class LivreActivity extends AbstractActivity {
         editeurView.setText(livre.editeur);
 
         ImageView icone = (ImageView) findViewById(R.id.img);
-        breizhLib.getImageDownloader().download(livre.imgUrl, icone);
+        BreizhLib.getImageDownloader().download(livre.imgUrl, icone);
+
 
 
         LinearLayout nav = (LinearLayout) findViewById(R.id.nav);
         Button previous = (Button) nav.getChildAt(0);
         Button next = (Button) nav.getChildAt(1);
-
+          if(ouvrages != null){
         if (index > 0) {
             previous.setOnClickListener(new Button.OnClickListener() {
 
@@ -69,7 +70,9 @@ public class LivreActivity extends AbstractActivity {
         } else {
             next.setEnabled(false);
         }
-
+          }else {
+            nav.setVisibility(View.INVISIBLE);
+          }
 
         Button avis = (Button) findViewById(R.id.addComment);
 
@@ -85,13 +88,13 @@ public class LivreActivity extends AbstractActivity {
             });
 
         } else {
-            avis.setEnabled(false);
+            avis.setVisibility(View.INVISIBLE);
         }
 
         Button button = (Button) findViewById(R.id.add);
         if (livre.add) {
             initAjout(button, livre.iSBN);
-            avis.setEnabled(false);
+            avis.setVisibility(View.INVISIBLE);
         } else {
             initReservation(button, livre.etat, livre.iSBN);
         }
@@ -108,9 +111,9 @@ public class LivreActivity extends AbstractActivity {
             button.setText(getString(R.string.reserveBtn));
         } else if (etat.equals("DISP0NIBLE")) {
             button.setText(getString(R.string.reserverBtn));
-            if (breizhLib.getSharedPreferences(this).getString(BreizhLib.ACCOUNT_NAME, null) != null) {
+            if (BreizhLib.getSharedPreferences(this).getString(BreizhLib.ACCOUNT_NAME, null) != null) {
                 button.setEnabled(true);
-                if (breizhLib.getSharedPreferences(this).getString(breizhLib.USER, null) != null) {
+                if (BreizhLib.getSharedPreferences(this).getString(BreizhLib.USER, null) != null) {
                     button.setOnClickListener(new Button.OnClickListener() {
 
                         public void onClick(View view) {
@@ -128,7 +131,7 @@ public class LivreActivity extends AbstractActivity {
     }
 
     private void initAjout(Button button, final String isbn) {
-        if (breizhLib.getSharedPreferences(this).getBoolean(breizhLib.USER_ADMIN, false)) {
+        if (BreizhLib.getSharedPreferences(this).getBoolean(BreizhLib.USER_ADMIN, false)) {
             button.setText(getString(R.string.ajouterBtn));
             button.setOnClickListener(new Button.OnClickListener() {
 
@@ -137,9 +140,9 @@ public class LivreActivity extends AbstractActivity {
 
                         @Override
                         protected Livre doInBackground(Void... params) {
-                            SharedPreferences prefs = breizhLib.getSharedPreferences(LivreActivity.this);
-                            String authCookie = prefs.getString(breizhLib.AUTH_COOKIE, null);
-                            Livre livre = breizhLib.getOuvrageService().add(authCookie, isbn);
+                            SharedPreferences prefs = BreizhLib.getSharedPreferences(LivreActivity.this);
+                            String authCookie = prefs.getString(BreizhLib.AUTH_COOKIE, null);
+                            Livre livre = BreizhLib.getOuvrageService().add(authCookie, isbn);
                             return livre;
                         }
 

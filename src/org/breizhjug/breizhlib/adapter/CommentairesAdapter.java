@@ -42,7 +42,7 @@ public class CommentairesAdapter extends ArrayAdapter<Commentaire> {
         text.setText(commentaire.commentaire);
 
         ImageView icone = (ImageView) view.findViewById(R.id.img);
-        BreizhLib.getInstance().getImageDownloader().download(commentaire.livre.imgUrl, icone);
+        BreizhLib.getImageDownloader().download(commentaire.livre.imgUrl, icone);
 
         return view;
     }

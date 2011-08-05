@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.compte.CompteList;
 
@@ -36,7 +37,7 @@ public class Menu extends AbstractActivity {
     }
 
     protected void loadMenu() {
-        SharedPreferences prefs = breizhLib.getSharedPreferences(this);
+        SharedPreferences prefs = BreizhLib.getSharedPreferences(this);
 
         GridView grid = (GridView) findViewById(R.id.grilleBoutons);
         List<Bouton> boutons = new ArrayList<Bouton>();
@@ -53,7 +54,7 @@ public class Menu extends AbstractActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         boutons.add(new Bouton(intent, R.string.commentaires, R.drawable.commentaire));
 
-        if (prefs.getBoolean(breizhLib.USER_ADMIN, false)) {
+        if (prefs.getBoolean(BreizhLib.USER_ADMIN, false)) {
             intent = new Intent(getApplicationContext(), ReservationsActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             boutons.add(new Bouton(intent, R.string.reservations, R.drawable.book));

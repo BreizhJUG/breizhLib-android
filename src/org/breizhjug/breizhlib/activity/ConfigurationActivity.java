@@ -14,14 +14,12 @@ public class ConfigurationActivity extends Activity {
 
     private CheckBox checkGrid;
     private CheckBox checkImg;
-    private BreizhLib breizhLib;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.configuration);
-        breizhLib = BreizhLib.getInstance();
 
-        SharedPreferences prefs = breizhLib.getSharedPreferences(this);
+        SharedPreferences prefs = BreizhLib.getSharedPreferences(this);
 
         checkGrid = (CheckBox) findViewById(R.id.checkGrid);
         checkGrid.setChecked(prefs.getBoolean(BreizhLib.GRID, false));
@@ -42,7 +40,7 @@ public class ConfigurationActivity extends Activity {
     }
 
     public void onSave() {
-        SharedPreferences.Editor editor = breizhLib.getSharedPreferences(this).edit();
+        SharedPreferences.Editor editor = BreizhLib.getSharedPreferences(this).edit();
         editor.putBoolean(BreizhLib.GRID, checkGrid.isChecked());
         editor.commit();
 
@@ -51,7 +49,7 @@ public class ConfigurationActivity extends Activity {
     }
 
     public void onClearCache() {
-        breizhLib.clearCache();
+        BreizhLib.clearCache();
         setResult(RESULT_OK);
         finish();
     }

@@ -35,7 +35,7 @@ public class OuvragesActivity extends AbstractActivity {
 
     @Override
     public void init(Intent intent) {
-        SharedPreferences prefs = breizhLib.getSharedPreferences(this);
+        SharedPreferences prefs = BreizhLib.getSharedPreferences(this);
         int resource = R.layout.ouvrage;
         if (prefs.getBoolean(BreizhLib.GRID, false)) {
             setContentView(R.layout.main);
@@ -48,7 +48,7 @@ public class OuvragesActivity extends AbstractActivity {
         }
 
         ouvrages = new ArrayList<Livre>();
-        ouvrages.addAll(breizhLib.getOuvrageService().load(prefs.getString(breizhLib.AUTH_COOKIE, null)));
+        ouvrages.addAll(BreizhLib.getOuvrageService().load(prefs.getString(BreizhLib.AUTH_COOKIE, null)));
 
         OuvrageAdapter mSchedule = new OuvrageAdapter(this.getBaseContext(), ouvrages, resource, prefs);
 

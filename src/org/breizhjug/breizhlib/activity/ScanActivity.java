@@ -6,11 +6,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.remote.OuvrageService;
 import org.breizhjug.breizhlib.utils.IntentIntegrator;
-import org.breizhjug.breizhlib.utils.IntentSupport;
 
 
 public class ScanActivity extends AbstractActivity {
@@ -21,14 +21,7 @@ public class ScanActivity extends AbstractActivity {
 
     @Override
     public void init(Intent intent) {
-        if (IntentSupport.isIntentAvailable(this, "com.google.zxing.client.android.SCAN", null)) {
-            Intent pIntent = new Intent("com.google.zxing.client.android.SCAN");
-            pIntent.setPackage("com.google.zxing.client.android");
-            pIntent.putExtra("SCAN_MODE", "PRODUCT_MODE");
-            startActivityForResult(pIntent, 0);
-        } else {
             IntentIntegrator.initiateScan(this);
-        }
     }
 
     public void onCreate(Bundle savedInstanceState) {
@@ -39,9 +32,9 @@ public class ScanActivity extends AbstractActivity {
 
 
         public void onClick(DialogInterface dialogInterface, int i) {
-            OuvrageService service = breizhLib.getOuvrageService();
-            SharedPreferences prefs = breizhLib.getSharedPreferences(ScanActivity.this);
-            Livre livre = service.find(prefs.getString(breizhLib.AUTH_COOKIE, null), isbn);
+            OuvrageService service = BreizhLib.getOuvrageService();
+            SharedPreferences prefs = BreizhLib.getSharedPreferences(ScanActivity.this);
+            Livre livre = service.find(prefs.getString(BreizhLib.AUTH_COOKIE, null), isbn);
 
             if (livre != null) {
                 Log.d(TAG, livre.titre);

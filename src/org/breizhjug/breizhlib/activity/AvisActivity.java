@@ -16,7 +16,7 @@ public class AvisActivity extends AbstractActivity {
     public void init(Intent intent) {
         final String isbn = intent.getStringExtra("isbn");
 
-        final SharedPreferences prefs = breizhLib.getSharedPreferences(this);
+        final SharedPreferences prefs = BreizhLib.getSharedPreferences(this);
 
 
         final Spinner note = (Spinner) findViewById(R.id.spinnerNote);
@@ -45,8 +45,8 @@ public class AvisActivity extends AbstractActivity {
 
                     @Override
                     protected Boolean doInBackground(Void... params) {
-                        String authCookie = prefs.getString(breizhLib.AUTH_COOKIE, null);
-                        boolean result = breizhLib.getCommentaireService().comment(authCookie, isbn, nomEdit.getText().toString(), avisEdit.getText().toString(), Integer.valueOf("" + note.getSelectedItem()));
+                        String authCookie = prefs.getString(BreizhLib.AUTH_COOKIE, null);
+                        boolean result = BreizhLib.getCommentaireService().comment(authCookie, isbn, nomEdit.getText().toString(), avisEdit.getText().toString(), Integer.valueOf("" + note.getSelectedItem()));
                         return result;
                     }
 

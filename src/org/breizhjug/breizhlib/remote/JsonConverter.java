@@ -13,9 +13,10 @@ public class JsonConverter {
     public Livre convertLivre(JSONObject item) throws JSONException {
         Livre livre = null;
         if (item != null) {
-            livre = new Livre((String) item.get("titre"), (String) item.get("isbn"), (String) item.get("editeur"), (String) item.get("image"));
-            livre.add = ((String) item.get("aAjouter")).equals("true");
-            livre.etat = (String) item.get("etat");
+            livre = new Livre(item.getString("titre"), item.getString("isbn"), item.getString("editeur"),item.getString("image"));
+            livre.add = item.getBoolean("aAjouter");
+            livre.etat = item.getString("etat");
+            livre.note = item.getInt("note");
         }
         return livre;
     }
@@ -24,7 +25,7 @@ public class JsonConverter {
         Commentaire commentaire = null;
         if (item != null) {
             Livre livre = convertLivre(item.getJSONObject("livre"));
-            commentaire = new Commentaire((String) item.get("nom"), (String) item.get("avis"), Integer.valueOf((String) item.get("note")).intValue(), livre);
+            commentaire = new Commentaire( item.getString("nom"),  item.getString("avis"), item.getInt("note"), livre);
         }
         return commentaire;
     }
@@ -33,7 +34,7 @@ public class JsonConverter {
         Reservation reservation = null;
         if (item != null) {
             Livre livre = convertLivre(item.getJSONObject("livre"));
-            reservation = new Reservation((String) item.get("nom"), (String) item.get("prenom"), livre);
+            reservation = new Reservation( item.getString("nom"), item.getString("prenom"), livre);
         }
         return reservation;
     }
@@ -42,15 +43,15 @@ public class JsonConverter {
         Utilisateur user = null;
         if (item != null) {
             user = new Utilisateur();
-            user.email = (String) item.get("email");
-            user.nom = (String) item.get("nom");
-            user.prenom = (String) item.get("prenom");
-            user.username = (String) item.get("username");
-            user.commentairesLabel = (String) item.get("commentaires");
-            user.ouvragesEncoursLabel = (String) item.get("ouvragesEncours");
-            user.ouvragesLlabel = (String) item.get("ouvrages");
-            user.reservationsLabel = (String) item.get("reservations");
-            user.isAdmin = ((String) item.get("isAdmin")).equals("true");
+            user.email =  item.getString("email");
+            user.nom = item.getString("nom");
+            user.prenom = item.getString("prenom");
+            user.username = item.getString("username");
+            user.commentairesLabel = item.getString("commentaires");
+            user.ouvragesEncoursLabel = item.getString("ouvragesEncours");
+            user.ouvragesLlabel =  item.getString("ouvrages");
+            user.reservationsLabel =  item.getString("reservations");
+            user.isAdmin = item.getBoolean("isAdmin");
         }
         return user;
     }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.AbstractActivity;
 import org.breizhjug.breizhlib.adapter.AccountsAdapter;
@@ -22,8 +23,8 @@ public class CompteList extends AbstractActivity {
     @Override
     public void init(Intent intent) {
 
-        prefs = breizhLib.getSharedPreferences(this);
-        authcookie = prefs.getString(breizhLib.AUTH_COOKIE, null);
+        prefs = BreizhLib.getSharedPreferences(this);
+        authcookie = prefs.getString(BreizhLib.AUTH_COOKIE, null);
         if (authcookie == null) {
             setContentView(R.layout.items);
         }
@@ -31,7 +32,7 @@ public class CompteList extends AbstractActivity {
         if (authcookie == null) {
             listView = (ListView) findViewById(R.id.items);
 
-            List<String> accounts = breizhLib.getGAuth().getGoogleAccounts(this);
+            List<String> accounts = BreizhLib.getGAuth().getGoogleAccounts(this);
 
             listView.setAdapter(new AccountsAdapter(this.getBaseContext(), accounts));
 
@@ -46,7 +47,7 @@ public class CompteList extends AbstractActivity {
             });
         } else {
             Intent pIntent = new Intent(this, ProfilActivity.class);
-            pIntent.putExtra("email", prefs.getString(breizhLib.ACCOUNT_NAME, null));
+            pIntent.putExtra("email", prefs.getString(BreizhLib.ACCOUNT_NAME, null));
             startActivity(pIntent);
         }
 

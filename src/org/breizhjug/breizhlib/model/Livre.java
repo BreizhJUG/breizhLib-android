@@ -6,6 +6,7 @@ public class Livre implements Serializable {
 
     public String titre;
     public String editeur;
+    public int note;
     public String imgUrl;
     public String iSBN;
     public boolean add;

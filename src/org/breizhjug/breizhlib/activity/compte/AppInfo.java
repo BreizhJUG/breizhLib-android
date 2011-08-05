@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.AbstractActivity;
 
@@ -24,10 +25,10 @@ public class AppInfo extends AbstractActivity {
 
     private void register(final String accountName) {
 
-        final SharedPreferences prefs = breizhLib.getSharedPreferences(this);
+        final SharedPreferences prefs = BreizhLib.getSharedPreferences(this);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(breizhLib.ACCOUNT_NAME, accountName);
-        editor.putString(breizhLib.AUTH_COOKIE, null);
+        editor.putString(BreizhLib.ACCOUNT_NAME, accountName);
+        editor.putString(BreizhLib.AUTH_COOKIE, null);
         editor.commit();
 
         AccountManager mgr = AccountManager.get(getApplicationContext());
@@ -38,8 +39,8 @@ public class AppInfo extends AbstractActivity {
 
                     @Override
                     protected String doInBackground(Void... params) {
-                        String auth_token = breizhLib.getGAuth().getToken(AppInfo.this, acct);
-                        String authCookie = breizhLib.getGAuth().getAuthCookie(auth_token);
+                        String auth_token = BreizhLib.getGAuth().getToken(AppInfo.this, acct);
+                        String authCookie = BreizhLib.getGAuth().getAuthCookie(auth_token);
                         return authCookie;
                     }
 
@@ -48,7 +49,7 @@ public class AppInfo extends AbstractActivity {
                         if (result == null) {
                             showError("Error", true);
                         } else {
-                            prefs.edit().putString(breizhLib.AUTH_COOKIE, result).commit();
+                            prefs.edit().putString(BreizhLib.AUTH_COOKIE, result).commit();
                             Intent intent = new Intent(AppInfo.this, ProfilActivity.class);
                             startActivity(intent);
                         }

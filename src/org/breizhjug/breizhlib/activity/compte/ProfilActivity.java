@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.AbstractActivity;
 import org.breizhjug.breizhlib.model.Utilisateur;
@@ -22,16 +23,16 @@ public class ProfilActivity extends AbstractActivity {
     }
 
     public void init(Intent intent) {
-        SharedPreferences prefs = breizhLib.getSharedPreferences(this);
-        String authCookie = prefs.getString(breizhLib.AUTH_COOKIE, null);
-        Utilisateur user = breizhLib.getUtilisateurService().find(authCookie);
+        SharedPreferences prefs = BreizhLib.getSharedPreferences(this);
+        String authCookie = prefs.getString(BreizhLib.AUTH_COOKIE, null);
+        Utilisateur user = BreizhLib.getUtilisateurService().find(authCookie);
 
         if (user != null) {
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putString(breizhLib.USER, user.email);
-            editor.putBoolean(breizhLib.USER_ADMIN, user.isAdmin);
-            editor.putString(breizhLib.USER_NOM, user.nom);
-            editor.putString(breizhLib.USER_PRENOM, user.prenom);
+            editor.putString(BreizhLib.USER, user.email);
+            editor.putBoolean(BreizhLib.USER_ADMIN, user.isAdmin);
+            editor.putString(BreizhLib.USER_NOM, user.nom);
+            editor.putString(BreizhLib.USER_PRENOM, user.prenom);
             editor.commit();
 
 
@@ -57,7 +58,7 @@ public class ProfilActivity extends AbstractActivity {
             reservations.setText(user.reservationsLabel);
 
             ImageView icone = (ImageView) findViewById(R.id.avatar);
-            breizhLib.getImageDownloader().download(Gravatar.getImage(user.email), icone);
+            BreizhLib.getImageDownloader().download(Gravatar.getImage(user.email), icone);
 
         } else {
             //TODO message Dialogue

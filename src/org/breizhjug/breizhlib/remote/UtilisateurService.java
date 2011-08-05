@@ -4,7 +4,6 @@ package org.breizhjug.breizhlib.remote;
 import android.util.Log;
 import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.model.Utilisateur;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -36,8 +35,7 @@ public class UtilisateurService extends Service<Utilisateur> {
         if (result != null) {
             Log.i("REST", result);
             try {
-                JSONArray booksArray = new JSONArray(result);
-                JSONObject item = booksArray.getJSONObject(0);
+                JSONObject item = new JSONObject(result);
                 return converter.convertUtilisateur(item);
             } catch (JSONException e) {
                 Log.e("JSON", "There was an error parsing the JSON", e);

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.adapter.CommentairesAdapter;
 import org.breizhjug.breizhlib.model.Commentaire;
@@ -25,9 +26,9 @@ public class CommentairesActivity extends AbstractActivity {
 
     public void init(Intent intent) {
         commentairesListView = (ListView) findViewById(R.id.items);
-        SharedPreferences prefs = breizhLib.getSharedPreferences(this);
+        SharedPreferences prefs = BreizhLib.getSharedPreferences(this);
         commentaires = new ArrayList<Commentaire>();
-        commentaires.addAll(breizhLib.getCommentaireService().load(prefs.getString(breizhLib.AUTH_COOKIE, null)));
+        commentaires.addAll(BreizhLib.getCommentaireService().load(prefs.getString(BreizhLib.AUTH_COOKIE, null)));
 
         CommentairesAdapter mSchedule = new CommentairesAdapter(this.getBaseContext(), commentaires);
         commentairesListView.setAdapter(mSchedule);

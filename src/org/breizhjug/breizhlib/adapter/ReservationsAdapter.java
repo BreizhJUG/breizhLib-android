@@ -42,7 +42,7 @@ public class ReservationsAdapter extends ArrayAdapter<Reservation> {
         text.setText(reservation.nom + " " + reservation.prenom);
 
         ImageView icone = (ImageView) view.findViewById(R.id.img);
-        BreizhLib.getInstance().getImageDownloader().download(reservation.livre.imgUrl, icone);
+        BreizhLib.getImageDownloader().download(reservation.livre.imgUrl, icone);
 
         return view;
     }

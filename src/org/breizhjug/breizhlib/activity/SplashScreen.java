@@ -5,17 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.R;
 
 public class SplashScreen extends BaseActivity {
 
     private static final int STOPSPLASH = 0;
     private static final long SPLASHTIME = 5000;
-
-    public void AbstractActivity() {
-        BreizhLib.getInstance();
-    }
 
     private Handler splashHandler = new Handler() {
 
