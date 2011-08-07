@@ -41,7 +41,60 @@
                   android:layout_height="fill_parent"
                 />
 
-        <Button
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                      android:orientation="horizontal"
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                >
+            <ImageView
+                android:id="@+id/star1"
+                android:layout_width="30sp"
+                android:layout_height="30sp"
+                android:layout_gravity="center_vertical"
+                android:padding="10px"
+                android:src="@drawable/sth"
+                />
+                <ImageView
+                android:id="@+id/star2"
+                android:layout_width="30sp"
+                android:layout_height="30sp"
+                android:layout_gravity="center_vertical"
+                android:padding="10px"
+                android:src="@drawable/sth"
+                />
+                <ImageView
+                android:id="@+id/star3"
+                android:layout_width="30sp"
+                android:layout_height="30sp"
+                android:layout_gravity="center_vertical"
+                android:padding="10px"
+                android:src="@drawable/sth"
+                />
+                <ImageView
+                android:id="@+id/star4"
+                android:layout_width="30sp"
+                android:layout_height="30sp"
+                android:layout_gravity="center_vertical"
+                android:padding="10px"
+                android:src="@drawable/sth"
+                />
+                 <ImageView
+                android:id="@+id/star5"
+                android:layout_width="30sp"
+                android:layout_height="30sp"
+                android:layout_gravity="center_vertical"
+                android:padding="10px"
+                android:src="@drawable/sth"
+                />
+            </LinearLayout>
+
+
+
+    </LinearLayout>
+    </LinearLayout>
+
+     <Button
                 android:id="@+id/add"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -52,7 +105,4 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/avisBtn"/>
-
-    </LinearLayout>
-    </LinearLayout>
 </LinearLayout>

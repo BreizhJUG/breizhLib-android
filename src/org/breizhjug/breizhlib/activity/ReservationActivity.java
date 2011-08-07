@@ -64,7 +64,16 @@ public class ReservationActivity extends AbstractActivity {
                 }
             }
         };
-        initTask.execute();
+
+        if (email == null || email.length() == 0) {
+            showError("Email non renseigné", false);
+        } else if (prenom == null || prenom.length() == 0) {
+            showError("Prénom non renseigné", false);
+        } else if (nom == null || nom.length() == 0) {
+            showError("Nom non renseigné", false);
+        } else {
+            initTask.execute();
+        }
     }
 
     public void onCreate(Bundle savedInstanceState) {
