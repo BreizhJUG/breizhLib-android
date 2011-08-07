@@ -1,6 +1,7 @@
 package org.breizhjug.breizhlib.remote;
 
 import android.util.Log;
+import org.acra.ErrorReporter;
 import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.model.Commentaire;
 import org.json.JSONArray;
@@ -49,6 +50,7 @@ public class CommentaireService extends Service<Commentaire> {
                 return commentaires;
             } catch (JSONException e) {
                 Log.e("JSON", "There was an error parsing the JSON", e);
+                ErrorReporter.getInstance().handleSilentException(e);
             }
         }
         return commentaires;

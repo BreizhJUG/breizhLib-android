@@ -2,6 +2,7 @@ package org.breizhjug.breizhlib.remote;
 
 
 import android.util.Log;
+import org.acra.ErrorReporter;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -97,10 +98,13 @@ public abstract class Service<T> {
             }
         } catch (ClientProtocolException e) {
             Log.e("REST", "There was a protocol based error", e);
+            ErrorReporter.getInstance().handleSilentException(e);
         } catch (IOException e) {
             Log.e("REST", "There was an IO Stream related error", e);
+            ErrorReporter.getInstance().handleSilentException(e);
         } catch (URISyntaxException e) {
             Log.e("REST", "There was an IO Stream related error", e);
+            ErrorReporter.getInstance().handleSilentException(e);
         }
         return null;
     }
@@ -144,10 +148,13 @@ public abstract class Service<T> {
             }
         } catch (ClientProtocolException e) {
             Log.e("REST", "There was a protocol based error", e);
+            ErrorReporter.getInstance().handleSilentException(e);
         } catch (IOException e) {
             Log.e("REST", "There was an IO Stream related error", e);
+            ErrorReporter.getInstance().handleSilentException(e);
         } catch (URISyntaxException e) {
             Log.e("REST", "There was an IO Stream related error", e);
+            ErrorReporter.getInstance().handleSilentException(e);
         }
         return null;
     }

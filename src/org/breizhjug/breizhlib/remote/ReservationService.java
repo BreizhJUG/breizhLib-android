@@ -2,6 +2,7 @@ package org.breizhjug.breizhlib.remote;
 
 
 import android.util.Log;
+import org.acra.ErrorReporter;
 import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.model.Reservation;
@@ -51,6 +52,7 @@ public class ReservationService extends Service<Reservation> {
                 return BOOKS;
             } catch (JSONException e) {
                 Log.e("JSON", "There was an error parsing the JSON", e);
+                ErrorReporter.getInstance().handleSilentException(e);
             }
         }
         return BOOKS;

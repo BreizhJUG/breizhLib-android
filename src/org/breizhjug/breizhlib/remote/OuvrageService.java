@@ -2,6 +2,7 @@ package org.breizhjug.breizhlib.remote;
 
 
 import android.util.Log;
+import org.acra.ErrorReporter;
 import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.model.Livre;
 import org.json.JSONArray;
@@ -39,6 +40,7 @@ public class OuvrageService extends Service<Livre> {
                 return livre;
             } catch (JSONException e) {
                 Log.e("JSON", "There was an error parsing the JSON", e);
+                ErrorReporter.getInstance().handleSilentException(e);
             }
         }
         return null;
@@ -59,6 +61,7 @@ public class OuvrageService extends Service<Livre> {
                 return livre;
             } catch (JSONException e) {
                 Log.e("JSON", "There was an error parsing the JSON", e);
+                ErrorReporter.getInstance().handleSilentException(e);
             }
         }
         return null;
@@ -80,6 +83,7 @@ public class OuvrageService extends Service<Livre> {
                 return BOOKS;
             } catch (JSONException e) {
                 Log.e("JSON", "There was an error parsing the JSON", e);
+                ErrorReporter.getInstance().handleSilentException(e);
             }
         }
         return BOOKS;

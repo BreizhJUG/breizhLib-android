@@ -23,7 +23,8 @@ import org.breizhjug.breizhlib.utils.Version;
 import java.util.Locale;
 
 
-@ReportsCrashes(formKey = "0AhXuEwofgu06dDVQS1VxY19iU3RXNm81SkxVQ3BWNkE", mode = ReportingInteractionMode.TOAST )
+@ReportsCrashes(formKey = "dGFpb0t5YXF3a3J3Ui1GZjBVY1ROMGc6MQ",
+        mode = ReportingInteractionMode.TOAST,resToastText = R.string.resToastText)
 public class BreizhLib extends Application {
 
     private static BreizhLib instance;

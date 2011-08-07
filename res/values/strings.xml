@@ -5,6 +5,7 @@
 
     <string name="nouvelleVersion">Nouvelle version disponible</string>
     <string name="versionDisponible">La version %1$s est disponible!</string>
+    <string name="resToastText">une erreur est survenue</string>
 
     <!-- splash screen -->
     <string name="splash_text">BreizhLib</string>
