@@ -56,9 +56,4 @@ public abstract class AbstractActivity extends BaseActivity {
         initTask.execute(null);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unregisterReceiver(receiver);
-    }
 }

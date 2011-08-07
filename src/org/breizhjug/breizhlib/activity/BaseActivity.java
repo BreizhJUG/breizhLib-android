@@ -133,4 +133,10 @@ public class BaseActivity extends Activity {
         sendBroadcast(broadcastIntent);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
+    }
+
 }

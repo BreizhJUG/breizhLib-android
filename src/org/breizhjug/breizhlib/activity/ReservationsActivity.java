@@ -1,17 +1,18 @@
 package org.breizhjug.breizhlib.activity;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.adapter.ReservationsAdapter;
 import org.breizhjug.breizhlib.model.Reservation;
-
-import java.util.List;
+import org.breizhjug.breizhlib.remote.AsyncRemoteTask;
 
 
 public class ReservationsActivity extends AbstractActivity {
@@ -22,27 +23,48 @@ public class ReservationsActivity extends AbstractActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.items);
+        initView();
     }
 
     @Override
     public void init(Intent intent) {
+            }
+
+    public void initView() {
         reservationsListView = (ListView) findViewById(R.id.items);
-        SharedPreferences prefs = BreizhLib.getSharedPreferences(this);
-        List<Reservation> reservations = BreizhLib.getReservationService().load(prefs.getString(BreizhLib.AUTH_COOKIE, null));
+        final SharedPreferences prefs = BreizhLib.getSharedPreferences(this);
+        final ProgressDialog waitDialog = ProgressDialog.show(this, getString(R.string.recherche), getString(R.string.chargement), true, true);
+        final AsyncTask<Void, Void, Boolean> initTask = new AsyncRemoteTask<Reservation>(BreizhLib.getReservationService(), reservationsListView, prefs) {
 
-        ReservationsAdapter mSchedule = new ReservationsAdapter(this.getBaseContext(), reservations, prefs);
+            @Override
+            protected void onPostExecute(Boolean result) {
+                super.onPostExecute(result);
+                waitDialog.dismiss();
+            }
 
-        reservationsListView.setAdapter(mSchedule);
+            @Override
+            public ArrayAdapter<Reservation> getAdapter() {
+                return new ReservationsAdapter(ReservationsActivity.this.getBaseContext(), items, prefs);
+            }
 
-        reservationsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-
+            public void onClick(int position) {
                 Reservation reservation = (Reservation) reservationsListView.getItemAtPosition(position);
                 Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
                 Populator.populate(intent, reservation);
                 ReservationsActivity.this.startActivity(intent);
             }
+        };
+        waitDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+
+            public void onCancel(DialogInterface dialog) {
+                if (initTask != null) {
+                    initTask.cancel(true);
+                }
+                finish();
+            }
         });
+
+        initTask.execute((Void) null);
 
     }
 
