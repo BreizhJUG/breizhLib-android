@@ -34,6 +34,8 @@ public class CommentaireActivity extends AbstractActivity {
         ImageView icone = (ImageView) findViewById(R.id.img);
         BreizhLib.getImageDownloader().download(commentaire.livre.imgUrl, icone);
 
+        initStars(commentaire.note);
+
         LinearLayout nav = (LinearLayout) findViewById(R.id.nav);
         Button previous = (Button) nav.getChildAt(0);
         Button next = (Button) nav.getChildAt(1);
@@ -69,6 +71,28 @@ public class CommentaireActivity extends AbstractActivity {
             next.setEnabled(false);
         }
 
+    }
+
+    private void initStars(int note) {
+        ImageView star1 = (ImageView) findViewById(R.id.star1);
+        ImageView star2 = (ImageView) findViewById(R.id.star2);
+        ImageView star3 = (ImageView) findViewById(R.id.star3);
+        ImageView star4 = (ImageView) findViewById(R.id.star4);
+        ImageView star5 = (ImageView) findViewById(R.id.star5);
+        switch (note){
+            case 0 :
+                star1.setVisibility(View.INVISIBLE);
+             case 1 :
+                star2.setVisibility(View.INVISIBLE);
+            case 2 :
+                star3.setVisibility(View.INVISIBLE);
+            case 3 :
+                star4.setVisibility(View.INVISIBLE);
+            case 4:
+               star5.setVisibility(View.INVISIBLE);
+            case 5:
+            break;
+        }
     }
 
     public void onCreate(Bundle savedInstanceState) {
