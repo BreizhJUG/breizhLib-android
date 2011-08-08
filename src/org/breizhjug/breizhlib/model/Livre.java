@@ -9,7 +9,7 @@ import org.breizhjug.breizhlib.database.Database;
 import java.io.Serializable;
 
 @Entity
-public class Livre implements Serializable,Model {
+public class Livre implements Serializable, Model {
 
     @Column
     public String titre;

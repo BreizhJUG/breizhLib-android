@@ -5,7 +5,7 @@ import org.breizhjug.breizhlib.database.Database;
 
 import java.io.Serializable;
 
-public class Utilisateur implements Serializable, Model{
+public class Utilisateur implements Serializable, Model {
 
     public String nom;
     public String prenom;

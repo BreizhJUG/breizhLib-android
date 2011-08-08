@@ -1,5 +1,7 @@
 package org.breizhjug.breizhlib.activity;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -48,36 +50,48 @@ public class AvisActivity extends AbstractActivity {
                 final String avis = avisEdit.getText().toString();
                 final String nom = nomEdit.getText().toString();
 
-                final AsyncTask<Void, Void, Boolean> initTask = new AsyncTask<Void, Void, Boolean>() {
-
-                    @Override
-                    protected Boolean doInBackground(Void... params) {
-
-
-                        String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
-                        boolean result = BreizhLib.getCommentaireService().comment(authCookie, livre.iSBN, nom, avis, Integer.valueOf("" + note.getSelectedItem()));
-                        return result;
-                    }
-
-                    @Override
-                    protected void onPostExecute(Boolean result) {
-                        if (result == null || !result) {
-                            showError("Erreur lors de l'envoi du commentaire", true);
-                        } else {
-                            Toast.makeText(AvisActivity.this, getString(R.string.commentaireSave), Toast.LENGTH_SHORT);
-                            Intent intent = new Intent(getApplicationContext(), Menu.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
-                        }
-                    }
-                };
-
-
                 if (avis == null || avis.length() == 0) {
                     showError("Commentaite non renseigné", false);
                 } else if (nom == null || nom.length() == 0) {
                     showError("Nom non renseigné", false);
                 } else {
+                    final ProgressDialog waitDialog = ProgressDialog.show(AvisActivity.this, "Envoi de votre commentaire", getString(R.string.chargement), true, true);
+
+                    final AsyncTask<Void, Void, Boolean> initTask = new AsyncTask<Void, Void, Boolean>() {
+
+                        @Override
+                        protected Boolean doInBackground(Void... params) {
+
+
+                            String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
+                            boolean result = BreizhLib.getCommentaireService().comment(authCookie, livre.iSBN, nom, avis, Integer.valueOf("" + note.getSelectedItem()));
+                            return result;
+                        }
+
+                        @Override
+                        protected void onPostExecute(Boolean result) {
+                            waitDialog.dismiss();
+                            if (result == null || !result) {
+                                showError("Erreur lors de l'envoi du commentaire", true);
+                            } else {
+                                Toast.makeText(AvisActivity.this, getString(R.string.commentaireSave), Toast.LENGTH_SHORT);
+                                Intent intent = new Intent(getApplicationContext(), Menu.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                            }
+                        }
+                    };
+
+
+                    waitDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+
+                        public void onCancel(DialogInterface dialog) {
+                            if (initTask != null) {
+                                initTask.cancel(true);
+                            }
+                            finish();
+                        }
+                    });
                     initTask.execute();
                 }
             }

@@ -19,7 +19,11 @@ public class ReservationActivity extends AbstractActivity {
 
     @Override
     public void init(Intent intent) {
-        final String isbn = intent.getStringExtra("isbn");
+
+    }
+
+    public void initView() {
+        final String isbn = getIntent().getStringExtra("isbn");
 
         prefs = BreizhLib.getSharedPreferences(this);
 
@@ -80,5 +84,6 @@ public class ReservationActivity extends AbstractActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reserver);
+        initView();
     }
 }

@@ -18,7 +18,9 @@ public class CommentaireActivity extends AbstractActivity {
 
     @Override
     public void init(Intent intent) {
+    }
 
+    public void initView() {
         final Commentaire commentaire = (Commentaire) getIntent().getSerializableExtra("commentaire");
         final ArrayList<Commentaire> commentaires = (ArrayList<Commentaire>) getIntent().getSerializableExtra("commentaires");
         final int index = (int) getIntent().getIntExtra("index", 0);
@@ -98,6 +100,7 @@ public class CommentaireActivity extends AbstractActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.commentaire);
+        initView();
     }
 
     @Override

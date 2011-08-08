@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.util.Log;
 import org.acra.ACRA;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
@@ -102,20 +103,19 @@ public class BreizhLib extends Application {
     }
 
 
-    private AsyncTask<Void, Void, String> checkVersion = new AsyncTask<Void, Void, String>() {
+    private AsyncTask<Void, Void, Integer> checkVersion = new AsyncTask<Void, Void, Integer>() {
 
         @Override
-        protected String doInBackground(Void... params) {
-            return Version.getVersionMarket();
+        protected Integer doInBackground(Void... params) {
+            return Version.getVersionCodeMarket();
         }
 
-        protected void onPostExecute(String result) {
-            if (result != null && !result.equals(Version.getVersionCourante(BreizhLib.this))) {
-                createNotification(result);
+        protected void onPostExecute(Integer result) {
+            Log.d("VERSION"," version "+Version.getVersionCourante(BreizhLib.this));
+            if (result != null && result < Version.getVersionCourante(BreizhLib.this)) {
+                createNotification(Version.getVersionMarket());
             }
         }
-
-        ;
     };
 
     private final int NOTIFICATION_VERSION_ID = 1;

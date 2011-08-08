@@ -19,9 +19,18 @@ public class LivreActivity extends AbstractActivity {
 
     private String backActivity;
 
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.livre);
+        initView();
+    }
+
     @Override
     public void init(Intent intent) {
 
+    }
+
+    private void initView() {
         SharedPreferences prefs = BreizhLib.getSharedPreferences(this);
         final Livre livre = (Livre) getIntent().getSerializableExtra("livre");
         backActivity = getIntent().getStringExtra("backActivity");
@@ -106,10 +115,6 @@ public class LivreActivity extends AbstractActivity {
         }
     }
 
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.livre);
-    }
 
     private void initStars(int note) {
         ImageView star1 = (ImageView) findViewById(R.id.star1);
@@ -203,11 +208,11 @@ public class LivreActivity extends AbstractActivity {
             intent = new Intent(getApplicationContext(), OuvragesActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-        } else if (backActivity != null && backActivity.equals("ReservationsActivity")){
+        } else if (backActivity != null && backActivity.equals("ReservationsActivity")) {
             intent = new Intent(getApplicationContext(), ReservationsActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        }else{
-           intent = new Intent(getApplicationContext(), Menu.class);
+        } else {
+            intent = new Intent(getApplicationContext(), Menu.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         }
 

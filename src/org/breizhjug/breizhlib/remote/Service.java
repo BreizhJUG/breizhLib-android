@@ -59,7 +59,7 @@ public abstract class Service<T extends Model> {
 
     private void loadDB(List<T> cache) {
         for (T entity : cache) {
-             entity.onLoad(db);
+            entity.onLoad(db);
         }
     }
 

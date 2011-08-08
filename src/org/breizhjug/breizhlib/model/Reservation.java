@@ -8,7 +8,7 @@ import org.breizhjug.breizhlib.database.Database;
 import java.io.Serializable;
 
 @Entity
-public class Reservation implements Serializable,Model {
+public class Reservation implements Serializable, Model {
 
     @Column
     public String nom;
