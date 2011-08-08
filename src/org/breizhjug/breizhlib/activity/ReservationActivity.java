@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import org.breizhjug.breizhlib.BreizhLib;
+import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 
 
@@ -23,13 +24,13 @@ public class ReservationActivity extends AbstractActivity {
         prefs = BreizhLib.getSharedPreferences(this);
 
         final EditText prenom = (EditText) findViewById(R.id.prenomEdit);
-        prenom.setText(prefs.getString(BreizhLib.USER_PRENOM, null));
+        prenom.setText(prefs.getString(BreizhLibConstantes.USER_PRENOM, null));
 
         final EditText nom = (EditText) findViewById(R.id.nomEdit);
-        nom.setText(prefs.getString(BreizhLib.USER_NOM, null));
+        nom.setText(prefs.getString(BreizhLibConstantes.USER_NOM, null));
 
         final EditText email = (EditText) findViewById(R.id.emailEdit);
-        email.setText(prefs.getString(BreizhLib.USER, null));
+        email.setText(prefs.getString(BreizhLibConstantes.USER, null));
 
         Button button = (Button) findViewById(R.id.send);
         button.setOnClickListener(new Button.OnClickListener() {
@@ -47,7 +48,7 @@ public class ReservationActivity extends AbstractActivity {
 
             @Override
             protected Boolean doInBackground(Void... params) {
-                String authCookie = prefs.getString(BreizhLib.AUTH_COOKIE, null);
+                String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
                 boolean result = BreizhLib.getReservationService().reserver(authCookie, isbn, nom, prenom, email);
                 Log.d(TAG, "result " + result);
                 return result;

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 import org.breizhjug.breizhlib.BreizhLib;
+import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.model.Livre;
 
@@ -16,11 +17,14 @@ import java.util.ArrayList;
 
 public class LivreActivity extends AbstractActivity {
 
+    private String backActivity;
+
     @Override
     public void init(Intent intent) {
 
         SharedPreferences prefs = BreizhLib.getSharedPreferences(this);
         final Livre livre = (Livre) getIntent().getSerializableExtra("livre");
+        backActivity = getIntent().getStringExtra("backActivity");
         final ArrayList<Livre> ouvrages = (ArrayList<Livre>) getIntent().getSerializableExtra("livres");
         final int index = (int) getIntent().getIntExtra("index", 0);
 
@@ -33,51 +37,53 @@ public class LivreActivity extends AbstractActivity {
         ImageView icone = (ImageView) findViewById(R.id.img);
         BreizhLib.getImageDownloader().download(livre.imgUrl, icone);
 
-        initStars(livre.note );
+        initStars(livre.note);
 
         LinearLayout nav = (LinearLayout) findViewById(R.id.nav);
         Button previous = (Button) nav.getChildAt(0);
         Button next = (Button) nav.getChildAt(1);
-          if(ouvrages != null){
-        if (index > 0) {
-            previous.setOnClickListener(new Button.OnClickListener() {
+        if (ouvrages != null) {
+            if (index > 0) {
+                previous.setOnClickListener(new Button.OnClickListener() {
 
-                public void onClick(View view) {
-                    Livre livre = ouvrages.get(index - 1);
-                    Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-                    intent.putExtra("livre", livre);
-                    intent.putExtra("livres", ouvrages);
-                    intent.putExtra("index", index - 1);
-                    startActivity(intent);
-                }
-            });
+                    public void onClick(View view) {
+                        Livre livre = ouvrages.get(index - 1);
+                        Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
+                        intent.putExtra("livre", livre);
+                        intent.putExtra("livres", ouvrages);
+                        intent.putExtra("index", index - 1);
+                        intent.putExtra("backActivity", backActivity);
+                        startActivity(intent);
+                    }
+                });
+            } else {
+                previous.setEnabled(false);
+            }
+
+            if (ouvrages.size() - 1 > index) {
+                next.setOnClickListener(new Button.OnClickListener() {
+
+                    public void onClick(View view) {
+                        Livre livre = ouvrages.get(index + 1);
+                        Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
+                        intent.putExtra("livre", livre);
+                        intent.putExtra("livres", ouvrages);
+                        intent.putExtra("index", index + 1);
+                        intent.putExtra("backActivity", backActivity);
+                        startActivity(intent);
+                    }
+                });
+            } else {
+                next.setEnabled(false);
+            }
         } else {
-            previous.setEnabled(false);
-        }
-
-        if (ouvrages.size() - 1 > index) {
-            next.setOnClickListener(new Button.OnClickListener() {
-
-                public void onClick(View view) {
-                    Livre livre = ouvrages.get(index + 1);
-                    Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-                    intent.putExtra("livre", livre);
-                    intent.putExtra("livres", ouvrages);
-                    intent.putExtra("index", index + 1);
-                    startActivity(intent);
-                }
-            });
-        } else {
-            next.setEnabled(false);
-        }
-          }else {
             nav.setVisibility(View.INVISIBLE);
-          }
+        }
 
         Button avis = (Button) findViewById(R.id.addComment);
 
 
-        if (prefs.getString(BreizhLib.ACCOUNT_NAME, null) != null) {
+        if (prefs.getString(BreizhLibConstantes.ACCOUNT_NAME, null) != null) {
             avis.setOnClickListener(new Button.OnClickListener() {
 
                 public void onClick(View view) {
@@ -105,25 +111,25 @@ public class LivreActivity extends AbstractActivity {
         setContentView(R.layout.livre);
     }
 
-     private void initStars(int note) {
+    private void initStars(int note) {
         ImageView star1 = (ImageView) findViewById(R.id.star1);
         ImageView star2 = (ImageView) findViewById(R.id.star2);
         ImageView star3 = (ImageView) findViewById(R.id.star3);
         ImageView star4 = (ImageView) findViewById(R.id.star4);
         ImageView star5 = (ImageView) findViewById(R.id.star5);
-        switch (note){
-            case 0 :
+        switch (note) {
+            case 0:
                 star1.setVisibility(View.INVISIBLE);
-             case 1 :
+            case 1:
                 star2.setVisibility(View.INVISIBLE);
-            case 2 :
+            case 2:
                 star3.setVisibility(View.INVISIBLE);
-            case 3 :
+            case 3:
                 star4.setVisibility(View.INVISIBLE);
             case 4:
-               star5.setVisibility(View.INVISIBLE);
+                star5.setVisibility(View.INVISIBLE);
             case 5:
-            break;
+                break;
         }
     }
 
@@ -133,9 +139,9 @@ public class LivreActivity extends AbstractActivity {
             button.setText(getString(R.string.reserveBtn));
         } else if (etat.equals("DISP0NIBLE")) {
             button.setText(getString(R.string.reserverBtn));
-            if (BreizhLib.getSharedPreferences(this).getString(BreizhLib.ACCOUNT_NAME, null) != null) {
+            if (BreizhLib.getSharedPreferences(this).getString(BreizhLibConstantes.ACCOUNT_NAME, null) != null) {
                 button.setEnabled(true);
-                if (BreizhLib.getSharedPreferences(this).getString(BreizhLib.USER, null) != null) {
+                if (BreizhLib.getSharedPreferences(this).getString(BreizhLibConstantes.USER, null) != null) {
                     button.setOnClickListener(new Button.OnClickListener() {
 
                         public void onClick(View view) {
@@ -153,7 +159,7 @@ public class LivreActivity extends AbstractActivity {
     }
 
     private void initAjout(Button button, final String isbn) {
-        if (BreizhLib.getSharedPreferences(this).getBoolean(BreizhLib.USER_ADMIN, false)) {
+        if (BreizhLib.getSharedPreferences(this).getBoolean(BreizhLibConstantes.USER_ADMIN, false)) {
             button.setText(getString(R.string.ajouterBtn));
             button.setOnClickListener(new Button.OnClickListener() {
 
@@ -163,7 +169,7 @@ public class LivreActivity extends AbstractActivity {
                         @Override
                         protected Livre doInBackground(Void... params) {
                             SharedPreferences prefs = BreizhLib.getSharedPreferences(LivreActivity.this);
-                            String authCookie = prefs.getString(BreizhLib.AUTH_COOKIE, null);
+                            String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
                             Livre livre = BreizhLib.getOuvrageService().add(authCookie, isbn);
                             return livre;
                         }
@@ -188,5 +194,23 @@ public class LivreActivity extends AbstractActivity {
             button.setEnabled(false);
             button.setBackgroundColor(Color.RED);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent;
+        if (backActivity != null && backActivity.equals("OuvragesActivity")) {
+            intent = new Intent(getApplicationContext(), OuvragesActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        } else if (backActivity != null && backActivity.equals("ReservationsActivity")){
+            intent = new Intent(getApplicationContext(), ReservationsActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        }else{
+           intent = new Intent(getApplicationContext(), Menu.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        }
+
+        startActivity(intent);
     }
 }

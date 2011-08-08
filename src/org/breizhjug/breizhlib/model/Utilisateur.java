@@ -1,7 +1,11 @@
 package org.breizhjug.breizhlib.model;
 
 
-public class Utilisateur {
+import org.breizhjug.breizhlib.database.Database;
+
+import java.io.Serializable;
+
+public class Utilisateur implements Serializable, Model{
 
     public String nom;
     public String prenom;
@@ -14,4 +18,8 @@ public class Utilisateur {
     public String ouvragesLlabel;
     public String ouvragesEncoursLabel;
     public String reservationsLabel;
+
+    public void onLoad(Database db) {
+
+    }
 }

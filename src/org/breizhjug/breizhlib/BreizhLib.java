@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import org.acra.ACRA;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
+import org.breizhjug.breizhlib.database.Database;
 import org.breizhjug.breizhlib.remote.CommentaireService;
 import org.breizhjug.breizhlib.remote.OuvrageService;
 import org.breizhjug.breizhlib.remote.ReservationService;
@@ -20,11 +21,9 @@ import org.breizhjug.breizhlib.utils.GoogleAuthentification;
 import org.breizhjug.breizhlib.utils.ImageDownloader;
 import org.breizhjug.breizhlib.utils.Version;
 
-import java.util.Locale;
-
 
 @ReportsCrashes(formKey = "dGFpb0t5YXF3a3J3Ui1GZjBVY1ROMGc6MQ",
-        mode = ReportingInteractionMode.TOAST,resToastText = R.string.resToastText)
+        mode = ReportingInteractionMode.TOAST, resToastText = R.string.resToastText)
 public class BreizhLib extends Application {
 
     private static BreizhLib instance;
@@ -41,19 +40,8 @@ public class BreizhLib extends Application {
 
     private static GoogleAuthentification gAuth;
 
-    public static final String SERVER_URL = "http://0-1-2.breizh-lib.appspot.com/";
+    private static Database databaseHelper;
 
-    /**
-     * clés pour shared preferences.
-     */
-    private static final String SHARED_PREFS = "breizhLib".toUpperCase(Locale.FRANCE) + "_PREFS";
-    public static final String ACCOUNT_NAME = "accountName";
-    public static final String AUTH_COOKIE = "authCookie";
-    public static final String USER = "user";
-    public static final String USER_ADMIN = "userAdmin";
-    public static final String USER_NOM = "user_nom";
-    public static final String USER_PRENOM = "user_prenom";
-    public static final String GRID = "ouvrages_grid";
 
     @Override
     public void onCreate() {
@@ -61,7 +49,7 @@ public class BreizhLib extends Application {
         super.onCreate();
 
         imageDownloader = ImageDownloader.getInstance();
-
+        databaseHelper = new Database(this);
         commentaireService = CommentaireService.getInstance();
         ouvrageService = OuvrageService.getInstance();
 
@@ -71,6 +59,10 @@ public class BreizhLib extends Application {
         gAuth = GoogleAuthentification.getInstance();
         instance = new BreizhLib();
         checkVersion.execute();
+    }
+
+    public static Database getDataBaseHelper() {
+        return databaseHelper;
     }
 
 
@@ -99,7 +91,7 @@ public class BreizhLib extends Application {
     }
 
     public static SharedPreferences getSharedPreferences(Context context) {
-        return context.getSharedPreferences(SHARED_PREFS, 0);
+        return context.getSharedPreferences(BreizhLibConstantes.SHARED_PREFS, 0);
     }
 
     public static void clearCache() {
@@ -112,38 +104,40 @@ public class BreizhLib extends Application {
 
     private AsyncTask<Void, Void, String> checkVersion = new AsyncTask<Void, Void, String>() {
 
-		@Override
-		protected String doInBackground(Void... params) {
-			return Version.getVersionMarket();
-		}
+        @Override
+        protected String doInBackground(Void... params) {
+            return Version.getVersionMarket();
+        }
 
-		protected void onPostExecute(String result) {
-			if (result != null && !result.equals(Version.getVersionCourante(BreizhLib.this))) {
-				createNotification(result);
-			}
-		};
-	};
+        protected void onPostExecute(String result) {
+            if (result != null && !result.equals(Version.getVersionCourante(BreizhLib.this))) {
+                createNotification(result);
+            }
+        }
 
-	private final int NOTIFICATION_VERSION_ID = 1;
+        ;
+    };
 
-	private void createNotification(String nouvelleVersion) {
-		int icon = R.drawable.icon;
-		CharSequence tickerText = getString(R.string.nouvelleVersion);
-		long when = System.currentTimeMillis();
-		Context context = getApplicationContext();
-		CharSequence contentTitle = getString(R.string.nouvelleVersion);
-		CharSequence contentText = getString(R.string.versionDisponible, nouvelleVersion);
+    private final int NOTIFICATION_VERSION_ID = 1;
 
-		Uri uri = Uri.parse("market://details?id=org.breizhjug.breizhlib");
-		Intent notificationIntent = new Intent(Intent.ACTION_VIEW, uri);
-		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+    private void createNotification(String nouvelleVersion) {
+        int icon = R.drawable.icon;
+        CharSequence tickerText = getString(R.string.nouvelleVersion);
+        long when = System.currentTimeMillis();
+        Context context = getApplicationContext();
+        CharSequence contentTitle = getString(R.string.nouvelleVersion);
+        CharSequence contentText = getString(R.string.versionDisponible, nouvelleVersion);
 
-		// the next two lines initialize the Notification, using the
-		// configurations above
-		Notification notification = new Notification(icon, tickerText, when);
-		notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+        Uri uri = Uri.parse("market://details?id=org.breizhjug.breizhlib");
+        Intent notificationIntent = new Intent(Intent.ACTION_VIEW, uri);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
-		NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-		mNotificationManager.notify(NOTIFICATION_VERSION_ID, notification);
-	}
+        // the next two lines initialize the Notification, using the
+        // configurations above
+        Notification notification = new Notification(icon, tickerText, when);
+        notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(NOTIFICATION_VERSION_ID, notification);
+    }
 }

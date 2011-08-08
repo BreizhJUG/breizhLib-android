@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import org.breizhjug.breizhlib.BreizhLib;
+import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.compte.CompteList;
 
@@ -54,7 +55,7 @@ public class Menu extends AbstractActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         boutons.add(new Bouton(intent, R.string.commentaires, R.drawable.commentaire));
 
-        if (prefs.getBoolean(BreizhLib.USER_ADMIN, false)) {
+        if (prefs.getBoolean(BreizhLibConstantes.USER_ADMIN, false)) {
             intent = new Intent(getApplicationContext(), ReservationsActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             boutons.add(new Bouton(intent, R.string.reservations, R.drawable.book));

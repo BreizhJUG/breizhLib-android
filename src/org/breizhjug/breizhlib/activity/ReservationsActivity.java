@@ -1,7 +1,5 @@
 package org.breizhjug.breizhlib.activity;
 
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -28,19 +26,13 @@ public class ReservationsActivity extends AbstractActivity {
 
     @Override
     public void init(Intent intent) {
-            }
+    }
 
     public void initView() {
         reservationsListView = (ListView) findViewById(R.id.items);
         final SharedPreferences prefs = BreizhLib.getSharedPreferences(this);
-        final ProgressDialog waitDialog = ProgressDialog.show(this, getString(R.string.recherche), getString(R.string.chargement), true, true);
-        final AsyncTask<Void, Void, Boolean> initTask = new AsyncRemoteTask<Reservation>(BreizhLib.getReservationService(), reservationsListView, prefs) {
 
-            @Override
-            protected void onPostExecute(Boolean result) {
-                super.onPostExecute(result);
-                waitDialog.dismiss();
-            }
+        final AsyncTask<Void, Void, Boolean> initTask = new AsyncRemoteTask<Reservation>(this, BreizhLib.getReservationService(), reservationsListView, prefs) {
 
             @Override
             public ArrayAdapter<Reservation> getAdapter() {
@@ -54,15 +46,7 @@ public class ReservationsActivity extends AbstractActivity {
                 ReservationsActivity.this.startActivity(intent);
             }
         };
-        waitDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
 
-            public void onCancel(DialogInterface dialog) {
-                if (initTask != null) {
-                    initTask.cancel(true);
-                }
-                finish();
-            }
-        });
 
         initTask.execute((Void) null);
 

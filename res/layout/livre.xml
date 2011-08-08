@@ -5,104 +5,112 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
         >
-<include android:id="@+id/nav" layout="@layout/navigation" />
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-        >
-    <ImageView
-            android:id="@+id/img"
-            android:layout_width="150sp"
-            android:layout_height="150sp"
-            android:layout_gravity="center_vertical"
-            android:padding="10px"
-            />
+    <include android:id="@+id/nav" layout="@layout/navigation"/>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:orientation="vertical"
+                  android:orientation="horizontal"
                   android:layout_width="fill_parent"
                   android:layout_height="wrap_content"
-                  android:layout_gravity="center_vertical"
-                  android:paddingLeft="10px"
-                  android:layout_weight="1"
             >
-
-        <TextView android:id="@+id/titre"
-                  android:layout_width="fill_parent"
-                  android:layout_height="fill_parent"
-                  android:textSize="16px"
-                  android:textStyle="bold"
+        <ImageView
+                android:id="@+id/img"
+                android:layout_width="150sp"
+                android:layout_height="150sp"
+                android:layout_gravity="center_vertical"
+                android:padding="10px"
                 />
-
-        <TextView android:id="@+id/editeur"
-                  android:layout_width="fill_parent"
-                  android:layout_height="fill_parent"
-                />
-
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                      android:orientation="horizontal"
+                      android:orientation="vertical"
                       android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
+                      android:layout_gravity="center_vertical"
+                      android:paddingLeft="10px"
+                      android:layout_weight="1"
                 >
-            <ImageView
-                android:id="@+id/star1"
-                android:layout_width="30sp"
-                android:layout_height="30sp"
-                android:layout_gravity="center_vertical"
-                android:padding="10px"
-                android:src="@drawable/sth"
-                />
+
+            <TextView android:id="@+id/titre"
+                      android:layout_width="fill_parent"
+                      android:layout_height="fill_parent"
+                      android:textSize="16px"
+                      android:textStyle="bold"
+                    />
+
+            <TextView android:id="@+id/editeur"
+                      android:layout_width="fill_parent"
+                      android:layout_height="fill_parent"
+                    />
+
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                          android:orientation="horizontal"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                    >
                 <ImageView
-                android:id="@+id/star2"
-                android:layout_width="30sp"
-                android:layout_height="30sp"
-                android:layout_gravity="center_vertical"
-                android:padding="10px"
-                android:src="@drawable/sth"
-                />
+                        android:id="@+id/star1"
+                        android:layout_width="30sp"
+                        android:layout_height="30sp"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10px"
+                        android:src="@drawable/sth"
+                        />
                 <ImageView
-                android:id="@+id/star3"
-                android:layout_width="30sp"
-                android:layout_height="30sp"
-                android:layout_gravity="center_vertical"
-                android:padding="10px"
-                android:src="@drawable/sth"
-                />
+                        android:id="@+id/star2"
+                        android:layout_width="30sp"
+                        android:layout_height="30sp"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10px"
+                        android:src="@drawable/sth"
+                        />
                 <ImageView
-                android:id="@+id/star4"
-                android:layout_width="30sp"
-                android:layout_height="30sp"
-                android:layout_gravity="center_vertical"
-                android:padding="10px"
-                android:src="@drawable/sth"
-                />
-                 <ImageView
-                android:id="@+id/star5"
-                android:layout_width="30sp"
-                android:layout_height="30sp"
-                android:layout_gravity="center_vertical"
-                android:padding="10px"
-                android:src="@drawable/sth"
-                />
+                        android:id="@+id/star3"
+                        android:layout_width="30sp"
+                        android:layout_height="30sp"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10px"
+                        android:src="@drawable/sth"
+                        />
+                <ImageView
+                        android:id="@+id/star4"
+                        android:layout_width="30sp"
+                        android:layout_height="30sp"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10px"
+                        android:src="@drawable/sth"
+                        />
+                <ImageView
+                        android:id="@+id/star5"
+                        android:layout_width="30sp"
+                        android:layout_height="30sp"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10px"
+                        android:src="@drawable/sth"
+                        />
             </LinearLayout>
 
 
-
+        </LinearLayout>
     </LinearLayout>
-    </LinearLayout>
-
-     <Button
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:orientation="horizontal"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+            >
+        <Button
                 android:id="@+id/add"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                            android:layout_weight="1"
                 />
 
         <Button
                 android:id="@+id/addComment"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                            android:layout_weight="1"
                 android:text="@string/avisBtn"/>
+
+    </LinearLayout>
+
 </LinearLayout>

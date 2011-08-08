@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.breizhjug.breizhlib.BreizhLib;
+import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.AbstractActivity;
 
@@ -27,8 +28,8 @@ public class AppInfo extends AbstractActivity {
 
         final SharedPreferences prefs = BreizhLib.getSharedPreferences(this);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(BreizhLib.ACCOUNT_NAME, accountName);
-        editor.putString(BreizhLib.AUTH_COOKIE, null);
+        editor.putString(BreizhLibConstantes.ACCOUNT_NAME, accountName);
+        editor.putString(BreizhLibConstantes.AUTH_COOKIE, null);
         editor.commit();
 
         AccountManager mgr = AccountManager.get(getApplicationContext());
@@ -49,7 +50,7 @@ public class AppInfo extends AbstractActivity {
                         if (result == null) {
                             showError("Error", true);
                         } else {
-                            prefs.edit().putString(BreizhLib.AUTH_COOKIE, result).commit();
+                            prefs.edit().putString(BreizhLibConstantes.AUTH_COOKIE, result).commit();
                             Intent intent = new Intent(AppInfo.this, ProfilActivity.class);
                             startActivity(intent);
                         }

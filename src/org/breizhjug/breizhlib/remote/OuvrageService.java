@@ -3,7 +3,7 @@ package org.breizhjug.breizhlib.remote;
 
 import android.util.Log;
 import org.acra.ErrorReporter;
-import org.breizhjug.breizhlib.BreizhLib;
+import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.model.Livre;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,15 +14,20 @@ import java.util.List;
 
 public class OuvrageService extends Service<Livre> {
 
-    private static String URL_BOOKS = BreizhLib.SERVER_URL + "api/ouvrages";
+    private static String URL_BOOKS = BreizhLibConstantes.SERVER_URL + "api/ouvrages";
 
-    private static String URL_FIND_BOOKS = BreizhLib.SERVER_URL + "api/find";
+    private static String URL_FIND_BOOKS = BreizhLibConstantes.SERVER_URL + "api/find";
 
-    private static String URL_ADD_BOOK = BreizhLib.SERVER_URL + "api/add";
+    private static String URL_ADD_BOOK = BreizhLibConstantes.SERVER_URL + "api/add";
 
     @Override
     public String url() {
         return URL_BOOKS;
+    }
+
+    @Override
+    protected Class<Livre> getEntityClass() {
+        return Livre.class;
     }
 
     public Livre find(String authCookie, String isbn) {
@@ -31,7 +36,7 @@ public class OuvrageService extends Service<Livre> {
 
     private Livre find(String authCookie, String urlString, String isbn) {
         String result = queryPostRESTurl(authCookie, urlString, new Param("iSBN", isbn));
-        Log.i("REST", result);
+        Log.d("REST", result);
         if (result != null) {
             try {
                 JSONArray booksArray = new JSONArray(result);
@@ -78,6 +83,7 @@ public class OuvrageService extends Service<Livre> {
                 for (int a = 0; a < booksArray.length(); a++) {
                     JSONObject item = booksArray.getJSONObject(a);
                     livre = converter.convertLivre(item);
+
                     BOOKS.add(livre);
                 }
                 return BOOKS;

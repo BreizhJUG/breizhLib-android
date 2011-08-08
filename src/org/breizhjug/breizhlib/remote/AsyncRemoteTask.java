@@ -1,31 +1,48 @@
 package org.breizhjug.breizhlib.remote;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import org.breizhjug.breizhlib.BreizhLib;
+import org.breizhjug.breizhlib.BreizhLibConstantes;
+import org.breizhjug.breizhlib.R;
+import org.breizhjug.breizhlib.model.Model;
 
 import java.util.ArrayList;
 
 
-public abstract class AsyncRemoteTask<T> extends AsyncTask<Void, Void, Boolean> {
+public abstract class AsyncRemoteTask<T extends Model> extends AsyncTask<Void, Void, Boolean> {
 
     Service<T> service;
     SharedPreferences prefs;
     AbsListView listView;
     public ArrayList<T> items = new ArrayList<T>();
+    private ProgressDialog waitDialog;
 
-    public AsyncRemoteTask(Service<T> service, AbsListView listView, SharedPreferences prefs) {
+    public AsyncRemoteTask(final Activity context, Service<T> service, AbsListView listView, SharedPreferences prefs) {
         this.service = service;
         this.listView = listView;
         this.prefs = prefs;
+        this.waitDialog = ProgressDialog.show(context, context.getString(R.string.recherche), context.getString(R.string.chargement), true, true);
+        waitDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+
+            public void onCancel(DialogInterface dialog) {
+                if (AsyncRemoteTask.this != null) {
+                    AsyncRemoteTask.this.cancel(true);
+                }
+                context.finish();
+            }
+        });
     }
 
     @Override
     protected void onPostExecute(Boolean result) {
+        waitDialog.dismiss();
         ArrayAdapter<T> mSchedule = getAdapter();
         listView.setAdapter(mSchedule);
 
@@ -38,7 +55,7 @@ public abstract class AsyncRemoteTask<T> extends AsyncTask<Void, Void, Boolean> 
 
     @Override
     protected Boolean doInBackground(Void... objects) {
-        items.addAll(service.load(prefs.getString(BreizhLib.AUTH_COOKIE, null)));
+        items.addAll(service.load(prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null)));
         return true;
     }
 

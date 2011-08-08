@@ -3,7 +3,7 @@ package org.breizhjug.breizhlib.remote;
 
 import android.util.Log;
 import org.acra.ErrorReporter;
-import org.breizhjug.breizhlib.BreizhLib;
+import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.model.Utilisateur;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class UtilisateurService extends Service<Utilisateur> {
 
-    private static String URL_USER = BreizhLib.SERVER_URL + "api/profil";
+    private static String URL_USER = BreizhLibConstantes.SERVER_URL + "api/profil";
 
     private static UtilisateurService instance;
 
@@ -20,6 +20,11 @@ public class UtilisateurService extends Service<Utilisateur> {
     @Override
     public String url() {
         return URL_USER;
+    }
+
+    @Override
+    protected Class<Utilisateur> getEntityClass() {
+        return Utilisateur.class;
     }
 
     public List<Utilisateur> load(String authCookie, String urlString) {
@@ -34,7 +39,7 @@ public class UtilisateurService extends Service<Utilisateur> {
         String result = queryRESTurl(authCookie, urlString);
 
         if (result != null) {
-            Log.i("REST", result);
+            Log.d("REST", result);
             try {
                 JSONObject item = new JSONObject(result);
                 return converter.convertUtilisateur(item);

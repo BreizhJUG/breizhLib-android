@@ -2,7 +2,7 @@ package org.breizhjug.breizhlib.remote;
 
 import android.util.Log;
 import org.acra.ErrorReporter;
-import org.breizhjug.breizhlib.BreizhLib;
+import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.model.Commentaire;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,9 +16,9 @@ public class CommentaireService extends Service<Commentaire> {
 
     private static final String TAG = CommentaireService.class.getName();
 
-    private static String URL_COMMENTS = BreizhLib.SERVER_URL + "api/commentaires";
+    private static String URL_COMMENTS = BreizhLibConstantes.SERVER_URL + "api/commentaires";
 
-    private static String URL_COMMENT = BreizhLib.SERVER_URL + "api/comment";
+    private static String URL_COMMENT = BreizhLibConstantes.SERVER_URL + "api/comment";
 
     public boolean comment(String authCookie, String bookId, String nom, String content, int note) {
         Log.i(TAG, "b: " + bookId + " " + nom + " " + content + " " + note);
@@ -38,7 +38,7 @@ public class CommentaireService extends Service<Commentaire> {
         String result = queryRESTurl(authCookie, urlString);
         ArrayList<Commentaire> commentaires = new ArrayList<Commentaire>();
         if (result != null) {
-            Log.i("REST", result);
+            Log.d("REST", result);
             try {
                 JSONArray commentairesArray = new JSONArray(result);
                 Commentaire commentaire = null;
@@ -59,6 +59,11 @@ public class CommentaireService extends Service<Commentaire> {
     @Override
     public String url() {
         return URL_COMMENTS;
+    }
+
+    @Override
+    protected Class<Commentaire> getEntityClass() {
+        return Commentaire.class;
     }
 
     private static CommentaireService instance;

@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import org.breizhjug.breizhlib.BreizhLib;
+import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.AbstractActivity;
 import org.breizhjug.breizhlib.model.Utilisateur;
@@ -24,15 +25,15 @@ public class ProfilActivity extends AbstractActivity {
 
     public void init(Intent intent) {
         SharedPreferences prefs = BreizhLib.getSharedPreferences(this);
-        String authCookie = prefs.getString(BreizhLib.AUTH_COOKIE, null);
+        String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
         Utilisateur user = BreizhLib.getUtilisateurService().find(authCookie);
 
         if (user != null) {
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putString(BreizhLib.USER, user.email);
-            editor.putBoolean(BreizhLib.USER_ADMIN, user.isAdmin);
-            editor.putString(BreizhLib.USER_NOM, user.nom);
-            editor.putString(BreizhLib.USER_PRENOM, user.prenom);
+            editor.putString(BreizhLibConstantes.USER, user.email);
+            editor.putBoolean(BreizhLibConstantes.USER_ADMIN, user.isAdmin);
+            editor.putString(BreizhLibConstantes.USER_NOM, user.nom);
+            editor.putString(BreizhLibConstantes.USER_PRENOM, user.prenom);
             editor.commit();
 
 

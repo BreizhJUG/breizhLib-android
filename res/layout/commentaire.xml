@@ -4,7 +4,7 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
         >
-    <include android:id="@+id/nav" layout="@layout/navigation" />
+    <include android:id="@+id/nav" layout="@layout/navigation"/>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   android:orientation="horizontal"
@@ -36,50 +36,50 @@
                       android:layout_height="fill_parent"
                     />
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                      android:orientation="horizontal"
-                      android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                >
-            <ImageView
-                android:id="@+id/star1"
-                android:layout_width="30sp"
-                android:layout_height="30sp"
-                android:layout_gravity="center_vertical"
-                android:padding="10px"
-                android:src="@drawable/sth"
-                />
+                          android:orientation="horizontal"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                    >
                 <ImageView
-                android:id="@+id/star2"
-                android:layout_width="30sp"
-                android:layout_height="30sp"
-                android:layout_gravity="center_vertical"
-                android:padding="10px"
-                android:src="@drawable/sth"
-                />
+                        android:id="@+id/star1"
+                        android:layout_width="30sp"
+                        android:layout_height="30sp"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10px"
+                        android:src="@drawable/sth"
+                        />
                 <ImageView
-                android:id="@+id/star3"
-                android:layout_width="30sp"
-                android:layout_height="30sp"
-                android:layout_gravity="center_vertical"
-                android:padding="10px"
-                android:src="@drawable/sth"
-                />
+                        android:id="@+id/star2"
+                        android:layout_width="30sp"
+                        android:layout_height="30sp"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10px"
+                        android:src="@drawable/sth"
+                        />
                 <ImageView
-                android:id="@+id/star4"
-                android:layout_width="30sp"
-                android:layout_height="30sp"
-                android:layout_gravity="center_vertical"
-                android:padding="10px"
-                android:src="@drawable/sth"
-                />
-                 <ImageView
-                android:id="@+id/star5"
-                android:layout_width="30sp"
-                android:layout_height="30sp"
-                android:layout_gravity="center_vertical"
-                android:padding="10px"
-                android:src="@drawable/sth"
-                />
+                        android:id="@+id/star3"
+                        android:layout_width="30sp"
+                        android:layout_height="30sp"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10px"
+                        android:src="@drawable/sth"
+                        />
+                <ImageView
+                        android:id="@+id/star4"
+                        android:layout_width="30sp"
+                        android:layout_height="30sp"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10px"
+                        android:src="@drawable/sth"
+                        />
+                <ImageView
+                        android:id="@+id/star5"
+                        android:layout_width="30sp"
+                        android:layout_height="30sp"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10px"
+                        android:src="@drawable/sth"
+                        />
             </LinearLayout>
 
         </LinearLayout>

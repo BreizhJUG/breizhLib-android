@@ -3,8 +3,7 @@ package org.breizhjug.breizhlib.remote;
 
 import android.util.Log;
 import org.acra.ErrorReporter;
-import org.breizhjug.breizhlib.BreizhLib;
-import org.breizhjug.breizhlib.R;
+import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.model.Reservation;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,14 +15,19 @@ import java.util.List;
 public class ReservationService extends Service<Reservation> {
     private static final String TAG = ReservationService.class.getName();
 
-    private static String URL_BOOKS = BreizhLib.SERVER_URL + "api/reservations";
-    private static String URL_RESA = BreizhLib.SERVER_URL + "api/book/reserver";
+    private static String URL_BOOKS = BreizhLibConstantes.SERVER_URL + "api/reservations";
+    private static String URL_RESA = BreizhLibConstantes.SERVER_URL + "api/book/reserver";
 
     private static ReservationService instance;
 
     @Override
     public String url() {
         return URL_BOOKS;
+    }
+
+    @Override
+    protected Class<Reservation> getEntityClass() {
+        return Reservation.class;
     }
 
     public boolean reserver(String authCookie, String isbn, String nom, String prenom, String email) {
@@ -37,7 +41,7 @@ public class ReservationService extends Service<Reservation> {
     }
 
     public List<Reservation> load(String authCookie, String urlString) {
-        Log.i("REST", urlString);
+        Log.d("REST", urlString);
         String result = queryRESTurl(authCookie, urlString);
         ArrayList<Reservation> BOOKS = new ArrayList<Reservation>();
         if (result != null) {

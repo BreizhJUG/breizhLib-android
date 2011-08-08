@@ -79,24 +79,31 @@ public class CommentaireActivity extends AbstractActivity {
         ImageView star3 = (ImageView) findViewById(R.id.star3);
         ImageView star4 = (ImageView) findViewById(R.id.star4);
         ImageView star5 = (ImageView) findViewById(R.id.star5);
-        switch (note){
-            case 0 :
+        switch (note) {
+            case 0:
                 star1.setVisibility(View.INVISIBLE);
-             case 1 :
+            case 1:
                 star2.setVisibility(View.INVISIBLE);
-            case 2 :
+            case 2:
                 star3.setVisibility(View.INVISIBLE);
-            case 3 :
+            case 3:
                 star4.setVisibility(View.INVISIBLE);
             case 4:
-               star5.setVisibility(View.INVISIBLE);
+                star5.setVisibility(View.INVISIBLE);
             case 5:
-            break;
+                break;
         }
     }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.commentaire);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), CommentairesActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 }

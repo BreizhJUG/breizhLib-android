@@ -6,6 +6,7 @@ import android.content.*;
 import android.os.Bundle;
 import android.view.MenuItem;
 import org.breizhjug.breizhlib.BreizhLib;
+import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.compte.CompteList;
 import org.breizhjug.breizhlib.utils.IntentSupport;
@@ -60,7 +61,7 @@ public class BaseActivity extends Activity {
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         SharedPreferences prefs = BreizhLib.getSharedPreferences(this);
-        String authCookie = prefs.getString(BreizhLib.AUTH_COOKIE, null);
+        String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
         if (authCookie == null) {
             MenuItem item = (MenuItem) menu.findItem(R.id.connexion);
             String message = getString(R.string.connexion);
@@ -84,7 +85,7 @@ public class BaseActivity extends Activity {
                 return true;
             case R.id.connexion:
                 SharedPreferences prefs = BreizhLib.getSharedPreferences(this);
-                String authCookie = prefs.getString(BreizhLib.AUTH_COOKIE, null);
+                String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
                 if (authCookie == null) {
                     Intent pIntent = new Intent(getApplicationContext(), CompteList.class);
                     pIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -118,12 +119,12 @@ public class BaseActivity extends Activity {
 
     private void onLogout() {
         SharedPreferences.Editor editor = BreizhLib.getSharedPreferences(this).edit();
-        editor.putString(BreizhLib.AUTH_COOKIE, null);
-        editor.putString(BreizhLib.ACCOUNT_NAME, null);
-        editor.putString(BreizhLib.USER, null);
-        editor.putString(BreizhLib.USER_NOM, null);
-        editor.putString(BreizhLib.USER_PRENOM, null);
-        editor.putString(BreizhLib.USER_ADMIN, null);
+        editor.putString(BreizhLibConstantes.AUTH_COOKIE, null);
+        editor.putString(BreizhLibConstantes.ACCOUNT_NAME, null);
+        editor.putString(BreizhLibConstantes.USER, null);
+        editor.putString(BreizhLibConstantes.USER_NOM, null);
+        editor.putString(BreizhLibConstantes.USER_PRENOM, null);
+        editor.putString(BreizhLibConstantes.USER_ADMIN, null);
         editor.commit();
     }
 

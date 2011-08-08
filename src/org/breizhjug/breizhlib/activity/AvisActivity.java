@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 import org.breizhjug.breizhlib.BreizhLib;
+import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.model.Livre;
 
@@ -28,12 +29,12 @@ public class AvisActivity extends AbstractActivity {
         adapter.add("4");
         adapter.add("5");
         note.setAdapter(adapter);
-        if(livre.note > 0){
-            note.setSelection(livre.note-1);
+        if (livre.note > 0) {
+            note.setSelection(livre.note - 1);
         }
 
-        String nom = prefs.getString(BreizhLib.USER_NOM, "") + " " +
-                prefs.getString(BreizhLib.USER_PRENOM, "");
+        String nom = prefs.getString(BreizhLibConstantes.USER_NOM, "") + " " +
+                prefs.getString(BreizhLibConstantes.USER_PRENOM, "");
         final EditText nomEdit = (EditText) findViewById(R.id.nomEdit);
         nomEdit.setText(nom);
 
@@ -45,7 +46,7 @@ public class AvisActivity extends AbstractActivity {
 
             public void onClick(View view) {
                 final String avis = avisEdit.getText().toString();
-                 final String nom = nomEdit.getText().toString();
+                final String nom = nomEdit.getText().toString();
 
                 final AsyncTask<Void, Void, Boolean> initTask = new AsyncTask<Void, Void, Boolean>() {
 
@@ -53,7 +54,7 @@ public class AvisActivity extends AbstractActivity {
                     protected Boolean doInBackground(Void... params) {
 
 
-                        String authCookie = prefs.getString(BreizhLib.AUTH_COOKIE, null);
+                        String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
                         boolean result = BreizhLib.getCommentaireService().comment(authCookie, livre.iSBN, nom, avis, Integer.valueOf("" + note.getSelectedItem()));
                         return result;
                     }
@@ -74,9 +75,9 @@ public class AvisActivity extends AbstractActivity {
 
                 if (avis == null || avis.length() == 0) {
                     showError("Commentaite non renseigné", false);
-                } else if(nom == null || nom.length() == 0){
-                   showError("Nom non renseigné", false);
-                }else{
+                } else if (nom == null || nom.length() == 0) {
+                    showError("Nom non renseigné", false);
+                } else {
                     initTask.execute();
                 }
             }

@@ -16,6 +16,9 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
+import org.breizhjug.breizhlib.BreizhLib;
+import org.breizhjug.breizhlib.database.Database;
+import org.breizhjug.breizhlib.model.Model;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,24 +29,50 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Service<T> {
+public abstract class Service<T extends Model> {
 
     private static final int CONNECTION_TIMEOUT = 20000;
     private static HttpClient httpclient = getHttpClient();
     private List<T> cache = null;
 
     protected static JsonConverter converter = new JsonConverter();
+    protected static Database db = BreizhLib.getDataBaseHelper();
 
     public abstract List<T> load(String authCookie, String urlString);
 
     public abstract String url();
 
     public List<T> load(String authCookie) {
+
         if (cache == null || cache.isEmpty()) {
-            cache = load(authCookie, url());
+            List<T> entities = db.selectAll(getEntityClass());
+            if (entities == null || entities.isEmpty()) {
+                cache = load(authCookie, url());
+                updateDB(cache);
+            } else {
+                cache = entities;
+                loadDB(cache);
+            }
         }
         return cache != null ? new ArrayList<T>(cache) : cache;
     }
+
+    private void loadDB(List<T> cache) {
+        for (T entity : cache) {
+             entity.onLoad(db);
+        }
+    }
+
+    private void updateDB(List<T> cache) {
+        db.beginTransaction();
+        for (T entity : cache) {
+            //TODO controle de la presence des données
+            db.insert(entity);
+        }
+        db.endTransaction();
+    }
+
+    protected abstract Class<T> getEntityClass();
 
     public void clearCache() {
         cache = null;
@@ -87,21 +116,19 @@ public abstract class Service<T> {
 
             httpPost.setURI(new URI(url));
             response = httpclient.execute(httpPost);
-            Log.i("REST", "Status:[" + response.getStatusLine().toString() + "]");
+            Log.d("REST", "Status:[" + response.getStatusLine().toString() + "]");
             HttpEntity entity = response.getEntity();
             if (entity != null) {
                 InputStream instream = entity.getContent();
                 String result = convertStreamToString(instream);
-                Log.i("REST", "Result of converstion: [" + result + "]");
+                Log.d("REST", "Result of converstion: [" + result + "]");
                 instream.close();
                 return result;
             }
         } catch (ClientProtocolException e) {
             Log.e("REST", "There was a protocol based error", e);
-            ErrorReporter.getInstance().handleSilentException(e);
         } catch (IOException e) {
             Log.e("REST", "There was an IO Stream related error", e);
-            ErrorReporter.getInstance().handleSilentException(e);
         } catch (URISyntaxException e) {
             Log.e("REST", "There was an IO Stream related error", e);
             ErrorReporter.getInstance().handleSilentException(e);

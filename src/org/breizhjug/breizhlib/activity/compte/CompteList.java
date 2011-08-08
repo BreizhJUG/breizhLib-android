@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import org.breizhjug.breizhlib.BreizhLib;
+import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.AbstractActivity;
 import org.breizhjug.breizhlib.adapter.AccountsAdapter;
@@ -24,7 +25,7 @@ public class CompteList extends AbstractActivity {
     public void init(Intent intent) {
 
         prefs = BreizhLib.getSharedPreferences(this);
-        authcookie = prefs.getString(BreizhLib.AUTH_COOKIE, null);
+        authcookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
         if (authcookie == null) {
             setContentView(R.layout.items);
         }
@@ -47,7 +48,7 @@ public class CompteList extends AbstractActivity {
             });
         } else {
             Intent pIntent = new Intent(this, ProfilActivity.class);
-            pIntent.putExtra("email", prefs.getString(BreizhLib.ACCOUNT_NAME, null));
+            pIntent.putExtra("email", prefs.getString(BreizhLibConstantes.ACCOUNT_NAME, null));
             startActivity(pIntent);
         }
 

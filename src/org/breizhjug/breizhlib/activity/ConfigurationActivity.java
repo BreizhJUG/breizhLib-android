@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import org.breizhjug.breizhlib.BreizhLib;
+import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 
 
@@ -22,7 +23,7 @@ public class ConfigurationActivity extends Activity {
         SharedPreferences prefs = BreizhLib.getSharedPreferences(this);
 
         checkGrid = (CheckBox) findViewById(R.id.checkGrid);
-        checkGrid.setChecked(prefs.getBoolean(BreizhLib.GRID, false));
+        checkGrid.setChecked(prefs.getBoolean(BreizhLibConstantes.GRID, false));
 
         Button button = (Button) findViewById(R.id.buttonValid);
         button.setOnClickListener(new Button.OnClickListener() {
@@ -41,7 +42,7 @@ public class ConfigurationActivity extends Activity {
 
     public void onSave() {
         SharedPreferences.Editor editor = BreizhLib.getSharedPreferences(this).edit();
-        editor.putBoolean(BreizhLib.GRID, checkGrid.isChecked());
+        editor.putBoolean(BreizhLibConstantes.GRID, checkGrid.isChecked());
         editor.commit();
 
         setResult(RESULT_OK);

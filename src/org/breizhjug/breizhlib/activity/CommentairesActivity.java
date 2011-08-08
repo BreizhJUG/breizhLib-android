@@ -1,7 +1,5 @@
 package org.breizhjug.breizhlib.activity;
 
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -24,19 +22,13 @@ public class CommentairesActivity extends AbstractActivity {
         initView();
     }
 
-    public void init(Intent intent) {             }
+    public void init(Intent intent) {
+    }
 
     public void initView() {
         commentairesListView = (ListView) findViewById(R.id.items);
         SharedPreferences prefs = BreizhLib.getSharedPreferences(this);
-        final ProgressDialog waitDialog = ProgressDialog.show(this, getString(R.string.recherche), getString(R.string.chargement), true, true);
-        final AsyncTask<Void, Void, Boolean> initTask = new AsyncRemoteTask<Commentaire>(BreizhLib.getCommentaireService(),commentairesListView, prefs) {
-
-            @Override
-            protected void onPostExecute(Boolean result) {
-                super.onPostExecute(result);
-                 waitDialog.dismiss();
-            }
+        final AsyncTask<Void, Void, Boolean> initTask = new AsyncRemoteTask<Commentaire>(this, BreizhLib.getCommentaireService(), commentairesListView, prefs) {
 
             @Override
             public ArrayAdapter<Commentaire> getAdapter() {
@@ -52,15 +44,6 @@ public class CommentairesActivity extends AbstractActivity {
                 startActivity(intent);
             }
         };
-        waitDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-
-            public void onCancel(DialogInterface dialog) {
-                if (initTask != null) {
-                    initTask.cancel(true);
-                }
-                finish();
-            }
-        });
-        initTask.execute((Void)null);
+        initTask.execute((Void) null);
     }
 }

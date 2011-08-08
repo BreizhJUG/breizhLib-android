@@ -30,37 +30,37 @@ import java.net.URLConnection;
 
 public class Version {
 
-	private final static String URL_VERSION = BreizhLib.SERVER_URL +"android/version";
+    private final static String URL_VERSION = BreizhLib.SERVER_URL + "android/version";
 
-	private static String versionMarket = null;
+    private static String versionMarket = null;
 
-	public static String getVersionMarket() {
-		try {
-			URL urlVersion = new URL(URL_VERSION);
-			URLConnection connection = urlVersion.openConnection();
-			connection.setConnectTimeout(30000);
-			connection.setReadTimeout(30000);
-			BufferedReader bufReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			versionMarket = bufReader.readLine();
-			bufReader.close();
-		} catch (Exception ignore) {
-		}
-		return versionMarket;
-	}
+    public static String getVersionMarket() {
+        try {
+            URL urlVersion = new URL(URL_VERSION);
+            URLConnection connection = urlVersion.openConnection();
+            connection.setConnectTimeout(30000);
+            connection.setReadTimeout(30000);
+            BufferedReader bufReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            versionMarket = bufReader.readLine();
+            bufReader.close();
+        } catch (Exception ignore) {
+        }
+        return versionMarket;
+    }
 
-	private static String version = null;
+    private static String version = null;
 
-	public static String getVersionCourante(Application application) {
-		if (version == null) {
-			PackageManager manager = application.getPackageManager();
-			try {
-				PackageInfo info = manager.getPackageInfo(application.getPackageName(), 0);
-				version = info.versionName;
-			} catch (PackageManager.NameNotFoundException exception) {
-				throw new BreizhLibException(exception);
-			}
-		}
-		return version;
-	}
+    public static String getVersionCourante(Application application) {
+        if (version == null) {
+            PackageManager manager = application.getPackageManager();
+            try {
+                PackageInfo info = manager.getPackageInfo(application.getPackageName(), 0);
+                version = info.versionName;
+            } catch (PackageManager.NameNotFoundException exception) {
+                throw new BreizhLibException(exception);
+            }
+        }
+        return version;
+    }
 
 }

@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import org.breizhjug.breizhlib.BreizhLib;
+import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 
 
@@ -22,6 +22,6 @@ public class CreditsActivity extends AbstractActivity {
 
 
     public void web(View view) {
-        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(BreizhLib.SERVER_URL + "android")));
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(BreizhLibConstantes.SERVER_URL + "android")));
     }
 }
