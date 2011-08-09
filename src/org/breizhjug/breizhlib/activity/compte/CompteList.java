@@ -44,12 +44,14 @@ public class CompteList extends AbstractActivity {
                     Intent intent = new Intent(getApplicationContext(), AppInfo.class);
                     intent.putExtra("account", account);
                     startActivity(intent);
+                    finish();
                 }
             });
         } else {
             Intent pIntent = new Intent(this, ProfilActivity.class);
             pIntent.putExtra("email", prefs.getString(BreizhLibConstantes.ACCOUNT_NAME, null));
             startActivity(pIntent);
+            finish();
         }
 
 

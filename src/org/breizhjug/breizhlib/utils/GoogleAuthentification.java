@@ -15,6 +15,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.breizhjug.breizhlib.BreizhLib;
+import org.breizhjug.breizhlib.BreizhLibConstantes;
 
 import java.io.IOException;
 import java.net.URI;
@@ -65,8 +66,8 @@ public class GoogleAuthentification {
         try {
             // Get SACSID cookie
             DefaultHttpClient client = new DefaultHttpClient();
-            String continueURL = BreizhLib.SERVER_URL;
-            URI uri = new URI(BreizhLib.SERVER_URL + "/_ah/login?continue="
+            String continueURL = BreizhLibConstantes.SERVER_URL;
+            URI uri = new URI(BreizhLibConstantes.SERVER_URL + "/_ah/login?continue="
                     + URLEncoder.encode(continueURL, "UTF-8") + "&auth=" + authToken);
             HttpGet method = new HttpGet(uri);
             final HttpParams getParams = new BasicHttpParams();

@@ -23,6 +23,7 @@ public class ScanActivity extends AbstractActivity {
     @Override
     public void init(Intent intent) {
         IntentIntegrator.initiateScan(this);
+        finish();
     }
 
     public void onCreate(Bundle savedInstanceState) {

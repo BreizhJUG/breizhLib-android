@@ -63,6 +63,7 @@ public class LivreActivity extends AbstractActivity {
                         intent.putExtra("index", index - 1);
                         intent.putExtra("backActivity", backActivity);
                         startActivity(intent);
+                        finish();
                     }
                 });
             } else {
@@ -80,6 +81,7 @@ public class LivreActivity extends AbstractActivity {
                         intent.putExtra("index", index + 1);
                         intent.putExtra("backActivity", backActivity);
                         startActivity(intent);
+                        finish();
                     }
                 });
             } else {
@@ -201,21 +203,4 @@ public class LivreActivity extends AbstractActivity {
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        Intent intent;
-        if (backActivity != null && backActivity.equals("OuvragesActivity")) {
-            intent = new Intent(getApplicationContext(), OuvragesActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        } else if (backActivity != null && backActivity.equals("ReservationsActivity")) {
-            intent = new Intent(getApplicationContext(), ReservationsActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        } else {
-            intent = new Intent(getApplicationContext(), Menu.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        }
-
-        startActivity(intent);
-    }
 }

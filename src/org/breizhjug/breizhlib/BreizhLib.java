@@ -112,7 +112,7 @@ public class BreizhLib extends Application {
 
         protected void onPostExecute(Integer result) {
             Log.d("VERSION"," version "+Version.getVersionCourante(BreizhLib.this));
-            if (result != null && result < Version.getVersionCourante(BreizhLib.this)) {
+            if (result != null && result > Version.getVersionCourante(BreizhLib.this)) {
                 createNotification(Version.getVersionMarket());
             }
         }

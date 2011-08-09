@@ -21,8 +21,10 @@ public class SplashScreen extends BaseActivity {
                     //remove SplashScreen from view
                     Intent intent = new Intent(SplashScreen.this, Menu.class);
                     startActivity(intent);
+
                     break;
             }
+            finish();
             super.handleMessage(msg);
         }
     };

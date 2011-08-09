@@ -51,6 +51,7 @@ public class CommentaireActivity extends AbstractActivity {
                     intent.putExtra("commentaires", commentaires);
                     intent.putExtra("index", index - 1);
                     startActivity(intent);
+                    finish();
                 }
             });
         } else {
@@ -67,6 +68,7 @@ public class CommentaireActivity extends AbstractActivity {
                     intent.putExtra("commentaires", commentaires);
                     intent.putExtra("index", index + 1);
                     startActivity(intent);
+                    finish();
                 }
             });
         } else {
@@ -103,10 +105,4 @@ public class CommentaireActivity extends AbstractActivity {
         initView();
     }
 
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(getApplicationContext(), CommentairesActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-    }
 }

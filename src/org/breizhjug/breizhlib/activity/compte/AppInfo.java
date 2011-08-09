@@ -53,6 +53,7 @@ public class AppInfo extends AbstractActivity {
                             prefs.edit().putString(BreizhLibConstantes.AUTH_COOKIE, result).commit();
                             Intent intent = new Intent(AppInfo.this, ProfilActivity.class);
                             startActivity(intent);
+                            finish();
                         }
                     }
                 };
