@@ -20,6 +20,7 @@ public class ConfigurationActivity extends Activity {
     private CheckBox checkGrid;
     private CheckBox checkImg;
     private Spinner frequence;
+    private long period;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +54,7 @@ public class ConfigurationActivity extends Activity {
         options.add(new Option("1 heure", AlarmManager.INTERVAL_HOUR));
         options.add(new Option("1 jour", AlarmManager.INTERVAL_DAY));
 
-        long period = prefs.getLong(SyncManager.OUVRAGE_T_PERIOD,0l);
+        period = prefs.getLong(SyncManager.OUVRAGE_T_PERIOD,0l);
 
         int selectedIndex = 0;
         for(Option option :options){
@@ -88,11 +89,13 @@ public class ConfigurationActivity extends Activity {
     public void onSave() {
         SharedPreferences.Editor editor = BreizhLib.getSharedPreferences(this).edit();
         editor.putBoolean(BreizhLibConstantes.GRID, checkGrid.isChecked());
-        editor.commit();
 
          Option option = (Option)   frequence.getSelectedItem();
-         BreizhLib.getSyncManager().reschedule(SyncManager.OUVRAGE_T,option.valeur);
-
+         if(period != option.valeur) {
+            editor.putLong(SyncManager.OUVRAGE_T_PERIOD, option.valeur);
+            BreizhLib.getSyncManager().reschedule(SyncManager.OUVRAGE_T,option.valeur);
+         }
+        editor.commit();
         setResult(RESULT_OK);
         finish();
     }

@@ -19,7 +19,7 @@ public class SyncManager {
 
     public static final String OUVRAGE_T_PERIOD = "OUVRAGE_T_PERIOD";
 
-    Timer ouvragesTimer = new Timer(OUVRAGE_T);
+    Timer ouvragesTimer;;
 
     SharedPreferences prefs;
 
@@ -36,11 +36,8 @@ public class SyncManager {
     }
 
     public void run() {
-        ouvragesTimer.schedule(syncOuvrages, TIMER_DELAY, prefs.getLong(OUVRAGE_T_PERIOD, 0l));
+        reschedule(OUVRAGE_T, prefs.getLong(OUVRAGE_T_PERIOD, 0l));
     }
-
-
-    private TimerTask syncOuvrages = new OuvragesTask();
 
     private class OuvragesTask extends TimerTask {
         @Override
@@ -53,14 +50,12 @@ public class SyncManager {
 
     public void reschedule(String timerName, long periode) {
         if (timerName.equals(OUVRAGE_T)) {
-            ouvragesTimer.cancel();
-            syncOuvrages = new OuvragesTask();
+            if(ouvragesTimer != null){
+                ouvragesTimer.cancel();
+            }
+            TimerTask syncOuvrages = new OuvragesTask();
             ouvragesTimer = new Timer(OUVRAGE_T);
             ouvragesTimer.schedule(syncOuvrages, TIMER_DELAY, periode);
-
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putLong(OUVRAGE_T_PERIOD, periode);
-            editor.commit();
         }
     }
 }

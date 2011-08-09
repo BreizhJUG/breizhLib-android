@@ -48,10 +48,10 @@ public abstract class Service<T extends Model> {
         if (forceCall || (cache == null || cache.isEmpty())) {
             List<T> entities = db.selectAll(getEntityClass());
             if (forceCall || (entities == null || entities.isEmpty())) {
+                forceCall = false;
                 Log.d("TIMEROUVRAGE", "load");
                 cache = load(authCookie, url());
                 updateDB(cache);
-                forceCall = false;
             } else {
                 cache = entities;
                 loadDB(cache);
