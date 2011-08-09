@@ -26,6 +26,13 @@ public class ReservationService extends Service<Reservation> {
     }
 
     @Override
+    protected boolean isInDB(Reservation entity) {
+        Reservation searchEntity = new Reservation();
+        searchEntity.isbn = entity.isbn;
+        return db.selectSingle(searchEntity) != null;
+    }
+
+    @Override
     protected Class<Reservation> getEntityClass() {
         return Reservation.class;
     }

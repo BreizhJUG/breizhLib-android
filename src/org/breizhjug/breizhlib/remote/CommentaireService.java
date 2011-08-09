@@ -62,6 +62,15 @@ public class CommentaireService extends Service<Commentaire> {
     }
 
     @Override
+    protected boolean isInDB(Commentaire entity) {
+        Commentaire searchEntity = new Commentaire();
+        searchEntity.isbn = entity.isbn;
+        searchEntity.nom = entity.nom;
+        //TODO clés unique ?
+        return db.selectSingle(searchEntity) != null;
+    }
+
+    @Override
     protected Class<Commentaire> getEntityClass() {
         return Commentaire.class;
     }

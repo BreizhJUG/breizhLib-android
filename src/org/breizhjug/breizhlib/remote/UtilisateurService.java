@@ -23,6 +23,13 @@ public class UtilisateurService extends Service<Utilisateur> {
     }
 
     @Override
+    protected boolean isInDB(Utilisateur entity) {
+        Utilisateur searchEntity = new Utilisateur();
+        searchEntity.email = entity.email;
+        return db.selectSingle(searchEntity) != null;
+    }
+
+    @Override
     protected Class<Utilisateur> getEntityClass() {
         return Utilisateur.class;
     }

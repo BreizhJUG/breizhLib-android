@@ -2,7 +2,6 @@ package org.breizhjug.breizhlib.remote;
 
 
 import android.util.Log;
-import org.acra.ErrorReporter;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -42,13 +41,17 @@ public abstract class Service<T extends Model> {
 
     public abstract String url();
 
+    public boolean forceCall = false;
+
     public List<T> load(String authCookie) {
 
-        if (cache == null || cache.isEmpty()) {
+        if (forceCall || (cache == null || cache.isEmpty())) {
             List<T> entities = db.selectAll(getEntityClass());
-            if (entities == null || entities.isEmpty()) {
+            if (forceCall || (entities == null || entities.isEmpty())) {
+                Log.d("TIMEROUVRAGE", "load");
                 cache = load(authCookie, url());
                 updateDB(cache);
+                forceCall = false;
             } else {
                 cache = entities;
                 loadDB(cache);
@@ -66,11 +69,16 @@ public abstract class Service<T extends Model> {
     private void updateDB(List<T> cache) {
         db.beginTransaction();
         for (T entity : cache) {
-            //TODO controle de la presence des données
-            db.insert(entity);
+            if (isInDB(entity)) {
+                db.update(entity);
+            } else {
+                db.insert(entity);
+            }
         }
         db.endTransaction();
     }
+
+    protected abstract boolean isInDB(T entity);
 
     protected abstract Class<T> getEntityClass();
 
@@ -126,12 +134,14 @@ public abstract class Service<T extends Model> {
                 return result;
             }
         } catch (ClientProtocolException e) {
-            Log.e("REST", "There was a protocol based error", e);
+            httpPost.abort();
+            Log.w("REST", "There was a protocol based error", e);
         } catch (IOException e) {
-            Log.e("REST", "There was an IO Stream related error", e);
+            httpPost.abort();
+            Log.w("REST", "There was an IO Stream related error", e);
         } catch (URISyntaxException e) {
-            Log.e("REST", "There was an IO Stream related error", e);
-            ErrorReporter.getInstance().handleSilentException(e);
+            httpPost.abort();
+            Log.w("REST", "There was an IO Stream related error", e);
         }
         return null;
     }
@@ -164,24 +174,22 @@ public abstract class Service<T extends Model> {
 
             httpget.setURI(new URI(url));
             response = httpclient.execute(httpget);
-            Log.i("REST", "Status:[" + response.getStatusLine().toString() + "]");
             HttpEntity entity = response.getEntity();
             if (entity != null) {
                 InputStream instream = entity.getContent();
                 String result = convertStreamToString(instream);
-                Log.i("REST", "Result of converstion: [" + result + "]");
                 instream.close();
                 return result;
             }
         } catch (ClientProtocolException e) {
-            Log.e("REST", "There was a protocol based error", e);
-            ErrorReporter.getInstance().handleSilentException(e);
+            httpget.abort();
+            Log.w("REST", "There was a protocol based error", e);
         } catch (IOException e) {
-            Log.e("REST", "There was an IO Stream related error", e);
-            ErrorReporter.getInstance().handleSilentException(e);
+            httpget.abort();
+            Log.w("REST", "There was an IO Stream related error", e);
         } catch (URISyntaxException e) {
-            Log.e("REST", "There was an IO Stream related error", e);
-            ErrorReporter.getInstance().handleSilentException(e);
+            httpget.abort();
+            Log.w("REST", "There was an IO Stream related error", e);
         }
         return null;
     }

@@ -9,15 +9,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.util.Log;
 import org.acra.ACRA;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
 import org.breizhjug.breizhlib.database.Database;
-import org.breizhjug.breizhlib.remote.CommentaireService;
-import org.breizhjug.breizhlib.remote.OuvrageService;
-import org.breizhjug.breizhlib.remote.ReservationService;
-import org.breizhjug.breizhlib.remote.UtilisateurService;
+import org.breizhjug.breizhlib.remote.*;
 import org.breizhjug.breizhlib.utils.GoogleAuthentification;
 import org.breizhjug.breizhlib.utils.ImageDownloader;
 import org.breizhjug.breizhlib.utils.Version;
@@ -43,6 +39,8 @@ public class BreizhLib extends Application {
 
     private static Database databaseHelper;
 
+    private static SyncManager syncManager;
+
 
     @Override
     public void onCreate() {
@@ -60,6 +58,14 @@ public class BreizhLib extends Application {
         gAuth = GoogleAuthentification.getInstance();
         instance = new BreizhLib();
         checkVersion.execute();
+
+        syncManager = new SyncManager();
+        syncManager.init(this);
+        syncManager.run();
+    }
+
+    public static SyncManager getSyncManager() {
+        return syncManager;
     }
 
     public static Database getDataBaseHelper() {
@@ -111,7 +117,6 @@ public class BreizhLib extends Application {
         }
 
         protected void onPostExecute(Integer result) {
-            Log.d("VERSION"," version "+Version.getVersionCourante(BreizhLib.this));
             if (result != null && result > Version.getVersionCourante(BreizhLib.this)) {
                 createNotification(Version.getVersionMarket());
             }

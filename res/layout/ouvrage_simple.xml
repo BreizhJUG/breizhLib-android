@@ -11,5 +11,6 @@
             android:layout_height="70sp"
             android:layout_gravity="center_vertical"
             android:padding="10px"
+            android:src="@drawable/no_photo"
             />
 </LinearLayout>

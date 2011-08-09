@@ -26,6 +26,13 @@ public class OuvrageService extends Service<Livre> {
     }
 
     @Override
+    protected boolean isInDB(Livre entity) {
+        Livre searchEntity = new Livre();
+        searchEntity.iSBN = entity.iSBN;
+        return db.selectSingle(searchEntity) != null;
+    }
+
+    @Override
     protected Class<Livre> getEntityClass() {
         return Livre.class;
     }

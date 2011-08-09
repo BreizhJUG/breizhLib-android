@@ -25,6 +25,18 @@
                   android:layout_alignParentLeft="true"
                   android:id="@+id/checkGrid"/>
 
+         <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="Synchronisation Ouvrages"
+                  android:textSize="16sp"
+                  android:padding="5sp"/>
+
+         <Spinner
+            android:id="@+id/frequence"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Fréquence"/>
+
         <Button android:id="@+id/buttonValid"
                 android:text="@string/valider"
                 android:layout_width="wrap_content"
@@ -37,6 +49,10 @@
                 android:layout_marginTop="20sp"
                 android:textColor="#111111"/>
 
+
+
+
+
         <RelativeLayout android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/ligth_theme_color">
@@ -44,7 +60,8 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/cacheTitre"/>
+                    android:text="@string/cacheTitre"
+                    android:textSize="16sp"/>
 
         </RelativeLayout>
 
