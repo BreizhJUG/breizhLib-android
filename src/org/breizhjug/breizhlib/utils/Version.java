@@ -55,19 +55,22 @@ public class Version {
         return versionCodeMarket;
     }
 
-    private static int version = 0;
+    private static int versionCode = 0;
+
+    public static String version = "0";
 
     public static int getVersionCourante(Application application) {
-        if (version == 0) {
+        if (versionCode == 0) {
             PackageManager manager = application.getPackageManager();
             try {
                 PackageInfo info = manager.getPackageInfo(application.getPackageName(), 0);
-                version = info.versionCode;
+                versionCode = info.versionCode;
+                version = info.versionName;
             } catch (PackageManager.NameNotFoundException exception) {
                 throw new BreizhLibException(exception);
             }
         }
-        return version;
+        return versionCode;
     }
 
 }

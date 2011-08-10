@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
@@ -16,13 +17,18 @@ import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.remote.AsyncRemoteTask;
 
 
-public class OuvragesActivity extends AbstractActivity {
+public class OuvragesActivity extends AbstractActivity implements SharedPreferences.OnSharedPreferenceChangeListener{
 
     private AbsListView ouvragesListView;
+
+    private boolean modeGrid;
+    private SharedPreferences prefs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        modeGrid = prefs.getBoolean(BreizhLibConstantes.GRID, false);
         initView();
     }
 
@@ -37,9 +43,9 @@ public class OuvragesActivity extends AbstractActivity {
     }
 
     public void initView() {
-        final SharedPreferences prefs = BreizhLib.getSharedPreferences(this);
+        prefs.registerOnSharedPreferenceChangeListener(this);
         int resource = R.layout.ouvrage;
-        if (prefs.getBoolean(BreizhLibConstantes.GRID, false)) {
+        if (modeGrid) {
             setContentView(R.layout.main);
             ouvragesListView = (GridView) findViewById(R.id.grilleBoutons);
             ((GridView) ouvragesListView).setNumColumns(4);
@@ -74,4 +80,9 @@ public class OuvragesActivity extends AbstractActivity {
     }
 
 
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+        if( s.equals(BreizhLibConstantes.GRID)){
+          modeGrid = sharedPreferences.getBoolean(BreizhLibConstantes.GRID, false);
+        }
+    }
 }

@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import org.acra.ACRA;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
@@ -22,8 +23,6 @@ import org.breizhjug.breizhlib.utils.Version;
 @ReportsCrashes(formKey = "dGFpb0t5YXF3a3J3Ui1GZjBVY1ROMGc6MQ",
         mode = ReportingInteractionMode.TOAST, resToastText = R.string.resToastText)
 public class BreizhLib extends Application {
-
-    private static BreizhLib instance;
 
     private static ImageDownloader imageDownloader;
 
@@ -56,11 +55,10 @@ public class BreizhLib extends Application {
         utilisateurService = UtilisateurService.getInstance();
 
         gAuth = GoogleAuthentification.getInstance();
-        instance = new BreizhLib();
         checkVersion.execute();
 
         syncManager = new SyncManager();
-        syncManager.init(this);
+        syncManager.init(this.getApplicationContext());
         syncManager.run();
     }
 
@@ -98,7 +96,7 @@ public class BreizhLib extends Application {
     }
 
     public static SharedPreferences getSharedPreferences(Context context) {
-        return context.getSharedPreferences(BreizhLibConstantes.SHARED_PREFS, 0);
+        return PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     public static void clearCache() {

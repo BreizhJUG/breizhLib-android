@@ -24,11 +24,20 @@
 
         </RelativeLayout>
 
+
+
         <TextView android:layout_width="fill_parent"
                   android:layout_height="wrap_content"
                   android:textSize="18sp"
                   android:layout_margin="10sp"
                   android:text="@string/credits"/>
+
+         <TextView android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:textSize="18sp"
+                  android:layout_margin="10sp"
+                  android:id="@+id/version"
+                  android:text="@string/version"/>
 
         <TextView android:layout_width="fill_parent"
                   android:layout_height="wrap_content"

@@ -20,7 +20,7 @@
     <string name="compte">Compte</string>
 
     <!-- livre -->
-    <string name="avisBtn">Votre Avi</string>
+    <string name="avisBtn">Votre Avis</string>
     <string name="indispoBtn">Indisponible</string>
     <string name="reserveBtn">Réservé</string>
     <string name="nonDispoBtn">Non disponible</string>
@@ -37,6 +37,7 @@
     <string name="contactWeb">Site :
         <a href="http://breizh-lib.appspot.com/android">breizh-lib.appspot.com</a>
     </string>
+    <string name="version">Version : </string>
 
     <!-- contextMenu -->
     <string name="shareText">BreizhLib, l\'application Android pour vous faciliter l\'utilisation de la bibliothèque du

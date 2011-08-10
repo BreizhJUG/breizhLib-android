@@ -31,7 +31,7 @@ public class LivreActivity extends AbstractActivity {
     }
 
     private void initView() {
-        SharedPreferences prefs = BreizhLib.getSharedPreferences(this);
+        SharedPreferences prefs = BreizhLib.getSharedPreferences(getApplicationContext());
         final Livre livre = (Livre) getIntent().getSerializableExtra("livre");
         backActivity = getIntent().getStringExtra("backActivity");
         final ArrayList<Livre> ouvrages = (ArrayList<Livre>) getIntent().getSerializableExtra("livres");
@@ -146,9 +146,9 @@ public class LivreActivity extends AbstractActivity {
             button.setText(getString(R.string.reserveBtn));
         } else if (etat.equals("DISP0NIBLE")) {
             button.setText(getString(R.string.reserverBtn));
-            if (BreizhLib.getSharedPreferences(this).getString(BreizhLibConstantes.ACCOUNT_NAME, null) != null) {
+            if (BreizhLib.getSharedPreferences(getApplicationContext()).getString(BreizhLibConstantes.ACCOUNT_NAME, null) != null) {
                 button.setEnabled(true);
-                if (BreizhLib.getSharedPreferences(this).getString(BreizhLibConstantes.USER, null) != null) {
+                //if (BreizhLib.getSharedPreferences(getApplicationContext()).getString(BreizhLibConstantes.USER, null) != null) {
                     button.setOnClickListener(new Button.OnClickListener() {
 
                         public void onClick(View view) {
@@ -157,7 +157,7 @@ public class LivreActivity extends AbstractActivity {
                             LivreActivity.this.startActivity(intent);
                         }
                     });
-                }
+                //}
             }
         } else {
             button.setText(getString(R.string.indispoBtn));

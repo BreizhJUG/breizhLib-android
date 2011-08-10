@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/descriptionParametrage">
+
+        <CheckBoxPreference android:key="ouvrages_grid"
+                            android:title="@string/ouvrageGrid"/>
+
+        <ListPreference
+                android:key="OUVRAGE_T_PERIOD"
+                android:title="Fréquence de mise à jour des données"
+                android:summary=""
+                android:defaultValue="1000"
+                android:entries="@array/updateInterval"
+                android:entryValues="@array/updateIntervalValues"
+                />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/cacheTitre">
+            <org.breizhjug.breizhlib.view.CacheDialogPreference android:key="cache"
+                              android:title="Suppression du cache"
+                              android:negativeButtonText="Annuler"
+                              android:positiveButtonText="OK"  />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

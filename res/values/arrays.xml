@@ -1,0 +1,14 @@
+<resources>
+    <string-array name="updateInterval">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 heure</item>
+        <item>1 jour</item>
+    </string-array>
+    <string-array name="updateIntervalValues">
+        <item>900000</item>
+        <item>1800000</item>
+        <item>3600000</item>
+        <item>86400000</item>
+    </string-array>
+</resources>
