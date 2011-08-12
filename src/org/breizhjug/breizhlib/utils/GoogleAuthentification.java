@@ -44,13 +44,13 @@ public class GoogleAuthentification {
         try {
             authTokenBundle = accountManagerFuture.getResult();
         } catch (OperationCanceledException e) {
-            Log.w(TAG, "Got OperationCanceledException " + e);
+           Log.w(TAG, "Got OperationCanceledException " + e);
             Log.w(TAG, Log.getStackTraceString(e));
         } catch (AuthenticatorException e) {
             Log.w(TAG, "Got AuthenticatorException " + e);
             Log.w(TAG, Log.getStackTraceString(e));
         } catch (IOException e) {
-            Log.w(TAG, "Got OperationCanceledException " + e);
+           Log.w(TAG, "Got OperationCanceledException " + e);
             Log.w(TAG, Log.getStackTraceString(e));
         }
         String authToken = authTokenBundle.get(AccountManager.KEY_AUTHTOKEN).toString();
@@ -63,7 +63,7 @@ public class GoogleAuthentification {
 
     public String getAuthCookie(String authToken) {
         try {
-            // Get SACSID cookie
+            // Get ACSID cookie
             DefaultHttpClient client = new DefaultHttpClient();
             String continueURL = BreizhLibConstantes.SERVER_URL;
             URI uri = new URI(BreizhLibConstantes.SERVER_URL + "/_ah/login?continue="
@@ -72,13 +72,12 @@ public class GoogleAuthentification {
             final HttpParams getParams = new BasicHttpParams();
             HttpClientParams.setRedirecting(getParams, false);
             method.setParams(getParams);
-
             HttpResponse res = client.execute(method);
             Header[] headers = res.getHeaders("Set-Cookie");
-            if (res.getStatusLine().getStatusCode() != 302 || headers.length == 0) {
+            if (res.getStatusLine().getStatusCode() != 302 ) {
+                 Log.d("COOKIE", "erreur reponse : "+res.getStatusLine().getStatusCode()  );
                 return null;
             }
-
             for (Cookie cookie : client.getCookieStore().getCookies()) {
                 Log.d(TAG, "" + cookie.getName());
                 if (AUTH_COOKIE_NAME.equals(cookie.getName())) {

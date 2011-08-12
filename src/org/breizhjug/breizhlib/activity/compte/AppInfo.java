@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
@@ -42,6 +43,7 @@ public class AppInfo extends AbstractActivity {
                     protected String doInBackground(Void... params) {
                         String auth_token = BreizhLib.getGAuth().getToken(AppInfo.this, acct);
                         String authCookie = BreizhLib.getGAuth().getAuthCookie(auth_token);
+                        Log.d("BREIZHLIB",""+authCookie);
                         return authCookie;
                     }
 

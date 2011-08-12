@@ -41,6 +41,7 @@ public class Menu extends AbstractActivity {
         SharedPreferences prefs = BreizhLib.getSharedPreferences(getApplicationContext());
 
         GridView grid = (GridView) findViewById(R.id.grilleBoutons);
+        grid.setNumColumns(1);
         List<Bouton> boutons = new ArrayList<Bouton>();
         grid.setAdapter(getBoutonAdapter(boutons));
 
