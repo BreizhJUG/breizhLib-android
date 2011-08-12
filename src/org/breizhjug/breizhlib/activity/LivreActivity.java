@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import org.breizhjug.breizhlib.BreizhLib;
@@ -96,14 +97,24 @@ public class LivreActivity extends AbstractActivity {
 
 
         if (prefs.getString(BreizhLibConstantes.ACCOUNT_NAME, null) != null) {
-            avis.setOnClickListener(new Button.OnClickListener() {
+            if (BreizhLib.getSharedPreferences(getApplicationContext()).getString(BreizhLibConstantes.USER, null) != null) {
+                avis.setOnClickListener(new Button.OnClickListener() {
 
-                public void onClick(View view) {
-                    Intent pIntent = new Intent(getApplicationContext(), AvisActivity.class);
-                    pIntent.putExtra("livre", livre);
-                    LivreActivity.this.startActivity(pIntent);
-                }
-            });
+                    public void onClick(View view) {
+                        Intent pIntent = new Intent(getApplicationContext(), AvisActivity.class);
+                        pIntent.putExtra("livre", livre);
+                        LivreActivity.this.startActivity(pIntent);
+                    }
+                });
+            } else {
+                avis.setOnClickListener(new Button.OnClickListener() {
+
+                    public void onClick(View view) {
+                        Log.d("breizhlib","click avis");
+                        Toast.makeText(LivreActivity.this.getApplicationContext(), "Vous devez être connecté", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
 
         } else {
             avis.setVisibility(View.INVISIBLE);
@@ -149,16 +160,24 @@ public class LivreActivity extends AbstractActivity {
             button.setText(getString(R.string.reserverBtn));
             if (BreizhLib.getSharedPreferences(getApplicationContext()).getString(BreizhLibConstantes.ACCOUNT_NAME, null) != null) {
                 button.setEnabled(true);
-                //if (BreizhLib.getSharedPreferences(getApplicationContext()).getString(BreizhLibConstantes.USER, null) != null) {
-                button.setOnClickListener(new Button.OnClickListener() {
+                if (BreizhLib.getSharedPreferences(getApplicationContext()).getString(BreizhLibConstantes.USER, null) != null) {
+                    button.setOnClickListener(new Button.OnClickListener() {
 
-                    public void onClick(View view) {
-                        Intent intent = new Intent(getApplicationContext(), ReservationActivity.class);
-                        intent.putExtra("isbn", isbn);
-                        LivreActivity.this.startActivity(intent);
-                    }
-                });
-                //}
+                        public void onClick(View view) {
+                            Intent intent = new Intent(getApplicationContext(), ReservationActivity.class);
+                            intent.putExtra("isbn", isbn);
+                            LivreActivity.this.startActivity(intent);
+                        }
+                    });
+                } else {
+                    button.setOnClickListener(new Button.OnClickListener() {
+
+                        public void onClick(View view) {
+
+                            Toast.makeText(LivreActivity.this.getApplicationContext(), "Vous devez être connecté", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         } else {
             button.setText(getString(R.string.indispoBtn));
