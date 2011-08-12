@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.model.Reservation;
+import org.breizhjug.breizhlib.utils.ISBNImageCache;
 
 import java.util.List;
 
@@ -42,7 +42,7 @@ public class ReservationsAdapter extends ArrayAdapter<Reservation> {
         text.setText(reservation.nom + " " + reservation.prenom);
 
         ImageView icone = (ImageView) view.findViewById(R.id.img);
-        BreizhLib.getImageDownloader().download(reservation.livre.imgUrl, icone);
+        ISBNImageCache.getIsbnImageFromCache(reservation.livre.iSBN, reservation.livre.imgUrl, icone);
 
         return view;
     }

@@ -24,15 +24,14 @@ public class CompteList extends AbstractActivity {
     @Override
     public void init(Intent intent) {
 
-        prefs = BreizhLib.getSharedPreferences(this);
+        prefs = BreizhLib.getSharedPreferences(getApplicationContext());
         authcookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
         if (authcookie == null) {
             setContentView(R.layout.items);
         }
 
         if (authcookie == null) {
-            listView = (ListView) findViewById(R.id.items);
-
+            listView = (ListView) findViewById(R.id.items);;
             List<String> accounts = BreizhLib.getGAuth().getGoogleAccounts(this);
 
             listView.setAdapter(new AccountsAdapter(this.getBaseContext(), accounts));

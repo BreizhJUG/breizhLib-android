@@ -5,7 +5,7 @@ import java.util.Locale;
 
 public interface BreizhLibConstantes {
 
-    public static final String SERVER_URL = "http://0-1-2.breizh-lib.appspot.com/";
+    public static final String SERVER_URL = "http://breizh-lib.appspot.com/";
     /**
      * clés pour shared preferences.
      */
