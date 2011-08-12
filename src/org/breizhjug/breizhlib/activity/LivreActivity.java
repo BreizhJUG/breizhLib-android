@@ -11,6 +11,7 @@ import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.model.Livre;
+import org.breizhjug.breizhlib.utils.ISBNImageCache;
 
 import java.util.ArrayList;
 
@@ -44,7 +45,7 @@ public class LivreActivity extends AbstractActivity {
         editeurView.setText(livre.editeur);
 
         ImageView icone = (ImageView) findViewById(R.id.img);
-        BreizhLib.getImageDownloader().download(livre.imgUrl, icone);
+        ISBNImageCache.getIsbnImageFromCache(livre.iSBN, livre.imgUrl, icone);
 
         initStars(livre.note);
 
