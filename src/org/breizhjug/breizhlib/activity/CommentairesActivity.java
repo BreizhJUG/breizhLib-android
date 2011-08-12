@@ -27,7 +27,7 @@ public class CommentairesActivity extends AbstractActivity {
 
     public void initView() {
         commentairesListView = (ListView) findViewById(R.id.items);
-        SharedPreferences prefs = BreizhLib.getSharedPreferences(this);
+        SharedPreferences prefs = BreizhLib.getSharedPreferences(getApplicationContext());
         final AsyncTask<Void, Void, Boolean> initTask = new AsyncRemoteTask<Commentaire>(this, BreizhLib.getCommentaireService(), commentairesListView, prefs) {
 
             @Override

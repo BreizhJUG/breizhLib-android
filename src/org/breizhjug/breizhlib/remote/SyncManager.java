@@ -14,6 +14,7 @@ import java.util.TimerTask;
 
 public class SyncManager implements SharedPreferences.OnSharedPreferenceChangeListener {
 
+    private static final String TAG = "Breizhlib.SyncManager";
     private final int TIMER_DELAY = 1000;
 
     public static final String OUVRAGE_T = "ouvrages";
@@ -42,7 +43,7 @@ public class SyncManager implements SharedPreferences.OnSharedPreferenceChangeLi
     }
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-        if( s.equals(OUVRAGE_T_PERIOD)){
+        if (s.equals(OUVRAGE_T_PERIOD)) {
             reschedule(OUVRAGE_T, Long.valueOf(prefs.getString(OUVRAGE_T_PERIOD, "0")));
         }
     }
@@ -50,7 +51,7 @@ public class SyncManager implements SharedPreferences.OnSharedPreferenceChangeLi
     private class OuvragesTask extends TimerTask {
         @Override
         public void run() {
-            Log.d("TIMEROUVRAGE", "run");
+            Log.d(TAG, "run");
             BreizhLib.getOuvrageService().forceCall = true;
             BreizhLib.getOuvrageService().load(prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null));
         }
@@ -58,7 +59,7 @@ public class SyncManager implements SharedPreferences.OnSharedPreferenceChangeLi
 
     public void reschedule(String timerName, long periode) {
         if (timerName.equals(OUVRAGE_T)) {
-            if(ouvragesTimer != null){
+            if (ouvragesTimer != null) {
                 ouvragesTimer.cancel();
             }
             TimerTask syncOuvrages = new OuvragesTask();

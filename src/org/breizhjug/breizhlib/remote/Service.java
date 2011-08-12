@@ -30,6 +30,7 @@ import java.util.List;
 
 public abstract class Service<T extends Model> {
 
+    private static final String TAG = "Breizhlib.Service";
     private static final int CONNECTION_TIMEOUT = 20000;
     private static HttpClient httpclient = getHttpClient();
     private List<T> cache = null;
@@ -49,7 +50,7 @@ public abstract class Service<T extends Model> {
             List<T> entities = db.selectAll(getEntityClass());
             if (forceCall || (entities == null || entities.isEmpty())) {
                 forceCall = false;
-                Log.d("TIMEROUVRAGE", "load");
+                Log.d(TAG, "load");
                 cache = load(authCookie, url());
                 updateDB(cache);
             } else {
@@ -124,24 +125,24 @@ public abstract class Service<T extends Model> {
 
             httpPost.setURI(new URI(url));
             response = httpclient.execute(httpPost);
-            Log.d("REST", "Status:[" + response.getStatusLine().toString() + "]");
+            Log.d(TAG, "Status:[" + response.getStatusLine().toString() + "]");
             HttpEntity entity = response.getEntity();
             if (entity != null) {
                 InputStream instream = entity.getContent();
                 String result = convertStreamToString(instream);
-                Log.d("REST", "Result of converstion: [" + result + "]");
+                Log.d(TAG, "Result of converstion: [" + result + "]");
                 instream.close();
                 return result;
             }
         } catch (ClientProtocolException e) {
             httpPost.abort();
-            Log.w("REST", "There was a protocol based error", e);
+            Log.w(TAG, "There was a protocol based error", e);
         } catch (IOException e) {
             httpPost.abort();
-            Log.w("REST", "There was an IO Stream related error", e);
+            Log.w(TAG, "There was an IO Stream related error", e);
         } catch (URISyntaxException e) {
             httpPost.abort();
-            Log.w("REST", "There was an IO Stream related error", e);
+            Log.w(TAG, "There was an IO Stream related error", e);
         }
         return null;
     }
@@ -183,13 +184,13 @@ public abstract class Service<T extends Model> {
             }
         } catch (ClientProtocolException e) {
             httpget.abort();
-            Log.w("REST", "There was a protocol based error", e);
+            Log.w(TAG, "There was a protocol based error", e);
         } catch (IOException e) {
             httpget.abort();
-            Log.w("REST", "There was an IO Stream related error", e);
+            Log.w(TAG, "There was an IO Stream related error", e);
         } catch (URISyntaxException e) {
             httpget.abort();
-            Log.w("REST", "There was an IO Stream related error", e);
+            Log.w(TAG, "There was an IO Stream related error", e);
         }
         return null;
     }

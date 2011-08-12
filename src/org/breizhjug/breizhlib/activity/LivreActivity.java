@@ -149,14 +149,14 @@ public class LivreActivity extends AbstractActivity {
             if (BreizhLib.getSharedPreferences(getApplicationContext()).getString(BreizhLibConstantes.ACCOUNT_NAME, null) != null) {
                 button.setEnabled(true);
                 //if (BreizhLib.getSharedPreferences(getApplicationContext()).getString(BreizhLibConstantes.USER, null) != null) {
-                    button.setOnClickListener(new Button.OnClickListener() {
+                button.setOnClickListener(new Button.OnClickListener() {
 
-                        public void onClick(View view) {
-                            Intent intent = new Intent(getApplicationContext(), ReservationActivity.class);
-                            intent.putExtra("isbn", isbn);
-                            LivreActivity.this.startActivity(intent);
-                        }
-                    });
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getApplicationContext(), ReservationActivity.class);
+                        intent.putExtra("isbn", isbn);
+                        LivreActivity.this.startActivity(intent);
+                    }
+                });
                 //}
             }
         } else {
@@ -166,7 +166,7 @@ public class LivreActivity extends AbstractActivity {
     }
 
     private void initAjout(Button button, final String isbn) {
-        if (BreizhLib.getSharedPreferences(this).getBoolean(BreizhLibConstantes.USER_ADMIN, false)) {
+        if (BreizhLib.getSharedPreferences(getApplicationContext()).getBoolean(BreizhLibConstantes.USER_ADMIN, false)) {
             button.setText(getString(R.string.ajouterBtn));
             button.setOnClickListener(new Button.OnClickListener() {
 
@@ -175,7 +175,7 @@ public class LivreActivity extends AbstractActivity {
 
                         @Override
                         protected Livre doInBackground(Void... params) {
-                            SharedPreferences prefs = BreizhLib.getSharedPreferences(LivreActivity.this);
+                            SharedPreferences prefs = BreizhLib.getSharedPreferences(LivreActivity.this.getApplicationContext());
                             String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
                             Livre livre = BreizhLib.getOuvrageService().add(authCookie, isbn);
                             return livre;

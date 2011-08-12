@@ -14,6 +14,8 @@ import java.util.List;
 
 public class OuvrageService extends Service<Livre> {
 
+    private static final String TAG = "Breizhlib.OuvrageService";
+
     private static String URL_BOOKS = BreizhLibConstantes.SERVER_URL + "api/ouvrages";
 
     private static String URL_FIND_BOOKS = BreizhLibConstantes.SERVER_URL + "api/find";
@@ -43,7 +45,7 @@ public class OuvrageService extends Service<Livre> {
 
     private Livre find(String authCookie, String urlString, String isbn) {
         String result = queryPostRESTurl(authCookie, urlString, new Param("iSBN", isbn));
-        Log.d("REST", result);
+        Log.d(TAG, result);
         if (result != null) {
             try {
                 JSONArray booksArray = new JSONArray(result);
@@ -51,7 +53,7 @@ public class OuvrageService extends Service<Livre> {
                 Livre livre = converter.convertLivre(item);
                 return livre;
             } catch (JSONException e) {
-                Log.e("JSON", "There was an error parsing the JSON", e);
+                Log.e(TAG, "There was an error parsing the JSON", e);
                 ErrorReporter.getInstance().handleSilentException(e);
             }
         }
@@ -64,7 +66,7 @@ public class OuvrageService extends Service<Livre> {
 
     private Livre add(String authCookie, String urlString, String isbn) {
         String result = queryPostRESTurl(authCookie, urlString, new Param("iSBN", isbn));
-        Log.i("REST", result);
+        Log.i(TAG, result);
         if (result != null) {
             try {
                 JSONArray booksArray = new JSONArray(result);
@@ -72,7 +74,7 @@ public class OuvrageService extends Service<Livre> {
                 Livre livre = converter.convertLivre(item);
                 return livre;
             } catch (JSONException e) {
-                Log.e("JSON", "There was an error parsing the JSON", e);
+                Log.e(TAG, "There was an error parsing the JSON", e);
                 ErrorReporter.getInstance().handleSilentException(e);
             }
         }
@@ -80,7 +82,7 @@ public class OuvrageService extends Service<Livre> {
     }
 
     public List<Livre> load(String authCookie, String urlString) {
-        Log.i("REST", urlString);
+        Log.i(TAG, urlString);
         String result = queryRESTurl(authCookie, urlString);
         ArrayList<Livre> BOOKS = new ArrayList<Livre>();
         if (result != null) {
@@ -95,7 +97,7 @@ public class OuvrageService extends Service<Livre> {
                 }
                 return BOOKS;
             } catch (JSONException e) {
-                Log.e("JSON", "There was an error parsing the JSON", e);
+                Log.e(TAG, "There was an error parsing the JSON", e);
                 ErrorReporter.getInstance().handleSilentException(e);
             }
         }

@@ -30,7 +30,7 @@ public class ReservationsActivity extends AbstractActivity {
 
     public void initView() {
         reservationsListView = (ListView) findViewById(R.id.items);
-        final SharedPreferences prefs = BreizhLib.getSharedPreferences(this);
+        final SharedPreferences prefs = BreizhLib.getSharedPreferences(getApplicationContext());
 
         final AsyncTask<Void, Void, Boolean> initTask = new AsyncRemoteTask<Reservation>(this, BreizhLib.getReservationService(), reservationsListView, prefs) {
 

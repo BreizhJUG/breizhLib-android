@@ -14,7 +14,6 @@ import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
-import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 
 import java.io.IOException;
@@ -26,7 +25,7 @@ import java.util.List;
 
 public class GoogleAuthentification {
 
-    private static final String TAG = GoogleAuthentification.class.getSimpleName();
+    private static final String TAG = "Breizhlib.GoogleAuthentification";
 
     private static GoogleAuthentification instance;
     private Cookie authCookie = null;

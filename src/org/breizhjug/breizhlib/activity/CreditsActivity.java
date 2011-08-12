@@ -22,7 +22,7 @@ public class CreditsActivity extends AbstractActivity {
         setContentView(R.layout.credits);
 
         TextView versionView = (TextView) findViewById(R.id.version);
-        versionView.setText(getString(R.string.version) +" "+ Version.version);
+        versionView.setText(getString(R.string.version) + " " + Version.version);
     }
 
 

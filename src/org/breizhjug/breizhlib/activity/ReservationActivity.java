@@ -25,7 +25,7 @@ public class ReservationActivity extends AbstractActivity {
     public void initView() {
         final String isbn = getIntent().getStringExtra("isbn");
 
-        prefs = BreizhLib.getSharedPreferences(this);
+        prefs = BreizhLib.getSharedPreferences(getApplicationContext());
 
         final EditText prenom = (EditText) findViewById(R.id.prenomEdit);
         prenom.setText(prefs.getString(BreizhLibConstantes.USER_PRENOM, null));

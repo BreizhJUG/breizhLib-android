@@ -43,7 +43,6 @@ public abstract class AsyncRemoteTask<T extends Model> extends AsyncTask<Void, V
     @Override
     protected void onPostExecute(Boolean result) {
         waitDialog.dismiss();
-        waitDialog.dismiss();
         ArrayAdapter<T> mSchedule = getAdapter();
         listView.setAdapter(mSchedule);
 

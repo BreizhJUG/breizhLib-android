@@ -34,11 +34,11 @@ public class Version {
 
     private static int versionCodeMarket = 0;
 
-    private static String versionMarket ;
+    private static String versionMarket;
 
-     public static String getVersionMarket() {
-         return versionMarket;
-     }
+    public static String getVersionMarket() {
+        return versionMarket;
+    }
 
     public static int getVersionCodeMarket() {
         try {

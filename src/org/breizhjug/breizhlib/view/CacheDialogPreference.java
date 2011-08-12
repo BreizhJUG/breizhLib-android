@@ -4,12 +4,11 @@ import android.content.Context;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.widget.Toast;
 import org.breizhjug.breizhlib.BreizhLib;
 
 
 public class CacheDialogPreference extends DialogPreference {
-
+    private static final String TAG = "Breizhlib.CacheDialogPreference";
 
     public CacheDialogPreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -21,7 +20,7 @@ public class CacheDialogPreference extends DialogPreference {
 
     @Override
     protected void onClick() {
-        Log.d("CACHE","clear cache");
+        Log.d(TAG, "clear cache");
         BreizhLib.clearCache();
 
     }

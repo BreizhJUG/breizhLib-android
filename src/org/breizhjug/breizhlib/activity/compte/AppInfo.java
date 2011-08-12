@@ -26,7 +26,7 @@ public class AppInfo extends AbstractActivity {
 
     private void register(final String accountName) {
 
-        final SharedPreferences prefs = BreizhLib.getSharedPreferences(getApplication());
+        final SharedPreferences prefs = BreizhLib.getSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(BreizhLibConstantes.ACCOUNT_NAME, accountName);
         editor.putString(BreizhLibConstantes.AUTH_COOKIE, null);
@@ -57,7 +57,7 @@ public class AppInfo extends AbstractActivity {
                     }
                 };
                 initTask.execute();
-               // finish();
+                // finish();
             }
         }
     }

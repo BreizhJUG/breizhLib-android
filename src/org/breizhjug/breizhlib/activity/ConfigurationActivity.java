@@ -5,7 +5,7 @@ import android.preference.PreferenceActivity;
 import org.breizhjug.breizhlib.R;
 
 
-public class ConfigurationActivity extends PreferenceActivity{
+public class ConfigurationActivity extends PreferenceActivity {
 
 
     public void onCreate(Bundle savedInstanceState) {
