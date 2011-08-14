@@ -61,7 +61,7 @@ public class GoogleAuthentification {
 
     }
 
-    public String getAuthCookie(String authToken) {
+    public String getAuthCookie(String authToken,Context context) {
         try {
             // Get ACSID cookie
             DefaultHttpClient client = new DefaultHttpClient();
@@ -74,8 +74,11 @@ public class GoogleAuthentification {
             method.setParams(getParams);
             HttpResponse res = client.execute(method);
             Header[] headers = res.getHeaders("Set-Cookie");
+             Log.d(TAG, "reponse code : "+res.getStatusLine().getStatusCode()  );
             if (res.getStatusLine().getStatusCode() != 302 ) {
                  Log.d("COOKIE", "erreur reponse : "+res.getStatusLine().getStatusCode()  );
+                AccountManager accountManager = AccountManager.get(context);
+                accountManager.invalidateAuthToken("com.google",authToken);
                 return null;
             }
             for (Cookie cookie : client.getCookieStore().getCookies()) {

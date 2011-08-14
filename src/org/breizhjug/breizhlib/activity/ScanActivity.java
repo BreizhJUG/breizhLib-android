@@ -12,10 +12,11 @@ import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.remote.OuvrageService;
 import org.breizhjug.breizhlib.utils.IntentIntegrator;
+import org.breizhjug.breizhlib.utils.IntentResult;
 
 
 public class ScanActivity extends AbstractActivity {
-    private static final String TAG = ScanActivity.class.getSimpleName();
+    private static final String TAG = "Breizhlib.ScanActivity";
 
     private String isbn;
     private static final String USER_AGENT = "ZXing (Android)";
@@ -23,7 +24,6 @@ public class ScanActivity extends AbstractActivity {
     @Override
     public void init(Intent intent) {
         IntentIntegrator.initiateScan(this);
-        finish();
     }
 
     public void onCreate(Bundle savedInstanceState) {
@@ -43,18 +43,21 @@ public class ScanActivity extends AbstractActivity {
                 Intent intent = new Intent(ScanActivity.this, LivreActivity.class);
                 Populator.populate(intent, livre);
                 startActivity(intent);
+                finish();
             }
         }
     };
 
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        if (requestCode == 0) {
-            if (resultCode == RESULT_OK) {
-                String contents = intent.getStringExtra("SCAN_RESULT");
-                String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
+        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+        if (scanResult != null) {
+                Log.d(TAG, "result OK");
+                String contents = scanResult.getContents();
+                String format = scanResult.getFormatName();
                 if (format.equals("EAN_13") && isIsbn13(contents)) {
                     isbn = contents;
+                    Log.d(TAG, "isbn : " + isbn);
                     AlertDialog.Builder adb = new AlertDialog.Builder(ScanActivity.this);
                     adb.setTitle(getString(R.string.isbn_scan_titre_ok));
                     adb.setMessage(getString(R.string.isbn_scan_msg_ok) + contents);
@@ -62,15 +65,16 @@ public class ScanActivity extends AbstractActivity {
                     adb.setNeutralButton(getString(R.string.rechercher), mSend);
                     adb.show();
                 } else {
+                    Log.d(TAG, "isbn ko ");
                     AlertDialog.Builder adb = new AlertDialog.Builder(ScanActivity.this);
                     adb.setTitle(getString(R.string.isbn_scan_titre_ko));
                     adb.setMessage(getString(R.string.isbn_scan_msg_ko));
                     adb.setNegativeButton(getString(R.string.retour), null);
                     adb.show();
                 }
-            } else if (resultCode == RESULT_CANCELED) {
+        } else {
                 // Handle cancel
-            }
+                Log.d(TAG, "result KO");
         }
     }
 

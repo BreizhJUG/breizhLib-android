@@ -42,7 +42,7 @@ public class AppInfo extends AbstractActivity {
                     @Override
                     protected String doInBackground(Void... params) {
                         String auth_token = BreizhLib.getGAuth().getToken(AppInfo.this, acct);
-                        String authCookie = BreizhLib.getGAuth().getAuthCookie(auth_token);
+                        String authCookie = BreizhLib.getGAuth().getAuthCookie(auth_token,AppInfo.this);
                         Log.d("BREIZHLIB",""+authCookie);
                         return authCookie;
                     }

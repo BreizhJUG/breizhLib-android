@@ -46,8 +46,7 @@ public class OuvrageService extends Service<Livre> {
         Log.d("REST", result);
         if (result != null) {
             try {
-                JSONArray booksArray = new JSONArray(result);
-                JSONObject item = booksArray.getJSONObject(0);
+                JSONObject item = new JSONObject(result);
                 Livre livre = converter.convertLivre(item);
                 return livre;
             } catch (JSONException e) {
