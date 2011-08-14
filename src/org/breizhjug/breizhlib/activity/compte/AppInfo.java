@@ -50,16 +50,16 @@ public class AppInfo extends AbstractActivity {
                     @Override
                     protected void onPostExecute(String result) {
                         if (result == null) {
-                            showError("Error", true);
+                            showError("Error de connexion", true);
                         } else {
                             prefs.edit().putString(BreizhLibConstantes.AUTH_COOKIE, result).commit();
                             Intent intent = new Intent(AppInfo.this, ProfilActivity.class);
                             startActivity(intent);
+                            finish();
                         }
                     }
                 };
                 initTask.execute();
-               // finish();
             }
         }
     }

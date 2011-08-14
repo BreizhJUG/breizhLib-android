@@ -60,7 +60,7 @@ public class BaseActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
-        SharedPreferences prefs = BreizhLib.getSharedPreferences(this);
+        SharedPreferences prefs = BreizhLib.getSharedPreferences(getApplicationContext());
         String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
         if (authCookie == null) {
             MenuItem item = (MenuItem) menu.findItem(R.id.connexion);
@@ -84,7 +84,7 @@ public class BaseActivity extends Activity {
                 startActivity(intent);
                 return true;
             case R.id.connexion:
-                SharedPreferences prefs = BreizhLib.getSharedPreferences(this);
+                SharedPreferences prefs = BreizhLib.getSharedPreferences(getApplicationContext());
                 String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
                 if (authCookie == null) {
                     Intent pIntent = new Intent(getApplicationContext(), CompteList.class);
@@ -118,7 +118,7 @@ public class BaseActivity extends Activity {
     }
 
     private void onLogout() {
-        SharedPreferences.Editor editor = BreizhLib.getSharedPreferences(this).edit();
+        SharedPreferences.Editor editor = BreizhLib.getSharedPreferences(getApplicationContext()).edit();
         editor.putString(BreizhLibConstantes.AUTH_COOKIE, null);
         editor.putString(BreizhLibConstantes.ACCOUNT_NAME, null);
         editor.putString(BreizhLibConstantes.USER, null);

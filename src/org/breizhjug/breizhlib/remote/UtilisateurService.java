@@ -12,6 +12,7 @@ import java.util.List;
 
 public class UtilisateurService extends Service<Utilisateur> {
 
+    private static final String TAG = "Breizhlib.UtilisateurService";
     private static String URL_USER = BreizhLibConstantes.SERVER_URL + "api/profil";
 
     private static UtilisateurService instance;
@@ -46,12 +47,12 @@ public class UtilisateurService extends Service<Utilisateur> {
         String result = queryRESTurl(authCookie, urlString);
 
         if (result != null) {
-            Log.d("REST", result);
+            Log.d(TAG, result);
             try {
                 JSONObject item = new JSONObject(result);
                 return converter.convertUtilisateur(item);
             } catch (JSONException e) {
-                Log.e("JSON", "There was an error parsing the JSON", e);
+                Log.e(TAG, "There was an error parsing the JSON", e);
                 ErrorReporter.getInstance().handleSilentException(e);
             }
         }

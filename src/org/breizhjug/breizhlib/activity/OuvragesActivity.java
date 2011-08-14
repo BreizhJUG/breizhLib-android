@@ -17,7 +17,7 @@ import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.remote.AsyncRemoteTask;
 
 
-public class OuvragesActivity extends AbstractActivity implements SharedPreferences.OnSharedPreferenceChangeListener{
+public class OuvragesActivity extends AbstractActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private AbsListView ouvragesListView;
 
@@ -81,8 +81,8 @@ public class OuvragesActivity extends AbstractActivity implements SharedPreferen
 
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-        if( s.equals(BreizhLibConstantes.GRID)){
-          modeGrid = sharedPreferences.getBoolean(BreizhLibConstantes.GRID, false);
+        if (s.equals(BreizhLibConstantes.GRID)) {
+            modeGrid = sharedPreferences.getBoolean(BreizhLibConstantes.GRID, false);
         }
     }
 }

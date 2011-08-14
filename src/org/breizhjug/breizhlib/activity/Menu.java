@@ -38,7 +38,7 @@ public class Menu extends AbstractActivity {
     }
 
     protected void loadMenu() {
-        SharedPreferences prefs = BreizhLib.getSharedPreferences(this);
+        SharedPreferences prefs = BreizhLib.getSharedPreferences(getApplicationContext());
 
         GridView grid = (GridView) findViewById(R.id.grilleBoutons);
         grid.setNumColumns(1);

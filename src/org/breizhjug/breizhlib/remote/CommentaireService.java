@@ -14,7 +14,7 @@ import java.util.List;
 
 public class CommentaireService extends Service<Commentaire> {
 
-    private static final String TAG = CommentaireService.class.getName();
+    private static final String TAG = "Breizhlib.CommentaireService";
 
     private static String URL_COMMENTS = BreizhLibConstantes.SERVER_URL + "api/commentaires";
 

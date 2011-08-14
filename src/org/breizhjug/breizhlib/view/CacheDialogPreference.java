@@ -4,11 +4,12 @@ import android.content.Context;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.widget.Toast;
 import org.breizhjug.breizhlib.BreizhLib;
+import org.breizhjug.breizhlib.utils.ISBNImageCache;
 
 
 public class CacheDialogPreference extends DialogPreference {
+    private static final String TAG = "Breizhlib.CacheDialogPreference";
 
 
     public CacheDialogPreference(Context context, AttributeSet attrs, int defStyle) {
@@ -21,8 +22,14 @@ public class CacheDialogPreference extends DialogPreference {
 
     @Override
     protected void onClick() {
-        Log.d("CACHE","clear cache");
-        BreizhLib.clearCache();
+
+        if( getKey().equals("cache")){
+            Log.d(TAG, "clear cache");
+            BreizhLib.clearCache();
+        } else if(getKey().equals("cacheImg")){
+            Log.d(TAG, "clear cache img");
+            ISBNImageCache.clearCache();
+        }
 
     }
 }

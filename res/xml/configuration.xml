@@ -8,7 +8,7 @@
 
         <ListPreference
                 android:key="OUVRAGE_T_PERIOD"
-                android:title="Fréquence de mise à jour des données"
+                android:title="@string/freq_title"
                 android:summary=""
                 android:defaultValue="1000"
                 android:entries="@array/updateInterval"
@@ -19,9 +19,14 @@
 
     <PreferenceCategory android:title="@string/cacheTitre">
             <org.breizhjug.breizhlib.view.CacheDialogPreference android:key="cache"
-                              android:title="Suppression du cache"
-                              android:negativeButtonText="Annuler"
-                              android:positiveButtonText="OK"  />
+                              android:title="@string/cache"
+                              android:negativeButtonText="@string/annuler"
+                              android:positiveButtonText="@string/ok"  />
+
+           <org.breizhjug.breizhlib.view.CacheDialogPreference android:key="cacheImg"
+                              android:title="@string/cacheImg"
+                              android:negativeButtonText="@string/annuler"
+                              android:positiveButtonText="@string/ok"  />
 
     </PreferenceCategory>
 

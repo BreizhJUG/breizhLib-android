@@ -25,7 +25,7 @@ import java.util.List;
 
 public class GoogleAuthentification {
 
-    private static final String TAG = GoogleAuthentification.class.getSimpleName();
+    private static final String TAG = "Breizhlib.GoogleAuthentification";
 
     private static GoogleAuthentification instance;
     private Cookie authCookie = null;

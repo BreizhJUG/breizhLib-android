@@ -18,13 +18,28 @@ public class ISBNImageCache {
 
     private static final String SD_PATH = Environment.getExternalStorageDirectory().toString() + "/breizhlib/";
 
-    public static void getIsbnImageFromCache(String isbn, String url, ImageView imageView) {
-
-
+    public static void init(){
         File dir = new File(SD_PATH);
         if (!dir.exists()) {
             dir.mkdirs();
         }
+    }
+
+    public static void clearCache(){
+       File dir = new File(SD_PATH);
+        if (dir.exists()) {
+            File[] fileList = dir.listFiles();
+            for (File file : fileList) {
+                 file.delete();
+            }
+        }
+    }
+
+    public static void getIsbnImageFromCache(String isbn, String url, ImageView imageView) {
+
+
+        init();
+
         File[] fileList = new File(SD_PATH).listFiles();
 
         Bitmap bitmap = null;
@@ -50,12 +65,8 @@ public class ISBNImageCache {
     }
 
     private static void saveImage(Bitmap bitmap, String isbn) throws FileNotFoundException {
-
-
         File file = new File(SD_PATH + isbn + ".jpg");
-
-        Bitmap thumb = Bitmap.createScaledBitmap(bitmap,50, 100,true);
-
+        Bitmap thumb = Bitmap.createScaledBitmap(bitmap,75, 100,true);
         thumb.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(file));
     }
 }

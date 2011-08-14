@@ -35,7 +35,7 @@ public class ScanActivity extends AbstractActivity {
 
         public void onClick(DialogInterface dialogInterface, int i) {
             OuvrageService service = BreizhLib.getOuvrageService();
-            SharedPreferences prefs = BreizhLib.getSharedPreferences(ScanActivity.this);
+            SharedPreferences prefs = BreizhLib.getSharedPreferences(ScanActivity.this.getApplicationContext());
             Livre livre = service.find(prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null), isbn);
 
             if (livre != null) {

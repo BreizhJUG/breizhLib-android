@@ -27,7 +27,7 @@ public class ProfilActivity extends AbstractActivity {
     }
 
     public void init(Intent intent) {
-        prefs = BreizhLib.getSharedPreferences(this);
+        prefs = BreizhLib.getSharedPreferences(getApplicationContext());
         final String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
 
         final ProgressDialog waitDialog = ProgressDialog.show(this, "Recherche de vos informations", getString(R.string.chargement), true, true);

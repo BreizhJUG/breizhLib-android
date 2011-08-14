@@ -5,12 +5,14 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.model.Livre;
+import org.breizhjug.breizhlib.utils.ISBNImageCache;
 
 import java.util.ArrayList;
 
@@ -44,7 +46,7 @@ public class LivreActivity extends AbstractActivity {
         editeurView.setText(livre.editeur);
 
         ImageView icone = (ImageView) findViewById(R.id.img);
-        BreizhLib.getImageDownloader().download(livre.imgUrl, icone);
+        ISBNImageCache.getIsbnImageFromCache(livre.iSBN, livre.imgUrl, icone);
 
         initStars(livre.note);
 
@@ -95,14 +97,24 @@ public class LivreActivity extends AbstractActivity {
 
 
         if (prefs.getString(BreizhLibConstantes.ACCOUNT_NAME, null) != null) {
-            avis.setOnClickListener(new Button.OnClickListener() {
+            if (BreizhLib.getSharedPreferences(getApplicationContext()).getString(BreizhLibConstantes.USER, null) != null) {
+                avis.setOnClickListener(new Button.OnClickListener() {
 
-                public void onClick(View view) {
-                    Intent pIntent = new Intent(getApplicationContext(), AvisActivity.class);
-                    pIntent.putExtra("livre", livre);
-                    LivreActivity.this.startActivity(pIntent);
-                }
-            });
+                    public void onClick(View view) {
+                        Intent pIntent = new Intent(getApplicationContext(), AvisActivity.class);
+                        pIntent.putExtra("livre", livre);
+                        LivreActivity.this.startActivity(pIntent);
+                    }
+                });
+            } else {
+                avis.setOnClickListener(new Button.OnClickListener() {
+
+                    public void onClick(View view) {
+                        Log.d("breizhlib","click avis");
+                        Toast.makeText(LivreActivity.this.getApplicationContext(), "Vous devez être connecté", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
 
         } else {
             avis.setVisibility(View.INVISIBLE);
@@ -148,7 +160,7 @@ public class LivreActivity extends AbstractActivity {
             button.setText(getString(R.string.reserverBtn));
             if (BreizhLib.getSharedPreferences(getApplicationContext()).getString(BreizhLibConstantes.ACCOUNT_NAME, null) != null) {
                 button.setEnabled(true);
-                //if (BreizhLib.getSharedPreferences(getApplicationContext()).getString(BreizhLibConstantes.USER, null) != null) {
+                if (BreizhLib.getSharedPreferences(getApplicationContext()).getString(BreizhLibConstantes.USER, null) != null) {
                     button.setOnClickListener(new Button.OnClickListener() {
 
                         public void onClick(View view) {
@@ -157,7 +169,15 @@ public class LivreActivity extends AbstractActivity {
                             LivreActivity.this.startActivity(intent);
                         }
                     });
-                //}
+                } else {
+                    button.setOnClickListener(new Button.OnClickListener() {
+
+                        public void onClick(View view) {
+
+                            Toast.makeText(LivreActivity.this.getApplicationContext(), "Vous devez être connecté", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         } else {
             button.setText(getString(R.string.indispoBtn));
@@ -166,7 +186,7 @@ public class LivreActivity extends AbstractActivity {
     }
 
     private void initAjout(Button button, final String isbn) {
-        if (BreizhLib.getSharedPreferences(this).getBoolean(BreizhLibConstantes.USER_ADMIN, false)) {
+        if (BreizhLib.getSharedPreferences(getApplicationContext()).getBoolean(BreizhLibConstantes.USER_ADMIN, false)) {
             button.setText(getString(R.string.ajouterBtn));
             button.setOnClickListener(new Button.OnClickListener() {
 
@@ -175,7 +195,7 @@ public class LivreActivity extends AbstractActivity {
 
                         @Override
                         protected Livre doInBackground(Void... params) {
-                            SharedPreferences prefs = BreizhLib.getSharedPreferences(LivreActivity.this);
+                            SharedPreferences prefs = BreizhLib.getSharedPreferences(LivreActivity.this.getApplicationContext());
                             String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
                             Livre livre = BreizhLib.getOuvrageService().add(authCookie, isbn);
                             return livre;

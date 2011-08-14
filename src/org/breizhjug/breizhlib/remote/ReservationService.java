@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReservationService extends Service<Reservation> {
-    private static final String TAG = ReservationService.class.getName();
+    private static final String TAG = "Breizhlib.ReservationService";
 
     private static String URL_BOOKS = BreizhLibConstantes.SERVER_URL + "api/reservations";
     private static String URL_RESA = BreizhLibConstantes.SERVER_URL + "api/book/reserver";
@@ -48,7 +48,7 @@ public class ReservationService extends Service<Reservation> {
     }
 
     public List<Reservation> load(String authCookie, String urlString) {
-        Log.d("REST", urlString);
+        Log.d(TAG, urlString);
         String result = queryRESTurl(authCookie, urlString);
         ArrayList<Reservation> BOOKS = new ArrayList<Reservation>();
         if (result != null) {
@@ -62,7 +62,7 @@ public class ReservationService extends Service<Reservation> {
                 }
                 return BOOKS;
             } catch (JSONException e) {
-                Log.e("JSON", "There was an error parsing the JSON", e);
+                Log.e(TAG, "There was an error parsing the JSON", e);
                 ErrorReporter.getInstance().handleSilentException(e);
             }
         }

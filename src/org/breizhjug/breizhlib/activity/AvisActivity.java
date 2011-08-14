@@ -20,7 +20,7 @@ public class AvisActivity extends AbstractActivity {
     public void init(Intent intent) {
         final Livre livre = (Livre) intent.getSerializableExtra("livre");
 
-        final SharedPreferences prefs = BreizhLib.getSharedPreferences(this);
+        final SharedPreferences prefs = BreizhLib.getSharedPreferences(getApplicationContext());
 
         final Spinner note = (Spinner) findViewById(R.id.spinnerNote);
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item);
