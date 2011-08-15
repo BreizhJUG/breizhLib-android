@@ -10,7 +10,7 @@ import org.breizhjug.breizhlib.R;
 public class SplashScreen extends BaseActivity {
 
     private static final int STOPSPLASH = 0;
-    private static final long SPLASHTIME = 2500;
+    private static final long SPLASHTIME = 1500;
 
     private Handler splashHandler = new Handler() {
 

@@ -69,8 +69,7 @@ public class OuvragesActivity extends AbstractActivity implements SharedPreferen
                 Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
                 intent.putExtra("livres", items);
                 intent.putExtra("index", position);
-                intent.putExtra("backActivity", "OuvragesActivity");
-                Populator.populate(intent, livre);
+                intent.putExtra("livre", livre);
                 OuvragesActivity.this.startActivity(intent);
             }
         };

@@ -68,7 +68,7 @@
     <!-- configuration -->
     <string name="descriptionParametrage">Modifier les paramètres de l\'application</string>
     <string name="ouvrageGrid">activer le mode Grid</string>
-    <string name="cache">Vider le cache</string>
+    <string name="cache">Vider le cache mémoire</string>
     <string name="cacheImg">Vider le cache images</string>
     <string name="cacheTitre">Cache</string>
     <string name="freq_title">Fréquence de mise à jour des données</string>

@@ -42,7 +42,9 @@ public class ReservationsActivity extends AbstractActivity {
             public void onClick(int position) {
                 Reservation reservation = (Reservation) reservationsListView.getItemAtPosition(position);
                 Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-                Populator.populate(intent, reservation);
+                intent.putExtra("livres", items);
+                intent.putExtra("index", position);
+                intent.putExtra("livre", reservation.livre);
                 ReservationsActivity.this.startActivity(intent);
             }
         };

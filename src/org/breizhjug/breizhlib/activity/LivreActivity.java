@@ -255,7 +255,7 @@ public class LivreActivity extends AbstractActivity {
                             } else {
                                 Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
                                 Toast.makeText(getApplicationContext(), getString(R.string.ajoutOK), Toast.LENGTH_SHORT).show();
-                                Populator.populate(intent, result);
+                                intent.putExtra("livre", result);
                                 LivreActivity.this.startActivity(intent);
                             }
                         }
