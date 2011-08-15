@@ -30,4 +30,10 @@
 
     </PreferenceCategory>
 
+     <PreferenceCategory android:title="beta">
+            <CheckBoxPreference android:key="beta"
+                            android:title="Activer les fonctionnalitées BETA"/>
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

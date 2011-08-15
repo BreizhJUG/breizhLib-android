@@ -1,6 +1,7 @@
 package org.breizhjug.breizhlib.model;
 
 
+import android.database.Cursor;
 import fr.ybo.database.annotation.Column;
 import fr.ybo.database.annotation.Entity;
 import org.breizhjug.breizhlib.database.Database;
@@ -34,6 +35,13 @@ public class Commentaire implements Serializable, Model {
         this.note = note;
         this.livre = livre;
         this.isbn = livre.iSBN;
+    }
+
+    public Commentaire(Cursor cursor) {
+		note = cursor.getInt(cursor.getColumnIndex("note"));
+		nom = cursor.getString(cursor.getColumnIndex("nom"));
+		isbn = cursor.getString(cursor.getColumnIndex("isbn"));
+		commentaire = cursor.getString(cursor.getColumnIndex("commentaire"));
     }
 
     public void onLoad(Database db) {

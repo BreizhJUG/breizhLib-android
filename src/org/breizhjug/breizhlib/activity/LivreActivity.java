@@ -2,6 +2,7 @@ package org.breizhjug.breizhlib.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,15 +12,22 @@ import android.widget.*;
 import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
+import org.breizhjug.breizhlib.adapter.CommentairesAdapter;
+import org.breizhjug.breizhlib.database.Database;
+import org.breizhjug.breizhlib.model.Commentaire;
 import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.utils.ISBNImageCache;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class LivreActivity extends AbstractActivity {
 
     private String backActivity;
+
+    protected static Database db = BreizhLib.getDataBaseHelper();
+    private static final String TAG = "BreizhLib.LivreActivity";
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,7 +118,7 @@ public class LivreActivity extends AbstractActivity {
                 avis.setOnClickListener(new Button.OnClickListener() {
 
                     public void onClick(View view) {
-                        Log.d("breizhlib","click avis");
+                        Log.d("breizhlib", "click avis");
                         Toast.makeText(LivreActivity.this.getApplicationContext(), "Vous devez être connecté", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -127,6 +135,45 @@ public class LivreActivity extends AbstractActivity {
         } else {
             initReservation(button, livre.etat, livre.iSBN);
         }
+
+        if (prefs.getBoolean("beta", false)) {
+
+            final ListView items = (ListView) findViewById(R.id.items);
+            List<String> args = new ArrayList<String>();
+            args.add(livre.iSBN);
+
+            Cursor cursor = db.executeSelectQuery("SELECT Commentaire.* FROM Commentaire  WHERE Commentaire.isbn = :isbn", args);
+
+            final ArrayList<Commentaire> commentaires = new ArrayList<Commentaire>();
+            if (cursor != null) {
+                if (cursor.getCount() > 0) {
+                    cursor.moveToFirst();
+                    do {
+                        Commentaire commentaire =new Commentaire(cursor);
+                        commentaire.onLoad(db);
+                        commentaires.add(commentaire);
+                    } while (cursor.moveToNext());
+                }
+                cursor.close();
+            }
+
+             items.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+                Commentaire commentaire = (Commentaire) items.getItemAtPosition(position);
+                Intent intent = new Intent(getApplicationContext(), CommentaireActivity.class);
+                intent.putExtra("commentaire", commentaire);
+                intent.putExtra("commentaires", commentaires);
+                intent.putExtra("index", position);
+                startActivity(intent);
+            }
+        });
+
+            Log.d(TAG, livre.iSBN + " size :" + commentaires.size());
+            CommentairesAdapter commentairesAdapter = new CommentairesAdapter(this.getBaseContext(), commentaires);
+            items.setAdapter(commentairesAdapter);
+
+        }
+
     }
 
 
