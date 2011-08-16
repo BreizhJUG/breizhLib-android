@@ -53,7 +53,6 @@ public class UtilisateurService extends Service<Utilisateur> {
                 return converter.convertUtilisateur(item);
             } catch (JSONException e) {
                 Log.e(TAG, "There was an error parsing the JSON", e);
-                ErrorReporter.getInstance().handleSilentException(e);
             }
         }
         return null;

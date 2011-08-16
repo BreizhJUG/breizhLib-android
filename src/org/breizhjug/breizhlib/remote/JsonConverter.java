@@ -10,13 +10,36 @@ import org.json.JSONObject;
 
 public class JsonConverter {
 
+    private String getFacultatifString(JSONObject item, String name) {
+        try {
+            return item.getString(name);
+        } catch (JSONException e) {
+            return null;
+        }
+    }
+
+    private int getFacultatifInt(JSONObject item, String name) {
+        try {
+            return item.getInt(name);
+        } catch (JSONException e) {
+            return 0;
+        }
+    }
+
     public Livre convertLivre(JSONObject item) throws JSONException {
         Livre livre = null;
         if (item != null) {
-            livre = new Livre(item.getString("titre"), item.getString("isbn"), item.getString("editeur"), item.getString("image"));
+            String editeur = null;
+            String image = null;
+
+            editeur = getFacultatifString(item, "editeur");
+            image = getFacultatifString(item, "image");
+
+
+            livre = new Livre(item.getString("titre"), item.getString("isbn"), editeur, image);
             livre.add = item.getBoolean("aAjouter");
             livre.etat = item.getString("etat");
-            livre.note = item.getInt("note");
+            livre.note = getFacultatifInt(item, "note");
         }
         return livre;
     }

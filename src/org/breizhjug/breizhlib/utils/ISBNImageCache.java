@@ -52,7 +52,7 @@ public class ISBNImageCache {
             }
         }
 
-        if (bitmap == null) {
+        if (bitmap == null && url != null) {
             bitmap = imageDownloader.download(url, imageView);
             if (bitmap != null) {
                 try {

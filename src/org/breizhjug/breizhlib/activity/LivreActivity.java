@@ -136,8 +136,6 @@ public class LivreActivity extends AbstractActivity {
             initReservation(button, livre.etat, livre.iSBN);
         }
 
-        if (prefs.getBoolean("beta", false)) {
-
             final ListView items = (ListView) findViewById(R.id.items);
             List<String> args = new ArrayList<String>();
             args.add(livre.iSBN);
@@ -171,8 +169,6 @@ public class LivreActivity extends AbstractActivity {
             Log.d(TAG, livre.iSBN + " size :" + commentaires.size());
             CommentairesAdapter commentairesAdapter = new CommentairesAdapter(this.getBaseContext(), commentaires);
             items.setAdapter(commentairesAdapter);
-
-        }
 
     }
 
@@ -257,6 +253,7 @@ public class LivreActivity extends AbstractActivity {
                                 Toast.makeText(getApplicationContext(), getString(R.string.ajoutOK), Toast.LENGTH_SHORT).show();
                                 intent.putExtra("livre", result);
                                 LivreActivity.this.startActivity(intent);
+                                finish();
                             }
                         }
                     };

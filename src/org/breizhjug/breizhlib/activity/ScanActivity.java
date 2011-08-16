@@ -55,7 +55,7 @@ public class ScanActivity extends AbstractActivity {
                 Log.d(TAG, "result OK");
                 String contents = scanResult.getContents();
                 String format = scanResult.getFormatName();
-                if (format.equals("EAN_13") && isIsbn13(contents)) {
+                if (format != null && format.equals("EAN_13") && isIsbn13(contents)) {
                     isbn = contents;
                     Log.d(TAG, "isbn : " + isbn);
                     AlertDialog.Builder adb = new AlertDialog.Builder(ScanActivity.this);
@@ -79,6 +79,6 @@ public class ScanActivity extends AbstractActivity {
     }
 
     public boolean isIsbn13(String isbn) {
-        return isbn.length() == 13 && (isbn.startsWith("978") || isbn.startsWith("979"));
+        return isbn != null && isbn.length() == 13 && (isbn.startsWith("978") || isbn.startsWith("979"));
     }
 }

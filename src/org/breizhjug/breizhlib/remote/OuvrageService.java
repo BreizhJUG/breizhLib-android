@@ -97,7 +97,6 @@ public class OuvrageService extends Service<Livre> {
                 return BOOKS;
             } catch (JSONException e) {
                 Log.e(TAG, "There was an error parsing the JSON", e);
-                ErrorReporter.getInstance().handleSilentException(e);
             }
         }
         return BOOKS;
