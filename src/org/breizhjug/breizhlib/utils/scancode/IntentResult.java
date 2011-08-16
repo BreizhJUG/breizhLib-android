@@ -1,4 +1,4 @@
-package org.breizhjug.breizhlib.utils;
+package org.breizhjug.breizhlib.utils.scancode;
 
 /*
  * Copyright 2009 ZXing authors

@@ -23,13 +23,9 @@ public class AvisActivity extends AbstractActivity {
         final SharedPreferences prefs = BreizhLib.getSharedPreferences(getApplicationContext());
 
         final Spinner note = (Spinner) findViewById(R.id.spinnerNote);
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item);
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.stars,android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapter.add("1");
-        adapter.add("2");
-        adapter.add("3");
-        adapter.add("4");
-        adapter.add("5");
+
         note.setAdapter(adapter);
         if (livre.note > 0) {
             note.setSelection(livre.note - 1);

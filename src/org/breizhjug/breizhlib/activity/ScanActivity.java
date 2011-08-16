@@ -11,8 +11,8 @@ import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.remote.OuvrageService;
-import org.breizhjug.breizhlib.utils.IntentIntegrator;
-import org.breizhjug.breizhlib.utils.IntentResult;
+import org.breizhjug.breizhlib.utils.scancode.IntentIntegrator;
+import org.breizhjug.breizhlib.utils.scancode.IntentResult;
 
 
 public class ScanActivity extends AbstractActivity {

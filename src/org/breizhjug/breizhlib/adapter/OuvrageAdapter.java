@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.model.Livre;
-import org.breizhjug.breizhlib.utils.ISBNImageCache;
 
 import java.util.List;
 
@@ -48,7 +48,7 @@ public class OuvrageAdapter extends ArrayAdapter<Livre> {
         }
 
         ImageView icone = (ImageView) view.findViewById(R.id.img);
-        ISBNImageCache.getIsbnImageFromCache(livre.iSBN,livre.imgUrl, icone);
+        BreizhLib.getImageCache().getFromCache(livre.iSBN, livre.imgUrl, icone);
 
         return view;
     }

@@ -14,9 +14,12 @@ import org.acra.ACRA;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
 import org.breizhjug.breizhlib.database.Database;
+import org.breizhjug.breizhlib.model.Commentaire;
+import org.breizhjug.breizhlib.model.Livre;
+import org.breizhjug.breizhlib.model.Reservation;
 import org.breizhjug.breizhlib.remote.*;
 import org.breizhjug.breizhlib.utils.GoogleAuthentification;
-import org.breizhjug.breizhlib.utils.ImageDownloader;
+import org.breizhjug.breizhlib.utils.ImageCache;
 import org.breizhjug.breizhlib.utils.Version;
 
 
@@ -24,7 +27,7 @@ import org.breizhjug.breizhlib.utils.Version;
         mode = ReportingInteractionMode.TOAST, resToastText = R.string.resToastText)
 public class BreizhLib extends Application {
 
-    private static ImageDownloader imageDownloader;
+    private static ImageCache imageCache;
 
     private static CommentaireService commentaireService;
 
@@ -46,7 +49,8 @@ public class BreizhLib extends Application {
         ACRA.init(this);
         super.onCreate();
 
-        imageDownloader = ImageDownloader.getInstance();
+        imageCache = new ImageCache("breizhlib");
+        imageCache.init();
         databaseHelper = new Database(this);
         commentaireService = CommentaireService.getInstance();
         ouvrageService = OuvrageService.getInstance();
@@ -58,8 +62,6 @@ public class BreizhLib extends Application {
         checkVersion.execute();
 
         syncManager = new SyncManager();
-        syncManager.init(this.getApplicationContext());
-        syncManager.run();
     }
 
     public static SyncManager getSyncManager() {
@@ -71,8 +73,8 @@ public class BreizhLib extends Application {
     }
 
 
-    public static ImageDownloader getImageDownloader() {
-        return imageDownloader;
+    public static ImageCache getImageCache() {
+        return imageCache;
     }
 
     public static GoogleAuthentification getGAuth() {
@@ -100,10 +102,15 @@ public class BreizhLib extends Application {
     }
 
     public static void clearCache() {
-        imageDownloader.clearCache();
         commentaireService.clearCache();
         ouvrageService.clearCache();
         reservationService.clearCache();
+    }
+
+    public static void clearDB() {
+        databaseHelper.deleteAll(Livre.class);
+        databaseHelper.deleteAll(Commentaire.class);
+        databaseHelper.deleteAll(Reservation.class);
     }
 
 

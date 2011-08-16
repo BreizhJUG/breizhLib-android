@@ -2,7 +2,7 @@ package org.breizhjug.breizhlib.remote;
 
 
 import android.util.Log;
-import org.acra.ErrorReporter;
+import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.model.Utilisateur;
 import org.json.JSONException;
@@ -59,7 +59,7 @@ public class UtilisateurService extends Service<Utilisateur> {
     }
 
     private UtilisateurService() {
-        super();
+        super(BreizhLib.getDataBaseHelper());
     }
 
     public static synchronized UtilisateurService getInstance() {

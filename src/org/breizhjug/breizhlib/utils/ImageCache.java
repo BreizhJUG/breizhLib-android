@@ -6,26 +6,31 @@ import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.ImageView;
-import org.breizhjug.breizhlib.BreizhLib;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
-public class ISBNImageCache {
+public class ImageCache implements Cache{
 
-    private static ImageDownloader imageDownloader = BreizhLib.getImageDownloader();
+    private static final String TAG = "Breizhlib.ImageCache";
 
-    private static final String SD_PATH = Environment.getExternalStorageDirectory().toString() + "/breizhlib/";
+    private static ImageDownloader imageDownloader = ImageDownloader.getInstance();
 
-    public static void init(){
+    private String SD_PATH = Environment.getExternalStorageDirectory().toString();
+
+    public ImageCache(String appfolder) {
+       SD_PATH  += "/"+appfolder+"/";
+    }
+
+    public void init(){
         File dir = new File(SD_PATH);
         if (!dir.exists()) {
             dir.mkdirs();
         }
     }
 
-    public static void clearCache(){
+    public void clearCache(){
        File dir = new File(SD_PATH);
         if (dir.exists()) {
             File[] fileList = dir.listFiles();
@@ -35,7 +40,7 @@ public class ISBNImageCache {
         }
     }
 
-    public static void getIsbnImageFromCache(String isbn, String url, ImageView imageView) {
+    public void getFromCache(String name, String url, ImageView imageView) {
 
 
         init();
@@ -44,10 +49,10 @@ public class ISBNImageCache {
 
         Bitmap bitmap = null;
         for (File file : fileList) {
-            if (file.getName().contains(isbn)) {
+            if (file.getName().contains(name)) {
                 bitmap = BitmapFactory.decodeFile(SD_PATH+file.getName());
                 imageView.setImageBitmap(bitmap);
-                Log.d("IMG", file.getName() +" "+bitmap );
+                Log.d(TAG, file.getName() +" "+bitmap );
                 return;
             }
         }
@@ -56,7 +61,7 @@ public class ISBNImageCache {
             bitmap = imageDownloader.download(url, imageView);
             if (bitmap != null) {
                 try {
-                    saveImage(bitmap, isbn);
+                    saveImage(bitmap, name);
                 } catch (FileNotFoundException e) {
 
                 }
@@ -64,7 +69,10 @@ public class ISBNImageCache {
         }
     }
 
-    private static void saveImage(Bitmap bitmap, String isbn) throws FileNotFoundException {
+    public void download(String url, ImageView imageView) {
+    }
+
+    private void saveImage(Bitmap bitmap, String isbn) throws FileNotFoundException {
         File file = new File(SD_PATH + isbn + ".jpg");
         Bitmap thumb = Bitmap.createScaledBitmap(bitmap,75, 100,true);
         thumb.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(file));

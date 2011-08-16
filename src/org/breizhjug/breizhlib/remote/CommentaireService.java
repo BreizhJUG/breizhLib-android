@@ -2,6 +2,7 @@ package org.breizhjug.breizhlib.remote;
 
 import android.util.Log;
 import org.acra.ErrorReporter;
+import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.model.Commentaire;
 import org.json.JSONArray;
@@ -78,7 +79,7 @@ public class CommentaireService extends Service<Commentaire> {
     private static CommentaireService instance;
 
     private CommentaireService() {
-        super();
+        super(BreizhLib.getDataBaseHelper());
     }
 
     public static synchronized CommentaireService getInstance() {

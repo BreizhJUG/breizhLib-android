@@ -14,7 +14,7 @@ import org.breizhjug.breizhlib.R;
 
 
 public class ReservationActivity extends AbstractActivity {
-    private static final String TAG = ReservationActivity.class.getName();
+    private static final String TAG = "BreizhLib.ReservationActivity";
     private SharedPreferences prefs;
 
     @Override

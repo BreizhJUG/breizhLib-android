@@ -3,6 +3,7 @@ package org.breizhjug.breizhlib.remote;
 
 import android.util.Log;
 import org.acra.ErrorReporter;
+import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.model.Livre;
 import org.json.JSONArray;
@@ -105,7 +106,7 @@ public class OuvrageService extends Service<Livre> {
     private static OuvrageService instance;
 
     private OuvrageService() {
-        super();
+        super(BreizhLib.getDataBaseHelper());
     }
 
     public static synchronized OuvrageService getInstance() {

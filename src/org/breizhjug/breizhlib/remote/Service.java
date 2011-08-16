@@ -15,9 +15,9 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
-import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.database.Database;
 import org.breizhjug.breizhlib.model.Model;
+import org.breizhjug.breizhlib.utils.Cache;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,21 +28,25 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Service<T extends Model> {
+public abstract class Service<T extends Model> implements Cache{
 
     private static final String TAG = "Breizhlib.Service";
     private static final int CONNECTION_TIMEOUT = 20000;
     private static HttpClient httpclient = getHttpClient();
-    private List<T> cache = null;
+    protected List<T> cache = null;
 
     protected static JsonConverter converter = new JsonConverter();
-    protected static Database db = BreizhLib.getDataBaseHelper();
+    protected static Database db;
 
     public abstract List<T> load(String authCookie, String urlString);
 
     public abstract String url();
 
     public boolean forceCall = false;
+
+    protected Service(Database db) {
+        this.db = db;
+    }
 
     public List<T> load(String authCookie) {
 

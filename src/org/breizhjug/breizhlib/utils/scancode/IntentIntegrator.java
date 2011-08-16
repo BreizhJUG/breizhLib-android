@@ -1,4 +1,4 @@
-package org.breizhjug.breizhlib.utils;
+package org.breizhjug.breizhlib.utils.scancode;
 
 /*
  * Copyright 2009 ZXing authors
@@ -24,6 +24,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
+import org.breizhjug.breizhlib.utils.scancode.IntentResult;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

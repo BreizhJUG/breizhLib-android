@@ -28,6 +28,11 @@
                               android:negativeButtonText="@string/annuler"
                               android:positiveButtonText="@string/ok"  />
 
+           <org.breizhjug.breizhlib.view.CacheDialogPreference android:key="cacheDb"
+                              android:title="@string/cacheDb"
+                              android:negativeButtonText="@string/annuler"
+                              android:positiveButtonText="@string/ok"  />
+
     </PreferenceCategory>
 
      <!-- PreferenceCategory android:title="Beta">

@@ -3,7 +3,9 @@ package org.breizhjug.breizhlib.remote;
 
 import android.util.Log;
 import org.acra.ErrorReporter;
+import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
+import org.breizhjug.breizhlib.database.dao.LivreDAO;
 import org.breizhjug.breizhlib.model.Reservation;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,6 +49,16 @@ public class ReservationService extends Service<Reservation> {
         return result != null && result.startsWith("OK");
     }
 
+    @Override
+    public List<Reservation> load(String authCookie) {
+
+        if (cache != null && LivreDAO.findByReservation().size() != cache.size()) {
+            db.deleteAll(Reservation.class);
+            forceCall = true;
+        }
+        return super.load(authCookie);
+    }
+
     public List<Reservation> load(String authCookie, String urlString) {
         Log.d(TAG, urlString);
         String result = queryRESTurl(authCookie, urlString);
@@ -70,7 +82,7 @@ public class ReservationService extends Service<Reservation> {
     }
 
     private ReservationService() {
-        super();
+        super(BreizhLib.getDataBaseHelper());
     }
 
     public static synchronized ReservationService getInstance() {

@@ -2,7 +2,6 @@ package org.breizhjug.breizhlib.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,17 +13,14 @@ import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.adapter.CommentairesAdapter;
 import org.breizhjug.breizhlib.database.Database;
+import org.breizhjug.breizhlib.database.dao.CommentaireDAO;
 import org.breizhjug.breizhlib.model.Commentaire;
 import org.breizhjug.breizhlib.model.Livre;
-import org.breizhjug.breizhlib.utils.ISBNImageCache;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class LivreActivity extends AbstractActivity {
-
-    private String backActivity;
 
     protected static Database db = BreizhLib.getDataBaseHelper();
     private static final String TAG = "BreizhLib.LivreActivity";
@@ -43,7 +39,6 @@ public class LivreActivity extends AbstractActivity {
     private void initView() {
         SharedPreferences prefs = BreizhLib.getSharedPreferences(getApplicationContext());
         final Livre livre = (Livre) getIntent().getSerializableExtra("livre");
-        backActivity = getIntent().getStringExtra("backActivity");
         final ArrayList<Livre> ouvrages = (ArrayList<Livre>) getIntent().getSerializableExtra("livres");
         final int index = (int) getIntent().getIntExtra("index", 0);
 
@@ -54,7 +49,7 @@ public class LivreActivity extends AbstractActivity {
         editeurView.setText(livre.editeur);
 
         ImageView icone = (ImageView) findViewById(R.id.img);
-        ISBNImageCache.getIsbnImageFromCache(livre.iSBN, livre.imgUrl, icone);
+        BreizhLib.getImageCache().getFromCache(livre.iSBN, livre.imgUrl, icone);
 
         initStars(livre.note);
 
@@ -71,7 +66,6 @@ public class LivreActivity extends AbstractActivity {
                         intent.putExtra("livre", livre);
                         intent.putExtra("livres", ouvrages);
                         intent.putExtra("index", index - 1);
-                        intent.putExtra("backActivity", backActivity);
                         startActivity(intent);
                         finish();
                     }
@@ -89,7 +83,6 @@ public class LivreActivity extends AbstractActivity {
                         intent.putExtra("livre", livre);
                         intent.putExtra("livres", ouvrages);
                         intent.putExtra("index", index + 1);
-                        intent.putExtra("backActivity", backActivity);
                         startActivity(intent);
                         finish();
                     }
@@ -118,7 +111,7 @@ public class LivreActivity extends AbstractActivity {
                 avis.setOnClickListener(new Button.OnClickListener() {
 
                     public void onClick(View view) {
-                        Log.d("breizhlib", "click avis");
+                        Log.d(TAG, "click avis");
                         Toast.makeText(LivreActivity.this.getApplicationContext(), "Vous devez être connecté", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -137,23 +130,7 @@ public class LivreActivity extends AbstractActivity {
         }
 
             final ListView items = (ListView) findViewById(R.id.items);
-            List<String> args = new ArrayList<String>();
-            args.add(livre.iSBN);
-
-            Cursor cursor = db.executeSelectQuery("SELECT Commentaire.* FROM Commentaire  WHERE Commentaire.isbn = :isbn", args);
-
-            final ArrayList<Commentaire> commentaires = new ArrayList<Commentaire>();
-            if (cursor != null) {
-                if (cursor.getCount() > 0) {
-                    cursor.moveToFirst();
-                    do {
-                        Commentaire commentaire =new Commentaire(cursor);
-                        commentaire.onLoad(db);
-                        commentaires.add(commentaire);
-                    } while (cursor.moveToNext());
-                }
-                cursor.close();
-            }
+            final ArrayList<Commentaire> commentaires = CommentaireDAO.findByIsbn(livre.iSBN);
 
              items.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
@@ -174,11 +151,12 @@ public class LivreActivity extends AbstractActivity {
 
 
     private void initStars(int note) {
-        ImageView star1 = (ImageView) findViewById(R.id.star1);
-        ImageView star2 = (ImageView) findViewById(R.id.star2);
-        ImageView star3 = (ImageView) findViewById(R.id.star3);
-        ImageView star4 = (ImageView) findViewById(R.id.star4);
-        ImageView star5 = (ImageView) findViewById(R.id.star5);
+        LinearLayout nav = (LinearLayout) findViewById(R.id.stars);
+        ImageView star1 = (ImageView) nav.getChildAt(0);
+        ImageView star2 = (ImageView) nav.getChildAt(1);
+        ImageView star3 = (ImageView) nav.getChildAt(2);
+        ImageView star4 = (ImageView) nav.getChildAt(3);
+        ImageView star5 = (ImageView) nav.getChildAt(4);
         switch (note) {
             case 0:
                 star1.setVisibility(View.INVISIBLE);

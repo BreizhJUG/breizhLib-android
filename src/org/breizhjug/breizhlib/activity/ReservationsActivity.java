@@ -9,8 +9,11 @@ import android.widget.ListView;
 import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.adapter.ReservationsAdapter;
+import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.model.Reservation;
 import org.breizhjug.breizhlib.remote.AsyncRemoteTask;
+
+import java.util.ArrayList;
 
 
 public class ReservationsActivity extends AbstractActivity {
@@ -42,7 +45,7 @@ public class ReservationsActivity extends AbstractActivity {
             public void onClick(int position) {
                 Reservation reservation = (Reservation) reservationsListView.getItemAtPosition(position);
                 Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-                intent.putExtra("livres", items);
+                intent.putExtra("livres", toOuvrages(items));
                 intent.putExtra("index", position);
                 intent.putExtra("livre", reservation.livre);
                 ReservationsActivity.this.startActivity(intent);
@@ -52,6 +55,16 @@ public class ReservationsActivity extends AbstractActivity {
 
         initTask.execute((Void) null);
 
+    }
+
+    private ArrayList<Livre> toOuvrages(ArrayList<Reservation> items) {
+          ArrayList<Livre> livres = new ArrayList<Livre>();
+
+          for(Reservation item : items){
+             livres.add(item.livre);
+          }
+
+          return livres;
     }
 
 

@@ -10,7 +10,6 @@ import android.widget.TextView;
 import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.model.Commentaire;
-import org.breizhjug.breizhlib.utils.ISBNImageCache;
 
 import java.util.ArrayList;
 
@@ -35,7 +34,7 @@ public class CommentaireActivity extends AbstractActivity {
         text.setText(commentaire.commentaire);
 
         ImageView icone = (ImageView) findViewById(R.id.img);
-        ISBNImageCache.getIsbnImageFromCache(commentaire.livre.iSBN,commentaire.livre.imgUrl, icone);
+        BreizhLib.getImageCache().getFromCache(commentaire.livre.iSBN, commentaire.livre.imgUrl, icone);
 
         initStars(commentaire.note);
 

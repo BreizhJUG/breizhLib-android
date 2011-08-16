@@ -23,7 +23,6 @@ public class ProfilActivity extends AbstractActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profil);
-
     }
 
     public void init(Intent intent) {
@@ -92,7 +91,7 @@ public class ProfilActivity extends AbstractActivity {
         reservations.setText(user.reservationsLabel);
 
         ImageView icon = (ImageView) findViewById(R.id.avatar);
-        BreizhLib.getImageDownloader().download(Gravatar.getImage(user.email), icon);
+        BreizhLib.getImageCache().getFromCache(user.email,Gravatar.getImage(user.email), icon);
     }
 
 }

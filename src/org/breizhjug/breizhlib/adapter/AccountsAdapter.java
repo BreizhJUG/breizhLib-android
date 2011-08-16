@@ -35,7 +35,7 @@ public class AccountsAdapter extends ArrayAdapter<String> {
         text.setText(email);
 
         ImageView icone = (ImageView) view.findViewById(R.id.avatar);
-        BreizhLib.getImageDownloader().download(Gravatar.getImage(email), icone);
+        BreizhLib.getImageCache().getFromCache("avatar",Gravatar.getImage(email), icone);
         return view;
     }
 }

@@ -5,7 +5,6 @@ import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import android.util.Log;
 import org.breizhjug.breizhlib.BreizhLib;
-import org.breizhjug.breizhlib.utils.ISBNImageCache;
 
 
 public class CacheDialogPreference extends DialogPreference {
@@ -28,7 +27,10 @@ public class CacheDialogPreference extends DialogPreference {
             BreizhLib.clearCache();
         } else if(getKey().equals("cacheImg")){
             Log.d(TAG, "clear cache img");
-            ISBNImageCache.clearCache();
+            BreizhLib.getImageCache().clearCache();
+        }  else if(getKey().equals("cacheDb")){
+            Log.d(TAG, "clear cache db");
+            BreizhLib.clearDB();
         }
 
     }

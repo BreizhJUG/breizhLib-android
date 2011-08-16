@@ -18,9 +18,9 @@ import java.util.ArrayList;
 
 public abstract class AsyncRemoteTask<T extends Model> extends AsyncTask<Void, Void, Boolean> {
 
-    Service<T> service;
-    SharedPreferences prefs;
-    AbsListView listView;
+    private Service<T> service;
+    private SharedPreferences prefs;
+    private AbsListView listView;
     public ArrayList<T> items = new ArrayList<T>();
     private ProgressDialog waitDialog;
 
