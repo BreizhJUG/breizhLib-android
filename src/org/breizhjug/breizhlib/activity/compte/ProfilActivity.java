@@ -91,7 +91,7 @@ public class ProfilActivity extends AbstractActivity {
         reservations.setText(user.reservationsLabel);
 
         ImageView icon = (ImageView) findViewById(R.id.avatar);
-        BreizhLib.getImageCache().getFromCache(user.email, Gravatar.getImage(user.email), icon);
+        BreizhLib.getImageCache().download(Gravatar.getImage(user.email), icon);
     }
 
 }

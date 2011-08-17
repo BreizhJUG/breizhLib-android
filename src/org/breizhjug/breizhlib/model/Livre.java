@@ -41,10 +41,10 @@ public class Livre implements Serializable, Model {
 
     public Livre(Cursor cursor) {
         note = cursor.getInt(cursor.getColumnIndex("note"));
-		editeur = cursor.getString(cursor.getColumnIndex("editeur"));
-		iSBN = cursor.getString(cursor.getColumnIndex("iSBN"));
+        editeur = cursor.getString(cursor.getColumnIndex("editeur"));
+        iSBN = cursor.getString(cursor.getColumnIndex("iSBN"));
         imgUrl = cursor.getString(cursor.getColumnIndex("imgUrl"));
-		titre = cursor.getString(cursor.getColumnIndex("titre"));
+        titre = cursor.getString(cursor.getColumnIndex("titre"));
     }
 
     public void onLoad(Database db) {

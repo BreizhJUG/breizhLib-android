@@ -22,13 +22,13 @@ public class CacheDialogPreference extends DialogPreference {
     @Override
     protected void onClick() {
 
-        if( getKey().equals("cache")){
+        if (getKey().equals("cache")) {
             Log.d(TAG, "clear cache");
             BreizhLib.clearCache();
-        } else if(getKey().equals("cacheImg")){
+        } else if (getKey().equals("cacheImg")) {
             Log.d(TAG, "clear cache img");
             BreizhLib.getImageCache().clearCache();
-        }  else if(getKey().equals("cacheDb")){
+        } else if (getKey().equals("cacheDb")) {
             Log.d(TAG, "clear cache db");
             BreizhLib.clearDB();
         }

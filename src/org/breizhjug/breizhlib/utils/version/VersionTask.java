@@ -4,22 +4,22 @@ import android.app.Application;
 import android.os.AsyncTask;
 
 
-public class VersionTask extends AsyncTask<Void,Void,Integer> {
+public class VersionTask extends AsyncTask<Void, Void, Integer> {
 
-        Application app;
+    Application app;
 
-        public VersionTask(Application app) {
-            this.app = app;
-        }
+    public VersionTask(Application app) {
+        this.app = app;
+    }
 
-        @Override
-        protected Integer doInBackground(Void... params) {
-            return Version.getVersionCodeMarket();
-        }
+    @Override
+    protected Integer doInBackground(Void... params) {
+        return Version.getVersionCodeMarket();
+    }
 
-        protected void onPostExecute(Integer result) {
-            if (result != null && result > Version.getVersionCourante(app)) {
-                Version.createNotification(app,app);
-            }
+    protected void onPostExecute(Integer result) {
+        if (result != null && result > Version.getVersionCourante(app)) {
+            Version.createNotification(app, app);
         }
     }
+}

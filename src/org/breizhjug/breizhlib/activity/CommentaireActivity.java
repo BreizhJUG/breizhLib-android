@@ -22,8 +22,7 @@ public class CommentaireActivity extends AbstractActivity {
 
     public void initView() {
         final Commentaire commentaire = (Commentaire) getIntent().getSerializableExtra("commentaire");
-        final ArrayList<Commentaire> commentaires = (ArrayList<Commentaire>) getIntent().getSerializableExtra("commentaires");
-        final int index = (int) getIntent().getIntExtra("index", 0);
+
         TextView text = (TextView) findViewById(R.id.titre);
         text.setText(commentaire.livre.titre);
 
@@ -36,7 +35,27 @@ public class CommentaireActivity extends AbstractActivity {
         ImageView icone = (ImageView) findViewById(R.id.img);
         BreizhLib.getImageCache().getFromCache(commentaire.livre.iSBN, commentaire.livre.imgUrl, icone);
 
+        icone.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
+                //intent.putExtra("livres", items);
+                intent.putExtra("index", 0);
+                intent.putExtra("livre", commentaire.livre);
+                CommentaireActivity.this.startActivity(intent);
+                finish();
+            }
+        });
+
+        initNavigation();
+
         initStars(commentaire.note);
+
+
+    }
+
+    private void initNavigation() {
+        final ArrayList<Commentaire> commentaires = (ArrayList<Commentaire>) getIntent().getSerializableExtra("commentaires");
+        final int index = (int) getIntent().getIntExtra("index", 0);
 
         LinearLayout nav = (LinearLayout) findViewById(R.id.nav);
         Button previous = (Button) nav.getChildAt(0);
@@ -74,7 +93,6 @@ public class CommentaireActivity extends AbstractActivity {
         } else {
             next.setEnabled(false);
         }
-
     }
 
     private void initStars(int note) {

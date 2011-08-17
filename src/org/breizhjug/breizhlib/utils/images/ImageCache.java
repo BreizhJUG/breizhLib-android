@@ -21,22 +21,22 @@ public class ImageCache implements Cache {
     private String SD_PATH = Environment.getExternalStorageDirectory().toString();
 
     public ImageCache(String appfolder) {
-       SD_PATH  += "/"+appfolder+"/";
+        SD_PATH += "/" + appfolder + "/";
     }
 
-    public void init(){
+    public void init() {
         File dir = new File(SD_PATH);
         if (!dir.exists()) {
             dir.mkdirs();
         }
     }
 
-    public void clearCache(){
-       File dir = new File(SD_PATH);
+    public void clearCache() {
+        File dir = new File(SD_PATH);
         if (dir.exists()) {
             File[] fileList = dir.listFiles();
             for (File file : fileList) {
-                 file.delete();
+                file.delete();
             }
         }
     }
@@ -51,9 +51,9 @@ public class ImageCache implements Cache {
         Bitmap bitmap = null;
         for (File file : fileList) {
             if (file.getName().contains(name)) {
-                bitmap = BitmapFactory.decodeFile(SD_PATH+file.getName());
+                bitmap = BitmapFactory.decodeFile(SD_PATH + file.getName());
                 imageView.setImageBitmap(bitmap);
-                Log.d(TAG, file.getName() +" "+bitmap );
+                Log.d(TAG, file.getName() + " " + bitmap);
                 return;
             }
         }
@@ -75,7 +75,7 @@ public class ImageCache implements Cache {
 
     private void saveImage(Bitmap bitmap, String isbn) throws FileNotFoundException {
         File file = new File(SD_PATH + isbn + ".jpg");
-        Bitmap thumb = Bitmap.createScaledBitmap(bitmap,75, 100,true);
+        Bitmap thumb = Bitmap.createScaledBitmap(bitmap, 75, 100, true);
         thumb.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(file));
     }
 }

@@ -58,13 +58,13 @@ public class ReservationsActivity extends AbstractActivity {
     }
 
     private ArrayList<Livre> toOuvrages(ArrayList<Reservation> items) {
-          ArrayList<Livre> livres = new ArrayList<Livre>();
+        ArrayList<Livre> livres = new ArrayList<Livre>();
 
-          for(Reservation item : items){
-             livres.add(item.livre);
-          }
+        for (Reservation item : items) {
+            livres.add(item.livre);
+        }
 
-          return livres;
+        return livres;
     }
 
 

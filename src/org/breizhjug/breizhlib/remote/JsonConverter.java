@@ -82,8 +82,8 @@ public class JsonConverter {
     public Result convertResult(JSONObject item) throws JSONException {
         Result result = null;
         if (item != null) {
-           result = new Result(item.getString("message"));
-           result.valid = false;
+            result = new Result(item.getString("message"));
+            result.valid = false;
         }
         return result;
 

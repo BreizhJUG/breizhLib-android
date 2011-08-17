@@ -44,13 +44,13 @@ public class GoogleAuthentification {
         try {
             authTokenBundle = accountManagerFuture.getResult();
         } catch (OperationCanceledException e) {
-           Log.w(TAG, "Got OperationCanceledException " + e);
+            Log.w(TAG, "Got OperationCanceledException " + e);
             Log.w(TAG, Log.getStackTraceString(e));
         } catch (AuthenticatorException e) {
             Log.w(TAG, "Got AuthenticatorException " + e);
             Log.w(TAG, Log.getStackTraceString(e));
         } catch (IOException e) {
-           Log.w(TAG, "Got OperationCanceledException " + e);
+            Log.w(TAG, "Got OperationCanceledException " + e);
             Log.w(TAG, Log.getStackTraceString(e));
         }
         String authToken = authTokenBundle.get(AccountManager.KEY_AUTHTOKEN).toString();
@@ -61,7 +61,7 @@ public class GoogleAuthentification {
 
     }
 
-    public String getAuthCookie(String authToken,Context context) {
+    public String getAuthCookie(String authToken, Context context) {
         try {
             // Get ACSID cookie
             DefaultHttpClient client = new DefaultHttpClient();
@@ -74,11 +74,11 @@ public class GoogleAuthentification {
             method.setParams(getParams);
             HttpResponse res = client.execute(method);
             Header[] headers = res.getHeaders("Set-Cookie");
-             Log.d(TAG, "reponse code : "+res.getStatusLine().getStatusCode()  );
-            if (res.getStatusLine().getStatusCode() != 302 ) {
-                 Log.d("COOKIE", "erreur reponse : "+res.getStatusLine().getStatusCode()  );
+            Log.d(TAG, "reponse code : " + res.getStatusLine().getStatusCode());
+            if (res.getStatusLine().getStatusCode() != 302) {
+                Log.d("COOKIE", "erreur reponse : " + res.getStatusLine().getStatusCode());
                 AccountManager accountManager = AccountManager.get(context);
-                accountManager.invalidateAuthToken("com.google",authToken);
+                accountManager.invalidateAuthToken("com.google", authToken);
                 return null;
             }
             for (Cookie cookie : client.getCookieStore().getCookies()) {

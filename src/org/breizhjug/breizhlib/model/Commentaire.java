@@ -38,10 +38,10 @@ public class Commentaire implements Serializable, Model {
     }
 
     public Commentaire(Cursor cursor) {
-		note = cursor.getInt(cursor.getColumnIndex("note"));
-		nom = cursor.getString(cursor.getColumnIndex("nom"));
-		isbn = cursor.getString(cursor.getColumnIndex("isbn"));
-		commentaire = cursor.getString(cursor.getColumnIndex("commentaire"));
+        note = cursor.getInt(cursor.getColumnIndex("note"));
+        nom = cursor.getString(cursor.getColumnIndex("nom"));
+        isbn = cursor.getString(cursor.getColumnIndex("isbn"));
+        commentaire = cursor.getString(cursor.getColumnIndex("commentaire"));
     }
 
     public void onLoad(Database db) {

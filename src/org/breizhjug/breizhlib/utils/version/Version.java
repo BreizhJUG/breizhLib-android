@@ -82,7 +82,7 @@ public class Version {
 
     private static final int NOTIFICATION_VERSION_ID = 1;
 
-    public static void createNotification(Context context,Application app) {
+    public static void createNotification(Context context, Application app) {
         int icon = R.drawable.icon;
         CharSequence tickerText = context.getString(R.string.nouvelleVersion);
         long when = System.currentTimeMillis();

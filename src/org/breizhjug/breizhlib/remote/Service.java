@@ -28,7 +28,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Service<T extends Model> implements Cache{
+public abstract class Service<T extends Model> implements Cache {
 
     private static final String TAG = "Breizhlib.Service";
     private static final int CONNECTION_TIMEOUT = 20000;

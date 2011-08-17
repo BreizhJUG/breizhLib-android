@@ -16,7 +16,7 @@ public class LivreDAO {
 
     public static ArrayList<Livre> findByReservation() {
 
-        Cursor cursor = db.executeSelectQuery("SELECT Livre.* FROM Livre  WHERE Livre.etat = 'RESERVE' ",null);
+        Cursor cursor = db.executeSelectQuery("SELECT Livre.* FROM Livre  WHERE Livre.etat = 'RESERVE' ", null);
 
         final ArrayList<Livre> livres = new ArrayList<Livre>();
         if (cursor != null) {

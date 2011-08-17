@@ -40,7 +40,7 @@ public class SyncManager implements SharedPreferences.OnSharedPreferenceChangeLi
             editor.putString(OUVRAGE_T_PERIOD, "" + AlarmManager.INTERVAL_FIFTEEN_MINUTES);
         }
 
-         if (Long.valueOf(prefs.getString(COMMENTAIRES_T_PERIOD, "0")) == 0l) {
+        if (Long.valueOf(prefs.getString(COMMENTAIRES_T_PERIOD, "0")) == 0l) {
             editor.putString(COMMENTAIRES_T_PERIOD, "" + AlarmManager.INTERVAL_FIFTEEN_MINUTES);
         }
 
@@ -56,7 +56,7 @@ public class SyncManager implements SharedPreferences.OnSharedPreferenceChangeLi
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
         if (s.equals(OUVRAGE_T_PERIOD)) {
             reschedule(OUVRAGE_T, Long.valueOf(prefs.getString(OUVRAGE_T_PERIOD, "0")));
-        } else if (s.equals(COMMENTAIRES_T_PERIOD))    {
+        } else if (s.equals(COMMENTAIRES_T_PERIOD)) {
             reschedule(COMMENTAIRES_T, Long.valueOf(prefs.getString(COMMENTAIRES_T_PERIOD, "0")));
         }
     }
@@ -70,7 +70,7 @@ public class SyncManager implements SharedPreferences.OnSharedPreferenceChangeLi
         }
     }
 
-     private class CommentairesTask extends TimerTask {
+    private class CommentairesTask extends TimerTask {
         @Override
         public void run() {
             Log.d(TAG, "run");

@@ -5,6 +5,7 @@ import android.util.Log;
 import org.acra.ErrorReporter;
 import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
+import org.breizhjug.breizhlib.exception.ResultException;
 import org.breizhjug.breizhlib.model.Livre;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,11 +41,11 @@ public class OuvrageService extends Service<Livre> {
         return Livre.class;
     }
 
-    public Livre find(String authCookie, String isbn) {
+    public Livre find(String authCookie, String isbn) throws ResultException {
         return find(authCookie, URL_FIND_BOOKS, isbn);
     }
 
-    private Livre find(String authCookie, String urlString, String isbn) {
+    private Livre find(String authCookie, String urlString, String isbn) throws ResultException {
         String result = queryPostRESTurl(authCookie, urlString, new Param("iSBN", isbn));
         Log.d(TAG, result);
         if (result != null) {
@@ -53,8 +54,14 @@ public class OuvrageService extends Service<Livre> {
                 Livre livre = converter.convertLivre(item);
                 return livre;
             } catch (JSONException e) {
-                Log.e(TAG, "There was an error parsing the JSON", e);
-                ErrorReporter.getInstance().handleSilentException(e);
+                try {
+                    JSONObject item = new JSONObject(result);
+                    throw new ResultException(converter.convertResult(item));
+                } catch (JSONException e1) {
+                    Log.e(TAG, "There was an error parsing the JSON", e);
+                    ErrorReporter.getInstance().handleSilentException(e);
+                    return null;
+                }
             }
         }
         return null;

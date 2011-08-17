@@ -45,9 +45,9 @@ public class ReservationService extends Service<Reservation> {
         Param paramPrenom = new Param("prenom", prenom);
         Param paramEmail = new Param("email", email);
         String result = queryPostRESTurl(authCookie, URL_RESA, param, paramNom, paramPrenom, paramEmail);
-        Log.i(TAG, result);
+        Log.i(TAG, "reserver :  "+result);
 
-        try{
+        try {
             JSONObject item = new JSONObject(result);
             return converter.convertResult(item);
         } catch (JSONException e) {
