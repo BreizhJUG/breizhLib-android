@@ -4,13 +4,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
+import org.breizhjug.breizhlib.remote.Result;
 
 
 public class ReservationActivity extends AbstractActivity {
@@ -48,20 +48,19 @@ public class ReservationActivity extends AbstractActivity {
     }
 
     private void onSend(final String isbn, final String prenom, final String nom, final String email) {
-        final AsyncTask<Void, Void, Boolean> initTask = new AsyncTask<Void, Void, Boolean>() {
+        final AsyncTask<Void, Void, Result> initTask = new AsyncTask<Void, Void, Result>() {
 
             @Override
-            protected Boolean doInBackground(Void... params) {
+            protected Result doInBackground(Void... params) {
                 String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
-                boolean result = BreizhLib.getReservationService().reserver(authCookie, isbn, nom, prenom, email);
-                Log.d(TAG, "result " + result);
+                Result result = BreizhLib.getReservationService().reserver(authCookie, isbn, nom, prenom, email);
                 return result;
             }
 
             @Override
-            protected void onPostExecute(Boolean result) {
-                if (result == null || !result) {
-                    showError("Erreur lors de la réservation", true);
+            protected void onPostExecute(Result result) {
+                if (!result.valid) {
+                    showError(result.msg, true);
                 } else {
                     Intent intent = new Intent(getApplicationContext(), Menu.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

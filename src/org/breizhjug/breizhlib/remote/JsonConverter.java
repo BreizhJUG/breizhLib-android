@@ -67,9 +67,9 @@ public class JsonConverter {
         if (item != null) {
             user = new Utilisateur();
             user.email = item.getString("email");
-            user.nom = getFacultatifString(item,"nom");
-            user.prenom = getFacultatifString(item,"prenom");
-            user.username = getFacultatifString(item,"username");
+            user.nom = getFacultatifString(item, "nom");
+            user.prenom = getFacultatifString(item, "prenom");
+            user.username = getFacultatifString(item, "username");
             user.commentairesLabel = item.getString("commentaires");
             user.ouvragesEncoursLabel = item.getString("ouvragesEncours");
             user.ouvragesLlabel = item.getString("ouvrages");
@@ -77,5 +77,15 @@ public class JsonConverter {
             user.isAdmin = item.getBoolean("isAdmin");
         }
         return user;
+    }
+
+    public Result convertResult(JSONObject item) throws JSONException {
+        Result result = null;
+        if (item != null) {
+           result = new Result(item.getString("message"));
+           result.valid = false;
+        }
+        return result;
+
     }
 }

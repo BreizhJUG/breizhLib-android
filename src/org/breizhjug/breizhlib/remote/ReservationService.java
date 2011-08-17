@@ -39,14 +39,20 @@ public class ReservationService extends Service<Reservation> {
         return Reservation.class;
     }
 
-    public boolean reserver(String authCookie, String isbn, String nom, String prenom, String email) {
+    public Result reserver(String authCookie, String isbn, String nom, String prenom, String email) {
         Param param = new Param("id", isbn);
         Param paramNom = new Param("nom", nom);
         Param paramPrenom = new Param("prenom", prenom);
         Param paramEmail = new Param("email", email);
         String result = queryPostRESTurl(authCookie, URL_RESA, param, paramNom, paramPrenom, paramEmail);
         Log.i(TAG, result);
-        return result != null && result.startsWith("OK");
+
+        try{
+            JSONObject item = new JSONObject(result);
+            return converter.convertResult(item);
+        } catch (JSONException e) {
+            return new Result("");
+        }
     }
 
     @Override
