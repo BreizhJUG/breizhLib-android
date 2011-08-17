@@ -67,9 +67,9 @@ public class JsonConverter {
         if (item != null) {
             user = new Utilisateur();
             user.email = item.getString("email");
-            user.nom = item.getString("nom");
-            user.prenom = item.getString("prenom");
-            user.username = item.getString("username");
+            user.nom = getFacultatifString(item,"nom");
+            user.prenom = getFacultatifString(item,"prenom");
+            user.username = getFacultatifString(item,"username");
             user.commentairesLabel = item.getString("commentaires");
             user.ouvragesEncoursLabel = item.getString("ouvragesEncours");
             user.ouvragesLlabel = item.getString("ouvrages");
