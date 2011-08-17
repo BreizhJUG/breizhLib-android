@@ -1,4 +1,4 @@
-package org.breizhjug.breizhlib.utils;
+package org.breizhjug.breizhlib.utils.images;
 
 /*
  * Copyright (C) 2010 The Android Open Source Project
@@ -58,12 +58,12 @@ public class ImageDownloader {
     private Mode mode = Mode.NO_DOWNLOADED_DRAWABLE;
 
     /**
-     * Download the specified image from the Internet and binds it to the provided ImageView. The
-     * binding is immediate if the image is found in the cache and will be done asynchronously
+     * Download the specified images from the Internet and binds it to the provided ImageView. The
+     * binding is immediate if the images is found in the cache and will be done asynchronously
      * otherwise. A null bitmap will be associated to the ImageView if an error occurs.
      *
-     * @param url       The URL of the image to download.
-     * @param imageView The ImageView to bind the downloaded image to.
+     * @param url       The URL of the images to download.
+     * @param imageView The ImageView to bind the downloaded images to.
      */
     public Bitmap download(String url, ImageView imageView) {
         resetPurgeTimer();
@@ -79,7 +79,7 @@ public class ImageDownloader {
     }
 
     /*
-     * Same as download but the image is always downloaded and the cache is not used.
+     * Same as download but the images is always downloaded and the cache is not used.
      * Kept private at the moment as its interest is not clear.
        private void forceDownload(String url, ImageView view) {
           forceDownload(url, view, null);
@@ -87,7 +87,7 @@ public class ImageDownloader {
      */
 
     /**
-     * Same as download but the image is always downloaded and the cache is not used.
+     * Same as download but the images is always downloaded and the cache is not used.
      * Kept private at the moment as its interest is not clear.
      */
     private void forceDownload(String url, ImageView imageView) {
@@ -124,7 +124,7 @@ public class ImageDownloader {
 
     /**
      * Returns true if the current download has been canceled or if there was no download in
-     * progress on this image view.
+     * progress on this images view.
      * Returns false if the download in progress deals with the same url. The download is not
      * stopped in that case.
      */
@@ -236,7 +236,7 @@ public class ImageDownloader {
     }
 
     /**
-     * The actual AsyncTask that will asynchronously download the image.
+     * The actual AsyncTask that will asynchronously download the images.
      */
     class BitmapDownloaderTask extends AsyncTask<String, Void, Bitmap> {
         private String url;
@@ -256,7 +256,7 @@ public class ImageDownloader {
         }
 
         /**
-         * Once the image is downloaded, associates it to the imageView
+         * Once the images is downloaded, associates it to the imageView
          */
         @Override
         protected void onPostExecute(Bitmap bitmap) {
@@ -356,7 +356,7 @@ public class ImageDownloader {
     }
 
     /**
-     * @param url The URL of the image that will be retrieved from the cache.
+     * @param url The URL of the images that will be retrieved from the cache.
      * @return The cached bitmap or null if it was not found.
      */
     private Bitmap getBitmapFromCache(String url) {
@@ -389,7 +389,7 @@ public class ImageDownloader {
     }
 
     /**
-     * Clears the image cache used internally to improve performance. Note that for memory
+     * Clears the images cache used internally to improve performance. Note that for memory
      * efficiency reasons, the cache will automatically be cleared after a certain inactivity delay.
      */
     public void clearCache() {

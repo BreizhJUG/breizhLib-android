@@ -1,4 +1,4 @@
-package org.breizhjug.breizhlib.utils;
+package org.breizhjug.breizhlib.utils.version;
 
 /*
  * This program is free software: you can redistribute it and/or modify
@@ -18,9 +18,16 @@ package org.breizhjug.breizhlib.utils;
  */
 
 import android.app.Application;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
+import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.exception.BreizhLibException;
 
 import java.io.BufferedReader;
@@ -35,6 +42,10 @@ public class Version {
     private static int versionCodeMarket = 0;
 
     private static String versionMarket;
+
+    private static int versionCode = 0;
+
+    public static String version = "0";
 
     public static String getVersionMarket() {
         return versionMarket;
@@ -55,10 +66,6 @@ public class Version {
         return versionCodeMarket;
     }
 
-    private static int versionCode = 0;
-
-    public static String version = "0";
-
     public static int getVersionCourante(Application application) {
         if (versionCode == 0) {
             PackageManager manager = application.getPackageManager();
@@ -71,6 +78,28 @@ public class Version {
             }
         }
         return versionCode;
+    }
+
+    private static final int NOTIFICATION_VERSION_ID = 1;
+
+    public static void createNotification(Context context,Application app) {
+        int icon = R.drawable.icon;
+        CharSequence tickerText = context.getString(R.string.nouvelleVersion);
+        long when = System.currentTimeMillis();
+        CharSequence contentTitle = context.getString(R.string.nouvelleVersion);
+        CharSequence contentText = context.getString(R.string.versionDisponible, getVersionMarket());
+
+        Uri uri = Uri.parse(BreizhLibConstantes.MARKET_URL);
+        Intent notificationIntent = new Intent(Intent.ACTION_VIEW, uri);
+        PendingIntent contentIntent = PendingIntent.getActivity(app, 0, notificationIntent, 0);
+
+        // the next two lines initialize the Notification, using the
+        // configurations above
+        Notification notification = new Notification(icon, tickerText, when);
+        notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+
+        NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(NOTIFICATION_VERSION_ID, notification);
     }
 
 }

@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
-import org.breizhjug.breizhlib.utils.Version;
+import org.breizhjug.breizhlib.utils.version.Version;
 
 
 public class CreditsActivity extends AbstractActivity {

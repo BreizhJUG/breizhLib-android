@@ -1,4 +1,4 @@
-package org.breizhjug.breizhlib.utils;
+package org.breizhjug.breizhlib.utils.images;
 
 import android.text.TextUtils;
 

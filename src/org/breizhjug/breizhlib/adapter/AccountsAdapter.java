@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.R;
-import org.breizhjug.breizhlib.utils.Gravatar;
+import org.breizhjug.breizhlib.utils.images.Gravatar;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ public class AccountsAdapter extends ArrayAdapter<String> {
         text.setText(email);
 
         ImageView icone = (ImageView) view.findViewById(R.id.avatar);
-        BreizhLib.getImageCache().getFromCache("avatar",Gravatar.getImage(email), icone);
+        BreizhLib.getImageCache().getFromCache("avatar", Gravatar.getImage(email), icone);
         return view;
     }
 }

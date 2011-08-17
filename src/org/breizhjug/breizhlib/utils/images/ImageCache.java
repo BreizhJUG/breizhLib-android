@@ -1,4 +1,4 @@
-package org.breizhjug.breizhlib.utils;
+package org.breizhjug.breizhlib.utils.images;
 
 
 import android.graphics.Bitmap;
@@ -6,12 +6,13 @@ import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.ImageView;
+import org.breizhjug.breizhlib.utils.Cache;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
-public class ImageCache implements Cache{
+public class ImageCache implements Cache {
 
     private static final String TAG = "Breizhlib.ImageCache";
 

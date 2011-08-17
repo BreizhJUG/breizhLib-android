@@ -13,7 +13,7 @@ import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.AbstractActivity;
 import org.breizhjug.breizhlib.model.Utilisateur;
-import org.breizhjug.breizhlib.utils.Gravatar;
+import org.breizhjug.breizhlib.utils.images.Gravatar;
 
 
 public class ProfilActivity extends AbstractActivity {
@@ -91,7 +91,7 @@ public class ProfilActivity extends AbstractActivity {
         reservations.setText(user.reservationsLabel);
 
         ImageView icon = (ImageView) findViewById(R.id.avatar);
-        BreizhLib.getImageCache().getFromCache(user.email,Gravatar.getImage(user.email), icon);
+        BreizhLib.getImageCache().getFromCache(user.email, Gravatar.getImage(user.email), icon);
     }
 
 }
