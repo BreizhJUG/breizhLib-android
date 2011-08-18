@@ -1,6 +1,7 @@
 package org.breizhjug.breizhlib.model;
 
 
+import android.database.Cursor;
 import fr.ybo.database.annotation.Column;
 import fr.ybo.database.annotation.Entity;
 import org.breizhjug.breizhlib.database.Database;
@@ -39,6 +40,12 @@ public class Reservation implements Serializable, Model {
             this.livre.etat = "RESERVE";
             this.isbn = livre.iSBN;
         }
+    }
+
+    public Reservation(Cursor cursor) {
+        nom = cursor.getString(cursor.getColumnIndex("nom"));
+        isbn = cursor.getString(cursor.getColumnIndex("isbn"));
+        prenom = cursor.getString(cursor.getColumnIndex("prenom"));
     }
 
     public void onLoad(Database db) {

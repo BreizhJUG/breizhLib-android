@@ -30,11 +30,26 @@
                   android:textStyle="bold"
                 />
 
-        <TextView android:id="@+id/editeur"
-                  android:layout_width="fill_parent"
-                  android:layout_height="fill_parent"
-                />
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                      android:orientation="horizontal"
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                >
 
+            <ImageView
+                    android:id="@+id/etat"
+                    android:layout_width="30sp"
+                    android:layout_height="30sp"
+                    android:layout_gravity="center_vertical"
+                    android:padding="10px"
+                    />
+            <TextView android:id="@+id/editeur"
+                      android:layout_width="wrap_content"
+                      android:layout_height="fill_parent"
+                    />
+
+
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -47,6 +47,17 @@ public class OuvrageAdapter extends ArrayAdapter<Livre> {
             text.setText(livre.editeur);
         }
 
+        ImageView etat = (ImageView) view.findViewById(R.id.etat);
+        if (etat != null) {
+            if (livre.etat.equals("RESERVE")) {
+                etat.setImageResource(R.drawable.voyant_rouge);
+            } else if (livre.etat.equals("DISP0NIBLE")) {
+                etat.setImageResource(R.drawable.voyant_vert);
+            }else{
+                etat.setImageResource(R.drawable.voyant_vert);
+            }
+        }
+
         ImageView icone = (ImageView) view.findViewById(R.id.img);
         BreizhLib.getImageCache().getFromCache(livre.iSBN, livre.imgUrl, icone);
 

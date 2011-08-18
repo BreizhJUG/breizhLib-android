@@ -71,6 +71,7 @@ public class ImageCache implements Cache {
     }
 
     public void download(String url, ImageView imageView) {
+          imageDownloader.download(url,imageView);
     }
 
     private void saveImage(Bitmap bitmap, String isbn) throws FileNotFoundException {

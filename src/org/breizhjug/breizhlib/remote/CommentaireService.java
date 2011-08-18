@@ -4,6 +4,7 @@ import android.util.Log;
 import org.acra.ErrorReporter;
 import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
+import org.breizhjug.breizhlib.exception.ResultException;
 import org.breizhjug.breizhlib.model.Commentaire;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,15 +22,28 @@ public class CommentaireService extends Service<Commentaire> {
 
     private static String URL_COMMENT = BreizhLibConstantes.SERVER_URL + "api/comment";
 
-    public boolean comment(String authCookie, String bookId, String nom, String content, int note) {
+    public Commentaire comment(String authCookie, String bookId, String nom, String content, int note) throws ResultException {
         Log.i(TAG, "b: " + bookId + " " + nom + " " + content + " " + note);
         Param param = new Param("bookId", bookId);
         Param paramNom = new Param("nom", nom);
         Param paramPrenom = new Param("content", content);
         Param paramEmail = new Param("note", note);
         String result = queryPostRESTurl(authCookie, URL_COMMENT, param, paramNom, paramPrenom, paramEmail);
-
-        return result != null && result.startsWith("OK");
+        try {
+            JSONObject item = new JSONObject(result);
+            Commentaire commentaire = converter.convertCommentaire(item);
+            db.insert(commentaire);
+            return commentaire;
+        } catch (JSONException e) {
+            try {
+                JSONObject item = new JSONObject(result);
+                throw new ResultException(converter.convertResult(item));
+            } catch (JSONException e1) {
+                Log.e(TAG, "There was an error parsing the JSON", e);
+                ErrorReporter.getInstance().handleSilentException(e);
+                return null;
+            }
+        }
 
     }
 
@@ -66,8 +80,7 @@ public class CommentaireService extends Service<Commentaire> {
     protected boolean isInDB(Commentaire entity) {
         Commentaire searchEntity = new Commentaire();
         searchEntity.isbn = entity.isbn;
-        searchEntity.nom = entity.nom;
-        //TODO clés unique ?
+        searchEntity.uid = entity.uid;
         return db.selectSingle(searchEntity) != null;
     }
 

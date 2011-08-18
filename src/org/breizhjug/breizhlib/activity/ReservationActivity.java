@@ -35,6 +35,7 @@ public class ReservationActivity extends AbstractActivity {
 
         final EditText email = (EditText) findViewById(R.id.emailEdit);
         email.setText(prefs.getString(BreizhLibConstantes.USER, null));
+        email.setEnabled(false);
 
         Button button = (Button) findViewById(R.id.send);
         button.setOnClickListener(new Button.OnClickListener() {

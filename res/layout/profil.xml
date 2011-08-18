@@ -63,8 +63,49 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"/>
 
+
     <TextView android:id="@+id/emprunts"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"/>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:orientation="horizontal"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+            >
+
+        <Button
+                android:id="@+id/commentairesbtn"
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="Vos commentaires"
+                />
+
+        <Button
+                android:id="@+id/resabtn"
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="Vos réservations"
+                />
+
+    </LinearLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:orientation="horizontal"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+            >
+
+        <Button
+                android:id="@+id/empruntsbtn"
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="Vos emprunts"
+                />
+
+
+
+    </LinearLayout>
 
 </LinearLayout>

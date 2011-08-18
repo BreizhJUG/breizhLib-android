@@ -11,6 +11,8 @@ import android.widget.*;
 import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
+import org.breizhjug.breizhlib.exception.ResultException;
+import org.breizhjug.breizhlib.model.Commentaire;
 import org.breizhjug.breizhlib.model.Livre;
 
 
@@ -53,27 +55,34 @@ public class AvisActivity extends AbstractActivity {
                 } else {
                     final ProgressDialog waitDialog = ProgressDialog.show(AvisActivity.this, "Envoi de votre commentaire", getString(R.string.chargement), true, true);
 
-                    final AsyncTask<Void, Void, Boolean> initTask = new AsyncTask<Void, Void, Boolean>() {
+                    final AsyncTask<Void, Void, Commentaire> initTask = new AsyncTask<Void, Void, Commentaire>() {
 
                         @Override
-                        protected Boolean doInBackground(Void... params) {
+                        protected Commentaire doInBackground(Void... params) {
 
 
                             String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
-                            boolean result = BreizhLib.getCommentaireService().comment(authCookie, livre.iSBN, nom, avis, Integer.valueOf("" + note.getSelectedItem()));
+                            Commentaire result = null;
+                            try {
+                                result = BreizhLib.getCommentaireService().comment(authCookie, livre.iSBN, nom, avis, Integer.valueOf("" + note.getSelectedItemId()));
+                            } catch (ResultException e) {
+                                 showError(e.result.msg, true);
+                                 finish();
+                            }
                             return result;
                         }
 
                         @Override
-                        protected void onPostExecute(Boolean result) {
+                        protected void onPostExecute(Commentaire result) {
                             waitDialog.dismiss();
-                            if (result == null || !result) {
+                            if (result == null) {
                                 showError("Erreur lors de l'envoi du commentaire", true);
                             } else {
                                 Toast.makeText(AvisActivity.this, getString(R.string.commentaireSave), Toast.LENGTH_SHORT);
-                                Intent intent = new Intent(getApplicationContext(), Menu.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                Intent intent = new Intent(getApplicationContext(), CommentaireActivity.class);
+                                intent.putExtra("commentaire", result);
                                 startActivity(intent);
+                                finish();
                             }
                         }
                     };

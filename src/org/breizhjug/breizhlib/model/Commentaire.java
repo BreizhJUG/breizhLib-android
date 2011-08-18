@@ -4,6 +4,7 @@ package org.breizhjug.breizhlib.model;
 import android.database.Cursor;
 import fr.ybo.database.annotation.Column;
 import fr.ybo.database.annotation.Entity;
+import fr.ybo.database.annotation.PrimaryKey;
 import org.breizhjug.breizhlib.database.Database;
 
 import java.io.Serializable;
@@ -13,6 +14,14 @@ public class Commentaire implements Serializable, Model {
 
     @Column
     public String nom;
+
+    @Column
+    public String titre;
+
+    @Column
+    @PrimaryKey
+    public String uid;
+
 
     @Column
     public String commentaire;

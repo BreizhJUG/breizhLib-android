@@ -60,37 +60,44 @@ public class CommentaireActivity extends AbstractActivity {
         LinearLayout nav = (LinearLayout) findViewById(R.id.nav);
         Button previous = (Button) nav.getChildAt(0);
         Button next = (Button) nav.getChildAt(1);
-        if (index > 0) {
-            previous.setOnClickListener(new Button.OnClickListener() {
 
-                public void onClick(View view) {
-                    Commentaire commentaire = commentaires.get(index - 1);
-                    Intent intent = new Intent(getApplicationContext(), CommentaireActivity.class);
-                    intent.putExtra("commentaire", commentaire);
-                    intent.putExtra("commentaires", commentaires);
-                    intent.putExtra("index", index - 1);
-                    startActivity(intent);
-                    finish();
-                }
-            });
+        if (commentaires != null) {
+            if (index > 0) {
+                previous.setOnClickListener(new Button.OnClickListener() {
+
+                    public void onClick(View view) {
+                        Commentaire commentaire = commentaires.get(index - 1);
+                        Intent intent = new Intent(getApplicationContext(), CommentaireActivity.class);
+                        intent.putExtra("commentaire", commentaire);
+                        intent.putExtra("commentaires", commentaires);
+                        intent.putExtra("index", index - 1);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+            } else {
+                previous.setEnabled(false);
+            }
+
+
+            if (commentaires.size() - 1 > index) {
+                next.setOnClickListener(new Button.OnClickListener() {
+
+                    public void onClick(View view) {
+                        Commentaire commentaire = commentaires.get(index + 1);
+                        Intent intent = new Intent(getApplicationContext(), CommentaireActivity.class);
+                        intent.putExtra("commentaire", commentaire);
+                        intent.putExtra("commentaires", commentaires);
+                        intent.putExtra("index", index + 1);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+            } else {
+                next.setEnabled(false);
+            }
         } else {
             previous.setEnabled(false);
-        }
-
-        if (commentaires.size() - 1 > index) {
-            next.setOnClickListener(new Button.OnClickListener() {
-
-                public void onClick(View view) {
-                    Commentaire commentaire = commentaires.get(index + 1);
-                    Intent intent = new Intent(getApplicationContext(), CommentaireActivity.class);
-                    intent.putExtra("commentaire", commentaire);
-                    intent.putExtra("commentaires", commentaires);
-                    intent.putExtra("index", index + 1);
-                    startActivity(intent);
-                    finish();
-                }
-            });
-        } else {
             next.setEnabled(false);
         }
     }

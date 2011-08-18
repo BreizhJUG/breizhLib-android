@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.R;
 
 public class SplashScreen extends BaseActivity {
@@ -38,7 +37,7 @@ public class SplashScreen extends BaseActivity {
         msg.what = STOPSPLASH;
         splashHandler.sendMessageDelayed(msg, SPLASHTIME);
 
-        BreizhLib.getSyncManager().init(this.getApplicationContext());
-        BreizhLib.getSyncManager().run();
+       // BreizhLib.getSyncManager().init(this.getApplicationContext());
+       // BreizhLib.getSyncManager().run();
     }
 }

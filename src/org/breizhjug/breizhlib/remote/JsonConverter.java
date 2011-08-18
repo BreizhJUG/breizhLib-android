@@ -29,13 +29,8 @@ public class JsonConverter {
     public Livre convertLivre(JSONObject item) throws JSONException {
         Livre livre = null;
         if (item != null) {
-            String editeur = null;
-            String image = null;
-
-            editeur = getFacultatifString(item, "editeur");
-            image = getFacultatifString(item, "image");
-
-
+            String editeur = getFacultatifString(item, "editeur");
+            String image = getFacultatifString(item, "image");
             livre = new Livre(item.getString("titre"), item.getString("isbn"), editeur, image);
             livre.add = item.getBoolean("aAjouter");
             livre.etat = item.getString("etat");
@@ -49,6 +44,7 @@ public class JsonConverter {
         if (item != null) {
             Livre livre = convertLivre(item.getJSONObject("livre"));
             commentaire = new Commentaire(item.getString("nom"), item.getString("avis"), item.getInt("note"), livre);
+            commentaire.uid = item.getString("uid");
         }
         return commentaire;
     }

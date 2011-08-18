@@ -5,10 +5,8 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.widget.AbsListView;
-import android.widget.ArrayAdapter;
-import android.widget.GridView;
-import android.widget.ListView;
+import android.view.View;
+import android.widget.*;
 import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
@@ -51,8 +49,16 @@ public class OuvragesActivity extends AbstractActivity implements SharedPreferen
             ((GridView) ouvragesListView).setNumColumns(4);
             resource = R.layout.ouvrage_simple;
         } else {
-            setContentView(R.layout.items);
+
             ouvragesListView = (ListView) findViewById(R.id.items);
+
+            EditText editText = (EditText) findViewById(R.id.editText);
+            if (prefs.getBoolean("beta", false)) {
+                 setContentView(R.layout.items_search);
+                editText.clearFocus();
+            } else {
+                setContentView(R.layout.items);
+            }
         }
 
         final int finalResource = resource;

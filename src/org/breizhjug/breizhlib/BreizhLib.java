@@ -48,6 +48,7 @@ public class BreizhLib extends Application {
         imageCache = new ImageCache("breizhlib");
         imageCache.init();
         databaseHelper = new Database(this);
+
         commentaireService = CommentaireService.getInstance();
         ouvrageService = OuvrageService.getInstance();
 

@@ -17,8 +17,27 @@ public class CommentaireDAO {
     public static ArrayList<Commentaire> findByIsbn(String isbn) {
         List<String> args = new ArrayList<String>();
         args.add(isbn);
-
         Cursor cursor = db.executeSelectQuery("SELECT Commentaire.* FROM Commentaire  WHERE Commentaire.isbn = :isbn", args);
+
+        final ArrayList<Commentaire> commentaires = new ArrayList<Commentaire>();
+        if (cursor != null) {
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                do {
+                    Commentaire commentaire = new Commentaire(cursor);
+                    commentaire.onLoad(db);
+                    commentaires.add(commentaire);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
+        return commentaires;
+    }
+
+    public static ArrayList<Commentaire> findByAutor(String nom) {
+        List<String> args = new ArrayList<String>();
+        args.add(nom);
+        Cursor cursor = db.executeSelectQuery("SELECT Commentaire.* FROM Commentaire  WHERE Commentaire.nom = :nom", args);
 
         final ArrayList<Commentaire> commentaires = new ArrayList<Commentaire>();
         if (cursor != null) {
