@@ -57,7 +57,7 @@ public class Database extends DataBaseHelper {
             });
             mapUpgrades.put(1, new UpgradeDatabaseWithError() {
                 public void myUpgrade(SQLiteDatabase db) {
-                   db.execSQL("DROP TABLE Commentaire");
+                   getBase().getTable(Commentaire.class).dropTable(db);
                    getBase().getTable(Commentaire.class).createTable(db);
                 }
             });

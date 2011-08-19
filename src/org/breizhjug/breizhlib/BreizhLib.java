@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import org.acra.ACRA;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
@@ -48,6 +49,8 @@ public class BreizhLib extends Application {
         imageCache = new ImageCache("breizhlib");
         imageCache.init();
         databaseHelper = new Database(this);
+        databaseHelper.onUpgrade(databaseHelper.getReadableDatabase(),0,databaseHelper.getReadableDatabase().getVersion());
+        Log.d("BreizhLib", "db version " + databaseHelper.getReadableDatabase().getVersion());
 
         commentaireService = CommentaireService.getInstance();
         ouvrageService = OuvrageService.getInstance();
