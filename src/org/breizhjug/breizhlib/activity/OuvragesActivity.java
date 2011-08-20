@@ -50,15 +50,17 @@ public class OuvragesActivity extends AbstractActivity implements SharedPreferen
             resource = R.layout.ouvrage_simple;
         } else {
 
-            ouvragesListView = (ListView) findViewById(R.id.items);
 
-            EditText editText = (EditText) findViewById(R.id.editText);
+
+
             if (prefs.getBoolean("beta", false)) {
                  setContentView(R.layout.items_search);
-                editText.clearFocus();
+                 EditText editText = (EditText) findViewById(R.id.editText);
+                 editText.clearFocus();
             } else {
                 setContentView(R.layout.items);
             }
+            ouvragesListView = (ListView) findViewById(R.id.items);
         }
 
         final int finalResource = resource;
