@@ -40,6 +40,7 @@ import java.lang.ref.SoftReference;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -320,7 +321,7 @@ public class ImageDownloader {
     private final HashMap<String, Bitmap> sHardBitmapCache =
             new LinkedHashMap<String, Bitmap>(HARD_CACHE_CAPACITY / 2, 0.75f, true) {
                 @Override
-                protected boolean removeEldestEntry(LinkedHashMap.Entry<String, Bitmap> eldest) {
+                protected boolean removeEldestEntry(Map.Entry<String, Bitmap> eldest) {
                     if (size() > HARD_CACHE_CAPACITY) {
                         // Entries push-out of hard reference cache are transferred to soft reference cache
                         sSoftBitmapCache.put(eldest.getKey(), new SoftReference<Bitmap>(eldest.getValue()));
