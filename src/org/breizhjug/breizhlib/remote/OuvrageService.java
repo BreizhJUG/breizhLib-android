@@ -47,7 +47,7 @@ public class OuvrageService extends Service<Livre> {
 
     private Livre find(String authCookie, String urlString, String isbn) throws ResultException {
         String result = queryPostRESTurl(authCookie, urlString, new Param("iSBN", isbn));
-        Log.d(TAG, result);
+        Log.d(TAG, ""+result);
         if (result != null) {
             try {
                 JSONObject item = new JSONObject(result);
