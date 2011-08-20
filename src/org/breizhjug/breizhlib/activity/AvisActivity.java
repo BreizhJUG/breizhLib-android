@@ -24,14 +24,10 @@ public class AvisActivity extends AbstractActivity {
 
         final SharedPreferences prefs = BreizhLib.getSharedPreferences(getApplicationContext());
 
-        final Spinner note = (Spinner) findViewById(R.id.spinnerNote);
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.stars, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        final RatingBar rating = (RatingBar) findViewById(R.id.rating);
+        rating.setRating(livre.note);
+        rating.setMax(5);
 
-        note.setAdapter(adapter);
-        if (livre.note > 0) {
-            note.setSelection(livre.note - 1);
-        }
 
         String nom = prefs.getString(BreizhLibConstantes.USER_NOM, "") + " " +
                 prefs.getString(BreizhLibConstantes.USER_PRENOM, "");
@@ -64,7 +60,7 @@ public class AvisActivity extends AbstractActivity {
                             String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
                             Commentaire result = null;
                             try {
-                                result = BreizhLib.getCommentaireService().comment(authCookie, livre.iSBN, nom, avis, Integer.valueOf("" + note.getSelectedItemId()));
+                                result = BreizhLib.getCommentaireService().comment(authCookie, livre.iSBN, nom, avis, Integer.valueOf(""+rating.getRating()));
                             } catch (ResultException e) {
                                  showError(e.result.msg, true);
                                  finish();

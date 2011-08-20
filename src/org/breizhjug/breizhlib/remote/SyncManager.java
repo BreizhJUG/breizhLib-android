@@ -29,6 +29,9 @@ public class SyncManager implements SharedPreferences.OnSharedPreferenceChangeLi
 
     Timer commentairesTimer;
 
+    TimerTask syncOuvrages = new OuvragesTask();
+    TimerTask syncCommentaires = new CommentairesTask();
+
     SharedPreferences prefs;
 
     public void init(Context context) {
@@ -84,16 +87,14 @@ public class SyncManager implements SharedPreferences.OnSharedPreferenceChangeLi
             if (ouvragesTimer != null) {
                 ouvragesTimer.cancel();
             }
-            TimerTask syncOuvrages = new OuvragesTask();
             ouvragesTimer = new Timer(OUVRAGE_T);
-            ouvragesTimer.schedule(syncOuvrages, TIMER_DELAY, periode);
+            ouvragesTimer.scheduleAtFixedRate(syncOuvrages, TIMER_DELAY, periode);
         } else if (timerName.equals(COMMENTAIRES_T)) {
             if (commentairesTimer != null) {
                 commentairesTimer.cancel();
             }
-            TimerTask syncCommentaires = new CommentairesTask();
             commentairesTimer = new Timer(COMMENTAIRES_T);
-            commentairesTimer.schedule(syncCommentaires, TIMER_DELAY, periode);
+            commentairesTimer.scheduleAtFixedRate(syncCommentaires, TIMER_DELAY, periode);
         }
     }
 }
