@@ -14,6 +14,7 @@ import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.model.Reservation;
 import org.breizhjug.breizhlib.remote.*;
 import org.breizhjug.breizhlib.utils.GoogleAuthentification;
+import org.breizhjug.breizhlib.utils.Tracker;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
 import org.breizhjug.breizhlib.utils.version.VersionTask;
 
@@ -38,7 +39,10 @@ public class BreizhLib extends Application {
 
     private static SyncManager syncManager;
 
+	private static Tracker tracker;
+
     private VersionTask checkVersion;
+
 
 
     @Override
@@ -62,7 +66,14 @@ public class BreizhLib extends Application {
         checkVersion = new VersionTask(this);
         checkVersion.execute();
 
+	    tracker = new Tracker(BreizhLibConstantes.UA_ACCOUNT,this);
+
+
         syncManager = new SyncManager();
+    }
+
+     public static Tracker getTraker() {
+        return tracker;
     }
 
     public static SyncManager getSyncManager() {

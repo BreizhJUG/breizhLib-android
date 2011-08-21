@@ -21,6 +21,7 @@ public class BaseActivity extends Activity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        BreizhLib.getTraker().trackPageView('/' + getClass().getSimpleName());
 
 
         receiver = new BroadcastReceiver() {

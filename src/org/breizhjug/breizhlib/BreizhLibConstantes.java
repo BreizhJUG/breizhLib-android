@@ -8,6 +8,8 @@ public interface BreizhLibConstantes {
     public static final String SERVER_URL = "http://0-1-6.breizh-lib.appspot.com/";
 
     public static final String MARKET_URL = "market://details?id=org.breizhjug.breizhlib";
+
+    public static final String  UA_ACCOUNT ="UA-25249240-2";
     /**
      * clés pour shared preferences.
      */

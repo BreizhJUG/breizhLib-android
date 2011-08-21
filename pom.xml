@@ -19,31 +19,26 @@
             <groupId>fr.ybo</groupId>
             <artifactId>android-ybo-db</artifactId>
             <version>1.0.2</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>acra</groupId>
+            <groupId>org.acra</groupId>
             <artifactId>acra</artifactId>
             <version>4.2.3</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/acra-4.2.3.jar
-            </systemPath>
+            <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>core</groupId>
-            <artifactId>core</artifactId>
-            <version>1.6</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/core-1.6.jar
-            </systemPath>
-        </dependency>
-        <dependency>
-            <groupId>javase</groupId>
-            <artifactId>javase</artifactId>
-            <version>1.6</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/javase-1.6.jar
-            </systemPath>
-        </dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>core</artifactId>
+			<version>1.6</version>
+            <scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>javase</artifactId>
+			<version>1.6</version>
+            <scope>provided</scope>
+		</dependency>
 
 
         <dependency>
@@ -87,6 +82,14 @@
 
     <repositories>
         <repository>
+			<id>zxing-repo</id>
+			<url>http://mvn-adamgent.googlecode.com/svn/maven/release/</url>
+		</repository>
+        <repository>
+			<id>acra-repo</id>
+			<url>http://acra.googlecode.com/svn/repository/releases</url>
+		</repository>
+        <repository>
             <id>ybonnel-repo</id>
             <url>https://github.com/ybonnel/ybonnel-mvn-repo/raw/master/releases</url>
         </repository>
@@ -94,5 +97,6 @@
             <id>gsylvain35-repo</id>
             <url>http://maven.gsylvain35.googlecode.com/git/</url>
         </repository>
+
     </repositories>
 </project>
