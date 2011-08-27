@@ -78,15 +78,25 @@ public class ReservationActivity extends AbstractActivity {
             }
         };
 
-        if (email == null || email.length() == 0) {
-            showError("Email non renseigné", false);
-        } else if (prenom == null || prenom.length() == 0) {
-            showError("Prénom non renseigné", false);
-        } else if (nom == null || nom.length() == 0) {
-            showError("Nom non renseigné", false);
-        } else {
+        if (validate()) {
             initTask.execute();
         }
+    }
+
+    private boolean validate() {
+        if (email == null || email.length() == 0) {
+            showError("Email non renseigné", false);
+            return false;
+        }
+        if (prenom == null || prenom.length() == 0) {
+            showError("Prénom non renseigné", false);
+            return false;
+        }
+        if (nom == null || nom.length() == 0) {
+            showError("Nom non renseigné", false);
+            return false;
+        }
+        return true;
     }
 
     public void onCreate(Bundle savedInstanceState) {

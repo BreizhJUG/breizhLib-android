@@ -39,8 +39,8 @@ public class CommentairesActivity extends AbstractActivity {
             public void onClick(int position) {
                 Commentaire commentaire = (Commentaire) commentairesListView.getItemAtPosition(position);
                 Intent intent = new Intent(getApplicationContext(), CommentaireActivity.class);
-                intent.putExtra("commentaire", commentaire);
-                intent.putExtra("commentaires", items);
+                intent.putExtra("item", commentaire);
+                intent.putExtra("items", items);
                 intent.putExtra("index", position);
                 startActivity(intent);
             }

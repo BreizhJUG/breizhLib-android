@@ -1,5 +1,6 @@
 package org.breizhjug.breizhlib.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -16,13 +17,12 @@ import org.breizhjug.breizhlib.database.Database;
 import org.breizhjug.breizhlib.database.dao.CommentaireDAO;
 import org.breizhjug.breizhlib.model.Commentaire;
 import org.breizhjug.breizhlib.model.Livre;
-import roboguice.inject.InjectExtra;
 import roboguice.inject.InjectView;
 
 import java.util.ArrayList;
 
 
-public class LivreActivity extends AbstractActivity {
+public class LivreActivity extends AbstractNavigationActivity<Livre> {
 
     protected static Database db = BreizhLib.getDataBaseHelper();
     private static final String TAG = "BreizhLib.LivreActivity";
@@ -38,17 +38,9 @@ public class LivreActivity extends AbstractActivity {
     Button addBtn;
     @InjectView(R.id.addComment)
     Button avis;
-    @InjectView(R.id.nav)
-    LinearLayout nav;
     @InjectView(R.id.items)
     ListView commentaireItems;
 
-    @InjectExtra("livre")
-    Livre livre;
-    @InjectExtra("livres")
-    ArrayList<Livre> ouvrages;
-    @InjectExtra("index")
-    int index;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,68 +56,25 @@ public class LivreActivity extends AbstractActivity {
     private void initView() {
         prefs = BreizhLib.getSharedPreferences(getApplicationContext());
 
-        titreView.setText(livre.titre);
-        editeurView.setText(livre.editeur);
+        titreView.setText(item.titre);
+        editeurView.setText(item.editeur);
 
-        BreizhLib.getImageCache().getFromCache(livre.iSBN, livre.imgUrl, icone);
+        BreizhLib.getImageCache().getFromCache(item.iSBN, item.imgUrl, icone);
 
         initNavigation();
 
-        initStars(livre.note);
+        initStars(item.note);
 
-        initAvis(livre);
+        initAvis(item);
 
-        if (livre.add) {
-            initAjout(addBtn, livre.iSBN);
+        if (item.add) {
+            initAjout(addBtn, item.iSBN);
         } else {
-            initReservation(addBtn, livre.etat, livre.iSBN);
+            initReservation(addBtn, item.etat, item.iSBN);
         }
 
-        initCommentaires(livre);
+        initCommentaires(item);
 
-    }
-
-    private void initNavigation() {
-        Button previous = (Button) nav.getChildAt(0);
-        Button next = (Button) nav.getChildAt(1);
-        if (ouvrages != null) {
-            if (index > 0) {
-                previous.setOnClickListener(new Button.OnClickListener() {
-
-                    public void onClick(View view) {
-                        Livre livre = ouvrages.get(index - 1);
-                        Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-                        intent.putExtra("livre", livre);
-                        intent.putExtra("livres", ouvrages);
-                        intent.putExtra("index", index - 1);
-                        startActivity(intent);
-                        finish();
-                    }
-                });
-            } else {
-                previous.setEnabled(false);
-            }
-
-            if (ouvrages.size() - 1 > index) {
-                next.setOnClickListener(new Button.OnClickListener() {
-
-                    public void onClick(View view) {
-                        Livre livre = ouvrages.get(index + 1);
-                        Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-                        intent.putExtra("livre", livre);
-                        intent.putExtra("livres", ouvrages);
-                        intent.putExtra("index", index + 1);
-                        startActivity(intent);
-                        finish();
-                    }
-                });
-            } else {
-                next.setEnabled(false);
-            }
-        } else {
-            previous.setEnabled(false);
-            next.setEnabled(false);
-        }
     }
 
     private void initAvis(final Livre livre) {
@@ -161,8 +110,8 @@ public class LivreActivity extends AbstractActivity {
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                 Commentaire commentaire = (Commentaire) commentaireItems.getItemAtPosition(position);
                 Intent intent = new Intent(getApplicationContext(), CommentaireActivity.class);
-                intent.putExtra("commentaire", commentaire);
-                intent.putExtra("commentaires", commentaires);
+                intent.putExtra("item", commentaire);
+                intent.putExtra("items", commentaires);
                 intent.putExtra("index", position);
                 startActivity(intent);
             }
@@ -171,30 +120,6 @@ public class LivreActivity extends AbstractActivity {
         Log.d(TAG, livre.iSBN + " size :" + commentaires.size());
         CommentairesAdapter commentairesAdapter = new CommentairesAdapter(this.getBaseContext(), commentaires);
         commentaireItems.setAdapter(commentairesAdapter);
-    }
-
-
-    private void initStars(int note) {
-        LinearLayout nav = (LinearLayout) findViewById(R.id.stars);
-        ImageView star1 = (ImageView) nav.getChildAt(0);
-        ImageView star2 = (ImageView) nav.getChildAt(1);
-        ImageView star3 = (ImageView) nav.getChildAt(2);
-        ImageView star4 = (ImageView) nav.getChildAt(3);
-        ImageView star5 = (ImageView) nav.getChildAt(4);
-        switch (note) {
-            case 0:
-                star1.setVisibility(View.INVISIBLE);
-            case 1:
-                star2.setVisibility(View.INVISIBLE);
-            case 2:
-                star3.setVisibility(View.INVISIBLE);
-            case 3:
-                star4.setVisibility(View.INVISIBLE);
-            case 4:
-                star5.setVisibility(View.INVISIBLE);
-            case 5:
-                break;
-        }
     }
 
     private void initReservation(Button button, String etat, final String isbn) {
@@ -253,7 +178,7 @@ public class LivreActivity extends AbstractActivity {
                             } else {
                                 Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
                                 Toast.makeText(getApplicationContext(), getString(R.string.ajoutOK), Toast.LENGTH_SHORT).show();
-                                intent.putExtra("livre", result);
+                                intent.putExtra("item", result);
                                 LivreActivity.this.startActivity(intent);
                                 finish();
                             }
@@ -269,4 +194,8 @@ public class LivreActivity extends AbstractActivity {
         }
     }
 
+    @Override
+    protected Class<? extends Activity> getActivityClass() {
+        return LivreActivity.class;
+    }
 }

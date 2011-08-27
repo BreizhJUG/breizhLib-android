@@ -16,6 +16,8 @@ public class AppInfo extends AbstractActivity {
 
     private static final String TAG = "BreizhLib.AppInfo";
 
+    SharedPreferences prefs;
+
     @Override
     public void init(Intent intent) {
         String account = (String) intent.getExtras().get("account");
@@ -25,7 +27,7 @@ public class AppInfo extends AbstractActivity {
 
     private void register(final String accountName) {
 
-        final SharedPreferences prefs = BreizhLib.getSharedPreferences(getApplicationContext());
+        prefs = BreizhLib.getSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(BreizhLibConstantes.ACCOUNT_NAME, accountName);
         editor.putString(BreizhLibConstantes.AUTH_COOKIE, null);

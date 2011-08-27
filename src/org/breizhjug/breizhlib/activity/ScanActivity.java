@@ -43,7 +43,7 @@ public class ScanActivity extends AbstractActivity {
                 if (livre != null) {
                     Log.d(TAG, livre.titre);
                     Intent intent = new Intent(ScanActivity.this, LivreActivity.class);
-                    intent.putExtra("livre", livre);
+                    intent.putExtra("item", livre);
                     startActivity(intent);
                     finish();
                 }

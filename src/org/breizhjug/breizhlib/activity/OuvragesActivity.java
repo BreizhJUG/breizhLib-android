@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.view.View;
 import android.widget.*;
 import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
@@ -75,9 +74,9 @@ public class OuvragesActivity extends AbstractActivity implements SharedPreferen
             public void onClick(int position) {
                 Livre livre = (Livre) ouvragesListView.getItemAtPosition(position);
                 Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-                intent.putExtra("livres", items);
+                intent.putExtra("items", items);
                 intent.putExtra("index", position);
-                intent.putExtra("livre", livre);
+                intent.putExtra("item", livre);
                 OuvragesActivity.this.startActivity(intent);
             }
         };

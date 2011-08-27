@@ -36,10 +36,12 @@ public class AvisActivity extends AbstractActivity {
     @InjectExtra("livre")
     Livre livre;
 
+    SharedPreferences prefs;
+
     @Override
     public void init(Intent intent) {
 
-        final SharedPreferences prefs = BreizhLib.getSharedPreferences(getApplicationContext());
+        prefs = BreizhLib.getSharedPreferences(getApplicationContext());
 
         rating.setRating(livre.note);
         rating.setMax(5);
@@ -52,62 +54,83 @@ public class AvisActivity extends AbstractActivity {
         button.setOnClickListener(new Button.OnClickListener() {
 
             public void onClick(View view) {
-                final String avis = avisEdit.getText().toString();
-                final String nom = nomEdit.getText().toString();
+                String avis = avisEdit.getText().toString();
+                String nom = nomEdit.getText().toString();
 
                 if (avis == null || avis.length() == 0) {
                     showError("Commentaite non renseigné", false);
                 } else if (nom == null || nom.length() == 0) {
                     showError("Nom non renseigné", false);
                 } else {
-                    final ProgressDialog waitDialog = ProgressDialog.show(AvisActivity.this, "Envoi de votre commentaire", getString(R.string.chargement), true, true);
-
-                    final AsyncTask<Void, Void, Commentaire> initTask = new AsyncTask<Void, Void, Commentaire>() {
-
-                        @Override
-                        protected Commentaire doInBackground(Void... params) {
-
-
-                            String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
-                            Commentaire result = null;
-                            try {
-                                result = BreizhLib.getCommentaireService().comment(authCookie, livre.iSBN, nom, avis, Integer.valueOf("" + rating.getRating()));
-                            } catch (ResultException e) {
-                                showError(e.result.msg, true);
-                                finish();
-                            }
-                            return result;
-                        }
-
-                        @Override
-                        protected void onPostExecute(Commentaire result) {
-                            waitDialog.dismiss();
-                            if (result == null) {
-                                showError("Erreur lors de l'envoi du commentaire", true);
-                            } else {
-                                Toast.makeText(AvisActivity.this, getString(R.string.commentaireSave), Toast.LENGTH_SHORT);
-                                Intent intent = new Intent(getApplicationContext(), CommentaireActivity.class);
-                                intent.putExtra("commentaire", result);
-                                startActivity(intent);
-                                finish();
-                            }
-                        }
-                    };
-
-
-                    waitDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-
-                        public void onCancel(DialogInterface dialog) {
-                            if (initTask != null) {
-                                initTask.cancel(true);
-                            }
-                            finish();
-                        }
-                    });
-                    initTask.execute();
+                    sendAvis();
                 }
             }
         });
+    }
+
+    private void sendAvis() {
+        final String avis = avisEdit.getText().toString();
+        final String nom = nomEdit.getText().toString();
+        final ProgressDialog waitDialog = ProgressDialog.show(this, "Envoi de votre item", getString(R.string.chargement), true, true);
+
+        final AsyncTask<Void, Void, Commentaire> initTask = new AsyncTask<Void, Void, Commentaire>() {
+
+            @Override
+            protected Commentaire doInBackground(Void... params) {
+
+
+                String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
+                Commentaire result = null;
+                try {
+                    result = BreizhLib.getCommentaireService().comment(authCookie, livre.iSBN, nom, avis, Integer.valueOf("" + rating.getRating()));
+                } catch (ResultException e) {
+                    showError(e.result.msg, true);
+                    finish();
+                }
+                return result;
+            }
+
+            @Override
+            protected void onPostExecute(Commentaire result) {
+                waitDialog.dismiss();
+                if (result == null) {
+                    showError("Erreur lors de l'envoi du item", true);
+                } else {
+                    Toast.makeText(AvisActivity.this, getString(R.string.commentaireSave), Toast.LENGTH_SHORT);
+                    Intent intent = new Intent(getApplicationContext(), CommentaireActivity.class);
+                    intent.putExtra("item", result);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        };
+
+
+        waitDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+
+            public void onCancel(DialogInterface dialog) {
+                if (initTask != null) {
+                    initTask.cancel(true);
+                }
+                finish();
+            }
+        });
+
+        if (validate()) {
+            initTask.execute();
+        }
+    }
+
+    private boolean validate() {
+        if (nomEdit == null || nomEdit.length() == 0) {
+            showError("Nom non renseigné", false);
+            return false;
+        }
+        if (avisEdit == null || avisEdit.length() == 0) {
+            showError("Avis non renseigné", false);
+            return false;
+        }
+        return true;
     }
 
     public void onCreate(Bundle savedInstanceState) {
