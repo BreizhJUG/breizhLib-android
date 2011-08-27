@@ -91,7 +91,7 @@ public class CommentaireService extends Service<Commentaire> {
 
     private static CommentaireService instance;
 
-    private CommentaireService() {
+    public CommentaireService() {
         super(BreizhLib.getDataBaseHelper());
     }
 

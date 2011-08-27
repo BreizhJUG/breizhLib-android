@@ -16,6 +16,8 @@ import org.breizhjug.breizhlib.database.Database;
 import org.breizhjug.breizhlib.database.dao.CommentaireDAO;
 import org.breizhjug.breizhlib.model.Commentaire;
 import org.breizhjug.breizhlib.model.Livre;
+import roboguice.inject.InjectExtra;
+import roboguice.inject.InjectView;
 
 import java.util.ArrayList;
 
@@ -25,6 +27,28 @@ public class LivreActivity extends AbstractActivity {
     protected static Database db = BreizhLib.getDataBaseHelper();
     private static final String TAG = "BreizhLib.LivreActivity";
     private SharedPreferences prefs;
+
+    @InjectView(R.id.titre)
+    TextView titreView;
+    @InjectView(R.id.editeur)
+    TextView editeurView;
+    @InjectView(R.id.img)
+    ImageView icone;
+    @InjectView(R.id.add)
+    Button addBtn;
+    @InjectView(R.id.addComment)
+    Button avis;
+    @InjectView(R.id.nav)
+    LinearLayout nav;
+    @InjectView(R.id.items)
+    ListView commentaireItems;
+
+    @InjectExtra("livre")
+    Livre livre;
+    @InjectExtra("livres")
+    ArrayList<Livre> ouvrages;
+    @InjectExtra("index")
+    int index;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,16 +63,10 @@ public class LivreActivity extends AbstractActivity {
 
     private void initView() {
         prefs = BreizhLib.getSharedPreferences(getApplicationContext());
-        final Livre livre = (Livre) getIntent().getSerializableExtra("livre");
 
-
-        TextView titreView = (TextView) findViewById(R.id.titre);
         titreView.setText(livre.titre);
-
-        TextView editeurView = (TextView) findViewById(R.id.editeur);
         editeurView.setText(livre.editeur);
 
-        ImageView icone = (ImageView) findViewById(R.id.img);
         BreizhLib.getImageCache().getFromCache(livre.iSBN, livre.imgUrl, icone);
 
         initNavigation();
@@ -57,11 +75,10 @@ public class LivreActivity extends AbstractActivity {
 
         initAvis(livre);
 
-        Button button = (Button) findViewById(R.id.add);
         if (livre.add) {
-            initAjout(button, livre.iSBN);
+            initAjout(addBtn, livre.iSBN);
         } else {
-            initReservation(button, livre.etat, livre.iSBN);
+            initReservation(addBtn, livre.etat, livre.iSBN);
         }
 
         initCommentaires(livre);
@@ -69,10 +86,6 @@ public class LivreActivity extends AbstractActivity {
     }
 
     private void initNavigation() {
-        final ArrayList<Livre> ouvrages = (ArrayList<Livre>) getIntent().getSerializableExtra("livres");
-        final int index = (int) getIntent().getIntExtra("index", 0);
-
-        LinearLayout nav = (LinearLayout) findViewById(R.id.nav);
         Button previous = (Button) nav.getChildAt(0);
         Button next = (Button) nav.getChildAt(1);
         if (ouvrages != null) {
@@ -116,7 +129,6 @@ public class LivreActivity extends AbstractActivity {
     }
 
     private void initAvis(final Livre livre) {
-        Button avis = (Button) findViewById(R.id.addComment);
         if (!livre.add && prefs.getString(BreizhLibConstantes.ACCOUNT_NAME, null) != null) {
             if (BreizhLib.getSharedPreferences(getApplicationContext()).getString(BreizhLibConstantes.USER, null) != null) {
                 avis.setOnClickListener(new Button.OnClickListener() {
@@ -143,12 +155,11 @@ public class LivreActivity extends AbstractActivity {
     }
 
     private void initCommentaires(Livre livre) {
-        final ListView items = (ListView) findViewById(R.id.items);
         final ArrayList<Commentaire> commentaires = CommentaireDAO.findByIsbn(livre.iSBN);
 
-        items.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        commentaireItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-                Commentaire commentaire = (Commentaire) items.getItemAtPosition(position);
+                Commentaire commentaire = (Commentaire) commentaireItems.getItemAtPosition(position);
                 Intent intent = new Intent(getApplicationContext(), CommentaireActivity.class);
                 intent.putExtra("commentaire", commentaire);
                 intent.putExtra("commentaires", commentaires);
@@ -159,7 +170,7 @@ public class LivreActivity extends AbstractActivity {
 
         Log.d(TAG, livre.iSBN + " size :" + commentaires.size());
         CommentairesAdapter commentairesAdapter = new CommentairesAdapter(this.getBaseContext(), commentaires);
-        items.setAdapter(commentairesAdapter);
+        commentaireItems.setAdapter(commentairesAdapter);
     }
 
 

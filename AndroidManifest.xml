@@ -35,6 +35,15 @@
         <activity android:name="org.breizhjug.breizhlib.activity.ConfigurationActivity" android:label="Paramètres"/>
         <activity android:name="org.breizhjug.breizhlib.activity.AvisActivity" android:label="Avis"/>
         <activity android:name="org.breizhjug.breizhlib.activity.CommentaireActivity" android:label="Commentaires"/>
+        <activity android:name="org.breizhjug.breizhlib.activity.SearchActivity" android:label="Search">
+             <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                       android:resource="@xml/searchable" />
+
+        </activity>
     </application>
 
 

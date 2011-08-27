@@ -1,10 +1,10 @@
 package org.breizhjug.breizhlib;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import com.google.inject.Module;
 import org.acra.ACRA;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
@@ -17,11 +17,14 @@ import org.breizhjug.breizhlib.utils.GoogleAuthentification;
 import org.breizhjug.breizhlib.utils.Tracker;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
 import org.breizhjug.breizhlib.utils.version.VersionTask;
+import roboguice.application.RoboApplication;
+
+import java.util.List;
 
 
 @ReportsCrashes(formKey = "dGFpb0t5YXF3a3J3Ui1GZjBVY1ROMGc6MQ",
         mode = ReportingInteractionMode.TOAST, resToastText = R.string.resToastText)
-public class BreizhLib extends Application {
+public class BreizhLib extends RoboApplication {
 
     private static ImageCache imageCache;
 
@@ -42,6 +45,10 @@ public class BreizhLib extends Application {
 	private static Tracker tracker;
 
     private VersionTask checkVersion;
+
+    protected void addApplicationModules(List<Module> modules) {
+        modules.add(new BreizhLibModule());
+    }
 
 
 

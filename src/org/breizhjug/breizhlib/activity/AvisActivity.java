@@ -7,36 +7,47 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RatingBar;
+import android.widget.Toast;
 import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.exception.ResultException;
 import org.breizhjug.breizhlib.model.Commentaire;
 import org.breizhjug.breizhlib.model.Livre;
+import roboguice.inject.InjectExtra;
+import roboguice.inject.InjectView;
 
 
 public class AvisActivity extends AbstractActivity {
 
+    @InjectView(R.id.send)
+    Button button;
+    @InjectView(R.id.avisEdit)
+    EditText avisEdit;
+    @InjectView(R.id.nomEdit)
+    EditText nomEdit;
+    @InjectView(R.id.rating)
+    RatingBar rating;
+
+
+    @InjectExtra("livre")
+    Livre livre;
+
     @Override
     public void init(Intent intent) {
-        final Livre livre = (Livre) intent.getSerializableExtra("livre");
 
         final SharedPreferences prefs = BreizhLib.getSharedPreferences(getApplicationContext());
 
-        final RatingBar rating = (RatingBar) findViewById(R.id.rating);
         rating.setRating(livre.note);
         rating.setMax(5);
 
 
         String nom = prefs.getString(BreizhLibConstantes.USER_NOM, "") + " " +
                 prefs.getString(BreizhLibConstantes.USER_PRENOM, "");
-        final EditText nomEdit = (EditText) findViewById(R.id.nomEdit);
         nomEdit.setText(nom);
-
-        final EditText avisEdit = (EditText) findViewById(R.id.avisEdit);
-
-        Button button = (Button) findViewById(R.id.send);
 
         button.setOnClickListener(new Button.OnClickListener() {
 
@@ -60,10 +71,10 @@ public class AvisActivity extends AbstractActivity {
                             String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
                             Commentaire result = null;
                             try {
-                                result = BreizhLib.getCommentaireService().comment(authCookie, livre.iSBN, nom, avis, Integer.valueOf(""+rating.getRating()));
+                                result = BreizhLib.getCommentaireService().comment(authCookie, livre.iSBN, nom, avis, Integer.valueOf("" + rating.getRating()));
                             } catch (ResultException e) {
-                                 showError(e.result.msg, true);
-                                 finish();
+                                showError(e.result.msg, true);
+                                finish();
                             }
                             return result;
                         }

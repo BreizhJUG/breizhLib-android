@@ -8,9 +8,13 @@ import android.widget.TextView;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.utils.version.Version;
+import roboguice.inject.InjectView;
 
 
 public class CreditsActivity extends AbstractActivity {
+
+    @InjectView(R.id.version)
+    TextView versionView;
 
     @Override
     public void init(Intent intent) {
@@ -21,7 +25,6 @@ public class CreditsActivity extends AbstractActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.credits);
 
-        TextView versionView = (TextView) findViewById(R.id.version);
         versionView.setText(getString(R.string.version) + " " + Version.version);
     }
 

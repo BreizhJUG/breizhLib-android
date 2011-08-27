@@ -10,29 +10,42 @@ import android.widget.TextView;
 import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.model.Commentaire;
+import roboguice.inject.InjectExtra;
+import roboguice.inject.InjectView;
 
 import java.util.ArrayList;
 
 
 public class CommentaireActivity extends AbstractActivity {
 
+    @InjectView(R.id.titre)
+    TextView titre;
+    @InjectView(R.id.user)
+    TextView user;
+    @InjectView(R.id.description)
+    TextView description;
+    @InjectView(R.id.img)
+    ImageView icone;
+    @InjectView(R.id.nav)
+    LinearLayout nav;
+
+    @InjectExtra("commentaire")
+    Commentaire commentaire;
+    @InjectExtra("index")
+    int index;
+    @InjectExtra("commentaires")
+    ArrayList<Commentaire> commentaires;
+
     @Override
     public void init(Intent intent) {
     }
 
     public void initView() {
-        final Commentaire commentaire = (Commentaire) getIntent().getSerializableExtra("commentaire");
 
-        TextView text = (TextView) findViewById(R.id.titre);
-        text.setText(commentaire.livre.titre);
+        titre.setText(commentaire.livre.titre);
+        user.setText(commentaire.nom);
+        description.setText(commentaire.commentaire);
 
-        text = (TextView) findViewById(R.id.user);
-        text.setText(commentaire.nom);
-
-        text = (TextView) findViewById(R.id.description);
-        text.setText(commentaire.commentaire);
-
-        ImageView icone = (ImageView) findViewById(R.id.img);
         BreizhLib.getImageCache().getFromCache(commentaire.livre.iSBN, commentaire.livre.imgUrl, icone);
 
         icone.setOnClickListener(new View.OnClickListener() {
@@ -54,10 +67,6 @@ public class CommentaireActivity extends AbstractActivity {
     }
 
     private void initNavigation() {
-        final ArrayList<Commentaire> commentaires = (ArrayList<Commentaire>) getIntent().getSerializableExtra("commentaires");
-        final int index = (int) getIntent().getIntExtra("index", 0);
-
-        LinearLayout nav = (LinearLayout) findViewById(R.id.nav);
         Button previous = (Button) nav.getChildAt(0);
         Button next = (Button) nav.getChildAt(1);
 

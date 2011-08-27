@@ -79,6 +79,7 @@ public class ScanActivity extends AbstractActivity {
                 adb.setMessage(getString(R.string.isbn_scan_msg_ko));
                 adb.setNegativeButton(getString(R.string.retour), null);
                 adb.show();
+                finish();
             }
         } else {
             // Handle cancel

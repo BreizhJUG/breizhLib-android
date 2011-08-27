@@ -12,13 +12,15 @@ import org.breizhjug.breizhlib.adapter.ReservationsAdapter;
 import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.model.Reservation;
 import org.breizhjug.breizhlib.remote.AsyncRemoteTask;
+import roboguice.inject.InjectView;
 
 import java.util.ArrayList;
 
 
 public class ReservationsActivity extends AbstractActivity {
 
-    private ListView reservationsListView;
+    @InjectView(R.id.items)
+    ListView reservationsListView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,7 +34,6 @@ public class ReservationsActivity extends AbstractActivity {
     }
 
     public void initView() {
-        reservationsListView = (ListView) findViewById(R.id.items);
         final SharedPreferences prefs = BreizhLib.getSharedPreferences(getApplicationContext());
 
         final AsyncTask<Void, Void, Boolean> initTask = new AsyncRemoteTask<Reservation>(this, BreizhLib.getReservationService(), reservationsListView, prefs) {

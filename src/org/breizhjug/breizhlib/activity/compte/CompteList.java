@@ -31,7 +31,7 @@ public class CompteList extends AbstractActivity {
 
         if (authcookie == null) {
             listView = (ListView) findViewById(R.id.items);
-            ;
+
             List<String> accounts = BreizhLib.getGAuth().getGoogleAccounts(this);
 
             listView.setAdapter(new AccountsAdapter(this.getBaseContext(), accounts));

@@ -11,10 +11,12 @@ import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.adapter.CommentairesAdapter;
 import org.breizhjug.breizhlib.model.Commentaire;
 import org.breizhjug.breizhlib.remote.AsyncRemoteTask;
+import roboguice.inject.InjectView;
 
 public class CommentairesActivity extends AbstractActivity {
 
-    private ListView commentairesListView;
+    @InjectView(R.id.items)
+    ListView commentairesListView;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +28,6 @@ public class CommentairesActivity extends AbstractActivity {
     }
 
     public void initView() {
-        commentairesListView = (ListView) findViewById(R.id.items);
         SharedPreferences prefs = BreizhLib.getSharedPreferences(getApplicationContext());
         final AsyncTask<Void, Void, Boolean> initTask = new AsyncRemoteTask<Commentaire>(this, BreizhLib.getCommentaireService(), commentairesListView, prefs) {
 

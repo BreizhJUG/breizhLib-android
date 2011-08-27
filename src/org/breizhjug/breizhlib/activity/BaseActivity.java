@@ -1,6 +1,5 @@
 package org.breizhjug.breizhlib.activity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.*;
 import android.os.Bundle;
@@ -10,9 +9,10 @@ import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.compte.CompteList;
 import org.breizhjug.breizhlib.utils.IntentSupport;
+import roboguice.activity.RoboActivity;
 
 
-public class BaseActivity extends Activity {
+public class BaseActivity extends RoboActivity {
 
     public static final String ACTION_LOGOUT = "org.breizhjug.breizhlib.LOGOUT";
 

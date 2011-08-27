@@ -11,11 +11,25 @@ import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.remote.Result;
-
+import roboguice.inject.InjectExtra;
+import roboguice.inject.InjectView;
 
 public class ReservationActivity extends AbstractActivity {
     private static final String TAG = "BreizhLib.ReservationActivity";
     private SharedPreferences prefs;
+
+
+    @InjectView(R.id.emailEdit)
+    EditText email;
+    @InjectView(R.id.nomEdit)
+    EditText nom;
+    @InjectView(R.id.prenomEdit)
+    EditText prenom;
+    @InjectView(R.id.send)
+    Button button;
+
+    @InjectExtra("isbn")
+    String isbn;
 
     @Override
     public void init(Intent intent) {
@@ -23,21 +37,15 @@ public class ReservationActivity extends AbstractActivity {
     }
 
     public void initView() {
-        final String isbn = getIntent().getStringExtra("isbn");
-
         prefs = BreizhLib.getSharedPreferences(getApplicationContext());
 
-        final EditText prenom = (EditText) findViewById(R.id.prenomEdit);
         prenom.setText(prefs.getString(BreizhLibConstantes.USER_PRENOM, null));
 
-        final EditText nom = (EditText) findViewById(R.id.nomEdit);
         nom.setText(prefs.getString(BreizhLibConstantes.USER_NOM, null));
 
-        final EditText email = (EditText) findViewById(R.id.emailEdit);
         email.setText(prefs.getString(BreizhLibConstantes.USER, null));
         email.setEnabled(false);
 
-        Button button = (Button) findViewById(R.id.send);
         button.setOnClickListener(new Button.OnClickListener() {
 
             public void onClick(View view) {

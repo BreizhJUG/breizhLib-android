@@ -112,7 +112,7 @@ public class OuvrageService extends Service<Livre> {
 
     private static OuvrageService instance;
 
-    private OuvrageService() {
+    public OuvrageService() {
         super(BreizhLib.getDataBaseHelper());
     }
 

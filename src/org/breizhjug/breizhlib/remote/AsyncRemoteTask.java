@@ -23,12 +23,22 @@ public abstract class AsyncRemoteTask<T extends Model> extends AsyncTask<Void, V
     private AbsListView listView;
     public ArrayList<T> items = new ArrayList<T>();
     private ProgressDialog waitDialog;
+    Activity context;
 
     public AsyncRemoteTask(final Activity context, Service<T> service, AbsListView listView, SharedPreferences prefs) {
         this.service = service;
         this.listView = listView;
         this.prefs = prefs;
-        this.waitDialog = ProgressDialog.show(context, context.getString(R.string.recherche), context.getString(R.string.chargement), true, true);
+        this.context = context;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        if (waitDialog == null) {
+			waitDialog = new ProgressDialog(context);
+			waitDialog.setIndeterminate(true);
+		}
+
         waitDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
 
             public void onCancel(DialogInterface dialog) {
@@ -38,6 +48,9 @@ public abstract class AsyncRemoteTask<T extends Model> extends AsyncTask<Void, V
                 context.finish();
             }
         });
+        waitDialog.setTitle(context.getString(R.string.chargement));
+		waitDialog.setMessage(context.getString(R.string.recherche));
+		waitDialog.show();
     }
 
     @Override
