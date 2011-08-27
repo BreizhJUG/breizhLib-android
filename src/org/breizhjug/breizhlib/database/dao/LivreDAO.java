@@ -2,7 +2,7 @@ package org.breizhjug.breizhlib.database.dao;
 
 
 import android.database.Cursor;
-import org.breizhjug.breizhlib.BreizhLib;
+import com.google.inject.Inject;
 import org.breizhjug.breizhlib.database.Database;
 import org.breizhjug.breizhlib.model.Livre;
 
@@ -10,11 +10,12 @@ import java.util.ArrayList;
 
 public class LivreDAO {
 
-    protected static Database db = BreizhLib.getDataBaseHelper();
     private static final String TAG = "BreizhLib.LivreDAO";
 
+    @Inject
+    protected Database db;
 
-    public static ArrayList<Livre> findByReservation() {
+    public ArrayList<Livre> findByReservation() {
 
         Cursor cursor = db.executeSelectQuery("SELECT Livre.* FROM Livre  WHERE Livre.etat = 'RESERVE' ", null);
 

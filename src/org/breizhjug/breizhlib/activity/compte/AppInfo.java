@@ -7,16 +7,19 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import org.breizhjug.breizhlib.BreizhLib;
+import com.google.inject.Inject;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.AbstractActivity;
+import org.breizhjug.breizhlib.utils.GoogleAuthentification;
 
 public class AppInfo extends AbstractActivity {
 
     private static final String TAG = "BreizhLib.AppInfo";
-
+    @Inject
     SharedPreferences prefs;
+    @Inject
+    private GoogleAuthentification gAuth;
 
     @Override
     public void init(Intent intent) {
@@ -26,8 +29,6 @@ public class AppInfo extends AbstractActivity {
 
 
     private void register(final String accountName) {
-
-        prefs = BreizhLib.getSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(BreizhLibConstantes.ACCOUNT_NAME, accountName);
         editor.putString(BreizhLibConstantes.AUTH_COOKIE, null);
@@ -41,8 +42,8 @@ public class AppInfo extends AbstractActivity {
 
                     @Override
                     protected String doInBackground(Void... params) {
-                        String auth_token = BreizhLib.getGAuth().getToken(AppInfo.this, acct);
-                        String authCookie = BreizhLib.getGAuth().getAuthCookie(auth_token, AppInfo.this);
+                        String auth_token = gAuth.getToken(AppInfo.this, acct);
+                        String authCookie = gAuth.getAuthCookie(auth_token, AppInfo.this);
                         Log.d(TAG, "" + authCookie);
                         return authCookie;
                     }

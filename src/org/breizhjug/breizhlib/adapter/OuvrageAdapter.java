@@ -8,9 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import org.breizhjug.breizhlib.BreizhLib;
+import com.google.inject.Inject;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.model.Livre;
+import org.breizhjug.breizhlib.utils.images.ImageCache;
 
 import java.util.List;
 
@@ -18,6 +19,8 @@ import java.util.List;
 public class OuvrageAdapter extends ArrayAdapter<Livre> {
 
     SharedPreferences prefs;
+    @Inject
+    private static ImageCache imageCache;
     int resource;
 
     public OuvrageAdapter(Context context, List<Livre> ouvrages, int resource, SharedPreferences prefs) {
@@ -53,13 +56,13 @@ public class OuvrageAdapter extends ArrayAdapter<Livre> {
                 etat.setImageResource(R.drawable.voyant_rouge);
             } else if (livre.etat.equals("DISP0NIBLE")) {
                 etat.setImageResource(R.drawable.voyant_vert);
-            }else{
+            } else {
                 etat.setImageResource(R.drawable.voyant_vert);
             }
         }
 
         ImageView icone = (ImageView) view.findViewById(R.id.img);
-        BreizhLib.getImageCache().getFromCache(livre.iSBN, livre.imgUrl, icone);
+        imageCache.getFromCache(livre.iSBN, livre.imgUrl, icone);
 
         return view;
     }

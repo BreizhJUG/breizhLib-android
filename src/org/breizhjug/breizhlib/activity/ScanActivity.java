@@ -3,10 +3,9 @@ package org.breizhjug.breizhlib.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import org.breizhjug.breizhlib.BreizhLib;
+import com.google.inject.Inject;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.exception.ResultException;
@@ -22,6 +21,9 @@ public class ScanActivity extends AbstractActivity {
     private String isbn;
     private static final String USER_AGENT = "ZXing (Android)";
 
+    @Inject
+    OuvrageService service;
+
     @Override
     public void init(Intent intent) {
         IntentIntegrator.initiateScan(this);
@@ -35,8 +37,7 @@ public class ScanActivity extends AbstractActivity {
 
 
         public void onClick(DialogInterface dialogInterface, int i) {
-            OuvrageService service = BreizhLib.getOuvrageService();
-            SharedPreferences prefs = BreizhLib.getSharedPreferences(ScanActivity.this.getApplicationContext());
+
             Livre livre = null;
             try {
                 livre = service.find(prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null), isbn);

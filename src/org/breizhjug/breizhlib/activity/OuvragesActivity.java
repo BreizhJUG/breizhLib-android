@@ -5,27 +5,35 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.*;
-import org.breizhjug.breizhlib.BreizhLib;
+import com.google.inject.Inject;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.adapter.OuvrageAdapter;
 import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.remote.AsyncRemoteTask;
+import org.breizhjug.breizhlib.remote.OuvrageService;
+import org.breizhjug.breizhlib.utils.images.ImageCache;
 
 
 public class OuvragesActivity extends AbstractActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
+    private static final String TAG = "Breizhlib.OuvragesActivity";
     private AbsListView ouvragesListView;
 
     private boolean modeGrid;
-    private SharedPreferences prefs;
+
+    @Inject
+    private ImageCache imageCache;
+
+    @Inject
+    OuvrageService service;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        modeGrid = prefs.getBoolean(BreizhLibConstantes.GRID, false);
+        modeGrid = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(BreizhLibConstantes.GRID, false);
         initView();
     }
 
@@ -40,7 +48,7 @@ public class OuvragesActivity extends AbstractActivity implements SharedPreferen
     }
 
     public void initView() {
-        prefs.registerOnSharedPreferenceChangeListener(this);
+        PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).registerOnSharedPreferenceChangeListener(this);
         int resource = R.layout.ouvrage;
         if (modeGrid) {
             setContentView(R.layout.main);
@@ -50,12 +58,10 @@ public class OuvragesActivity extends AbstractActivity implements SharedPreferen
         } else {
 
 
-
-
             if (prefs.getBoolean("beta", false)) {
-                 setContentView(R.layout.items_search);
-                 EditText editText = (EditText) findViewById(R.id.editText);
-                 editText.clearFocus();
+                setContentView(R.layout.items_search);
+                EditText editText = (EditText) findViewById(R.id.editText);
+                editText.clearFocus();
             } else {
                 setContentView(R.layout.items);
             }
@@ -63,7 +69,7 @@ public class OuvragesActivity extends AbstractActivity implements SharedPreferen
         }
 
         final int finalResource = resource;
-        final AsyncTask<Void, Void, Boolean> initTask = new AsyncRemoteTask<Livre>(this, BreizhLib.getOuvrageService(), ouvragesListView, prefs) {
+        final AsyncTask<Void, Void, Boolean> initTask = new AsyncRemoteTask<Livre>(this, service, ouvragesListView, prefs) {
 
 
             @Override
@@ -88,6 +94,7 @@ public class OuvragesActivity extends AbstractActivity implements SharedPreferen
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
         if (s.equals(BreizhLibConstantes.GRID)) {
+            Log.d(TAG,"grid "+s);
             modeGrid = sharedPreferences.getBoolean(BreizhLibConstantes.GRID, false);
         }
     }

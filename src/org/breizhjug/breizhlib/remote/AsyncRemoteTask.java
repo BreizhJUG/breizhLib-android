@@ -35,9 +35,9 @@ public abstract class AsyncRemoteTask<T extends Model> extends AsyncTask<Void, V
     @Override
     protected void onPreExecute() {
         if (waitDialog == null) {
-			waitDialog = new ProgressDialog(context);
-			waitDialog.setIndeterminate(true);
-		}
+            waitDialog = new ProgressDialog(context);
+            waitDialog.setIndeterminate(true);
+        }
 
         waitDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
 
@@ -49,8 +49,8 @@ public abstract class AsyncRemoteTask<T extends Model> extends AsyncTask<Void, V
             }
         });
         waitDialog.setTitle(context.getString(R.string.chargement));
-		waitDialog.setMessage(context.getString(R.string.recherche));
-		waitDialog.show();
+        waitDialog.setMessage(context.getString(R.string.recherche));
+        waitDialog.show();
     }
 
     @Override

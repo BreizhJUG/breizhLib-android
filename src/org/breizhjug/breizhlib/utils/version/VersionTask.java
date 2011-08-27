@@ -2,12 +2,14 @@ package org.breizhjug.breizhlib.utils.version;
 
 import android.app.Application;
 import android.os.AsyncTask;
+import com.google.inject.Inject;
 
 
 public class VersionTask extends AsyncTask<Void, Void, Integer> {
 
-    Application app;
+    private Application app;
 
+    @Inject
     public VersionTask(Application app) {
         this.app = app;
     }

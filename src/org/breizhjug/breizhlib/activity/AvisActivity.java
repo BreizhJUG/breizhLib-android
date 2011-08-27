@@ -3,7 +3,6 @@ package org.breizhjug.breizhlib.activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -11,12 +10,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
-import org.breizhjug.breizhlib.BreizhLib;
+import com.google.inject.Inject;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.exception.ResultException;
 import org.breizhjug.breizhlib.model.Commentaire;
 import org.breizhjug.breizhlib.model.Livre;
+import org.breizhjug.breizhlib.remote.CommentaireService;
 import roboguice.inject.InjectExtra;
 import roboguice.inject.InjectView;
 
@@ -36,12 +36,11 @@ public class AvisActivity extends AbstractActivity {
     @InjectExtra("livre")
     Livre livre;
 
-    SharedPreferences prefs;
+    @Inject
+    CommentaireService service;
 
     @Override
     public void init(Intent intent) {
-
-        prefs = BreizhLib.getSharedPreferences(getApplicationContext());
 
         rating.setRating(livre.note);
         rating.setMax(5);
@@ -82,7 +81,7 @@ public class AvisActivity extends AbstractActivity {
                 String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
                 Commentaire result = null;
                 try {
-                    result = BreizhLib.getCommentaireService().comment(authCookie, livre.iSBN, nom, avis, Integer.valueOf("" + rating.getRating()));
+                    result = service.comment(authCookie, livre.iSBN, nom, avis, Integer.valueOf("" + rating.getRating()));
                 } catch (ResultException e) {
                     showError(e.result.msg, true);
                     finish();

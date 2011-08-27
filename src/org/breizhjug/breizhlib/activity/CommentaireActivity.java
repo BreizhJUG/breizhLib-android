@@ -6,9 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import org.breizhjug.breizhlib.BreizhLib;
+import com.google.inject.Inject;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.model.Commentaire;
+import org.breizhjug.breizhlib.utils.images.ImageCache;
 import roboguice.inject.InjectView;
 
 
@@ -22,6 +23,8 @@ public class CommentaireActivity extends AbstractNavigationActivity<Commentaire>
     TextView description;
     @InjectView(R.id.img)
     ImageView icone;
+    @Inject
+    private ImageCache imageCache;
 
     @Override
     public void init(Intent intent) {
@@ -33,7 +36,7 @@ public class CommentaireActivity extends AbstractNavigationActivity<Commentaire>
         user.setText(item.nom);
         description.setText(item.commentaire);
 
-        BreizhLib.getImageCache().getFromCache(item.livre.iSBN, item.livre.imgUrl, icone);
+        imageCache.getFromCache(item.livre.iSBN, item.livre.imgUrl, icone);
 
         icone.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {

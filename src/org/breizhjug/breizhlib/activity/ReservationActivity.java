@@ -1,22 +1,21 @@
 package org.breizhjug.breizhlib.activity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import org.breizhjug.breizhlib.BreizhLib;
+import com.google.inject.Inject;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
+import org.breizhjug.breizhlib.remote.ReservationService;
 import org.breizhjug.breizhlib.remote.Result;
 import roboguice.inject.InjectExtra;
 import roboguice.inject.InjectView;
 
 public class ReservationActivity extends AbstractActivity {
     private static final String TAG = "BreizhLib.ReservationActivity";
-    private SharedPreferences prefs;
 
 
     @InjectView(R.id.emailEdit)
@@ -30,6 +29,8 @@ public class ReservationActivity extends AbstractActivity {
 
     @InjectExtra("isbn")
     String isbn;
+    @Inject
+    private ReservationService service;
 
     @Override
     public void init(Intent intent) {
@@ -37,7 +38,6 @@ public class ReservationActivity extends AbstractActivity {
     }
 
     public void initView() {
-        prefs = BreizhLib.getSharedPreferences(getApplicationContext());
 
         prenom.setText(prefs.getString(BreizhLibConstantes.USER_PRENOM, null));
 
@@ -62,7 +62,7 @@ public class ReservationActivity extends AbstractActivity {
             @Override
             protected Result doInBackground(Void... params) {
                 String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
-                Result result = BreizhLib.getReservationService().reserver(authCookie, isbn, nom, prenom, email);
+                Result result = service.reserver(authCookie, isbn, nom, prenom, email);
                 return result;
             }
 

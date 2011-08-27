@@ -4,6 +4,7 @@ package org.breizhjug.breizhlib.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import com.google.inject.Inject;
 import fr.ybo.database.DataBaseHelper;
 import org.acra.ErrorReporter;
 import org.breizhjug.breizhlib.model.Commentaire;
@@ -23,6 +24,7 @@ public class Database extends DataBaseHelper {
 
     private Map<Integer, UpgradeDatabase> mapUpgrades;
 
+    @Inject
     public Database(Context context) {
         super(context, Constantes.LIST_CLASSES_DATABASE, DATABASE_NAME, DATABASE_VERSION);
         this.context = context;
@@ -33,7 +35,7 @@ public class Database extends DataBaseHelper {
 
         final public void upgrade(SQLiteDatabase arg0) {
             try {
-                Log.e(TAG,"update db");
+                Log.e(TAG, "update db");
                 myUpgrade(arg0);
             } catch (Exception exception) {
                 ErrorReporter.getInstance().handleException(exception);
@@ -57,8 +59,8 @@ public class Database extends DataBaseHelper {
             });
             mapUpgrades.put(1, new UpgradeDatabaseWithError() {
                 public void myUpgrade(SQLiteDatabase db) {
-                   getBase().getTable(Commentaire.class).dropTable(db);
-                   getBase().getTable(Commentaire.class).createTable(db);
+                    getBase().getTable(Commentaire.class).dropTable(db);
+                    getBase().getTable(Commentaire.class).createTable(db);
                 }
             });
         }

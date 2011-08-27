@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import org.breizhjug.breizhlib.BreizhLib;
+import com.google.inject.Inject;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.AbstractActivity;
@@ -23,14 +23,26 @@ import org.breizhjug.breizhlib.model.Commentaire;
 import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.model.Reservation;
 import org.breizhjug.breizhlib.model.Utilisateur;
+import org.breizhjug.breizhlib.remote.UtilisateurService;
 import org.breizhjug.breizhlib.utils.images.Gravatar;
+import org.breizhjug.breizhlib.utils.images.ImageCache;
 
 import java.util.ArrayList;
 
 
 public class ProfilActivity extends AbstractActivity {
 
+    @Inject
     SharedPreferences prefs;
+    @Inject
+    private UtilisateurService service;
+    @Inject
+    private ImageCache imageCache;
+    @Inject
+    private CommentaireDAO commentaireDAO;
+    @Inject
+    private ReservationDAO reservationDAO;
+
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +50,6 @@ public class ProfilActivity extends AbstractActivity {
     }
 
     public void init(Intent intent) {
-        prefs = BreizhLib.getSharedPreferences(getApplicationContext());
         final String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
 
         final ProgressDialog waitDialog = ProgressDialog.show(this, "Recherche de vos informations", getString(R.string.chargement), true, true);
@@ -47,7 +58,7 @@ public class ProfilActivity extends AbstractActivity {
 
             @Override
             protected Utilisateur doInBackground(Void... params) {
-                return BreizhLib.getUtilisateurService().find(authCookie);
+                return service.find(authCookie);
             }
 
             @Override
@@ -103,9 +114,9 @@ public class ProfilActivity extends AbstractActivity {
         reservations.setText(user.reservationsLabel);
 
         ImageView icon = (ImageView) findViewById(R.id.avatar);
-        BreizhLib.getImageCache().download(Gravatar.getImage(user.email), icon);
+        imageCache.download(Gravatar.getImage(user.email), icon);
 
-        final ArrayList<Commentaire> items = CommentaireDAO.findByAutor(user.nom + " " + user.prenom);
+        final ArrayList<Commentaire> items = commentaireDAO.findByAutor(user.nom + " " + user.prenom);
         Button commentairesBtn = (Button) findViewById(R.id.commentairesbtn);
         commentairesBtn.setVisibility(View.INVISIBLE);
         if (items != null && items.size() > 0) {
@@ -115,8 +126,8 @@ public class ProfilActivity extends AbstractActivity {
                 public void onClick(View view) {
 
                     Intent intent = new Intent(getApplicationContext(), CommentaireActivity.class);
-                    intent.putExtra("commentaire", items.get(0));
-                    intent.putExtra("commentaires", items);
+                    intent.putExtra("item", items.get(0));
+                    intent.putExtra("items", items);
                     intent.putExtra("index", 0);
                     startActivity(intent);
 
@@ -125,7 +136,7 @@ public class ProfilActivity extends AbstractActivity {
             });
         }
 
-        final ArrayList<Reservation> resaItems = ReservationDAO.findByNom(user.nom, user.prenom);
+        final ArrayList<Reservation> resaItems = reservationDAO.findByNom(user.nom, user.prenom);
         Button resaBtn = (Button) findViewById(R.id.resabtn);
         resaBtn.setVisibility(View.INVISIBLE);
         if (resaItems != null && resaItems.size() > 0) {
@@ -134,9 +145,9 @@ public class ProfilActivity extends AbstractActivity {
 
                 public void onClick(View view) {
                     Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-                    intent.putExtra("livres", toOuvrages(resaItems));
+                    intent.putExtra("items", toOuvrages(resaItems));
                     intent.putExtra("index", 0);
-                    intent.putExtra("livre", resaItems.get(0).livre);
+                    intent.putExtra("item", resaItems.get(0).livre);
                     startActivity(intent);
 
 

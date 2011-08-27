@@ -27,7 +27,6 @@ public class GoogleAuthentification {
 
     private static final String TAG = "Breizhlib.GoogleAuthentification";
 
-    private static GoogleAuthentification instance;
     private Cookie authCookie = null;
 
     /**
@@ -114,13 +113,6 @@ public class GoogleAuthentification {
 
     public GoogleAuthentification() {
         super();
-    }
-
-    public static synchronized GoogleAuthentification getInstance() {
-        if (instance == null) {
-            instance = new GoogleAuthentification();
-        }
-        return instance;
     }
 
     public Cookie getAuthCookie() {

@@ -1,7 +1,7 @@
 package org.breizhjug.breizhlib.database.dao;
 
 import android.database.Cursor;
-import org.breizhjug.breizhlib.BreizhLib;
+import com.google.inject.Inject;
 import org.breizhjug.breizhlib.database.Database;
 import org.breizhjug.breizhlib.model.Reservation;
 
@@ -11,12 +11,14 @@ import java.util.List;
 
 public class ReservationDAO {
 
-    protected static Database db = BreizhLib.getDataBaseHelper();
     private static final String TAG = "BreizhLib.ReservationDAODAO";
 
+    @Inject
+    protected Database db;
 
 
-    public static ArrayList<Reservation> findByNom(String nom,String prenom) {
+
+    public ArrayList<Reservation> findByNom(String nom, String prenom) {
         List<String> args = new ArrayList<String>();
         args.add(nom);
         args.add(prenom);

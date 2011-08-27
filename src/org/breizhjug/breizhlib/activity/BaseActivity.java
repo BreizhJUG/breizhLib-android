@@ -4,11 +4,12 @@ import android.app.AlertDialog;
 import android.content.*;
 import android.os.Bundle;
 import android.view.MenuItem;
-import org.breizhjug.breizhlib.BreizhLib;
+import com.google.inject.Inject;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.compte.CompteList;
 import org.breizhjug.breizhlib.utils.IntentSupport;
+import org.breizhjug.breizhlib.utils.Tracker;
 import roboguice.activity.RoboActivity;
 
 
@@ -17,11 +18,15 @@ public class BaseActivity extends RoboActivity {
     public static final String ACTION_LOGOUT = "org.breizhjug.breizhlib.LOGOUT";
 
     protected BroadcastReceiver receiver;
+    @Inject
+    protected SharedPreferences prefs;
+    @Inject
+    private Tracker tracker;
 
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        BreizhLib.getTraker().trackPageView('/' + getClass().getSimpleName());
+        tracker.trackPageView('/' + getClass().getSimpleName());
 
 
         receiver = new BroadcastReceiver() {
@@ -61,7 +66,6 @@ public class BaseActivity extends RoboActivity {
     @Override
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
-        SharedPreferences prefs = BreizhLib.getSharedPreferences(getApplicationContext());
         String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
         if (authCookie == null) {
             MenuItem item = (MenuItem) menu.findItem(R.id.connexion);
@@ -85,7 +89,6 @@ public class BaseActivity extends RoboActivity {
                 startActivity(intent);
                 return true;
             case R.id.connexion:
-                SharedPreferences prefs = BreizhLib.getSharedPreferences(getApplicationContext());
                 String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
                 if (authCookie == null) {
                     Intent pIntent = new Intent(getApplicationContext(), CompteList.class);
@@ -119,7 +122,7 @@ public class BaseActivity extends RoboActivity {
     }
 
     private void onLogout() {
-        SharedPreferences.Editor editor = BreizhLib.getSharedPreferences(getApplicationContext()).edit();
+        SharedPreferences.Editor editor =prefs.edit();
         editor.putString(BreizhLibConstantes.AUTH_COOKIE, null);
         editor.putString(BreizhLibConstantes.ACCOUNT_NAME, null);
         editor.putString(BreizhLibConstantes.USER, null);

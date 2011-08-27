@@ -5,12 +5,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import com.google.inject.Inject;
 import org.breizhjug.breizhlib.R;
+import org.breizhjug.breizhlib.remote.SyncManager;
 
 public class SplashScreen extends BaseActivity {
 
     private static final int STOPSPLASH = 0;
     private static final long SPLASHTIME = 1000;
+
+    @Inject
+    private SyncManager syncManager;
 
     private Handler splashHandler = new Handler() {
 
@@ -37,7 +42,7 @@ public class SplashScreen extends BaseActivity {
         msg.what = STOPSPLASH;
         splashHandler.sendMessageDelayed(msg, SPLASHTIME);
 
-       // BreizhLib.getSyncManager().init(this.getApplicationContext());
-       // BreizhLib.getSyncManager().run();
+        // syncManager.init(this.getApplicationContext());
+        // syncManager.run();
     }
 }

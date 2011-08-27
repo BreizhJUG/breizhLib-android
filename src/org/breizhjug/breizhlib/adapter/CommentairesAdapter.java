@@ -7,15 +7,18 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import org.breizhjug.breizhlib.BreizhLib;
+import com.google.inject.Inject;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.model.Commentaire;
+import org.breizhjug.breizhlib.utils.images.ImageCache;
 
 import java.util.List;
 
 
 public class CommentairesAdapter extends ArrayAdapter<Commentaire> {
 
+    @Inject
+    private static ImageCache imageCache;
 
     public CommentairesAdapter(Context context, List<Commentaire> commentaires) {
         super(context, 0, commentaires);
@@ -42,7 +45,7 @@ public class CommentairesAdapter extends ArrayAdapter<Commentaire> {
         text.setText(commentaire.commentaire);
 
         ImageView icone = (ImageView) view.findViewById(R.id.img);
-        BreizhLib.getImageCache().getFromCache(commentaire.livre.iSBN, commentaire.livre.imgUrl, icone);
+        imageCache.getFromCache(commentaire.livre.iSBN, commentaire.livre.imgUrl, icone);
 
         return view;
     }

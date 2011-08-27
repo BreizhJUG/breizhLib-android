@@ -2,8 +2,8 @@ package org.breizhjug.breizhlib.remote;
 
 
 import android.util.Log;
+import com.google.inject.Inject;
 import org.acra.ErrorReporter;
-import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.database.dao.LivreDAO;
 import org.breizhjug.breizhlib.model.Reservation;
@@ -17,10 +17,11 @@ import java.util.List;
 public class ReservationService extends Service<Reservation> {
     private static final String TAG = "Breizhlib.ReservationService";
 
-    private static String URL_BOOKS = BreizhLibConstantes.SERVER_URL + "api/reservations";
-    private static String URL_RESA = BreizhLibConstantes.SERVER_URL + "api/book/reserver";
+    private static final String URL_BOOKS = BreizhLibConstantes.SERVER_URL + "api/reservations";
+    private static final String URL_RESA = BreizhLibConstantes.SERVER_URL + "api/book/reserver";
+    @Inject
+    private LivreDAO livreDAO;
 
-    private static ReservationService instance;
 
     @Override
     public String url() {
@@ -45,7 +46,7 @@ public class ReservationService extends Service<Reservation> {
         Param paramPrenom = new Param("prenom", prenom);
         Param paramEmail = new Param("email", email);
         String result = queryPostRESTurl(authCookie, URL_RESA, param, paramNom, paramPrenom, paramEmail);
-        Log.i(TAG, "reserver :  "+result);
+        Log.i(TAG, "reserver :  " + result);
 
         try {
             JSONObject item = new JSONObject(result);
@@ -58,7 +59,7 @@ public class ReservationService extends Service<Reservation> {
     @Override
     public List<Reservation> load(String authCookie) {
 
-        if (cache != null && LivreDAO.findByReservation().size() != cache.size()) {
+        if (cache != null && livreDAO.findByReservation().size() != cache.size()) {
             db.deleteAll(Reservation.class);
             forceCall = true;
         }
@@ -87,14 +88,9 @@ public class ReservationService extends Service<Reservation> {
         return BOOKS;
     }
 
-    private ReservationService() {
-        super(BreizhLib.getDataBaseHelper());
+    @Inject
+    public ReservationService() {
+        super();
     }
 
-    public static synchronized ReservationService getInstance() {
-        if (instance == null) {
-            instance = new ReservationService();
-        }
-        return instance;
-    }
 }

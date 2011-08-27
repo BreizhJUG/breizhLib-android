@@ -4,11 +4,18 @@ import android.content.Context;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import android.util.Log;
-import org.breizhjug.breizhlib.BreizhLib;
+import com.google.inject.Inject;
+import org.breizhjug.breizhlib.utils.CacheManager;
+import org.breizhjug.breizhlib.utils.images.ImageCache;
 
 
 public class CacheDialogPreference extends DialogPreference {
     private static final String TAG = "Breizhlib.CacheDialogPreference";
+
+    @Inject
+    private static ImageCache imageCache;
+    @Inject
+    private static CacheManager cacheManager;
 
 
     public CacheDialogPreference(Context context, AttributeSet attrs, int defStyle) {
@@ -19,18 +26,19 @@ public class CacheDialogPreference extends DialogPreference {
         super(context, attrs);
     }
 
+
     @Override
     protected void onClick() {
 
         if (getKey().equals("cache")) {
             Log.d(TAG, "clear cache");
-            BreizhLib.clearCache();
+            cacheManager.clearCache();
         } else if (getKey().equals("cacheImg")) {
             Log.d(TAG, "clear cache img");
-            BreizhLib.getImageCache().clearCache();
+            imageCache.clearCache();
         } else if (getKey().equals("cacheDb")) {
             Log.d(TAG, "clear cache db");
-            BreizhLib.clearDB();
+            cacheManager.clearDB();
         }
 
     }

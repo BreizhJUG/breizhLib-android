@@ -2,14 +2,13 @@ package org.breizhjug.breizhlib.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.compte.CompteList;
@@ -38,7 +37,6 @@ public class Menu extends AbstractActivity {
     }
 
     protected void loadMenu() {
-        SharedPreferences prefs = BreizhLib.getSharedPreferences(getApplicationContext());
 
         GridView grid = (GridView) findViewById(R.id.grilleBoutons);
         grid.setNumColumns(1);
@@ -71,7 +69,7 @@ public class Menu extends AbstractActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         boutons.add(new Bouton(intent, R.string.profil, R.drawable.profile));
 
-        if (prefs.getBoolean("beta", false)) {
+        if (PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(BreizhLibConstantes.BETA, false)) {
             intent = new Intent(getApplicationContext(), SearchActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             boutons.add(new Bouton(intent, R.string.search, android.R.drawable.ic_menu_search));

@@ -2,8 +2,8 @@ package org.breizhjug.breizhlib.remote;
 
 
 import android.util.Log;
+import com.google.inject.Inject;
 import org.acra.ErrorReporter;
-import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.exception.ResultException;
 import org.breizhjug.breizhlib.model.Livre;
@@ -18,11 +18,11 @@ public class OuvrageService extends Service<Livre> {
 
     private static final String TAG = "Breizhlib.OuvrageService";
 
-    private static String URL_BOOKS = BreizhLibConstantes.SERVER_URL + "api/ouvrages";
+    private static final String URL_BOOKS = BreizhLibConstantes.SERVER_URL + "api/ouvrages";
 
-    private static String URL_FIND_BOOKS = BreizhLibConstantes.SERVER_URL + "api/find";
+    private static final String URL_FIND_BOOKS = BreizhLibConstantes.SERVER_URL + "api/find";
 
-    private static String URL_ADD_BOOK = BreizhLibConstantes.SERVER_URL + "api/add";
+    private static final String URL_ADD_BOOK = BreizhLibConstantes.SERVER_URL + "api/add";
 
     @Override
     public String url() {
@@ -47,7 +47,7 @@ public class OuvrageService extends Service<Livre> {
 
     private Livre find(String authCookie, String urlString, String isbn) throws ResultException {
         String result = queryPostRESTurl(authCookie, urlString, new Param("iSBN", isbn));
-        Log.d(TAG, ""+result);
+        Log.d(TAG, "" + result);
         if (result != null) {
             try {
                 JSONObject item = new JSONObject(result);
@@ -110,16 +110,8 @@ public class OuvrageService extends Service<Livre> {
         return BOOKS;
     }
 
-    private static OuvrageService instance;
-
+    @Inject
     public OuvrageService() {
-        super(BreizhLib.getDataBaseHelper());
-    }
-
-    public static synchronized OuvrageService getInstance() {
-        if (instance == null) {
-            instance = new OuvrageService();
-        }
-        return instance;
+        super();
     }
 }

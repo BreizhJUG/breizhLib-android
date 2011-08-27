@@ -5,7 +5,7 @@ public interface AsyncActivity {
 
     void showLoadingProgressDialog();
 
-	void showProgressDialog(CharSequence message);
+    void showProgressDialog(CharSequence message);
 
-	void dismissProgressDialog();
+    void dismissProgressDialog();
 }

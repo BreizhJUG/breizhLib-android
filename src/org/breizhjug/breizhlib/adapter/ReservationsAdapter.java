@@ -8,9 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import org.breizhjug.breizhlib.BreizhLib;
+import com.google.inject.Inject;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.model.Reservation;
+import org.breizhjug.breizhlib.utils.images.ImageCache;
 
 import java.util.List;
 
@@ -18,6 +19,8 @@ import java.util.List;
 public class ReservationsAdapter extends ArrayAdapter<Reservation> {
 
     SharedPreferences prefs;
+    @Inject
+    private static ImageCache imageCache;
 
     public ReservationsAdapter(Context context, List<Reservation> reservations, SharedPreferences prefs) {
         super(context, 0, reservations);
@@ -42,7 +45,7 @@ public class ReservationsAdapter extends ArrayAdapter<Reservation> {
         text.setText(reservation.nom + " " + reservation.prenom);
 
         ImageView icone = (ImageView) view.findViewById(R.id.img);
-        BreizhLib.getImageCache().getFromCache(reservation.livre.iSBN, reservation.livre.imgUrl, icone);
+        imageCache.getFromCache(reservation.livre.iSBN, reservation.livre.imgUrl, icone);
 
         return view;
     }

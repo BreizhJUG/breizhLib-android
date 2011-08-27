@@ -2,21 +2,21 @@ package org.breizhjug.breizhlib.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
-import org.breizhjug.breizhlib.BreizhLib;
+import com.google.inject.Inject;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.adapter.CommentairesAdapter;
-import org.breizhjug.breizhlib.database.Database;
 import org.breizhjug.breizhlib.database.dao.CommentaireDAO;
 import org.breizhjug.breizhlib.model.Commentaire;
 import org.breizhjug.breizhlib.model.Livre;
+import org.breizhjug.breizhlib.remote.OuvrageService;
+import org.breizhjug.breizhlib.utils.images.ImageCache;
 import roboguice.inject.InjectView;
 
 import java.util.ArrayList;
@@ -24,9 +24,7 @@ import java.util.ArrayList;
 
 public class LivreActivity extends AbstractNavigationActivity<Livre> {
 
-    protected static Database db = BreizhLib.getDataBaseHelper();
     private static final String TAG = "BreizhLib.LivreActivity";
-    private SharedPreferences prefs;
 
     @InjectView(R.id.titre)
     TextView titreView;
@@ -41,6 +39,13 @@ public class LivreActivity extends AbstractNavigationActivity<Livre> {
     @InjectView(R.id.items)
     ListView commentaireItems;
 
+    @Inject
+    private OuvrageService service;
+    @Inject
+    private ImageCache imageCache;
+    @Inject
+    private CommentaireDAO commentaireDAO;
+
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,12 +59,10 @@ public class LivreActivity extends AbstractNavigationActivity<Livre> {
     }
 
     private void initView() {
-        prefs = BreizhLib.getSharedPreferences(getApplicationContext());
-
         titreView.setText(item.titre);
         editeurView.setText(item.editeur);
 
-        BreizhLib.getImageCache().getFromCache(item.iSBN, item.imgUrl, icone);
+        imageCache.getFromCache(item.iSBN, item.imgUrl, icone);
 
         initNavigation();
 
@@ -79,7 +82,7 @@ public class LivreActivity extends AbstractNavigationActivity<Livre> {
 
     private void initAvis(final Livre livre) {
         if (!livre.add && prefs.getString(BreizhLibConstantes.ACCOUNT_NAME, null) != null) {
-            if (BreizhLib.getSharedPreferences(getApplicationContext()).getString(BreizhLibConstantes.USER, null) != null) {
+            if (prefs.getString(BreizhLibConstantes.USER, null) != null) {
                 avis.setOnClickListener(new Button.OnClickListener() {
 
                     public void onClick(View view) {
@@ -104,7 +107,7 @@ public class LivreActivity extends AbstractNavigationActivity<Livre> {
     }
 
     private void initCommentaires(Livre livre) {
-        final ArrayList<Commentaire> commentaires = CommentaireDAO.findByIsbn(livre.iSBN);
+        final ArrayList<Commentaire> commentaires = commentaireDAO.findByIsbn(livre.iSBN);
 
         commentaireItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
@@ -128,9 +131,9 @@ public class LivreActivity extends AbstractNavigationActivity<Livre> {
             button.setText(getString(R.string.reserveBtn));
         } else if (etat.equals("DISP0NIBLE")) {
             button.setText(getString(R.string.reserverBtn));
-            if (BreizhLib.getSharedPreferences(getApplicationContext()).getString(BreizhLibConstantes.ACCOUNT_NAME, null) != null) {
+            if (prefs.getString(BreizhLibConstantes.ACCOUNT_NAME, null) != null) {
                 button.setEnabled(true);
-                if (BreizhLib.getSharedPreferences(getApplicationContext()).getString(BreizhLibConstantes.USER, null) != null) {
+                if (prefs.getString(BreizhLibConstantes.USER, null) != null) {
                     button.setOnClickListener(new Button.OnClickListener() {
 
                         public void onClick(View view) {
@@ -156,7 +159,7 @@ public class LivreActivity extends AbstractNavigationActivity<Livre> {
     }
 
     private void initAjout(Button button, final String isbn) {
-        if (BreizhLib.getSharedPreferences(getApplicationContext()).getBoolean(BreizhLibConstantes.USER_ADMIN, false)) {
+        if (prefs.getBoolean(BreizhLibConstantes.USER_ADMIN, false)) {
             button.setText(getString(R.string.ajouterBtn));
             button.setOnClickListener(new Button.OnClickListener() {
 
@@ -165,9 +168,8 @@ public class LivreActivity extends AbstractNavigationActivity<Livre> {
 
                         @Override
                         protected Livre doInBackground(Void... params) {
-                            SharedPreferences prefs = BreizhLib.getSharedPreferences(LivreActivity.this.getApplicationContext());
                             String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
-                            Livre livre = BreizhLib.getOuvrageService().add(authCookie, isbn);
+                            Livre livre = service.add(authCookie, isbn);
                             return livre;
                         }
 

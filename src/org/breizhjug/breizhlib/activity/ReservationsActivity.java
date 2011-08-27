@@ -1,17 +1,18 @@
 package org.breizhjug.breizhlib.activity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import org.breizhjug.breizhlib.BreizhLib;
+import com.google.inject.Inject;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.adapter.ReservationsAdapter;
 import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.model.Reservation;
 import org.breizhjug.breizhlib.remote.AsyncRemoteTask;
+import org.breizhjug.breizhlib.remote.ReservationService;
+import org.breizhjug.breizhlib.utils.images.ImageCache;
 import roboguice.inject.InjectView;
 
 import java.util.ArrayList;
@@ -21,6 +22,12 @@ public class ReservationsActivity extends AbstractActivity {
 
     @InjectView(R.id.items)
     ListView reservationsListView;
+
+    @Inject
+    ReservationService service;
+    @Inject
+    private ImageCache imageCache;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,9 +41,8 @@ public class ReservationsActivity extends AbstractActivity {
     }
 
     public void initView() {
-        final SharedPreferences prefs = BreizhLib.getSharedPreferences(getApplicationContext());
 
-        final AsyncTask<Void, Void, Boolean> initTask = new AsyncRemoteTask<Reservation>(this, BreizhLib.getReservationService(), reservationsListView, prefs) {
+        final AsyncTask<Void, Void, Boolean> initTask = new AsyncRemoteTask<Reservation>(this, service, reservationsListView, prefs) {
 
             @Override
             public ArrayAdapter<Reservation> getAdapter() {

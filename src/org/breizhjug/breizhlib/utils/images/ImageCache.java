@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.ImageView;
+import com.google.inject.Inject;
+import org.breizhjug.breizhlib.guice.AppPath;
 import org.breizhjug.breizhlib.utils.Cache;
 
 import java.io.File;
@@ -20,7 +22,8 @@ public class ImageCache implements Cache {
 
     private String SD_PATH = Environment.getExternalStorageDirectory().toString();
 
-    public ImageCache(String appfolder) {
+    @Inject
+    public ImageCache(@AppPath String appfolder) {
         SD_PATH += "/" + appfolder + "/";
     }
 
@@ -71,7 +74,7 @@ public class ImageCache implements Cache {
     }
 
     public void download(String url, ImageView imageView) {
-          imageDownloader.download(url,imageView);
+        imageDownloader.download(url, imageView);
     }
 
     private void saveImage(Bitmap bitmap, String isbn) throws FileNotFoundException {

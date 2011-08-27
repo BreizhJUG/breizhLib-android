@@ -2,6 +2,7 @@ package org.breizhjug.breizhlib.remote;
 
 
 import android.util.Log;
+import com.google.inject.Inject;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -35,18 +36,16 @@ public abstract class Service<T extends Model> implements Cache {
     private static HttpClient httpclient = getHttpClient();
     protected List<T> cache = null;
 
-    protected static JsonConverter converter = new JsonConverter();
-    protected static Database db;
+    @Inject
+    protected JsonConverter converter;
+    @Inject
+    protected Database db;
 
     public abstract List<T> load(String authCookie, String urlString);
 
     public abstract String url();
 
     public boolean forceCall = false;
-
-    protected Service(Database db) {
-        this.db = db;
-    }
 
     public List<T> load(String authCookie) {
 

@@ -1,22 +1,28 @@
 package org.breizhjug.breizhlib.activity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import org.breizhjug.breizhlib.BreizhLib;
+import com.google.inject.Inject;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.adapter.CommentairesAdapter;
 import org.breizhjug.breizhlib.model.Commentaire;
 import org.breizhjug.breizhlib.remote.AsyncRemoteTask;
+import org.breizhjug.breizhlib.remote.CommentaireService;
+import org.breizhjug.breizhlib.utils.images.ImageCache;
 import roboguice.inject.InjectView;
 
 public class CommentairesActivity extends AbstractActivity {
 
     @InjectView(R.id.items)
     ListView commentairesListView;
+
+    @Inject
+    CommentaireService service;
+    @Inject
+    ImageCache imageCache;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,8 +34,7 @@ public class CommentairesActivity extends AbstractActivity {
     }
 
     public void initView() {
-        SharedPreferences prefs = BreizhLib.getSharedPreferences(getApplicationContext());
-        final AsyncTask<Void, Void, Boolean> initTask = new AsyncRemoteTask<Commentaire>(this, BreizhLib.getCommentaireService(), commentairesListView, prefs) {
+        final AsyncTask<Void, Void, Boolean> initTask = new AsyncRemoteTask<Commentaire>(this, service, commentairesListView, prefs) {
 
             @Override
             public ArrayAdapter<Commentaire> getAdapter() {

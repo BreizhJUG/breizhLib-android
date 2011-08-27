@@ -4,6 +4,8 @@ package org.breizhjug.breizhlib.utils;
 import android.app.Application;
 import android.os.Handler;
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
+import com.google.inject.Inject;
+import org.breizhjug.breizhlib.guice.UaAccount;
 import org.breizhjug.breizhlib.utils.version.Version;
 
 public class Tracker {
@@ -16,8 +18,9 @@ public class Tracker {
 
     private Application application;
 
-    public Tracker( String uaAccount, Application application) {
-        this(GoogleAnalyticsTracker.getInstance(),uaAccount,application);
+    @Inject
+    public Tracker(@UaAccount String uaAccount, Application application) {
+        this(GoogleAnalyticsTracker.getInstance(), uaAccount, application);
     }
 
     public Tracker(GoogleAnalyticsTracker traker, String uaAccount, Application application) {
@@ -29,7 +32,7 @@ public class Tracker {
 
     private void initData() {
         traker.start(uaAccount, application);
-        traker.setCustomVar(1, "app_version", ""+ Version.getVersionCourante(application), 1);
+        traker.setCustomVar(1, "app_version", "" + Version.getVersionCourante(application), 1);
     }
 
 

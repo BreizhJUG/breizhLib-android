@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import org.breizhjug.breizhlib.BreizhLib;
+import com.google.inject.Inject;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 
 import java.util.Timer;
@@ -33,6 +33,12 @@ public class SyncManager implements SharedPreferences.OnSharedPreferenceChangeLi
     TimerTask syncCommentaires = new CommentairesTask();
 
     SharedPreferences prefs;
+
+    @Inject
+    private OuvrageService ouvrageService;
+    @Inject
+    private CommentaireService commentaireService;
+
 
     public void init(Context context) {
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -68,8 +74,8 @@ public class SyncManager implements SharedPreferences.OnSharedPreferenceChangeLi
         @Override
         public void run() {
             Log.d(TAG, "run");
-            BreizhLib.getOuvrageService().forceCall = true;
-            BreizhLib.getOuvrageService().load(prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null));
+            ouvrageService.forceCall = true;
+            ouvrageService.load(prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null));
         }
     }
 
@@ -77,8 +83,8 @@ public class SyncManager implements SharedPreferences.OnSharedPreferenceChangeLi
         @Override
         public void run() {
             Log.d(TAG, "run");
-            BreizhLib.getCommentaireService().forceCall = true;
-            BreizhLib.getCommentaireService().load(prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null));
+            commentaireService.forceCall = true;
+            commentaireService.load(prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null));
         }
     }
 
