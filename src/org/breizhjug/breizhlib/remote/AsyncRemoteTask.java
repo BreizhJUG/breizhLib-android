@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.model.Model;
@@ -56,19 +57,23 @@ public abstract class AsyncRemoteTask<T extends Model> extends AsyncTask<Void, V
     @Override
     protected void onPostExecute(Boolean result) {
         waitDialog.dismiss();
-        ArrayAdapter<T> mSchedule = getAdapter();
-        listView.setAdapter(mSchedule);
-        if(items.isEmpty()){
+        if(items != null && items.isEmpty()){
             displayEmptyMessage();
+        }else {
+            ArrayAdapter<T> mSchedule = getAdapter();
+            listView.setAdapter(mSchedule);
+
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+                    onClick(position);
+                }
+            });
         }
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-                onClick(position);
-            }
-        });
     }
 
-    public void displayEmptyMessage(){}
+    public void displayEmptyMessage(){
+        Toast.makeText(context, "Aucune information ", Toast.LENGTH_SHORT).show();
+    }
 
     @Override
     protected Boolean doInBackground(Void... objects) {

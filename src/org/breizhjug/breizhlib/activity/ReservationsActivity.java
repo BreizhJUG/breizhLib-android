@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import com.google.inject.Inject;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.adapter.ReservationsAdapter;
@@ -57,7 +58,13 @@ public class ReservationsActivity extends AbstractActivity {
                 intent.putExtra("item", reservation.livre);
                 ReservationsActivity.this.startActivity(intent);
             }
+
+            public void displayEmptyMessage(){
+                Toast.makeText(getApplicationContext(),"Aucune réservation ",Toast.LENGTH_SHORT).show();
+            }
         };
+
+
 
 
         initTask.execute((Void) null);
