@@ -26,11 +26,35 @@ import org.breizhjug.breizhlib.model.Utilisateur;
 import org.breizhjug.breizhlib.remote.UtilisateurService;
 import org.breizhjug.breizhlib.utils.images.Gravatar;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
+import roboguice.inject.InjectView;
 
 import java.util.ArrayList;
 
 
 public class ProfilActivity extends AbstractActivity {
+
+    @InjectView(R.id.nom)
+    TextView nom;
+    @InjectView(R.id.prenom)
+    TextView prenom;
+    @InjectView(R.id.email)
+    TextView emailV;
+    @InjectView(R.id.username)
+    TextView username;
+    @InjectView(R.id.commentaires)
+    TextView commentaires;
+    @InjectView(R.id.emprunts)
+    TextView emprunts;
+    @InjectView(R.id.reservations)
+    TextView reservations;
+    @InjectView(R.id.avatar)
+    ImageView icon;
+    @InjectView(R.id.commentairesbtn)
+    Button commentairesBtn;
+    @InjectView(R.id.resabtn)
+    Button resaBtn;
+    @InjectView(R.id.empruntsbtn)
+    Button empruntsBtn;
 
     @Inject
     SharedPreferences prefs;
@@ -91,33 +115,16 @@ public class ProfilActivity extends AbstractActivity {
         editor.putString(BreizhLibConstantes.USER_PRENOM, user.prenom);
         editor.commit();
 
-
-        TextView nom = (TextView) findViewById(R.id.nom);
         nom.setText(user.nom);
-
-        TextView prenom = (TextView) findViewById(R.id.prenom);
         prenom.setText(user.prenom);
-
-        TextView emailV = (TextView) findViewById(R.id.email);
         emailV.setText(user.email);
-
-        TextView username = (TextView) findViewById(R.id.username);
         username.setText(user.username);
-
-        TextView commentaires = (TextView) findViewById(R.id.commentaires);
         commentaires.setText(user.commentairesLabel);
-
-        TextView emprunts = (TextView) findViewById(R.id.emprunts);
         emprunts.setText(user.ouvragesEncoursLabel);
-
-        TextView reservations = (TextView) findViewById(R.id.reservations);
         reservations.setText(user.reservationsLabel);
-
-        ImageView icon = (ImageView) findViewById(R.id.avatar);
         imageCache.download(Gravatar.getImage(user.email), icon);
 
         final ArrayList<Commentaire> items = commentaireDAO.findByAutor(user.nom + " " + user.prenom);
-        Button commentairesBtn = (Button) findViewById(R.id.commentairesbtn);
         commentairesBtn.setVisibility(View.INVISIBLE);
         if (items != null && items.size() > 0) {
             commentairesBtn.setVisibility(View.VISIBLE);
@@ -137,7 +144,6 @@ public class ProfilActivity extends AbstractActivity {
         }
 
         final ArrayList<Reservation> resaItems = reservationDAO.findByNom(user.nom, user.prenom);
-        Button resaBtn = (Button) findViewById(R.id.resabtn);
         resaBtn.setVisibility(View.INVISIBLE);
         if (resaItems != null && resaItems.size() > 0) {
             resaBtn.setVisibility(View.VISIBLE);
@@ -154,10 +160,7 @@ public class ProfilActivity extends AbstractActivity {
                 }
             });
         }
-
-        Button empruntsBtn = (Button) findViewById(R.id.empruntsbtn);
-
-        if (prefs.getBoolean("beta", false)) {
+        if (prefs.getBoolean(BreizhLibConstantes.BETA, false)) {
             empruntsBtn.setOnClickListener(new Button.OnClickListener() {
 
                 public void onClick(View view) {

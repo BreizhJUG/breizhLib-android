@@ -1,9 +1,6 @@
 package org.breizhjug.breizhlib.remote;
 
-import org.breizhjug.breizhlib.model.Commentaire;
-import org.breizhjug.breizhlib.model.Livre;
-import org.breizhjug.breizhlib.model.Reservation;
-import org.breizhjug.breizhlib.model.Utilisateur;
+import org.breizhjug.breizhlib.model.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -83,5 +80,14 @@ public class JsonConverter {
         }
         return result;
 
+    }
+
+    public Emprunt convertEmprunt(JSONObject item) throws JSONException {
+        Emprunt emprunt = null;
+        if (item != null) {
+            Livre livre = convertLivre(item.getJSONObject("livre"));
+            emprunt = new Emprunt(item.getString("nom"), item.getString("prenom"), livre);
+        }
+        return emprunt;
     }
 }

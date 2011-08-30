@@ -4,8 +4,8 @@ package org.breizhjug.breizhlib.remote;
 import android.util.Log;
 import com.google.inject.Inject;
 import org.acra.ErrorReporter;
-import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.exception.ResultException;
+import org.breizhjug.breizhlib.guice.ServerUrl;
 import org.breizhjug.breizhlib.model.Livre;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,11 +18,11 @@ public class OuvrageService extends Service<Livre> {
 
     private static final String TAG = "Breizhlib.OuvrageService";
 
-    private static final String URL_BOOKS = BreizhLibConstantes.SERVER_URL + "api/ouvrages";
+    private final String URL_BOOKS = serverUrl + "api/ouvrages";
 
-    private static final String URL_FIND_BOOKS = BreizhLibConstantes.SERVER_URL + "api/find";
+    private final String URL_FIND_BOOKS = serverUrl + "api/find";
 
-    private static final String URL_ADD_BOOK = BreizhLibConstantes.SERVER_URL + "api/add";
+    private final String URL_ADD_BOOK = serverUrl + "api/add";
 
     @Override
     public String url() {
@@ -111,7 +111,7 @@ public class OuvrageService extends Service<Livre> {
     }
 
     @Inject
-    public OuvrageService() {
-        super();
+    public OuvrageService(@ServerUrl String serverUrl) {
+        super(serverUrl);
     }
 }

@@ -6,6 +6,7 @@ import com.google.inject.Inject;
 import org.acra.ErrorReporter;
 import org.breizhjug.breizhlib.database.dao.LivreDAO;
 import org.breizhjug.breizhlib.guice.ServerUrl;
+import org.breizhjug.breizhlib.model.Emprunt;
 import org.breizhjug.breizhlib.model.Reservation;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,11 +15,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReservationService extends Service<Reservation> {
-    private static final String TAG = "Breizhlib.ReservationService";
+public class EmpruntService extends Service<Emprunt> {
+    private static final String TAG = "Breizhlib.EmpruntService";
 
-    private final String URL_BOOKS = serverUrl + "api/reservations";
-    private final String URL_RESA = serverUrl + "api/book/reserver";
+    private final String URL_BOOKS = serverUrl + "api/emprunts";
+
     @Inject
     private LivreDAO livreDAO;
 
@@ -29,35 +30,21 @@ public class ReservationService extends Service<Reservation> {
     }
 
     @Override
-    protected boolean isInDB(Reservation entity) {
-        Reservation searchEntity = new Reservation();
+    protected boolean isInDB(Emprunt entity) {
+        Emprunt searchEntity = new Emprunt();
         searchEntity.isbn = entity.isbn;
         return db.selectSingle(searchEntity) != null;
     }
 
     @Override
-    protected Class<Reservation> getEntityClass() {
-        return Reservation.class;
+    protected Class<Emprunt> getEntityClass() {
+        return Emprunt.class;
     }
 
-    public Result reserver(String authCookie, String isbn, String nom, String prenom, String email) {
-        Param param = new Param("id", isbn);
-        Param paramNom = new Param("nom", nom);
-        Param paramPrenom = new Param("prenom", prenom);
-        Param paramEmail = new Param("email", email);
-        String result = queryPostRESTurl(authCookie, URL_RESA, param, paramNom, paramPrenom, paramEmail);
-        Log.i(TAG, "reserver :  " + result);
 
-        try {
-            JSONObject item = new JSONObject(result);
-            return converter.convertResult(item);
-        } catch (JSONException e) {
-            return new Result("");
-        }
-    }
 
     @Override
-    public List<Reservation> load(String authCookie) {
+    public List<Emprunt> load(String authCookie) {
 
         if (cache != null && livreDAO.findByReservation().size() != cache.size()) {
             db.deleteAll(Reservation.class);
@@ -66,17 +53,17 @@ public class ReservationService extends Service<Reservation> {
         return super.load(authCookie);
     }
 
-    public List<Reservation> load(String authCookie, String urlString) {
+    public List<Emprunt> load(String authCookie, String urlString) {
         Log.d(TAG, urlString);
         String result = queryRESTurl(authCookie, urlString);
-        ArrayList<Reservation> BOOKS = new ArrayList<Reservation>();
+        ArrayList<Emprunt> BOOKS = new ArrayList<Emprunt>();
         if (result != null) {
             try {
                 JSONArray booksArray = new JSONArray(result);
-                Reservation livre = null;
+                Emprunt livre = null;
                 for (int a = 0; a < booksArray.length(); a++) {
                     JSONObject item = booksArray.getJSONObject(a);
-                    livre = converter.convertReservation(item);
+                    livre = converter.convertEmprunt(item);
                     BOOKS.add(livre);
                 }
                 return BOOKS;
@@ -89,7 +76,7 @@ public class ReservationService extends Service<Reservation> {
     }
 
     @Inject
-    public ReservationService(@ServerUrl String serverUrl) {
+    public EmpruntService(@ServerUrl String serverUrl) {
         super(serverUrl);
         forceCall = true;
     }

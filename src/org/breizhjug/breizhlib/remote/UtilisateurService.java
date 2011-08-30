@@ -3,7 +3,7 @@ package org.breizhjug.breizhlib.remote;
 
 import android.util.Log;
 import com.google.inject.Inject;
-import org.breizhjug.breizhlib.BreizhLibConstantes;
+import org.breizhjug.breizhlib.guice.ServerUrl;
 import org.breizhjug.breizhlib.model.Utilisateur;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,7 +13,7 @@ import java.util.List;
 public class UtilisateurService extends Service<Utilisateur> {
 
     private static final String TAG = "Breizhlib.UtilisateurService";
-    private static final String URL_USER = BreizhLibConstantes.SERVER_URL + "api/profil";
+    private final String URL_USER = serverUrl + "api/profil";
 
     @Override
     public String url() {
@@ -57,8 +57,8 @@ public class UtilisateurService extends Service<Utilisateur> {
 
 
     @Inject
-    public UtilisateurService() {
-        super();
+    public UtilisateurService(@ServerUrl String serverUrl) {
+        super(serverUrl);
     }
 
 }

@@ -19,6 +19,8 @@
     <string name="scanner">Scanner</string>
     <string name="compte">Compte</string>
     <string name="search">Recherche</string>
+    <string name="emprunts">Emprunts</string>
+
 
     <!-- livre -->
     <string name="avisBtn">Votre Avis</string>

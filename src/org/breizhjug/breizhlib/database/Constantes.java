@@ -1,6 +1,7 @@
 package org.breizhjug.breizhlib.database;
 
 import org.breizhjug.breizhlib.model.Commentaire;
+import org.breizhjug.breizhlib.model.Emprunt;
 import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.model.Reservation;
 
@@ -17,6 +18,7 @@ public class Constantes {
         LIST_CLASSES_DATABASE.add(Livre.class);
         LIST_CLASSES_DATABASE.add(Reservation.class);
         LIST_CLASSES_DATABASE.add(Commentaire.class);
+        LIST_CLASSES_DATABASE.add(Emprunt.class);
     }
 
     public static final Collection<Class<?>> CLASSES_DB_TO_DELETE_ON_UPDATE = new ArrayList<Class<?>>(1);
@@ -25,6 +27,7 @@ public class Constantes {
         CLASSES_DB_TO_DELETE_ON_UPDATE.add(Livre.class);
         CLASSES_DB_TO_DELETE_ON_UPDATE.add(Reservation.class);
         CLASSES_DB_TO_DELETE_ON_UPDATE.add(Commentaire.class);
+        CLASSES_DB_TO_DELETE_ON_UPDATE.add(Emprunt.class);
     }
 
     private Constantes() {

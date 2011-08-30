@@ -3,8 +3,8 @@ package org.breizhjug.breizhlib.remote;
 import android.util.Log;
 import com.google.inject.Inject;
 import org.acra.ErrorReporter;
-import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.exception.ResultException;
+import org.breizhjug.breizhlib.guice.ServerUrl;
 import org.breizhjug.breizhlib.model.Commentaire;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,9 +18,9 @@ public class CommentaireService extends Service<Commentaire> {
 
     private static final String TAG = "Breizhlib.CommentaireService";
 
-    private static final String URL_COMMENTS = BreizhLibConstantes.SERVER_URL + "api/commentaires";
+    private final String URL_COMMENTS = serverUrl + "api/commentaires";
 
-    private static final String URL_COMMENT = BreizhLibConstantes.SERVER_URL + "api/comment";
+    private final String URL_COMMENT = serverUrl + "api/comment";
 
     public Commentaire comment(String authCookie, String bookId, String nom, String content, int note) throws ResultException {
         Log.i(TAG, "b: " + bookId + " " + nom + " " + content + " " + note);
@@ -73,6 +73,7 @@ public class CommentaireService extends Service<Commentaire> {
 
     @Override
     public String url() {
+        Log.d(TAG,URL_COMMENTS);
         return URL_COMMENTS;
     }
 
@@ -90,7 +91,7 @@ public class CommentaireService extends Service<Commentaire> {
     }
 
     @Inject
-    public CommentaireService() {
-        super();
+    public CommentaireService(@ServerUrl String serverUrl) {
+        super(serverUrl);
     }
 }

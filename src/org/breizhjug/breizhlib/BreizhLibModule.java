@@ -1,14 +1,12 @@
 package org.breizhjug.breizhlib;
 
-import org.breizhjug.breizhlib.adapter.AccountsAdapter;
-import org.breizhjug.breizhlib.adapter.CommentairesAdapter;
-import org.breizhjug.breizhlib.adapter.OuvrageAdapter;
-import org.breizhjug.breizhlib.adapter.ReservationsAdapter;
+import org.breizhjug.breizhlib.adapter.*;
 import org.breizhjug.breizhlib.database.Database;
 import org.breizhjug.breizhlib.database.dao.CommentaireDAO;
 import org.breizhjug.breizhlib.database.dao.LivreDAO;
 import org.breizhjug.breizhlib.database.dao.ReservationDAO;
 import org.breizhjug.breizhlib.guice.AppPath;
+import org.breizhjug.breizhlib.guice.ServerUrl;
 import org.breizhjug.breizhlib.guice.UaAccount;
 import org.breizhjug.breizhlib.remote.*;
 import org.breizhjug.breizhlib.utils.CacheManager;
@@ -34,11 +32,14 @@ public class BreizhLibModule extends AbstractAndroidModule {
 
         bindConstant().annotatedWith(AppPath.class).to("breizhlib");
         bindConstant().annotatedWith(UaAccount.class).to(BreizhLibConstantes.UA_ACCOUNT);
+        bindConstant().annotatedWith(ServerUrl.class).to(BreizhLibConstantes.SERVER_URL);
+
 
         bind(CommentaireService.class);
         bind(OuvrageService.class);
         bind(ReservationService.class);
         bind(UtilisateurService.class);
+        bind(EmpruntService.class);
         bind(JsonConverter.class);
         bind(ImageCache.class);
         bind(CacheManager.class);
@@ -56,6 +57,7 @@ public class BreizhLibModule extends AbstractAndroidModule {
         requestStaticInjection(CommentairesAdapter.class);
         requestStaticInjection(OuvrageAdapter.class);
         requestStaticInjection(ReservationsAdapter.class);
+        requestStaticInjection(EmpruntsAdapter.class);
 
 
     }

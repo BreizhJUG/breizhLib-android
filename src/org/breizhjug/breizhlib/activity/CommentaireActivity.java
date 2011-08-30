@@ -23,6 +23,7 @@ public class CommentaireActivity extends AbstractNavigationActivity<Commentaire>
     TextView description;
     @InjectView(R.id.img)
     ImageView icone;
+
     @Inject
     private ImageCache imageCache;
 

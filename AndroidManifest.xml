@@ -31,6 +31,7 @@
         <activity android:name="org.breizhjug.breizhlib.activity.compte.CompteList" android:label="Comptes"/>
         <activity android:name="org.breizhjug.breizhlib.activity.compte.AppInfo" android:label="Comptes"/>
         <activity android:name="org.breizhjug.breizhlib.activity.ReservationActivity" android:label="Reserver"/>
+        <activity android:name="org.breizhjug.breizhlib.activity.EmpruntsActivity" android:label="Emprunts"/>
         <activity android:name="org.breizhjug.breizhlib.activity.CreditsActivity" android:label="Crédits"/>
         <activity android:name="org.breizhjug.breizhlib.activity.ConfigurationActivity" android:label="Paramètres"/>
         <activity android:name="org.breizhjug.breizhlib.activity.AvisActivity" android:label="Avis"/>

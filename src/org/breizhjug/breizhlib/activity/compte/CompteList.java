@@ -12,12 +12,14 @@ import org.breizhjug.breizhlib.activity.AbstractActivity;
 import org.breizhjug.breizhlib.adapter.AccountsAdapter;
 import org.breizhjug.breizhlib.utils.GoogleAuthentification;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
+import roboguice.inject.InjectView;
 
 import java.util.List;
 
 
 public class CompteList extends AbstractActivity {
 
+    @InjectView(R.id.items)
     private ListView listView;
     private String authcookie;
     @Inject
@@ -36,8 +38,6 @@ public class CompteList extends AbstractActivity {
         }
 
         if (authcookie == null) {
-            listView = (ListView) findViewById(R.id.items);
-
             List<String> accounts = gAuth.getGoogleAccounts(this);
 
             listView.setAdapter(new AccountsAdapter(this.getBaseContext(), accounts));

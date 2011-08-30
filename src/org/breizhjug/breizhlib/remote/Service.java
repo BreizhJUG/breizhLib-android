@@ -41,11 +41,19 @@ public abstract class Service<T extends Model> implements Cache {
     @Inject
     protected Database db;
 
+    protected String serverUrl;
+
+    public Service(String serverUrl) {
+        this.serverUrl = serverUrl;
+    }
+
     public abstract List<T> load(String authCookie, String urlString);
 
     public abstract String url();
 
     public boolean forceCall = false;
+
+
 
     public List<T> load(String authCookie) {
 
