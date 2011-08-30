@@ -54,7 +54,6 @@ public abstract class Service<T extends Model> implements Cache {
     public boolean forceCall = false;
 
 
-
     public List<T> load(String authCookie) {
 
         if (forceCall || (cache == null || cache.isEmpty())) {

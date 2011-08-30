@@ -94,7 +94,7 @@ public class OuvragesActivity extends AbstractActivity implements SharedPreferen
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
         if (s.equals(BreizhLibConstantes.GRID)) {
-            Log.d(TAG,"grid "+s);
+            Log.d(TAG, "grid " + s);
             modeGrid = sharedPreferences.getBoolean(BreizhLibConstantes.GRID, false);
         }
     }

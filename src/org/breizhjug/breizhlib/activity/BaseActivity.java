@@ -122,7 +122,7 @@ public class BaseActivity extends RoboActivity {
     }
 
     private void onLogout() {
-        SharedPreferences.Editor editor =prefs.edit();
+        SharedPreferences.Editor editor = prefs.edit();
         editor.putString(BreizhLibConstantes.AUTH_COOKIE, null);
         editor.putString(BreizhLibConstantes.ACCOUNT_NAME, null);
         editor.putString(BreizhLibConstantes.USER, null);

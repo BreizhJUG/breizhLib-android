@@ -23,9 +23,17 @@ public class Database extends DataBaseHelper {
 
     private Map<Integer, UpgradeDatabase> mapUpgrades;
 
+    DBContext context;
+
     @Inject
     public Database(Context context) {
-        super(new DBContext(context), Constantes.LIST_CLASSES_DATABASE, DATABASE_NAME, DATABASE_VERSION);
+        this(new DBContext(context));
+    }
+
+    public Database(DBContext context) {
+        super(context, Constantes.LIST_CLASSES_DATABASE, DATABASE_NAME, DATABASE_VERSION);
+        this.context = context;
+        this.context.clean();
     }
 
 

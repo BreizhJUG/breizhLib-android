@@ -42,7 +42,6 @@ public class EmpruntService extends Service<Emprunt> {
     }
 
 
-
     @Override
     public List<Emprunt> load(String authCookie) {
 

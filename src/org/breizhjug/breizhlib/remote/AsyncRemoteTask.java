@@ -58,13 +58,17 @@ public abstract class AsyncRemoteTask<T extends Model> extends AsyncTask<Void, V
         waitDialog.dismiss();
         ArrayAdapter<T> mSchedule = getAdapter();
         listView.setAdapter(mSchedule);
-
+        if(items.isEmpty()){
+            displayEmptyMessage();
+        }
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                 onClick(position);
             }
         });
     }
+
+    public void displayEmptyMessage(){}
 
     @Override
     protected Boolean doInBackground(Void... objects) {

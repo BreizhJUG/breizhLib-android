@@ -9,7 +9,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.CONSTRUCTOR, ElementType.PARAMETER,ElementType.FIELD})
+@Target({ElementType.CONSTRUCTOR, ElementType.PARAMETER, ElementType.FIELD})
 @BindingAnnotation
 public @interface ServerUrl {
 }

@@ -73,7 +73,7 @@ public class CommentaireService extends Service<Commentaire> {
 
     @Override
     public String url() {
-        Log.d(TAG,URL_COMMENTS);
+        Log.d(TAG, URL_COMMENTS);
         return URL_COMMENTS;
     }
 

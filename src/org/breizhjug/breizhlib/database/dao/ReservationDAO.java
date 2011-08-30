@@ -17,7 +17,6 @@ public class ReservationDAO {
     protected Database db;
 
 
-
     public ArrayList<Reservation> findByNom(String nom, String prenom) {
         List<String> args = new ArrayList<String>();
         args.add(nom);
