@@ -20,7 +20,7 @@ public abstract class AbstractNavigationActivity<T extends Serializable> extends
     LinearLayout nav;
     @InjectView(R.id.star1)
     ImageView star1;
-    @InjectView(R.id.star3)
+    @InjectView(R.id.star2)
     ImageView star2;
     @InjectView(R.id.star3)
     ImageView star3;
