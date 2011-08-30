@@ -1,27 +1,22 @@
 package org.breizhjug.breizhlib.database.dao;
 
-import android.database.Cursor;
-import com.google.inject.Inject;
-import org.breizhjug.breizhlib.database.Database;
 import org.breizhjug.breizhlib.model.Reservation;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ReservationDAO {
+public class ReservationDAO extends AbstractDao{
 
     private static final String TAG = "BreizhLib.ReservationDAODAO";
 
-    @Inject
-    protected Database db;
-
 
     public ArrayList<Reservation> findByNom(String nom, String prenom) {
+        closeCursor();
         List<String> args = new ArrayList<String>();
         args.add(nom);
         args.add(prenom);
-        Cursor cursor = db.executeSelectQuery("SELECT Reservation.* FROM Reservation  WHERE Reservation.nom = :nom AND Reservation.prenom = :prenom", args);
+        cursor = db.executeSelectQuery("SELECT Reservation.* FROM Reservation  WHERE Reservation.nom = :nom AND Reservation.prenom = :prenom", args);
         try {
             final ArrayList<Reservation> items = new ArrayList<Reservation>();
             if (cursor != null) {
@@ -33,13 +28,11 @@ public class ReservationDAO {
                         items.add(resa);
                     } while (cursor.moveToNext());
                 }
-                cursor.close();
+                closeCursor();
             }
             return items;
         } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
+            closeCursor();
         }
     }
 }

@@ -55,20 +55,24 @@ public abstract class Service<T extends Model> implements Cache {
 
 
     public List<T> load(String authCookie) {
-
-        if (forceCall || (cache == null || cache.isEmpty())) {
-            List<T> entities = db.selectAll(getEntityClass());
-            if (forceCall || (entities == null || entities.isEmpty())) {
-                forceCall = false;
-                Log.d(TAG, "load");
-                cache = load(authCookie, url());
-                updateDB(cache);
-            } else {
-                cache = entities;
-                loadDB(cache);
+        try {
+            if (forceCall || (cache == null || cache.isEmpty())) {
+                List<T> entities = db.selectAll(getEntityClass());
+                if (forceCall || (entities == null || entities.isEmpty())) {
+                    forceCall = false;
+                    Log.d(TAG, "load");
+                    cache = load(authCookie, url());
+                    updateDB(cache);
+                } else {
+                    cache = entities;
+                    loadDB(cache);
+                }
             }
+            return cache != null ? new ArrayList<T>(cache) : cache;
+        } finally {
+
+
         }
-        return cache != null ? new ArrayList<T>(cache) : cache;
     }
 
     private void loadDB(List<T> cache) {

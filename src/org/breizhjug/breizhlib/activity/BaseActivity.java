@@ -8,6 +8,7 @@ import com.google.inject.Inject;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.compte.CompteList;
+import org.breizhjug.breizhlib.database.Database;
 import org.breizhjug.breizhlib.utils.IntentSupport;
 import org.breizhjug.breizhlib.utils.Tracker;
 import roboguice.activity.RoboActivity;
@@ -22,6 +23,8 @@ public class BaseActivity extends RoboActivity {
     protected SharedPreferences prefs;
     @Inject
     private Tracker tracker;
+    @Inject
+    protected Database db;
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -141,6 +144,7 @@ public class BaseActivity extends RoboActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        db.close();
         unregisterReceiver(receiver);
     }
 

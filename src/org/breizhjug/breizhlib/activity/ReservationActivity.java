@@ -1,5 +1,7 @@
 package org.breizhjug.breizhlib.activity;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -58,6 +60,28 @@ public class ReservationActivity extends AbstractActivity {
 
     private void onSend(final String isbn, final String prenom, final String nom, final String email) {
         final AsyncTask<Void, Void, Result> initTask = new AsyncTask<Void, Void, Result>() {
+            private ProgressDialog waitDialog;
+
+            @Override
+            protected void onPreExecute() {
+                if (waitDialog == null) {
+                    waitDialog = new ProgressDialog(ReservationActivity.this);
+                    waitDialog.setIndeterminate(true);
+                }
+
+                waitDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+
+                    public void onCancel(DialogInterface dialog) {
+                        if (this != null) {
+                            //this.cancel(true);
+                        }
+                        ReservationActivity.this.finish();
+                    }
+                });
+                waitDialog.setTitle(ReservationActivity.this.getString(R.string.chargement));
+                waitDialog.setMessage("Envoi des données");
+                waitDialog.show();
+            }
 
             @Override
             protected Result doInBackground(Void... params) {
@@ -68,6 +92,7 @@ public class ReservationActivity extends AbstractActivity {
 
             @Override
             protected void onPostExecute(Result result) {
+                waitDialog.dismiss();
                 if (!result.valid) {
                     showError(result.msg, true);
                 } else {
