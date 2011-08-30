@@ -59,12 +59,10 @@ public class ReservationsActivity extends AbstractActivity {
                 ReservationsActivity.this.startActivity(intent);
             }
 
-            public void displayEmptyMessage(){
-                Toast.makeText(getApplicationContext(),"Aucune réservation ",Toast.LENGTH_SHORT).show();
+            public void displayEmptyMessage() {
+                Toast.makeText(getApplicationContext(), "Aucune réservation ", Toast.LENGTH_SHORT).show();
             }
         };
-
-
 
 
         initTask.execute((Void) null);

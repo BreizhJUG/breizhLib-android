@@ -57,9 +57,9 @@ public abstract class AsyncRemoteTask<T extends Model> extends AsyncTask<Void, V
     @Override
     protected void onPostExecute(Boolean result) {
         waitDialog.dismiss();
-        if(items != null && items.isEmpty()){
+        if (items != null && items.isEmpty()) {
             displayEmptyMessage();
-        }else {
+        } else {
             ArrayAdapter<T> mSchedule = getAdapter();
             listView.setAdapter(mSchedule);
 
@@ -71,7 +71,7 @@ public abstract class AsyncRemoteTask<T extends Model> extends AsyncTask<Void, V
         }
     }
 
-    public void displayEmptyMessage(){
+    public void displayEmptyMessage() {
         Toast.makeText(context, "Aucune information ", Toast.LENGTH_SHORT).show();
     }
 

@@ -22,19 +22,24 @@ public class ReservationDAO {
         args.add(nom);
         args.add(prenom);
         Cursor cursor = db.executeSelectQuery("SELECT Reservation.* FROM Reservation  WHERE Reservation.nom = :nom AND Reservation.prenom = :prenom", args);
-
-        final ArrayList<Reservation> items = new ArrayList<Reservation>();
-        if (cursor != null) {
-            if (cursor.getCount() > 0) {
-                cursor.moveToFirst();
-                do {
-                    Reservation resa = new Reservation(cursor);
-                    resa.onLoad(db);
-                    items.add(resa);
-                } while (cursor.moveToNext());
+        try {
+            final ArrayList<Reservation> items = new ArrayList<Reservation>();
+            if (cursor != null) {
+                if (cursor.getCount() > 0) {
+                    cursor.moveToFirst();
+                    do {
+                        Reservation resa = new Reservation(cursor);
+                        resa.onLoad(db);
+                        items.add(resa);
+                    } while (cursor.moveToNext());
+                }
+                cursor.close();
             }
-            cursor.close();
+            return items;
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
         }
-        return items;
     }
 }

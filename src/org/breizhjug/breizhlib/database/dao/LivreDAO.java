@@ -18,19 +18,24 @@ public class LivreDAO {
     public ArrayList<Livre> findByReservation() {
 
         Cursor cursor = db.executeSelectQuery("SELECT Livre.* FROM Livre  WHERE Livre.etat = 'RESERVE' ", null);
-
-        final ArrayList<Livre> livres = new ArrayList<Livre>();
-        if (cursor != null) {
-            if (cursor.getCount() > 0) {
-                cursor.moveToFirst();
-                do {
-                    Livre livre = new Livre(cursor);
-                    livre.onLoad(db);
-                    livres.add(livre);
-                } while (cursor.moveToNext());
+        try {
+            final ArrayList<Livre> livres = new ArrayList<Livre>();
+            if (cursor != null) {
+                if (cursor.getCount() > 0) {
+                    cursor.moveToFirst();
+                    do {
+                        Livre livre = new Livre(cursor);
+                        livre.onLoad(db);
+                        livres.add(livre);
+                    } while (cursor.moveToNext());
+                }
+                cursor.close();
             }
-            cursor.close();
+            return livres;
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
         }
-        return livres;
     }
 }

@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import com.google.inject.Inject;
+import com.google.inject.internal.Nullable;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.AbstractActivity;
@@ -20,6 +21,7 @@ import java.util.List;
 public class CompteList extends AbstractActivity {
 
     @InjectView(R.id.items)
+    @Nullable
     private ListView listView;
     private String authcookie;
     @Inject
