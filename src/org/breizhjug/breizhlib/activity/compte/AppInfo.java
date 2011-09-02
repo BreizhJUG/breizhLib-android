@@ -17,7 +17,7 @@ public class AppInfo extends AbstractActivity {
 
     private static final String TAG = "BreizhLib.AppInfo";
     @Inject
-    SharedPreferences prefs;
+    private SharedPreferences prefs;
     @Inject
     private GoogleAuthentification gAuth;
 
@@ -51,7 +51,7 @@ public class AppInfo extends AbstractActivity {
                     @Override
                     protected void onPostExecute(String result) {
                         if (result == null) {
-                            showError("Error de connexion", true);
+                            showError(getString(R.string.connexion_error), true);
                         } else {
                             prefs.edit().putString(BreizhLibConstantes.AUTH_COOKIE, result).commit();
                             Intent intent = new Intent(AppInfo.this, ProfilActivity.class);

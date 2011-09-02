@@ -28,7 +28,7 @@ public class OuvragesActivity extends AbstractActivity implements SharedPreferen
     private ImageCache imageCache;
 
     @Inject
-    OuvrageService service;
+    private OuvrageService service;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

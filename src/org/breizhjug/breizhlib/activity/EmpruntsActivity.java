@@ -24,7 +24,7 @@ public class EmpruntsActivity extends AbstractActivity {
     ListView empruntsListView;
 
     @Inject
-    EmpruntService service;
+    private EmpruntService service;
     @Inject
     private ImageCache imageCache;
 

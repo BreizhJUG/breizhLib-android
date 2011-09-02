@@ -58,7 +58,7 @@ public class ReservationService extends Service<Reservation> {
 
     @Override
     public List<Reservation> load(String authCookie) {
-
+        forceCall = true;
         if (cache != null && livreDAO.findByReservation().size() != cache.size()) {
             db.deleteAll(Reservation.class);
             forceCall = true;

@@ -25,7 +25,7 @@ public class ReservationsActivity extends AbstractActivity {
     ListView reservationsListView;
 
     @Inject
-    ReservationService service;
+    private ReservationService service;
     @Inject
     private ImageCache imageCache;
 
@@ -60,7 +60,7 @@ public class ReservationsActivity extends AbstractActivity {
             }
 
             public void displayEmptyMessage() {
-                Toast.makeText(getApplicationContext(), "Aucune réservation ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getText(R.string.no_reservation), Toast.LENGTH_SHORT).show();
             }
         };
 

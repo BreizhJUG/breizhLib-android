@@ -96,7 +96,7 @@ public class LivreActivity extends AbstractNavigationActivity<Livre> {
 
                     public void onClick(View view) {
                         Log.d(TAG, "click avis");
-                        Toast.makeText(LivreActivity.this.getApplicationContext(), "Vous devez être connecté", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LivreActivity.this.getApplicationContext(), getString(R.string.connexion_required), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -176,7 +176,7 @@ public class LivreActivity extends AbstractNavigationActivity<Livre> {
                         @Override
                         protected void onPostExecute(Livre result) {
                             if (result == null) {
-                                showError("Erreur lors de l'ajout", true);
+                                showError(getString(R.string.add_error), true);
                             } else {
                                 Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
                                 Toast.makeText(getApplicationContext(), getString(R.string.ajoutOK), Toast.LENGTH_SHORT).show();

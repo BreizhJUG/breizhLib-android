@@ -81,7 +81,7 @@ public class GoogleAuthentification {
                 return null;
             }
             for (Cookie cookie : client.getCookieStore().getCookies()) {
-                Log.d(TAG, "" + cookie.getName());
+                Log.d(TAG, "" + cookie.getName()+" "+cookie.getValue());
                 if (AUTH_COOKIE_NAME.equals(cookie.getName())) {
                     authCookie = cookie;
                     return AUTH_COOKIE_NAME + "=" + cookie.getValue();

@@ -37,7 +37,7 @@ public class AvisActivity extends AbstractActivity {
     Livre livre;
 
     @Inject
-    CommentaireService service;
+    private CommentaireService service;
 
     @Override
     public void init(Intent intent) {
@@ -122,11 +122,11 @@ public class AvisActivity extends AbstractActivity {
 
     private boolean validate() {
         if (nomEdit == null || nomEdit.length() == 0) {
-            showError("Nom non renseigné", false);
+            showError(getString(R.string.nom_validation_msg), false);
             return false;
         }
         if (avisEdit == null || avisEdit.length() == 0) {
-            showError("Avis non renseigné", false);
+            showError(getString(R.string.avis_validation_msg), false);
             return false;
         }
         return true;

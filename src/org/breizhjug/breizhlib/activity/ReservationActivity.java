@@ -79,7 +79,7 @@ public class ReservationActivity extends AbstractActivity {
                     }
                 });
                 waitDialog.setTitle(ReservationActivity.this.getString(R.string.chargement));
-                waitDialog.setMessage("Envoi des données");
+                waitDialog.setMessage(getString(R.string.send_data));
                 waitDialog.show();
             }
 
@@ -110,15 +110,15 @@ public class ReservationActivity extends AbstractActivity {
 
     private boolean validate() {
         if (email == null || email.length() == 0) {
-            showError("Email non renseigné", false);
+            showError(getString(R.string.email_validation_msg), false);
             return false;
         }
         if (prenom == null || prenom.length() == 0) {
-            showError("Prénom non renseigné", false);
+            showError(getString(R.string.prenom_validation_msg), false);
             return false;
         }
         if (nom == null || nom.length() == 0) {
-            showError("Nom non renseigné", false);
+            showError(getString(R.string.nom_validation_msg), false);
             return false;
         }
         return true;

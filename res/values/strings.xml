@@ -57,6 +57,12 @@
     <!-- app_info -->
     <string name="chargement_profil">Chargement de vos informations</string>
 
+    <string name="find_data">Recherche de vos informations</string>
+    <string name="data_unavailable">Information indisponible</string>
+    <string name="upcoming">Prochainement</string>
+
+
+
     <!-- avis -->
     <string name="nom">Nom :</string>
     <string name="avis">Votre Avis :</string>
@@ -65,6 +71,8 @@
     <string name="prenom">Prenom :</string>
     <string name="email">Email :</string>
     <string name="reserverBtn">Réserver</string>
+    <string name="no_reservation">Aucune réservation</string>
+    <string name="send_data">Envoi des données</string>
 
 
 
@@ -93,4 +101,19 @@
     <string name="deconnexion">Deconnexion</string>
     <string name="recherche">Recherche</string>
     <string name="chargement">Chargement</string>
+
+
+    <!-- Errors-->
+    <string name="error">Error</string>
+    <string name="nom_validation_msg">Nom non renseigné</string>
+    <string name="avis_validation_msg">Avis non renseigné</string>
+    <string name="prenom_validation_msg">Prénom non renseigné</string>
+    <string name="email_validation_msg">Email non renseigné</string>
+
+
+    <string name="connexion_required">Vous devez être connecté</string>
+    <string name="connexion_error">Erreur de connexion</string>
+    <string name="add_error">Erreur lors de l\'ajout</string>
+
+
 </resources>

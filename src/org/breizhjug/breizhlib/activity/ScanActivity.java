@@ -22,7 +22,7 @@ public class ScanActivity extends AbstractActivity {
     private static final String USER_AGENT = "ZXing (Android)";
 
     @Inject
-    OuvrageService service;
+    private OuvrageService service;
 
     @Override
     public void init(Intent intent) {

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import org.breizhjug.breizhlib.R;
 
 
 public abstract class AbstractActivity extends BaseActivity {
@@ -27,7 +28,7 @@ public abstract class AbstractActivity extends BaseActivity {
             @Override
             protected void onPostExecute(Boolean result) {
                 if (result == null || !result) {
-                    showError("Error", true);
+                    showError(getString(R.string.error), true);
                 } else {
                     init(getIntent());
                 }

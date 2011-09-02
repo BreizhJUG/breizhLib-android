@@ -33,12 +33,10 @@ public class BaseActivity extends RoboActivity {
 
 
         receiver = new BroadcastReceiver() {
-
             @Override
             public void onReceive(Context context, Intent intent) {
                 finish();
             }
-
         };
 
         IntentFilter intentFilter = new IntentFilter();

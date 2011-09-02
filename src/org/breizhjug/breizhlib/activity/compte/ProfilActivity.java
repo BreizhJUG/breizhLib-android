@@ -76,7 +76,7 @@ public class ProfilActivity extends AbstractActivity {
     public void init(Intent intent) {
         final String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
 
-        final ProgressDialog waitDialog = ProgressDialog.show(this, "Recherche de vos informations", getString(R.string.chargement), true, true);
+        final ProgressDialog waitDialog = ProgressDialog.show(this, getString(R.string.find_data), getString(R.string.chargement), true, true);
 
         final AsyncTask<Void, Void, Utilisateur> initTask = new AsyncTask<Void, Void, Utilisateur>() {
 
@@ -89,7 +89,7 @@ public class ProfilActivity extends AbstractActivity {
             protected void onPostExecute(Utilisateur result) {
                 waitDialog.dismiss();
                 if (result == null) {
-                    showError("Information indisponible", true);
+                    showError(getString(R.string.data_unavailable), true);
                 } else {
                     initView(result);
                 }
@@ -164,7 +164,7 @@ public class ProfilActivity extends AbstractActivity {
             empruntsBtn.setOnClickListener(new Button.OnClickListener() {
 
                 public void onClick(View view) {
-                    Toast.makeText(ProfilActivity.this, "Prochainement!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProfilActivity.this, getString(R.string.upcoming), Toast.LENGTH_SHORT).show();
                 }
             });
         } else {

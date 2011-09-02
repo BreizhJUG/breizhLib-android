@@ -20,9 +20,9 @@ public class CommentairesActivity extends AbstractActivity {
     ListView commentairesListView;
 
     @Inject
-    CommentaireService service;
+    private CommentaireService service;
     @Inject
-    ImageCache imageCache;
+    private ImageCache imageCache;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

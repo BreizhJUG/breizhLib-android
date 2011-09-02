@@ -74,9 +74,9 @@ public class Menu extends AbstractActivity {
         boutons.add(new Bouton(intent, R.string.profil, R.drawable.profile));
 
         if (PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(BreizhLibConstantes.BETA, false)) {
-            intent = new Intent(getApplicationContext(), SearchActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            boutons.add(new Bouton(intent, R.string.search, android.R.drawable.ic_menu_search));
+            //intent = new Intent(getApplicationContext(), SearchActivity.class);
+            //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            //boutons.add(new Bouton(intent, R.string.search, android.R.drawable.ic_menu_search));
         }
         Log.i("MENU", "menu loaded");
     }
