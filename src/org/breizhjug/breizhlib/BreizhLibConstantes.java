@@ -3,7 +3,7 @@ package org.breizhjug.breizhlib;
 
 public interface BreizhLibConstantes {
 
-    public static final String SERVER_URL = "http://0-1-6.breizh-lib.appspot.com/";
+    public static final String SERVER_URL = "http://0-1-7.breizh-lib.appspot.com/";
 
     public static final String MARKET_URL = "market://details?id=org.breizhjug.breizhlib";
 

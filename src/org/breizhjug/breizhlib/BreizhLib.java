@@ -7,6 +7,7 @@ import org.acra.ACRA;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
 import org.breizhjug.breizhlib.database.Database;
+import org.breizhjug.breizhlib.guice.BreizhLibModule;
 import org.breizhjug.breizhlib.utils.version.VersionTask;
 import roboguice.application.RoboInjectableApplication;
 

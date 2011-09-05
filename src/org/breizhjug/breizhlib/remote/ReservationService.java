@@ -1,7 +1,9 @@
 package org.breizhjug.breizhlib.remote;
 
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 import com.google.inject.Inject;
 import org.acra.ErrorReporter;
 import org.breizhjug.breizhlib.database.dao.LivreDAO;
@@ -21,6 +23,7 @@ public class ReservationService extends Service<Reservation> {
     private final String URL_RESA = serverUrl + "api/book/reserver";
     @Inject
     private LivreDAO livreDAO;
+    private Context context;
 
 
     @Override
@@ -66,18 +69,30 @@ public class ReservationService extends Service<Reservation> {
         return super.load(authCookie);
     }
 
+    protected void update(Reservation entity) {
+        db.update(entity);
+        if (entity.livre != null) {
+            Log.d(TAG, "update livre");
+            db.update(entity.livre);
+        }
+    }
+
     public List<Reservation> load(String authCookie, String urlString) {
         Log.d(TAG, urlString);
         String result = queryRESTurl(authCookie, urlString);
         ArrayList<Reservation> BOOKS = new ArrayList<Reservation>();
-        if (result != null) {
+        Log.i(TAG, result);
+        if (result != null && result.length() > 2) {
+            if (result.equals("Access denied")) {
+                Toast.makeText(context, "Veuillez vouz reconnecter", Toast.LENGTH_SHORT).show();
+            }
             try {
                 JSONArray booksArray = new JSONArray(result);
-                Reservation livre = null;
+                Reservation reservation = null;
                 for (int a = 0; a < booksArray.length(); a++) {
                     JSONObject item = booksArray.getJSONObject(a);
-                    livre = converter.convertReservation(item);
-                    BOOKS.add(livre);
+                    reservation = converter.convertReservation(item);
+                    BOOKS.add(reservation);
                 }
                 return BOOKS;
             } catch (JSONException e) {
@@ -89,9 +104,10 @@ public class ReservationService extends Service<Reservation> {
     }
 
     @Inject
-    public ReservationService(@ServerUrl String serverUrl) {
+    public ReservationService(@ServerUrl String serverUrl, Context context) {
         super(serverUrl);
         forceCall = true;
+        this.context = context;
     }
 
 }

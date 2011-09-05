@@ -70,8 +70,7 @@ public abstract class Service<T extends Model> implements Cache {
             }
             return cache != null ? new ArrayList<T>(cache) : cache;
         } finally {
-
-
+           db.close();
         }
     }
 
@@ -85,12 +84,15 @@ public abstract class Service<T extends Model> implements Cache {
         db.beginTransaction();
         for (T entity : cache) {
             if (isInDB(entity)) {
-                db.update(entity);
+                update(entity);
             } else {
                 db.insert(entity);
             }
         }
         db.endTransaction();
+    }
+
+    protected void update(T entity) {
     }
 
     protected abstract boolean isInDB(T entity);

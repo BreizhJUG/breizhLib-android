@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CommentaireDAO extends AbstractDao{
+public class CommentaireDAO extends AbstractDao {
 
     private static final String TAG = "BreizhLib.CommentaireDAO";
 
@@ -55,7 +55,7 @@ public class CommentaireDAO extends AbstractDao{
             return commentaires;
         } finally {
             if (cursor != null) {
-               closeCursor();
+                closeCursor();
             }
         }
     }

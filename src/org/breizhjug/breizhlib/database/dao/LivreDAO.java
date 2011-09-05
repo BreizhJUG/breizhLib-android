@@ -5,7 +5,7 @@ import org.breizhjug.breizhlib.model.Livre;
 
 import java.util.ArrayList;
 
-public class LivreDAO extends AbstractDao{
+public class LivreDAO extends AbstractDao {
 
     private static final String TAG = "BreizhLib.LivreDAO";
 

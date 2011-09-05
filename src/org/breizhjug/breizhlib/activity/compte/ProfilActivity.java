@@ -124,6 +124,7 @@ public class ProfilActivity extends AbstractActivity {
         reservations.setText(user.reservationsLabel);
         imageCache.download(Gravatar.getImage(user.email), icon);
 
+        //TODO synchronisation
         final ArrayList<Commentaire> items = commentaireDAO.findByAutor(user.nom + " " + user.prenom);
         commentairesBtn.setVisibility(View.INVISIBLE);
         if (items != null && items.size() > 0) {
@@ -143,6 +144,7 @@ public class ProfilActivity extends AbstractActivity {
             });
         }
 
+        //TODO synchronisation
         final ArrayList<Reservation> resaItems = reservationDAO.findByNom(user.nom, user.prenom);
         resaBtn.setVisibility(View.INVISIBLE);
         if (resaItems != null && resaItems.size() > 0) {

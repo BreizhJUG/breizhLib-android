@@ -1,13 +1,12 @@
-package org.breizhjug.breizhlib;
+package org.breizhjug.breizhlib.guice;
 
+import org.breizhjug.breizhlib.BreizhLib;
+import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.adapter.*;
 import org.breizhjug.breizhlib.database.Database;
 import org.breizhjug.breizhlib.database.dao.CommentaireDAO;
 import org.breizhjug.breizhlib.database.dao.LivreDAO;
 import org.breizhjug.breizhlib.database.dao.ReservationDAO;
-import org.breizhjug.breizhlib.guice.AppPath;
-import org.breizhjug.breizhlib.guice.ServerUrl;
-import org.breizhjug.breizhlib.guice.UaAccount;
 import org.breizhjug.breizhlib.remote.*;
 import org.breizhjug.breizhlib.utils.CacheManager;
 import org.breizhjug.breizhlib.utils.GoogleAuthentification;
@@ -20,7 +19,7 @@ import roboguice.config.AbstractAndroidModule;
 
 public class BreizhLibModule extends AbstractAndroidModule {
 
-    BreizhLib application;
+   private  BreizhLib application;
 
     public BreizhLibModule(BreizhLib breizhLib) {
         super();

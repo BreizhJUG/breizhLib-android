@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ReservationDAO extends AbstractDao{
+public class ReservationDAO extends AbstractDao {
 
     private static final String TAG = "BreizhLib.ReservationDAODAO";
 
