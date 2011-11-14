@@ -49,7 +49,7 @@ public class LivreActivity extends AbstractNavigationActivity<Livre> {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.livre);
+        setActionBarContentView(R.layout.livre);
         initView();
     }
 
@@ -61,7 +61,7 @@ public class LivreActivity extends AbstractNavigationActivity<Livre> {
     private void initView() {
         titreView.setText(item.titre);
         editeurView.setText(item.editeur);
-
+        getActionBar().setTitle(item.titre);
         imageCache.getFromCache(item.iSBN, item.imgUrl, icone);
 
         initNavigation();
@@ -73,7 +73,7 @@ public class LivreActivity extends AbstractNavigationActivity<Livre> {
         if (item.add) {
             initAjout(addBtn, item.iSBN);
         } else {
-            initReservation(addBtn, item.etat, item.iSBN);
+            initReservation(addBtn, item);
         }
 
         initCommentaires(item);
@@ -125,11 +125,11 @@ public class LivreActivity extends AbstractNavigationActivity<Livre> {
         commentaireItems.setAdapter(commentairesAdapter);
     }
 
-    private void initReservation(Button button, String etat, final String isbn) {
+    private void initReservation(Button button, final Livre livre) {
         button.setEnabled(false);
-        if (etat.equals("RESERVE")) {
+        if (livre.etat.equals("RESERVE")) {
             button.setText(getString(R.string.reserveBtn));
-        } else if (etat.equals("DISP0NIBLE")) {
+        } else if (livre.etat.equals("DISP0NIBLE")) {
             button.setText(getString(R.string.reserverBtn));
             if (prefs.getString(BreizhLibConstantes.ACCOUNT_NAME, null) != null) {
                 button.setEnabled(true);
@@ -138,7 +138,7 @@ public class LivreActivity extends AbstractNavigationActivity<Livre> {
 
                         public void onClick(View view) {
                             Intent intent = new Intent(getApplicationContext(), ReservationActivity.class);
-                            intent.putExtra("isbn", isbn);
+                            intent.putExtra("livre", livre);
                             LivreActivity.this.startActivity(intent);
                         }
                     });

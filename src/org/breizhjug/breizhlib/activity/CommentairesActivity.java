@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.google.inject.Inject;
+import com.google.inject.internal.Nullable;
 import org.breizhjug.breizhlib.R;
+import org.breizhjug.breizhlib.activity.gd.AbstractGDActivity;
 import org.breizhjug.breizhlib.adapter.CommentairesAdapter;
 import org.breizhjug.breizhlib.model.Commentaire;
 import org.breizhjug.breizhlib.remote.AsyncRemoteTask;
@@ -14,9 +16,10 @@ import org.breizhjug.breizhlib.remote.CommentaireService;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
 import roboguice.inject.InjectView;
 
-public class CommentairesActivity extends AbstractActivity {
+public class CommentairesActivity extends AbstractGDActivity {
 
     @InjectView(R.id.items)
+    @Nullable
     ListView commentairesListView;
 
     @Inject
@@ -26,8 +29,11 @@ public class CommentairesActivity extends AbstractActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.items);
+        setActionBarContentView(R.layout.items);
+        commentairesListView = (ListView) findViewById(R.id.items);
+
         initView();
+        getActionBar().setTitle("Commentaires");
     }
 
     public void init(Intent intent) {

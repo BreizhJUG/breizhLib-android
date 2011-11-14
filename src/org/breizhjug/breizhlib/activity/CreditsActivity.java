@@ -5,15 +5,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import com.google.inject.internal.Nullable;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
+import org.breizhjug.breizhlib.activity.gd.AbstractGDActivity;
 import org.breizhjug.breizhlib.utils.version.Version;
 import roboguice.inject.InjectView;
 
 
-public class CreditsActivity extends AbstractActivity {
+public class CreditsActivity extends AbstractGDActivity {
 
-    @InjectView(R.id.version)
     TextView versionView;
 
     @Override
@@ -23,8 +24,9 @@ public class CreditsActivity extends AbstractActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.credits);
-
+        setActionBarContentView(R.layout.credits);
+        getActionBar().setTitle("BreizhLib");
+        versionView = (TextView) findViewById(R.id.version);
         versionView.setText(getString(R.string.version) + " " + Version.version);
     }
 

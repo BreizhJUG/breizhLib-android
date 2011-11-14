@@ -9,14 +9,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import greendroid.widget.ActionBar;
+import greendroid.widget.ActionBarItem;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.compte.CompteList;
+import org.breizhjug.breizhlib.activity.gd.AbstractGDActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Menu extends AbstractActivity {
+public class Menu extends AbstractGDActivity {
 
     @Override
     public void init(Intent intent) {
@@ -26,7 +29,11 @@ public class Menu extends AbstractActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setActionBarContentView(R.layout.main);
+        getActionBar().setType(ActionBar.Type.Empty);
+        getActionBar().setTitle("BreizhLib");
+        addActionBarItem(ActionBarItem.Type.Search, R.id.action_bar_search);
+        addActionBarItem(ActionBarItem.Type.Info, R.id.action_bar_info);
 
     }
 
@@ -81,6 +88,23 @@ public class Menu extends AbstractActivity {
         Log.i("MENU", "menu loaded");
     }
 
+    @Override
+    public boolean onHandleActionBarItemClick(ActionBarItem item, int position) {
+
+        switch (item.getItemId()) {
+            case R.id.action_bar_search:
+                startActivity(new Intent(this, SearchActivity.class));
+                break;
+            case R.id.action_bar_info:
+                startActivity(new Intent(this, CreditsActivity.class));
+                break;
+            default:
+                return super.onHandleActionBarItemClick(item, position);
+        }
+
+        return true;
+    }
+
 
     class Bouton {
         public int libelle;
@@ -109,6 +133,7 @@ public class Menu extends AbstractActivity {
 
                 TextView name = (TextView) view.findViewById(R.id.name);
                 name.setText(bouton.libelle);
+                name.setTextColor(R.color.black_text_color);
 
                 ImageView icone = (ImageView) view.findViewById(R.id.icon);
                 icone.setImageResource(bouton.icone);

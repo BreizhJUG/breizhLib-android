@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.google.inject.Inject;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
+import org.breizhjug.breizhlib.activity.gd.AbstractGDActivity;
 import org.breizhjug.breizhlib.exception.ResultException;
 import org.breizhjug.breizhlib.model.Commentaire;
 import org.breizhjug.breizhlib.model.Livre;
@@ -21,7 +22,7 @@ import roboguice.inject.InjectExtra;
 import roboguice.inject.InjectView;
 
 
-public class AvisActivity extends AbstractActivity {
+public class AvisActivity extends AbstractGDActivity {
 
     @InjectView(R.id.send)
     Button button;
@@ -44,7 +45,7 @@ public class AvisActivity extends AbstractActivity {
 
         rating.setRating(livre.note);
         rating.setMax(5);
-
+        getActionBar().setTitle(livre.titre);
 
         String nom = prefs.getString(BreizhLibConstantes.USER_NOM, "") + " " +
                 prefs.getString(BreizhLibConstantes.USER_PRENOM, "");
@@ -134,6 +135,6 @@ public class AvisActivity extends AbstractActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.avis);
+        setActionBarContentView(R.layout.avis);
     }
 }

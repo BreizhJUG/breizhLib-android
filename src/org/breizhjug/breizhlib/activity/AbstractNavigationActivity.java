@@ -6,7 +6,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import com.google.inject.internal.Nullable;
 import org.breizhjug.breizhlib.R;
+import org.breizhjug.breizhlib.activity.gd.AbstractGDActivity;
 import roboguice.inject.InjectExtra;
 import roboguice.inject.InjectView;
 
@@ -14,19 +16,25 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public abstract class AbstractNavigationActivity<T extends Serializable> extends AbstractActivity {
+public abstract class AbstractNavigationActivity<T extends Serializable> extends AbstractGDActivity {
 
     @InjectView(R.id.nav)
+    @Nullable
     LinearLayout nav;
     @InjectView(R.id.star1)
+    @Nullable
     ImageView star1;
     @InjectView(R.id.star2)
+    @Nullable
     ImageView star2;
     @InjectView(R.id.star3)
+    @Nullable
     ImageView star3;
     @InjectView(R.id.star4)
+    @Nullable
     ImageView star4;
     @InjectView(R.id.star5)
+    @Nullable
     ImageView star5;
 
     @InjectExtra("item")

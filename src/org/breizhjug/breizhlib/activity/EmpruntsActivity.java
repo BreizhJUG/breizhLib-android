@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.google.inject.Inject;
 import org.breizhjug.breizhlib.R;
+import org.breizhjug.breizhlib.activity.gd.AbstractGDActivity;
 import org.breizhjug.breizhlib.adapter.EmpruntsAdapter;
 import org.breizhjug.breizhlib.model.Emprunt;
 import org.breizhjug.breizhlib.model.Livre;
@@ -18,7 +19,7 @@ import roboguice.inject.InjectView;
 import java.util.ArrayList;
 
 
-public class EmpruntsActivity extends AbstractActivity {
+public class EmpruntsActivity extends AbstractGDActivity {
 
     @InjectView(R.id.items)
     ListView empruntsListView;
@@ -32,8 +33,9 @@ public class EmpruntsActivity extends AbstractActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.items);
+        setActionBarContentView(R.layout.items);
         initView();
+        getActionBar().setTitle("Emprunts");
     }
 
     @Override

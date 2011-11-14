@@ -1,4 +1,10 @@
 <resources>
+    <style name="Theme.BreizhLib" parent="@style/Theme.GreenDroid.Light.NoTitleBar">
 
+    		<item name="gdActionBarTitleColor">@android:color/white</item>
+            <item name="gdActionBarBackground">@color/action_bar_tint</item>
+
+    		<item name="gdActionBarDividerWidth">2px</item>
+    	</style>
 
 </resources>

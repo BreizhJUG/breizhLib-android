@@ -8,8 +8,10 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.*;
 import com.google.inject.Inject;
+import greendroid.widget.ActionBarItem;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
+import org.breizhjug.breizhlib.activity.gd.AbstractGDActivity;
 import org.breizhjug.breizhlib.adapter.OuvrageAdapter;
 import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.remote.AsyncRemoteTask;
@@ -17,7 +19,7 @@ import org.breizhjug.breizhlib.remote.OuvrageService;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
 
 
-public class OuvragesActivity extends AbstractActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class OuvragesActivity extends AbstractGDActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String TAG = "Breizhlib.OuvragesActivity";
     private AbsListView ouvragesListView;
@@ -35,6 +37,8 @@ public class OuvragesActivity extends AbstractActivity implements SharedPreferen
         super.onCreate(savedInstanceState);
         modeGrid = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(BreizhLibConstantes.GRID, false);
         initView();
+        addActionBarItem(ActionBarItem.Type.Refresh,R.id.action_bar_refresh);
+        getActionBar().setTitle("Ouvrages");
     }
 
     @Override
@@ -51,7 +55,7 @@ public class OuvragesActivity extends AbstractActivity implements SharedPreferen
         PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).registerOnSharedPreferenceChangeListener(this);
         int resource = R.layout.ouvrage;
         if (modeGrid) {
-            setContentView(R.layout.main);
+            setActionBarContentView(R.layout.main);
             ouvragesListView = (GridView) findViewById(R.id.grilleBoutons);
             ((GridView) ouvragesListView).setNumColumns(4);
             resource = R.layout.ouvrage_simple;
@@ -59,11 +63,11 @@ public class OuvragesActivity extends AbstractActivity implements SharedPreferen
 
 
             if (prefs.getBoolean("beta", false)) {
-                setContentView(R.layout.items_search);
+                setActionBarContentView(R.layout.items_search);
                 EditText editText = (EditText) findViewById(R.id.editText);
                 editText.clearFocus();
             } else {
-                setContentView(R.layout.items);
+                setActionBarContentView(R.layout.items);
             }
             ouvragesListView = (ListView) findViewById(R.id.items);
         }

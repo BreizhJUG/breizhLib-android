@@ -11,12 +11,14 @@ import android.widget.EditText;
 import com.google.inject.Inject;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
+import org.breizhjug.breizhlib.activity.gd.AbstractGDActivity;
+import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.remote.ReservationService;
 import org.breizhjug.breizhlib.remote.Result;
 import roboguice.inject.InjectExtra;
 import roboguice.inject.InjectView;
 
-public class ReservationActivity extends AbstractActivity {
+public class ReservationActivity extends AbstractGDActivity {
     private static final String TAG = "BreizhLib.ReservationActivity";
 
 
@@ -29,8 +31,8 @@ public class ReservationActivity extends AbstractActivity {
     @InjectView(R.id.send)
     Button button;
 
-    @InjectExtra("isbn")
-    String isbn;
+    @InjectExtra("livre")
+    Livre livre;
     @Inject
     private ReservationService service;
 
@@ -40,7 +42,7 @@ public class ReservationActivity extends AbstractActivity {
     }
 
     public void initView() {
-
+        getActionBar().setTitle(livre.titre);
         prenom.setText(prefs.getString(BreizhLibConstantes.USER_PRENOM, null));
 
         nom.setText(prefs.getString(BreizhLibConstantes.USER_NOM, null));
@@ -51,7 +53,7 @@ public class ReservationActivity extends AbstractActivity {
         button.setOnClickListener(new Button.OnClickListener() {
 
             public void onClick(View view) {
-                onSend(isbn, prenom.getText().toString(), nom.getText().toString(), email.getText().toString());
+                onSend(livre.iSBN, prenom.getText().toString(), nom.getText().toString(), email.getText().toString());
             }
         });
 
@@ -126,7 +128,7 @@ public class ReservationActivity extends AbstractActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.reserver);
+        setActionBarContentView(R.layout.reserver);
         initView();
     }
 }

@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.google.inject.Inject;
+import com.google.inject.internal.Nullable;
+import greendroid.widget.ActionBarItem;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.model.Commentaire;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
@@ -15,9 +17,9 @@ import roboguice.inject.InjectView;
 
 public class CommentaireActivity extends AbstractNavigationActivity<Commentaire> {
 
-    @InjectView(R.id.titre)
-    TextView titre;
+
     @InjectView(R.id.user)
+    @Nullable
     TextView user;
     @InjectView(R.id.description)
     TextView description;
@@ -33,10 +35,10 @@ public class CommentaireActivity extends AbstractNavigationActivity<Commentaire>
 
     public void initView() {
 
-        titre.setText(item.livre.titre);
+        getActionBar().addItem(ActionBarItem.Type.Share,R.id.action_bar_share);
         user.setText(item.nom);
         description.setText(item.commentaire);
-
+        getActionBar().setTitle(item.livre.titre);
         imageCache.getFromCache(item.livre.iSBN, item.livre.imgUrl, icone);
 
         icone.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +61,7 @@ public class CommentaireActivity extends AbstractNavigationActivity<Commentaire>
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.commentaire);
+        setActionBarContentView(R.layout.commentaire);
         initView();
     }
 

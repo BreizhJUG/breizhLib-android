@@ -3,6 +3,7 @@ package org.breizhjug.breizhlib;
 import android.util.Log;
 import com.google.inject.Inject;
 import com.google.inject.Module;
+import greendroid.app.GDApplication;
 import org.acra.ACRA;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
@@ -19,10 +20,11 @@ import java.util.List;
 public class BreizhLib extends RoboInjectableApplication {
 
     @Inject
-    private Database databaseHelper;
+    public static Database databaseHelper;
 
     @Inject
     private VersionTask checkVersion;
+    public GDApplication gdapp = new GDApplication();
 
     protected void addApplicationModules(List<Module> modules) {
         modules.add(new BreizhLibModule(this));
@@ -31,6 +33,8 @@ public class BreizhLib extends RoboInjectableApplication {
 
     @Override
     public void onCreate() {
+        databaseHelper = new Database(this);
+        checkVersion = new VersionTask(this);
         ACRA.init(this);
         super.onCreate();
 

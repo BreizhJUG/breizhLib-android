@@ -12,11 +12,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.inject.Inject;
+import com.google.inject.internal.Nullable;
+import greendroid.widget.ActionBarItem;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
-import org.breizhjug.breizhlib.activity.AbstractActivity;
 import org.breizhjug.breizhlib.activity.CommentaireActivity;
 import org.breizhjug.breizhlib.activity.LivreActivity;
+import org.breizhjug.breizhlib.activity.gd.AbstractGDActivity;
 import org.breizhjug.breizhlib.database.dao.CommentaireDAO;
 import org.breizhjug.breizhlib.database.dao.ReservationDAO;
 import org.breizhjug.breizhlib.model.Commentaire;
@@ -31,7 +33,7 @@ import roboguice.inject.InjectView;
 import java.util.ArrayList;
 
 
-public class ProfilActivity extends AbstractActivity {
+public class ProfilActivity extends AbstractGDActivity {
 
     @InjectView(R.id.nom)
     TextView nom;
@@ -70,7 +72,9 @@ public class ProfilActivity extends AbstractActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.profil);
+        getActionBar().setTitle("Profil");
+        getActionBar().addItem(ActionBarItem.Type.Settings,R.id.action_bar_settings);
+        setActionBarContentView(R.layout.profil);
     }
 
     public void init(Intent intent) {

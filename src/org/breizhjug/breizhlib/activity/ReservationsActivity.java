@@ -8,6 +8,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import com.google.inject.Inject;
 import org.breizhjug.breizhlib.R;
+import org.breizhjug.breizhlib.activity.gd.AbstractGDActivity;
 import org.breizhjug.breizhlib.adapter.ReservationsAdapter;
 import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.model.Reservation;
@@ -19,7 +20,7 @@ import roboguice.inject.InjectView;
 import java.util.ArrayList;
 
 
-public class ReservationsActivity extends AbstractActivity {
+public class ReservationsActivity extends AbstractGDActivity {
 
     @InjectView(R.id.items)
     ListView reservationsListView;
@@ -33,8 +34,11 @@ public class ReservationsActivity extends AbstractActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.items);
+        setActionBarContentView(R.layout.items);
+
+        reservationsListView = (ListView) findViewById(R.id.items);
         initView();
+        getActionBar().setTitle("Reservations");
     }
 
     @Override
