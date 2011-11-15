@@ -44,6 +44,11 @@ public class ImageCache implements Cache {
         }
     }
 
+    @Override
+    public void clearDBCache() {
+        clearCache();
+    }
+
     public void getFromCache(String name, String url, ImageView imageView) {
 
 

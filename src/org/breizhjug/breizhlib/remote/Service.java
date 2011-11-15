@@ -17,6 +17,7 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.breizhjug.breizhlib.database.Database;
+import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.model.Model;
 import org.breizhjug.breizhlib.utils.Cache;
 
@@ -101,6 +102,11 @@ public abstract class Service<T extends Model> implements Cache {
 
     public void clearCache() {
         cache = null;
+    }
+
+    public void clearDBCache() {
+        cache = null;
+        db.deleteAll(getEntityClass());
     }
 
     public static String convertStreamToString(InputStream is) {

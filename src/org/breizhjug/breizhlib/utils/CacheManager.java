@@ -18,8 +18,6 @@ public class CacheManager {
     private OuvrageService ouvrageService;
     @Inject
     private ReservationService reservationService;
-    @Inject
-    private Database databaseHelper;
 
     public void clearCache() {
         commentaireService.clearCache();
@@ -28,9 +26,9 @@ public class CacheManager {
     }
 
     public void clearDB() {
-        databaseHelper.deleteAll(Livre.class);
-        databaseHelper.deleteAll(Commentaire.class);
-        databaseHelper.deleteAll(Reservation.class);
+        commentaireService.clearDBCache();
+        ouvrageService.clearDBCache();
+        reservationService.clearDBCache();
     }
 
 }

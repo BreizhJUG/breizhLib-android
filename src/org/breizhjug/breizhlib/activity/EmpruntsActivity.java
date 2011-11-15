@@ -47,7 +47,7 @@ public class EmpruntsActivity extends AbstractGDActivity {
         switch (item.getItemId()) {
             case R.id.action_bar_refresh:
                 final LoaderActionBarItem loaderItem = (LoaderActionBarItem) item;
-                service.clearCache();
+                service.clearDBCache();
                 initView(loaderItem);
 
                 return true;
