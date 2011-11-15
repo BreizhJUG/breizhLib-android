@@ -11,6 +11,7 @@ import com.google.inject.internal.Nullable;
 import greendroid.widget.ActionBarItem;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.model.Commentaire;
+import org.breizhjug.breizhlib.utils.IntentSupport;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
 import roboguice.inject.InjectView;
 
@@ -35,7 +36,7 @@ public class CommentaireActivity extends AbstractNavigationActivity<Commentaire>
 
     public void initView() {
 
-        getActionBar().addItem(ActionBarItem.Type.Share,R.id.action_bar_share);
+        getActionBar().addItem(ActionBarItem.Type.Share, R.id.action_bar_share);
         user.setText(item.nom);
         description.setText(item.commentaire);
         getActionBar().setTitle(item.livre.titre);
@@ -58,6 +59,21 @@ public class CommentaireActivity extends AbstractNavigationActivity<Commentaire>
 
 
     }
+
+    @Override
+    public boolean onHandleActionBarItemClick(ActionBarItem aItem, int position) {
+        switch (aItem.getItemId()) {
+            case R.id.action_bar_share:
+                Intent pIntent = IntentSupport.newShareComment(this, item, getString(R.string.app_name));
+                startActivity(pIntent);
+                break;
+            default:
+                return super.onHandleActionBarItemClick(aItem, position);
+        }
+
+        return true;
+    }
+
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

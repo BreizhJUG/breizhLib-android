@@ -32,7 +32,7 @@
     <string name="ajouterBtn">Ajouter</string>
 
     <!-- commentaire-->
-    <string name="commentaireMsgTitle">Commentaire de l\'ouvrage  </string>
+    <string name="commentaireMsgTitle">Commentaire de l\'ouvrage</string>
     <string name="commentaireSave">Commentaire enregistré</string>
 
     <!-- credit -->
@@ -41,7 +41,7 @@
     <string name="contactWeb">Site :
         <a href="http://breizh-lib.appspot.com/android">breizh-lib.appspot.com</a>
     </string>
-    <string name="version">Version : </string>
+    <string name="version">Version :</string>
 
     <!-- contextMenu -->
     <string name="shareText">BreizhLib, l\'application Android pour vous faciliter l\'utilisation de la bibliothèque du
@@ -63,7 +63,6 @@
     <string name="upcoming">Prochainement</string>
 
 
-
     <!-- avis -->
     <string name="nom">Nom :</string>
     <string name="avis">Votre Avis :</string>
@@ -74,7 +73,6 @@
     <string name="reserverBtn">Réserver</string>
     <string name="no_reservation">Aucune réservation</string>
     <string name="send_data">Envoi des données</string>
-
 
 
     <!-- configuration -->
@@ -90,7 +88,7 @@
     <string name="isbn_scan_titre_ok">Isbn identifié</string>
     <string name="isbn_scan_titre_ko">isbn non reconnu</string>
     <string name="isbn_scan_msg_ko">Il ne s\'agit pas d\'un code isbn13</string>
-    <string name="isbn_scan_msg_ok">isbn : </string>
+    <string name="isbn_scan_msg_ok">isbn :</string>
 
     <!-- generique -->
     <string name="valider">Valider</string>

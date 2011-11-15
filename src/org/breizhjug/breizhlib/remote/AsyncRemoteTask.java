@@ -56,7 +56,8 @@ public abstract class AsyncRemoteTask<T extends Model> extends AsyncTask<Void, V
 
     @Override
     protected void onPostExecute(Boolean result) {
-        waitDialog.dismiss();
+        if (waitDialog != null)
+            waitDialog.dismiss();
         if (items != null && items.isEmpty()) {
             displayEmptyMessage();
         } else {

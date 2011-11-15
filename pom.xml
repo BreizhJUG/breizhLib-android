@@ -30,30 +30,30 @@
             <systemPath>${project.basedir}/lib/acra-4.2.3.jar</systemPath>
         </dependency>
         <dependency>
-			<groupId>com.google.zxing</groupId>
-			<artifactId>core</artifactId>
-			<version>1.6</version>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>1.6</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/core-1.6.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>com.google.zxing</groupId>
-			<artifactId>javase</artifactId>
-			<version>1.6</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/javase-1.6.jar</systemPath>
-		</dependency>
-
-        <dependency>
-          <groupId>com.google.inject</groupId>
-          <artifactId>guice</artifactId>
-          <version>3.0</version>
-          <classifier>no_aop</classifier>
         </dependency>
         <dependency>
-          <groupId>org.roboguice</groupId>
-          <artifactId>roboguice</artifactId>
-          <version>2.0b2</version>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>javase</artifactId>
+            <version>1.6</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/javase-1.6.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>3.0</version>
+            <classifier>no_aop</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.roboguice</groupId>
+            <artifactId>roboguice</artifactId>
+            <version>2.0b2</version>
         </dependency>
 
 
@@ -66,17 +66,17 @@
         </dependency>
 
         <dependency>
-                                <groupId>com.googlecode.androidannotations</groupId>
-                                <artifactId>androidannotations</artifactId>
-                                <version>2.1-SNAPSHOT</version>
-                                <scope>compile</scope>
-                        </dependency>
-                        <dependency>
-                                <groupId>com.googlecode.androidannotations</groupId>
-                                <artifactId>androidannotations</artifactId>
-                                <classifier>api</classifier>
-                                <version>2.1-SNAPSHOT</version>
-                        </dependency>
+            <groupId>com.googlecode.androidannotations</groupId>
+            <artifactId>androidannotations</artifactId>
+            <version>2.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.androidannotations</groupId>
+            <artifactId>androidannotations</artifactId>
+            <classifier>api</classifier>
+            <version>2.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -116,13 +116,13 @@
 
     <repositories>
         <repository>
-			<id>zxing-repo</id>
-			<url>http://mvn-adamgent.googlecode.com/svn/maven/release/</url>
-		</repository>
+            <id>zxing-repo</id>
+            <url>http://mvn-adamgent.googlecode.com/svn/maven/release/</url>
+        </repository>
         <repository>
-			<id>acra-repo</id>
-			<url>http://acra.googlecode.com/svn/repository/releases</url>
-		</repository>
+            <id>acra-repo</id>
+            <url>http://acra.googlecode.com/svn/repository/releases</url>
+        </repository>
         <repository>
             <id>ybonnel-repo</id>
             <url>https://github.com/ybonnel/ybonnel-mvn-repo/raw/master/releases</url>
@@ -132,10 +132,10 @@
             <url>http://maven.gsylvain35.googlecode.com/git/</url>
         </repository>
         <repository>
-                                <id>androidannotations-repository</id>
-                                <name>androidannotations Maven2 repository</name>
-                                <url>http://androidannotations.googlecode.com/svn/repository/snapshots</url>
-                        </repository>
+            <id>androidannotations-repository</id>
+            <name>androidannotations Maven2 repository</name>
+            <url>http://androidannotations.googlecode.com/svn/repository/snapshots</url>
+        </repository>
 
     </repositories>
 </project>

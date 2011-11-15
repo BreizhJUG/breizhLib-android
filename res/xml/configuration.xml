@@ -18,25 +18,25 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/cacheTitre">
-            <org.breizhjug.breizhlib.view.CacheDialogPreference android:key="cache"
-                              android:title="@string/cache"
-                              android:negativeButtonText="@string/annuler"
-                              android:positiveButtonText="@string/ok"  />
+        <org.breizhjug.breizhlib.view.CacheDialogPreference android:key="cache"
+                                                            android:title="@string/cache"
+                                                            android:negativeButtonText="@string/annuler"
+                                                            android:positiveButtonText="@string/ok"/>
 
-           <org.breizhjug.breizhlib.view.CacheDialogPreference android:key="cacheImg"
-                              android:title="@string/cacheImg"
-                              android:negativeButtonText="@string/annuler"
-                              android:positiveButtonText="@string/ok"  />
+        <org.breizhjug.breizhlib.view.CacheDialogPreference android:key="cacheImg"
+                                                            android:title="@string/cacheImg"
+                                                            android:negativeButtonText="@string/annuler"
+                                                            android:positiveButtonText="@string/ok"/>
 
-           <org.breizhjug.breizhlib.view.CacheDialogPreference android:key="cacheDb"
-                              android:title="@string/cacheDb"
-                              android:negativeButtonText="@string/annuler"
-                              android:positiveButtonText="@string/ok"  />
+        <org.breizhjug.breizhlib.view.CacheDialogPreference android:key="cacheDb"
+                                                            android:title="@string/cacheDb"
+                                                            android:negativeButtonText="@string/annuler"
+                                                            android:positiveButtonText="@string/ok"/>
 
     </PreferenceCategory>
 
-     <PreferenceCategory android:title="Beta">
-            <CheckBoxPreference android:key="beta"
+    <PreferenceCategory android:title="Beta">
+        <CheckBoxPreference android:key="beta"
                             android:title="Activer les fonctionnalitées BETA"/>
 
     </PreferenceCategory>

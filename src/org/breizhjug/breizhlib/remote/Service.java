@@ -70,7 +70,7 @@ public abstract class Service<T extends Model> implements Cache {
             }
             return cache != null ? new ArrayList<T>(cache) : cache;
         } finally {
-           db.close();
+            db.close();
         }
     }
 

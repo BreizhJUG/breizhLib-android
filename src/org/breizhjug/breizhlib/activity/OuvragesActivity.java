@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.*;
 import com.google.inject.Inject;
 import greendroid.widget.ActionBarItem;
+import greendroid.widget.LoaderActionBarItem;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.gd.AbstractGDActivity;
@@ -36,22 +37,38 @@ public class OuvragesActivity extends AbstractGDActivity implements SharedPrefer
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         modeGrid = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(BreizhLibConstantes.GRID, false);
-        initView();
-        addActionBarItem(ActionBarItem.Type.Refresh,R.id.action_bar_refresh);
+        initView(null);
+        addActionBarItem(ActionBarItem.Type.Refresh, R.id.action_bar_refresh);
         getActionBar().setTitle("Ouvrages");
     }
 
     @Override
+    public boolean onHandleActionBarItemClick(ActionBarItem item, int position) {
+        Log.d("ActionBar ", "" + item.getItemId());
+        switch (item.getItemId()) {
+            case R.id.action_bar_refresh:
+                final LoaderActionBarItem loaderItem = (LoaderActionBarItem) item;
+                service.clearCache();
+                initView(loaderItem);
+                return true;
+            default:
+
+                return super.onHandleActionBarItemClick(item, position);
+        }
+    }
+
+
+    @Override
     protected void onResume() {
         super.onResume();
-        initView();
+        initView(null);
     }
 
     @Override
     public void init(Intent intent) {
     }
 
-    public void initView() {
+    public void initView(final LoaderActionBarItem loaderItem) {
         PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).registerOnSharedPreferenceChangeListener(this);
         int resource = R.layout.ouvrage;
         if (modeGrid) {
@@ -75,6 +92,18 @@ public class OuvragesActivity extends AbstractGDActivity implements SharedPrefer
         final int finalResource = resource;
         final AsyncTask<Void, Void, Boolean> initTask = new AsyncRemoteTask<Livre>(this, service, ouvragesListView, prefs) {
 
+            @Override
+            protected void onPostExecute(Boolean result) {
+                super.onPostExecute(result);
+                if (loaderItem != null)
+                    loaderItem.setLoading(false);
+            }
+
+            @Override
+            protected void onPreExecute() {
+                if (loaderItem == null)
+                    super.onPreExecute();
+            }
 
             @Override
             public ArrayAdapter<Livre> getAdapter() {

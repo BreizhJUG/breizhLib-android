@@ -76,6 +76,8 @@ public abstract class AbstractNavigationActivity<T extends Serializable> extends
                 next.setEnabled(false);
             }
         } else {
+            nav.setEnabled(false);
+            nav.setVisibility(View.INVISIBLE);
             previous.setEnabled(false);
             next.setEnabled(false);
         }

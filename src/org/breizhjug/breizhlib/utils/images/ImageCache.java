@@ -52,7 +52,7 @@ public class ImageCache implements Cache {
         File[] fileList = new File(SD_PATH).listFiles();
 
         Bitmap bitmap = null;
-        if(fileList != null){
+        if (fileList != null) {
             for (File file : fileList) {
                 if (file.getName().contains(name)) {
                     bitmap = BitmapFactory.decodeFile(SD_PATH + file.getName());

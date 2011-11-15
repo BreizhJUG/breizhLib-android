@@ -14,7 +14,6 @@ import org.breizhjug.breizhlib.utils.Tracker;
 import roboguice.activity.RoboActivity;
 
 
-
 public class BaseActivity extends RoboActivity {
     public static final String ACTION_LOGOUT = "org.breizhjug.breizhlib.LOGOUT";
 

@@ -19,7 +19,7 @@ import roboguice.config.AbstractAndroidModule;
 
 public class BreizhLibModule extends AbstractAndroidModule {
 
-   private  BreizhLib application;
+    private BreizhLib application;
 
     public BreizhLibModule(BreizhLib breizhLib) {
         super();

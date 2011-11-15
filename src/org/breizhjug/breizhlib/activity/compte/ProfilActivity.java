@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.inject.Inject;
-import com.google.inject.internal.Nullable;
 import greendroid.widget.ActionBarItem;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
@@ -73,7 +72,7 @@ public class ProfilActivity extends AbstractGDActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActionBar().setTitle("Profil");
-        getActionBar().addItem(ActionBarItem.Type.Settings,R.id.action_bar_settings);
+        getActionBar().addItem(ActionBarItem.Type.Settings, R.id.action_bar_settings);
         setActionBarContentView(R.layout.profil);
     }
 

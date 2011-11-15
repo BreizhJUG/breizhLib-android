@@ -6,23 +6,23 @@
         >
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        >
-	    <EditText android:id="@+id/editText"
-	    	android:layout_width="wrap_content"
-	    	android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_gravity="bottom"
-                android:text=""
-	    	/>
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            >
+        <EditText android:id="@+id/editText"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1"
+                  android:layout_gravity="bottom"
+                  android:text=""
+                />
 
-	    <Button android:id="@+id/button"
-	    	android:layout_width="wrap_content"
-	    	android:layout_height="wrap_content"
-	    	android:text="Filtrer"
-	    	/>
+        <Button android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Filtrer"
+                />
     </LinearLayout>
     <ListView
             android:id="@+id/items"

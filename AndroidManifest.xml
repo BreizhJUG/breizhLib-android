@@ -1,31 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="org.breizhjug.breizhlib"
-      android:versionCode="1010"
-      android:versionName="0.1.10"
-      android:installLocation="auto">
+          package="org.breizhjug.breizhlib"
+          android:versionCode="1010"
+          android:versionName="0.1.10"
+          android:installLocation="auto">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
-    <application android:label="@string/app_name" android:icon="@drawable/icon" android:name="BreizhLib" android:theme="@style/Theme.BreizhLib" >
+    <application android:label="@string/app_name" android:icon="@drawable/icon" android:name="BreizhLib"
+                 android:theme="@style/Theme.BreizhLib">
 
         <activity android:name="org.breizhjug.breizhlib.activity.SplashScreen"
-                   android:theme="@android:style/Theme.NoTitleBar">
+                  android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <activity android:name="org.breizhjug.breizhlib.activity.OuvragesActivity" android:label="BreizhLib Ouvrages" />
-        <activity android:name="org.breizhjug.breizhlib.activity.ReservationsActivity" android:label="BreizhLib Reservations" />
-        <activity android:name="org.breizhjug.breizhlib.activity.Menu" android:label="BreizhLib" />
-        <activity android:name="org.breizhjug.breizhlib.activity.CommentairesActivity" android:label="BreizhLib Commentaires"/>
-        <activity android:name="org.breizhjug.breizhlib.activity.compte.ProfilActivity" android:label="BreizhLib Profil"/>
+        <activity android:name="org.breizhjug.breizhlib.activity.OuvragesActivity" android:label="BreizhLib Ouvrages"/>
+        <activity android:name="org.breizhjug.breizhlib.activity.ReservationsActivity"
+                  android:label="BreizhLib Reservations"/>
+        <activity android:name="org.breizhjug.breizhlib.activity.Menu" android:label="BreizhLib"/>
+        <activity android:name="org.breizhjug.breizhlib.activity.CommentairesActivity"
+                  android:label="BreizhLib Commentaires"/>
+        <activity android:name="org.breizhjug.breizhlib.activity.compte.ProfilActivity"
+                  android:label="BreizhLib Profil"/>
         <activity android:name="org.breizhjug.breizhlib.activity.LivreActivity" android:label="BreizhLib Ouvrage"/>
         <activity android:name="org.breizhjug.breizhlib.activity.ScanActivity" android:label="Ouvrage Scan"/>
         <activity android:name="org.breizhjug.breizhlib.activity.compte.CompteList" android:label="Comptes"/>
@@ -37,12 +41,12 @@
         <activity android:name="org.breizhjug.breizhlib.activity.AvisActivity" android:label="Avis"/>
         <activity android:name="org.breizhjug.breizhlib.activity.CommentaireActivity" android:label="Commentaires"/>
         <activity android:name="org.breizhjug.breizhlib.activity.SearchActivity" android:label="Search">
-             <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-                <category android:name="android.intent.category.DEFAULT" />
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
             <meta-data android:name="android.app.searchable"
-                       android:resource="@xml/searchable" />
+                       android:resource="@xml/searchable"/>
 
         </activity>
     </application>
