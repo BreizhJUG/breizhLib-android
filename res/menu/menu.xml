@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/apropos"
-          android:title="@string/apropos"
-          android:icon="@android:drawable/ic_menu_info_details"/>
-    <item android:id="@+id/parametre"
-          android:title="@string/parametres"
-          android:icon="@android:drawable/ic_menu_preferences"/>
+
+
     <group android:id="@+id/group1">
-        <item android:id="@+id/accueil"
-              android:title="@string/menu"
-              android:icon="@drawable/ic_menu_home"/>
+        <item android:id="@+id/parametre"
+                  android:title="@string/parametres"
+                  android:icon="@android:drawable/ic_menu_preferences"/>
         <item android:id="@+id/connexion"
               android:title="@string/connexionBtn"
               android:icon="@drawable/connexion"/>
@@ -19,5 +15,8 @@
         <item android:id="@+id/share"
               android:title="@string/share"
               android:icon="@android:drawable/ic_menu_share"/>
+        <item android:id="@+id/search_record"
+                  android:title="@string/search"
+            />
     </group>
 </menu>

@@ -22,10 +22,16 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="org.breizhjug.breizhlib.activity.OuvragesActivity" android:label="BreizhLib Ouvrages"/>
+        <activity android:name="org.breizhjug.breizhlib.activity.OuvragesActivity" android:label="BreizhLib Ouvrages">
+
+
+        </activity>
         <activity android:name="org.breizhjug.breizhlib.activity.ReservationsActivity"
                   android:label="BreizhLib Reservations"/>
-        <activity android:name="org.breizhjug.breizhlib.activity.Menu" android:label="BreizhLib"/>
+        <activity android:name="org.breizhjug.breizhlib.activity.Menu" android:label="BreizhLib">
+            <meta-data android:name="android.app.default_searchable"
+                                           android:value="org.breizhjug.breizhlib.activity.SearchActivity" />
+        </activity>
         <activity android:name="org.breizhjug.breizhlib.activity.CommentairesActivity"
                   android:label="BreizhLib Commentaires"/>
         <activity android:name="org.breizhjug.breizhlib.activity.compte.ProfilActivity"

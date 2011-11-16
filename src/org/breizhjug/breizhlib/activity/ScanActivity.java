@@ -8,6 +8,7 @@ import android.util.Log;
 import com.google.inject.Inject;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
+import org.breizhjug.breizhlib.activity.gd.AbstractGDActivity;
 import org.breizhjug.breizhlib.exception.ResultException;
 import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.remote.OuvrageService;
@@ -15,7 +16,7 @@ import org.breizhjug.breizhlib.utils.scancode.IntentIntegrator;
 import org.breizhjug.breizhlib.utils.scancode.IntentResult;
 
 
-public class ScanActivity extends AbstractActivity {
+public class ScanActivity extends AbstractGDActivity {
     private static final String TAG = "Breizhlib.ScanActivity";
 
     private String isbn;

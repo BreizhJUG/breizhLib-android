@@ -1,6 +1,5 @@
 package org.breizhjug.breizhlib.activity;
 
-import android.app.ListActivity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.google.inject.Inject;
 import org.breizhjug.breizhlib.R;
+import org.breizhjug.breizhlib.activity.gd.AbstractGDActivity;
 import org.breizhjug.breizhlib.adapter.OuvrageAdapter;
 import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.remote.AsyncRemoteTask;
@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class SearchActivity extends ListActivity {
+public class SearchActivity extends AbstractGDActivity {
 
     private String[] from;
     private int[] to;
@@ -32,16 +32,21 @@ public class SearchActivity extends ListActivity {
     @Inject
     private ImageCache imageCache;
 
+    @Override
+    public void init(Intent intent) {
+
+    }
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        setContentView(R.layout.items);
+        setActionBarContentView(R.layout.items);
         final AbsListView ouvragesListView = (ListView) findViewById(R.id.items);
         final Intent queryIntent = getIntent();
         final String queryAction = queryIntent.getAction();
         if (Intent.ACTION_SEARCH.equals(queryAction)) {
             String searchKeywords = queryIntent.getStringExtra(SearchManager.QUERY);
-
+        if(searchKeywords != "" && searchKeywords != null){
             final AsyncTask<Void, Void, Boolean> initTask = new AsyncRemoteTask<Livre>(this, service, ouvragesListView, prefs) {
 
 
@@ -62,6 +67,8 @@ public class SearchActivity extends ListActivity {
             initTask.execute((Void) null);
         }
 
-
+        }else{
+            onSearchRequested();
+        }
     }
 }

@@ -85,9 +85,6 @@ public class BaseActivity extends RoboActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         switch (item.getItemId()) {
-            case R.id.accueil:
-                startActivity(intent);
-                return true;
             case R.id.connexion:
                 String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
                 if (authCookie == null) {
@@ -104,11 +101,6 @@ public class BaseActivity extends RoboActivity {
                 return true;
             case R.id.share:
                 Intent pIntent = IntentSupport.newShareIntent(this, getString(R.string.app_name), getString(R.string.shareText), getString(R.string.app_name));
-                startActivity(pIntent);
-                return true;
-            case R.id.apropos:
-                pIntent = new Intent(getApplicationContext(), CreditsActivity.class);
-                pIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(pIntent);
                 return true;
             case R.id.parametre:

@@ -9,16 +9,17 @@ import com.google.inject.Inject;
 import com.google.inject.internal.Nullable;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
-import org.breizhjug.breizhlib.activity.AbstractActivity;
+import org.breizhjug.breizhlib.activity.gd.AbstractGDActivity;
 import org.breizhjug.breizhlib.adapter.AccountsAdapter;
-import org.breizhjug.breizhlib.utils.GoogleAuthentification;
+import org.breizhjug.breizhlib.utils.Authentification;
+import org.breizhjug.breizhlib.utils.GAEAuthentification;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
 import roboguice.inject.InjectView;
 
 import java.util.List;
 
 
-public class CompteList extends AbstractActivity {
+public class CompteList extends AbstractGDActivity {
 
     @InjectView(R.id.items)
     @Nullable
@@ -29,14 +30,14 @@ public class CompteList extends AbstractActivity {
     @Inject
     private ImageCache imageCache;
     @Inject
-    private GoogleAuthentification gAuth;
+    private Authentification gAuth;
 
     @Override
     public void init(Intent intent) {
 
         authcookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
         if (authcookie == null) {
-            setContentView(R.layout.items);
+            setActionBarContentView(R.layout.items);
         }
 
         if (authcookie == null) {

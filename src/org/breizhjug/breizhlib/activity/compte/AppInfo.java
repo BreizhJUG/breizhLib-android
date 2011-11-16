@@ -10,16 +10,17 @@ import android.util.Log;
 import com.google.inject.Inject;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
-import org.breizhjug.breizhlib.activity.AbstractActivity;
-import org.breizhjug.breizhlib.utils.GoogleAuthentification;
+import org.breizhjug.breizhlib.activity.gd.AbstractGDActivity;
+import org.breizhjug.breizhlib.utils.Authentification;
+import org.breizhjug.breizhlib.utils.GAEAuthentification;
 
-public class AppInfo extends AbstractActivity {
+public class AppInfo extends AbstractGDActivity {
 
     private static final String TAG = "BreizhLib.AppInfo";
     @Inject
     private SharedPreferences prefs;
     @Inject
-    private GoogleAuthentification gAuth;
+    private Authentification gAuth;
 
     @Override
     public void init(Intent intent) {
@@ -68,6 +69,6 @@ public class AppInfo extends AbstractActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.app_info);
+        setActionBarContentView(R.layout.app_info);
     }
 }

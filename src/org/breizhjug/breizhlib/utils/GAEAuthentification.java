@@ -23,9 +23,9 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GoogleAuthentification {
+public class GAEAuthentification implements Authentification{
 
-    private static final String TAG = "Breizhlib.GoogleAuthentification";
+    private static final String TAG = "Breizhlib.GAEAuthentification";
 
     private Cookie authCookie = null;
 
@@ -111,7 +111,7 @@ public class GoogleAuthentification {
     }
 
 
-    public GoogleAuthentification() {
+    public GAEAuthentification() {
         super();
     }
 

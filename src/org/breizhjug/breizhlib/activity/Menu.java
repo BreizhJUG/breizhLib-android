@@ -33,7 +33,8 @@ public class Menu extends AbstractGDActivity {
         getActionBar().setType(ActionBar.Type.Empty);
         getActionBar().setTitle("BreizhLib");
         if (PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(BreizhLibConstantes.BETA, false)) {
-            addActionBarItem(ActionBarItem.Type.Search, R.id.action_bar_search);
+            ActionBarItem item = addActionBarItem(ActionBarItem.Type.Search, R.id.action_bar_search);
+           // android:actionViewClass="android.widget.SearchView"
         }
         addActionBarItem(ActionBarItem.Type.Info, R.id.action_bar_info);
 
@@ -95,7 +96,8 @@ public class Menu extends AbstractGDActivity {
 
         switch (item.getItemId()) {
             case R.id.action_bar_search:
-                startActivity(new Intent(this, SearchActivity.class));
+                startSearch("",);
+                onSearchRequested();
                 break;
             case R.id.action_bar_info:
                 startActivity(new Intent(this, CreditsActivity.class));
