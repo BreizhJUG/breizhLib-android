@@ -51,6 +51,10 @@ public class BreizhLibModule extends AbstractAndroidModule {
         bind(CommentaireDAO.class);
         //bind(SharedPreferences.class).toInstance(PreferenceManager.getDefaultSharedPreferences(application));
 
+
+        requestStaticInjection(OuvragesPagedAdapter.class);
+
+        requestStaticInjection(CommentairesPagedAdapter.class);
         requestStaticInjection(CacheDialogPreference.class);
         requestStaticInjection(AccountsAdapter.class);
         requestStaticInjection(CommentairesAdapter.class);

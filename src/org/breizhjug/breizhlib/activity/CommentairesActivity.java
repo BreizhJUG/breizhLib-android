@@ -3,36 +3,36 @@ package org.breizhjug.breizhlib.activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import com.google.inject.Inject;
-import com.google.inject.internal.Nullable;
-import greendroid.widget.ActionBarItem;
-import greendroid.widget.LoaderActionBarItem;
+import greendroid.widget.*;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.gd.AbstractGDActivity;
-import org.breizhjug.breizhlib.adapter.CommentairesAdapter;
+import org.breizhjug.breizhlib.adapter.CommentairesPagedAdapter;
 import org.breizhjug.breizhlib.model.Commentaire;
-import org.breizhjug.breizhlib.remote.AsyncRemoteTask;
+import org.breizhjug.breizhlib.remote.AsyncPageViewRemoteTask;
 import org.breizhjug.breizhlib.remote.CommentaireService;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
-import roboguice.inject.InjectView;
 
 public class CommentairesActivity extends AbstractGDActivity {
 
-    @InjectView(R.id.items)
-    @Nullable
-    ListView commentairesListView;
+    private PageIndicator mPageIndicatorOther;
 
     @Inject
     private CommentaireService service;
     @Inject
     private ImageCache imageCache;
 
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setActionBarContentView(R.layout.items);
-        commentairesListView = (ListView) findViewById(R.id.items);
+
+        setActionBarContentView(R.layout.paged_view);
+
+        final PagedView pagedView = (PagedView) findViewById(R.id.paged_view);
+        pagedView.setOnPageChangeListener(mOnPagedViewChangedListener);
+        mPageIndicatorOther = (PageIndicator) findViewById(R.id.page_indicator_other);
+
+        setActivePage(pagedView.getCurrentPage());
 
         initView(null);
         getActionBar().setTitle("Commentaires");
@@ -58,28 +58,23 @@ public class CommentairesActivity extends AbstractGDActivity {
     }
 
     public void initView(final LoaderActionBarItem loaderItem) {
-        final AsyncTask<Void, Void, Boolean> initTask = new AsyncRemoteTask<Commentaire>(this, service, commentairesListView, prefs) {
+        final PagedView pagedView = (PagedView) findViewById(R.id.paged_view);
+        final AsyncTask<Void, Void, Boolean> initTask = new AsyncPageViewRemoteTask<Commentaire>(this, service, pagedView, prefs) {
+
+            @Override
+            public PagedAdapter getAdapter() {
+                return new CommentairesPagedAdapter(CommentairesActivity.this, items);
+            }
 
             @Override
             protected void onPostExecute(Boolean result) {
                 super.onPostExecute(result);
-                if (loaderItem != null)
-                    loaderItem.setLoading(false);
+                mPageIndicatorOther.setDotCount(getAdapter().getCount());
             }
 
-            @Override
-            protected void onPreExecute() {
-                if (loaderItem == null)
-                    super.onPreExecute();
-            }
-
-            @Override
-            public ArrayAdapter<Commentaire> getAdapter() {
-                return new CommentairesAdapter(CommentairesActivity.this.getBaseContext(), items);
-            }
 
             public void onClick(int position) {
-                Commentaire commentaire = (Commentaire) commentairesListView.getItemAtPosition(position);
+                Commentaire commentaire = (Commentaire) getAdapter().getItem(position);
                 Intent intent = new Intent(getApplicationContext(), CommentaireActivity.class);
                 intent.putExtra("item", commentaire);
                 intent.putExtra("items", items);
@@ -89,4 +84,25 @@ public class CommentairesActivity extends AbstractGDActivity {
         };
         initTask.execute((Void) null);
     }
+
+
+    private void setActivePage(int page) {
+        mPageIndicatorOther.setActiveDot(page);
+    }
+
+    private PagedView.OnPagedViewChangeListener mOnPagedViewChangedListener = new PagedView.OnPagedViewChangeListener() {
+
+        @Override
+        public void onStopTracking(PagedView pagedView) {
+        }
+
+        @Override
+        public void onStartTracking(PagedView pagedView) {
+        }
+
+        @Override
+        public void onPageChanged(PagedView pagedView, int previousPage, int newPage) {
+            setActivePage(newPage);
+        }
+    };
 }

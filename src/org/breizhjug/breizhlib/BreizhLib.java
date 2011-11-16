@@ -7,6 +7,7 @@ import greendroid.app.GDApplication;
 import org.acra.ACRA;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
+import org.breizhjug.breizhlib.activity.Menu;
 import org.breizhjug.breizhlib.database.Database;
 import org.breizhjug.breizhlib.guice.BreizhLibModule;
 import org.breizhjug.breizhlib.utils.version.VersionTask;
@@ -24,7 +25,12 @@ public class BreizhLib extends RoboInjectableApplication {
 
     @Inject
     private VersionTask checkVersion;
-    public GDApplication gdapp = new GDApplication();
+    public GDApplication gdapp = new GDApplication(){
+        @Override
+           public Class<?> getHomeActivityClass() {
+               return Menu.class;
+           }
+    };
 
     protected void addApplicationModules(List<Module> modules) {
         modules.add(new BreizhLibModule(this));

@@ -47,9 +47,6 @@ public abstract class AbstractGDActivity extends GDBaseActivity {
     public boolean onHandleActionBarItemClick(ActionBarItem item, int position) {
         Log.d("ActionBar ", "" + item.getItemId());
         switch (item.getItemId()) {
-            case R.id.action_bar_home:
-                startActivity(new Intent(this, Menu.class));
-                break;
             case R.id.action_bar_share:
                 Intent pIntent = IntentSupport.newShareIntent(this, getString(R.string.app_name), getString(R.string.shareText), getString(R.string.app_name));
                 startActivity(pIntent);
@@ -68,8 +65,6 @@ public abstract class AbstractGDActivity extends GDBaseActivity {
 
                 return super.onHandleActionBarItemClick(item, position);
         }
-
-        return true;
     }
 
 }

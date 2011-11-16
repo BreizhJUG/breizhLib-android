@@ -7,36 +7,34 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.*;
 import com.google.inject.Inject;
+import greendroid.widget.ActionBarItem;
+import greendroid.widget.LoaderActionBarItem;
+import greendroid.widget.PagedView;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.adapter.CommentairesAdapter;
+import org.breizhjug.breizhlib.adapter.OuvragesPagedAdapter;
 import org.breizhjug.breizhlib.database.dao.CommentaireDAO;
 import org.breizhjug.breizhlib.model.Commentaire;
 import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.remote.OuvrageService;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
-import roboguice.inject.InjectView;
 
 import java.util.ArrayList;
 
 
-public class LivreActivity extends AbstractNavigationActivity<Livre> {
+public class LivreActivity extends AbstractPagednActivity<Livre> {
 
     private static final String TAG = "BreizhLib.LivreActivity";
 
-    @InjectView(R.id.titre)
     TextView titreView;
-    @InjectView(R.id.editeur)
     TextView editeurView;
-    @InjectView(R.id.img)
     ImageView icone;
-    @InjectView(R.id.add)
     Button addBtn;
-    @InjectView(R.id.addComment)
     Button avis;
-    @InjectView(R.id.items)
     ListView commentaireItems;
 
     @Inject
@@ -49,8 +47,11 @@ public class LivreActivity extends AbstractNavigationActivity<Livre> {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setActionBarContentView(R.layout.livre);
-        initView();
+        if (!item.add && prefs.getString(BreizhLibConstantes.ACCOUNT_NAME, null) != null) {
+            if (prefs.getString(BreizhLibConstantes.USER, null) != null) {
+                getActionBar().addItem(ActionBarItem.Type.Compose, R.id.action_bar_avis);
+            }
+        }
     }
 
     @Override
@@ -58,17 +59,60 @@ public class LivreActivity extends AbstractNavigationActivity<Livre> {
 
     }
 
-    private void initView() {
+    @Override
+    public boolean onHandleActionBarItemClick(ActionBarItem item, int position) {
+        switch (item.getItemId()) {
+            case R.id.action_bar_avis:
+                Intent pIntent = new Intent(getApplicationContext(), AvisActivity.class);
+                pIntent.putExtra("livre", LivreActivity.this.item);
+                LivreActivity.this.startActivity(pIntent);
+
+                return true;
+            default:
+
+                return super.onHandleActionBarItemClick(item, position);
+        }
+    }
+
+
+    public void initView(final LoaderActionBarItem loaderItem) {
+        final PagedView pagedView = (PagedView) findViewById(R.id.paged_view);
+
+        OuvragesPagedAdapter adapter = new OuvragesPagedAdapter(LivreActivity.this, items) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                if (convertView == null) {
+                    convertView = LivreActivity.this.getLayoutInflater().inflate(R.layout.livre, parent, false);
+                }
+                item = (Livre) getItem(position);
+                if (item != null)
+                    initView(convertView, item);
+
+                return convertView;
+            }
+        };
+
+        pagedView.setAdapter(adapter);
+        mPageIndicatorOther.setDotCount(adapter.getCount());
+
+
+    }
+
+
+    private void initView(View convertView, Livre item) {
+        titreView = (TextView) convertView.findViewById(R.id.titre);
+        editeurView = (TextView) convertView.findViewById(R.id.editeur);
+        icone = (ImageView) convertView.findViewById(R.id.img);
+        addBtn = (Button) convertView.findViewById(R.id.add);
+        commentaireItems = (ListView) convertView.findViewById(R.id.items);
+
         titreView.setText(item.titre);
         editeurView.setText(item.editeur);
         getActionBar().setTitle(item.titre);
         imageCache.getFromCache(item.iSBN, item.imgUrl, icone);
 
-        initNavigation();
+        initStars(convertView,item.note);
 
-        initStars(item.note);
-
-        initAvis(item);
 
         if (item.add) {
             initAjout(addBtn, item.iSBN);
@@ -80,31 +124,6 @@ public class LivreActivity extends AbstractNavigationActivity<Livre> {
 
     }
 
-    private void initAvis(final Livre livre) {
-        if (!livre.add && prefs.getString(BreizhLibConstantes.ACCOUNT_NAME, null) != null) {
-            if (prefs.getString(BreizhLibConstantes.USER, null) != null) {
-                avis.setOnClickListener(new Button.OnClickListener() {
-
-                    public void onClick(View view) {
-                        Intent pIntent = new Intent(getApplicationContext(), AvisActivity.class);
-                        pIntent.putExtra("livre", livre);
-                        LivreActivity.this.startActivity(pIntent);
-                    }
-                });
-            } else {
-                avis.setOnClickListener(new Button.OnClickListener() {
-
-                    public void onClick(View view) {
-                        Log.d(TAG, "click avis");
-                        Toast.makeText(LivreActivity.this.getApplicationContext(), getString(R.string.connexion_required), Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-
-        } else {
-            avis.setVisibility(View.INVISIBLE);
-        }
-    }
 
     private void initCommentaires(Livre livre) {
         final ArrayList<Commentaire> commentaires = commentaireDAO.findByIsbn(livre.iSBN);
