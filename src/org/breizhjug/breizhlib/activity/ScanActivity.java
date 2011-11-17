@@ -46,6 +46,7 @@ public class ScanActivity extends AbstractGDActivity {
                     Log.d(TAG, livre.titre);
                     Intent intent = new Intent(ScanActivity.this, LivreActivity.class);
                     intent.putExtra("item", livre);
+                    intent.putExtra("index", 0);
                     startActivity(intent);
                     finish();
                 }
