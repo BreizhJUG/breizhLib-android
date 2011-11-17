@@ -67,11 +67,11 @@ public class Menu extends AbstractGDActivity {
         if (prefs.getBoolean(BreizhLibConstantes.USER_ADMIN, false)) {
             intent = new Intent(getApplicationContext(), ReservationsActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            boutons.add(new Bouton(intent, R.string.reservations, R.drawable.book));
+            boutons.add(new Bouton(intent, R.string.reservations, R.drawable.reservation));
 
             intent = new Intent(getApplicationContext(), EmpruntsActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            boutons.add(new Bouton(intent, R.string.emprunts, R.drawable.book));
+            boutons.add(new Bouton(intent, R.string.emprunts, R.drawable.emprunt));
         }
 
         intent = new Intent(getApplicationContext(), ScanActivity.class);
@@ -96,7 +96,7 @@ public class Menu extends AbstractGDActivity {
 
         switch (item.getItemId()) {
             case R.id.action_bar_search:
-                startSearch("",);
+
                 onSearchRequested();
                 break;
             case R.id.action_bar_info:
