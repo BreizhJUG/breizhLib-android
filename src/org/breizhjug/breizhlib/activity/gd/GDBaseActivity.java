@@ -135,9 +135,7 @@ public class GDBaseActivity extends GDActivity implements InjectorProvider {
                 pIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(pIntent);
                 return true;
-            case R.id.search_record:
-                            onSearchRequested();
-                            return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -15,6 +15,8 @@ import org.breizhjug.breizhlib.remote.OuvrageService;
 import org.breizhjug.breizhlib.utils.scancode.IntentIntegrator;
 import org.breizhjug.breizhlib.utils.scancode.IntentResult;
 
+import java.util.ArrayList;
+
 
 public class ScanActivity extends AbstractGDActivity {
     private static final String TAG = "Breizhlib.ScanActivity";
@@ -45,6 +47,9 @@ public class ScanActivity extends AbstractGDActivity {
                 if (livre != null) {
                     Log.d(TAG, livre.titre);
                     Intent intent = new Intent(ScanActivity.this, LivreActivity.class);
+                    ArrayList<Livre> items = new ArrayList<Livre>();
+                                         items.add(livre);
+                                         intent.putExtra("items", items);
                     intent.putExtra("item", livre);
                     intent.putExtra("index", 0);
                     startActivity(intent);

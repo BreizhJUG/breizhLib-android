@@ -1,6 +1,7 @@
 package org.breizhjug.breizhlib.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -8,9 +9,12 @@ import android.widget.TextView;
 import com.google.inject.Inject;
 import greendroid.widget.PagedAdapter;
 import org.breizhjug.breizhlib.R;
+import org.breizhjug.breizhlib.activity.LivreActivity;
 import org.breizhjug.breizhlib.model.Commentaire;
+import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -48,9 +52,21 @@ public class CommentairesPagedAdapter extends PagedAdapter {
         if (convertView == null) {
             convertView = activity.getLayoutInflater().inflate(R.layout.commentaire_item, parent, false);
         }
-        Commentaire commentaire = (Commentaire) getItem(position);
+        final Commentaire commentaire = (Commentaire) getItem(position);
         TextView text = (TextView) convertView.findViewById(R.id.titre);
         text.setText(commentaire.livre.titre);
+
+        text.setOnClickListener(new View.OnClickListener() {
+                  public void onClick(View view) {
+                      Intent intent = new Intent(activity.getApplicationContext(), LivreActivity.class);
+                      ArrayList<Livre> items = new ArrayList<Livre>();
+                      items.add(commentaire.livre);
+                      intent.putExtra("items", items);
+                      intent.putExtra("index", 0);
+                      intent.putExtra("item", commentaire.livre);
+                      activity.startActivity(intent);
+          }
+              });
 
         text = (TextView) convertView.findViewById(R.id.user);
         text.setText(commentaire.nom);
