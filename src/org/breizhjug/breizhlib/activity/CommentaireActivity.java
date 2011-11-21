@@ -2,87 +2,115 @@ package org.breizhjug.breizhlib.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.google.inject.Inject;
 import com.google.inject.internal.Nullable;
-import greendroid.widget.ActionBarItem;
+import greendroid.widget.*;
 import org.breizhjug.breizhlib.R;
+import org.breizhjug.breizhlib.activity.gd.AbstractGDActivity;
+import org.breizhjug.breizhlib.adapter.CommentairesAdapter;
+import org.breizhjug.breizhlib.adapter.CommentairesPagedAdapter;
 import org.breizhjug.breizhlib.model.Commentaire;
+import org.breizhjug.breizhlib.remote.AsyncPageViewRemoteTask;
+import org.breizhjug.breizhlib.remote.CommentaireService;
 import org.breizhjug.breizhlib.utils.IntentSupport;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
 import roboguice.inject.InjectView;
 
 
-public class CommentaireActivity extends AbstractNavigationActivity<Commentaire> {
+public class CommentaireActivity extends AbstractGDActivity {
 
+    private PageIndicator mPageIndicatorOther;
 
-    @InjectView(R.id.user)
-    @Nullable
-    TextView user;
-    @InjectView(R.id.description)
-    TextView description;
-    @InjectView(R.id.img)
-    ImageView icone;
+    private static final int PAGE_COUNT = 7;
+    private static final int PAGE_MAX_INDEX = PAGE_COUNT - 1;
 
     @Inject
+    private CommentaireService service;
+    @Inject
     private ImageCache imageCache;
-
-    @Override
-    public void init(Intent intent) {
-    }
-
-    public void initView() {
-
-        getActionBar().addItem(ActionBarItem.Type.Share, R.id.action_bar_share);
-        user.setText(item.nom);
-        description.setText(item.commentaire);
-        getActionBar().setTitle(item.livre.titre);
-        imageCache.getFromCache(item.livre.iSBN, item.livre.imgUrl, icone);
-
-        icone.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-                //intent.putExtra("items", items);
-                intent.putExtra("index", 0);
-                intent.putExtra("item", item.livre);
-                CommentaireActivity.this.startActivity(intent);
-                finish();
-            }
-        });
-
-        initNavigation();
-
-        initStars(item.note);
-
-
-    }
-
-    @Override
-    public boolean onHandleActionBarItemClick(ActionBarItem aItem, int position) {
-        switch (aItem.getItemId()) {
-            case R.id.action_bar_share:
-                Intent pIntent = IntentSupport.newShareComment(this, item, getString(R.string.app_name));
-                startActivity(pIntent);
-                break;
-            default:
-                return super.onHandleActionBarItemClick(aItem, position);
-        }
-
-        return true;
-    }
 
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setActionBarContentView(R.layout.commentaire);
-        initView();
+
+        setActionBarContentView(R.layout.paged_view);
+
+        final PagedView pagedView = (PagedView) findViewById(R.id.paged_view);
+        pagedView.setOnPageChangeListener(mOnPagedViewChangedListener);
+
+
+        setActivePage(pagedView.getCurrentPage());
+
+        initView(null);
+        getActionBar().setTitle("Commentaires");
+        addActionBarItem(ActionBarItem.Type.Refresh, R.id.action_bar_refresh);
+
     }
 
     @Override
-    protected Class<? extends Activity> getActivityClass() {
-        return CommentaireActivity.class;
+    public boolean onHandleActionBarItemClick(ActionBarItem item, int position) {
+        switch (item.getItemId()) {
+            case R.id.action_bar_refresh:
+                final LoaderActionBarItem loaderItem = (LoaderActionBarItem) item;
+                service.clearDBCache();
+                initView(loaderItem);
+                return true;
+            default:
+
+                return super.onHandleActionBarItemClick(item, position);
+        }
     }
+
+    public void init(Intent intent) {
+    }
+
+    public void initView(final LoaderActionBarItem loaderItem) {
+        final PagedView pagedView = (PagedView) findViewById(R.id.paged_view);
+        final AsyncTask<Void, Void, Boolean> initTask = new AsyncPageViewRemoteTask<Commentaire>(this, service, pagedView, prefs) {
+
+            @Override
+            public PagedAdapter getAdapter() {
+                return new CommentairesPagedAdapter(CommentaireActivity.this, items);
+            }
+
+            @Override
+            protected void onPostExecute(Boolean result) {
+                super.onPostExecute(result);
+                mPageIndicatorOther = (PageIndicator) findViewById(R.id.page_indicator_other);
+                mPageIndicatorOther.setDotCount(getAdapter().getCount());
+            }
+
+
+            public void onClick(int position) {
+
+            }
+        };
+        initTask.execute((Void) null);
+    }
+
+
+    private void setActivePage(int page) {
+        mPageIndicatorOther.setActiveDot(page);
+    }
+
+    private PagedView.OnPagedViewChangeListener mOnPagedViewChangedListener = new PagedView.OnPagedViewChangeListener() {
+
+        @Override
+        public void onStopTracking(PagedView pagedView) {
+        }
+
+        @Override
+        public void onStartTracking(PagedView pagedView) {
+        }
+
+        @Override
+        public void onPageChanged(PagedView pagedView, int previousPage, int newPage) {
+            setActivePage(newPage);
+        }
+    };
 }

@@ -5,6 +5,8 @@ local.properties
 out/
 gen/
 *.apk
+*.key
+help.txt
 .idea/
 apk/
 target/
