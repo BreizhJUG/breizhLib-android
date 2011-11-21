@@ -9,7 +9,7 @@ import com.google.inject.Inject;
 import greendroid.widget.ActionBarItem;
 import greendroid.widget.LoaderActionBarItem;
 import org.breizhjug.breizhlib.R;
-import org.breizhjug.breizhlib.activity.gd.AbstractGDActivity;
+import org.breizhjug.breizhlib.activity.common.AbstractGDActivity;
 import org.breizhjug.breizhlib.adapter.EmpruntsAdapter;
 import org.breizhjug.breizhlib.model.Emprunt;
 import org.breizhjug.breizhlib.model.Livre;

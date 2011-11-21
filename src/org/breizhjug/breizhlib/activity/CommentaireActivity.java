@@ -1,25 +1,17 @@
 package org.breizhjug.breizhlib.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 import com.google.inject.Inject;
-import com.google.inject.internal.Nullable;
 import greendroid.widget.*;
 import org.breizhjug.breizhlib.R;
-import org.breizhjug.breizhlib.activity.gd.AbstractGDActivity;
-import org.breizhjug.breizhlib.adapter.CommentairesAdapter;
+import org.breizhjug.breizhlib.activity.common.AbstractGDActivity;
 import org.breizhjug.breizhlib.adapter.CommentairesPagedAdapter;
 import org.breizhjug.breizhlib.model.Commentaire;
 import org.breizhjug.breizhlib.remote.AsyncPageViewRemoteTask;
 import org.breizhjug.breizhlib.remote.CommentaireService;
-import org.breizhjug.breizhlib.utils.IntentSupport;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
-import roboguice.inject.InjectView;
 
 
 public class CommentaireActivity extends AbstractGDActivity {

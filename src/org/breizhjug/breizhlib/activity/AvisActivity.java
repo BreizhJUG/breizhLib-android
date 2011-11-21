@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.google.inject.Inject;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
-import org.breizhjug.breizhlib.activity.gd.AbstractGDActivity;
+import org.breizhjug.breizhlib.activity.common.AbstractGDActivity;
 import org.breizhjug.breizhlib.exception.ResultException;
 import org.breizhjug.breizhlib.model.Commentaire;
 import org.breizhjug.breizhlib.model.Livre;

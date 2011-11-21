@@ -7,7 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import com.google.inject.Inject;
 import org.breizhjug.breizhlib.R;
-import org.breizhjug.breizhlib.activity.gd.GDBaseActivity;
+import org.breizhjug.breizhlib.activity.common.BaseActivity;
 import org.breizhjug.breizhlib.remote.SyncManager;
 
 public class SplashScreen extends BaseActivity {

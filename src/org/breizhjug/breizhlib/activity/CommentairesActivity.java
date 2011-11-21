@@ -8,7 +8,7 @@ import android.widget.ListView;
 import com.google.inject.Inject;
 import com.google.inject.internal.Nullable;
 import org.breizhjug.breizhlib.R;
-import org.breizhjug.breizhlib.activity.gd.AbstractGDActivity;
+import org.breizhjug.breizhlib.activity.common.AbstractGDActivity;
 import org.breizhjug.breizhlib.adapter.CommentairesAdapter;
 import org.breizhjug.breizhlib.model.Commentaire;
 import org.breizhjug.breizhlib.remote.AsyncRemoteTask;

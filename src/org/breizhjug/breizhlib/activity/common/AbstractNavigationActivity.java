@@ -1,4 +1,4 @@
-package org.breizhjug.breizhlib.activity;
+package org.breizhjug.breizhlib.activity.common;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import com.google.inject.internal.Nullable;
 import org.breizhjug.breizhlib.R;
-import org.breizhjug.breizhlib.activity.gd.AbstractGDActivity;
+import org.breizhjug.breizhlib.activity.common.AbstractGDActivity;
 import roboguice.inject.InjectExtra;
 import roboguice.inject.InjectView;
 

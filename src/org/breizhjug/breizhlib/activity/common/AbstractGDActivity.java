@@ -1,4 +1,4 @@
-package org.breizhjug.breizhlib.activity.gd;
+package org.breizhjug.breizhlib.activity.common;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -9,7 +9,6 @@ import greendroid.widget.ActionBarItem;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.ConfigurationActivity;
 import org.breizhjug.breizhlib.activity.CreditsActivity;
-import org.breizhjug.breizhlib.activity.Menu;
 import org.breizhjug.breizhlib.utils.IntentSupport;
 
 

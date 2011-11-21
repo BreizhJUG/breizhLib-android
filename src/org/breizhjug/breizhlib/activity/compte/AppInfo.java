@@ -10,9 +10,8 @@ import android.util.Log;
 import com.google.inject.Inject;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
-import org.breizhjug.breizhlib.activity.gd.AbstractGDActivity;
+import org.breizhjug.breizhlib.activity.common.AbstractGDActivity;
 import org.breizhjug.breizhlib.utils.Authentification;
-import org.breizhjug.breizhlib.utils.GAEAuthentification;
 
 public class AppInfo extends AbstractGDActivity {
 

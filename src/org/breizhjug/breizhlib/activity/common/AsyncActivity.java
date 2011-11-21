@@ -1,4 +1,4 @@
-package org.breizhjug.breizhlib.activity;
+package org.breizhjug.breizhlib.activity.common;
 
 
 public interface AsyncActivity {

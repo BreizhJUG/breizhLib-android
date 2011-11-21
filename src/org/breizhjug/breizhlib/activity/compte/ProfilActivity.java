@@ -17,7 +17,7 @@ import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.CommentaireActivity;
 import org.breizhjug.breizhlib.activity.LivreActivity;
-import org.breizhjug.breizhlib.activity.gd.AbstractGDActivity;
+import org.breizhjug.breizhlib.activity.common.AbstractGDActivity;
 import org.breizhjug.breizhlib.database.dao.CommentaireDAO;
 import org.breizhjug.breizhlib.database.dao.ReservationDAO;
 import org.breizhjug.breizhlib.model.Commentaire;
@@ -159,6 +159,7 @@ public class ProfilActivity extends AbstractGDActivity {
                     intent.putExtra("items", toOuvrages(resaItems));
                     intent.putExtra("index", 0);
                     intent.putExtra("item", resaItems.get(0).livre);
+                    intent.putExtra("emailReservation", resaItems.get(0).email);
                     startActivity(intent);
 
 

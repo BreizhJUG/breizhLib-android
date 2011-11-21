@@ -51,6 +51,7 @@ public class JsonConverter {
         if (item != null) {
             Livre livre = convertLivre(item.getJSONObject("livre"));
             reservation = new Reservation(item.getString("nom"), item.getString("prenom"), livre);
+            reservation.email = item.getString("user") ;
         }
         return reservation;
     }

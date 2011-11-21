@@ -18,6 +18,9 @@ public class Reservation implements Serializable, Model {
     @Column
     public String isbn;
 
+    public String email;
+
+
     public Livre livre;
 
     public Reservation() {

@@ -1,4 +1,4 @@
-package org.breizhjug.breizhlib.activity;
+package org.breizhjug.breizhlib.activity.common;
 
 import android.app.AlertDialog;
 import android.content.*;
@@ -7,6 +7,8 @@ import android.view.MenuItem;
 import com.google.inject.Inject;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
+import org.breizhjug.breizhlib.activity.ConfigurationActivity;
+import org.breizhjug.breizhlib.activity.Menu;
 import org.breizhjug.breizhlib.activity.compte.CompteList;
 import org.breizhjug.breizhlib.database.Database;
 import org.breizhjug.breizhlib.utils.IntentSupport;

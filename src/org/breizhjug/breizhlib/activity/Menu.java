@@ -14,7 +14,7 @@ import greendroid.widget.ActionBarItem;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.compte.CompteList;
-import org.breizhjug.breizhlib.activity.gd.AbstractGDActivity;
+import org.breizhjug.breizhlib.activity.common.AbstractGDActivity;
 
 import java.util.ArrayList;
 import java.util.List;

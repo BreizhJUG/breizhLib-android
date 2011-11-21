@@ -8,6 +8,7 @@ import com.google.inject.Inject;
 import org.acra.ErrorReporter;
 import org.breizhjug.breizhlib.database.dao.LivreDAO;
 import org.breizhjug.breizhlib.guice.ServerUrl;
+import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.model.Reservation;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -110,4 +111,7 @@ public class ReservationService extends Service<Reservation> {
         this.context = context;
     }
 
+    public void annuler(Livre livre) {
+        //TODO appel au serveur pour annuler la reservation
+    }
 }

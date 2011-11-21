@@ -15,12 +15,16 @@ import greendroid.widget.LoaderActionBarItem;
 import greendroid.widget.PagedView;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
+import org.breizhjug.breizhlib.activity.common.AbstractPagednActivity;
 import org.breizhjug.breizhlib.adapter.CommentairesAdapter;
 import org.breizhjug.breizhlib.adapter.OuvragesPagedAdapter;
 import org.breizhjug.breizhlib.database.dao.CommentaireDAO;
 import org.breizhjug.breizhlib.model.Commentaire;
 import org.breizhjug.breizhlib.model.Livre;
+import org.breizhjug.breizhlib.model.Utilisateur;
 import org.breizhjug.breizhlib.remote.OuvrageService;
+import org.breizhjug.breizhlib.remote.ReservationService;
+import org.breizhjug.breizhlib.remote.UtilisateurService;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
 
 import java.util.ArrayList;
@@ -39,6 +43,10 @@ public class LivreActivity extends AbstractPagednActivity<Livre> {
 
     @Inject
     private OuvrageService service;
+    @Inject
+    private UtilisateurService userService;
+    @Inject
+    private ReservationService reservationService;
     @Inject
     private ImageCache imageCache;
     @Inject
@@ -111,7 +119,7 @@ public class LivreActivity extends AbstractPagednActivity<Livre> {
         getActionBar().setTitle(item.titre);
         imageCache.getFromCache(item.iSBN, item.imgUrl, icone);
 
-        initStars(convertView,item.note);
+        initStars(convertView, item.note);
 
 
         if (item.add) {
@@ -147,7 +155,25 @@ public class LivreActivity extends AbstractPagednActivity<Livre> {
     private void initReservation(Button button, final Livre livre) {
         button.setEnabled(false);
         if (livre.etat.equals("RESERVE")) {
-            button.setText(getString(R.string.reserveBtn));
+            String email = getIntent().getStringExtra("emailReservation");
+            String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
+            Utilisateur user = userService.find(authCookie);
+            if (user.email.equals(email)) {
+                //TODO si l'utilisateeur est la personne qui a réservé l'ouvrage
+                //TODO lui permettre d'annuler la réservation
+                button.setText("Annuler");
+                button.setEnabled(true);
+                button.setOnClickListener(new Button.OnClickListener() {
+
+                    public void onClick(View view) {
+                        Toast.makeText(LivreActivity.this.getApplicationContext(), "Annulation en cours", Toast.LENGTH_SHORT).show();
+                        reservationService.annuler(livre);
+                    }
+                });
+            } else {
+                button.setText(getString(R.string.reserveBtn));
+            }
+
         } else if (livre.etat.equals("DISP0NIBLE")) {
             button.setText(getString(R.string.reserverBtn));
             if (prefs.getString(BreizhLibConstantes.ACCOUNT_NAME, null) != null) {

@@ -10,7 +10,7 @@ import com.google.inject.Inject;
 import greendroid.widget.ActionBarItem;
 import greendroid.widget.LoaderActionBarItem;
 import org.breizhjug.breizhlib.R;
-import org.breizhjug.breizhlib.activity.gd.AbstractGDActivity;
+import org.breizhjug.breizhlib.activity.common.AbstractGDActivity;
 import org.breizhjug.breizhlib.adapter.ReservationsAdapter;
 import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.model.Reservation;
@@ -93,6 +93,7 @@ public class ReservationsActivity extends AbstractGDActivity {
                 intent.putExtra("items", toOuvrages(items));
                 intent.putExtra("index", position);
                 intent.putExtra("item", reservation.livre);
+                intent.putExtra("emailReservation", reservation.email);
                 ReservationsActivity.this.startActivity(intent);
             }
 

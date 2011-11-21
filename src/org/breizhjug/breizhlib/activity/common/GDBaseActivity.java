@@ -1,4 +1,4 @@
-package org.breizhjug.breizhlib.activity.gd;
+package org.breizhjug.breizhlib.activity.common;
 
 import android.app.AlertDialog;
 import android.content.*;
@@ -15,7 +15,6 @@ import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.ConfigurationActivity;
-import org.breizhjug.breizhlib.activity.CreditsActivity;
 import org.breizhjug.breizhlib.activity.Menu;
 import org.breizhjug.breizhlib.activity.compte.CompteList;
 import org.breizhjug.breizhlib.database.Database;

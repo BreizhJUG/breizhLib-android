@@ -9,10 +9,9 @@ import com.google.inject.Inject;
 import com.google.inject.internal.Nullable;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
-import org.breizhjug.breizhlib.activity.gd.AbstractGDActivity;
+import org.breizhjug.breizhlib.activity.common.AbstractGDActivity;
 import org.breizhjug.breizhlib.adapter.AccountsAdapter;
 import org.breizhjug.breizhlib.utils.Authentification;
-import org.breizhjug.breizhlib.utils.GAEAuthentification;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
 import roboguice.inject.InjectView;
 

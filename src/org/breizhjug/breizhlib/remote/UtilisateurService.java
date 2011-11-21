@@ -8,6 +8,7 @@ import org.breizhjug.breizhlib.model.Utilisateur;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UtilisateurService extends Service<Utilisateur> {
@@ -41,15 +42,20 @@ public class UtilisateurService extends Service<Utilisateur> {
     }
 
     private Utilisateur find(String authCookie, String urlString) {
-        String result = queryRESTurl(authCookie, urlString);
-
-        if (result != null) {
-            Log.d(TAG, result);
-            try {
-                JSONObject item = new JSONObject(result);
-                return converter.convertUtilisateur(item);
-            } catch (JSONException e) {
-                Log.e(TAG, "There was an error parsing the JSON", e);
+        if (cache != null && cache.size() == 1) {
+            return cache.get(0);
+        } else {
+            String result = queryRESTurl(authCookie, urlString);
+            cache = new ArrayList<Utilisateur>(1);
+            if (result != null) {
+                Log.d(TAG, result);
+                try {
+                    JSONObject item = new JSONObject(result);
+                    cache.add(converter.convertUtilisateur(item));
+                    return cache.get(0);
+                } catch (JSONException e) {
+                    Log.e(TAG, "There was an error parsing the JSON", e);
+                }
             }
         }
         return null;

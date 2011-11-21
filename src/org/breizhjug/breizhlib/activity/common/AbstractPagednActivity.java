@@ -1,4 +1,4 @@
-package org.breizhjug.breizhlib.activity;
+package org.breizhjug.breizhlib.activity.common;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -8,7 +8,7 @@ import greendroid.widget.LoaderActionBarItem;
 import greendroid.widget.PageIndicator;
 import greendroid.widget.PagedView;
 import org.breizhjug.breizhlib.R;
-import org.breizhjug.breizhlib.activity.gd.AbstractGDActivity;
+import org.breizhjug.breizhlib.activity.common.AbstractGDActivity;
 import roboguice.inject.InjectExtra;
 
 import java.io.Serializable;
@@ -18,11 +18,11 @@ import java.util.ArrayList;
 public abstract class AbstractPagednActivity<T extends Serializable> extends AbstractGDActivity {
 
     @InjectExtra("item")
-    T item;
+    protected T item;
     @InjectExtra("index")
-    int index;
+    protected int index;
     @InjectExtra(value = "items", optional = true)
-    ArrayList<T> items;
+    protected ArrayList<T> items;
 
     protected PageIndicator mPageIndicatorOther;
 
