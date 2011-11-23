@@ -12,16 +12,19 @@
             >
         <EditText android:id="@+id/editText"
                   android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_weight="1"
-                  android:layout_gravity="bottom"
-                  android:text=""
+                  			android:layout_weight="75"
+                  			android:layout_height="wrap_content"
+                  			android:inputType="text"
+                  			android:imeOptions="actionSearch"
                 />
 
-        <Button android:id="@+id/button"
+        <ImageButton android:id="@+id/button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Filtrer"
+                			android:layout_height="44dip"
+                			android:layout_gravity="center_vertical"
+                			android:scaleType="fitCenter"
+                			android:background="@android:drawable/btn_default_small"
+                			android:src="@android:drawable/ic_menu_search"
                 />
     </LinearLayout>
     <ListView

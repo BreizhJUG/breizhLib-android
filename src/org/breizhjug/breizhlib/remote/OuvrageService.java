@@ -20,6 +20,8 @@ public class OuvrageService extends Service<Livre> {
 
     private final String URL_BOOKS = serverUrl + "api/ouvrages";
 
+    private final String URL_BOOKS_SEARCH = serverUrl + "api/ouvrages?p=";
+
     private final String URL_FIND_BOOKS = serverUrl + "api/find";
 
     private final String URL_ADD_BOOK = serverUrl + "api/add";
@@ -109,6 +111,28 @@ public class OuvrageService extends Service<Livre> {
         }
         return BOOKS;
     }
+
+    public List<Livre> search(String authCookie, String searchKey) {
+        Log.i(TAG, URL_BOOKS_SEARCH);
+               String result = queryRESTurl(authCookie, URL_BOOKS_SEARCH+searchKey);
+               ArrayList<Livre> BOOKS = new ArrayList<Livre>();
+               if (result != null) {
+                   try {
+                       JSONArray booksArray = new JSONArray(result);
+                       Livre livre = null;
+                       for (int a = 0; a < booksArray.length(); a++) {
+                           JSONObject item = booksArray.getJSONObject(a);
+                           livre = converter.convertLivre(item);
+
+                           BOOKS.add(livre);
+                       }
+                       return BOOKS;
+                   } catch (JSONException e) {
+                       Log.e(TAG, "There was an error parsing the JSON", e);
+                   }
+               }
+               return BOOKS;
+        }
 
     @Inject
     public OuvrageService(@ServerUrl String serverUrl) {
