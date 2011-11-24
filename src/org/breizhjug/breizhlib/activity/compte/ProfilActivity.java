@@ -6,11 +6,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import com.google.inject.Inject;
 import greendroid.widget.ActionBarItem;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
@@ -18,6 +16,7 @@ import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.CommentaireActivity;
 import org.breizhjug.breizhlib.activity.LivreActivity;
 import org.breizhjug.breizhlib.activity.common.AbstractGDActivity;
+import org.breizhjug.breizhlib.adapter.InfoListAdapter;
 import org.breizhjug.breizhlib.database.dao.CommentaireDAO;
 import org.breizhjug.breizhlib.database.dao.ReservationDAO;
 import org.breizhjug.breizhlib.model.Commentaire;
@@ -27,6 +26,9 @@ import org.breizhjug.breizhlib.model.Utilisateur;
 import org.breizhjug.breizhlib.remote.UtilisateurService;
 import org.breizhjug.breizhlib.utils.images.Gravatar;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import roboguice.inject.InjectView;
 
 import java.util.ArrayList;
@@ -36,26 +38,10 @@ public class ProfilActivity extends AbstractGDActivity {
 
     @InjectView(R.id.nom)
     TextView nom;
-    @InjectView(R.id.prenom)
-    TextView prenom;
-    @InjectView(R.id.email)
-    TextView emailV;
-    @InjectView(R.id.username)
-    TextView username;
-    @InjectView(R.id.commentaires)
-    TextView commentaires;
-    @InjectView(R.id.emprunts)
-    TextView emprunts;
-    @InjectView(R.id.reservations)
-    TextView reservations;
     @InjectView(R.id.avatar)
     ImageView icon;
-    @InjectView(R.id.commentairesbtn)
-    Button commentairesBtn;
-    @InjectView(R.id.resabtn)
-    Button resaBtn;
-    @InjectView(R.id.empruntsbtn)
-    Button empruntsBtn;
+    @InjectView(R.id.profile_info)
+    ListView profile_info;
 
     @Inject
     SharedPreferences prefs;
@@ -110,6 +96,28 @@ public class ProfilActivity extends AbstractGDActivity {
         initTask.execute((Void) null);
     }
 
+    public static final class ViewHolder {
+        TextView title;
+
+        TextView content;
+    }
+
+    ;
+
+    protected JSONObject buildListItem(final String title, final String content)
+            throws JSONException {
+        return new JSONObject().put("title", title).put("content", content);
+    }
+
+    protected boolean IsNotNullNorEmpty(final String subject) {
+        if (subject != null && !subject.equals("")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     private void initView(final Utilisateur user) {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(BreizhLibConstantes.USER, user.email);
@@ -118,64 +126,89 @@ public class ProfilActivity extends AbstractGDActivity {
         editor.putString(BreizhLibConstantes.USER_PRENOM, user.prenom);
         editor.commit();
 
-        nom.setText(user.nom);
-        prenom.setText(user.prenom);
-        emailV.setText(user.email);
-        username.setText(user.username);
-        commentaires.setText(user.commentairesLabel);
-        emprunts.setText(user.ouvragesEncoursLabel);
-        reservations.setText(user.reservationsLabel);
+        final JSONArray listItems = new JSONArray();
+        try {
+            if (IsNotNullNorEmpty(user.nom)) {
+                listItems.put(buildListItem("Nom", user.nom + " " + user.prenom));
+                nom.setText(user.nom + " " + user.prenom);
+            }
+            if (IsNotNullNorEmpty(user.email)) {
+                listItems.put(buildListItem("Email", user.email));
+            }
+            if (IsNotNullNorEmpty(user.username)) {
+                listItems.put(buildListItem("Twitter", user.username));
+            }
+            if (IsNotNullNorEmpty(user.commentairesLabel)) {
+                listItems.put(buildListItem("Commentaires", user.commentairesLabel));
+            }
+            if (IsNotNullNorEmpty(user.ouvragesEncoursLabel)) {
+                listItems.put(buildListItem("Ouvrages", user.ouvragesEncoursLabel));
+            }
+            if (IsNotNullNorEmpty(user.reservationsLabel)) {
+                listItems.put(buildListItem("Réservations", user.reservationsLabel));
+            }
+
+            listItems.put(buildListItem("Emprunt", ""));
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        final ListView infoList = (ListView) findViewById(R.id.profile_info);
+        final InfoListAdapter adapter = new InfoListAdapter(this, infoList);
+        adapter.loadData(listItems);
+        adapter.pushData();
+        infoList.setAdapter(adapter);
         imageCache.download(Gravatar.getImage(user.email), icon);
 
-        //TODO synchronisation
-        final ArrayList<Commentaire> items = commentaireDAO.findByAutor(user.nom + " " + user.prenom);
-        commentairesBtn.setVisibility(View.INVISIBLE);
-        if (items != null && items.size() > 0) {
-            commentairesBtn.setVisibility(View.VISIBLE);
-            commentairesBtn.setOnClickListener(new Button.OnClickListener() {
 
-                public void onClick(View view) {
+        infoList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(final AdapterView<?> parent, final View v,
+                                    final int position, final long id) {
+                try {
+                    final String title = ((JSONObject) listItems.get(position))
+                            .getString("title");
+                    String content = ((JSONObject) listItems.get(position))
+                            .getString("content");
+                    Intent intent = null;
 
-                    Intent intent = new Intent(getApplicationContext(), CommentaireActivity.class);
-                    intent.putExtra("item", items.get(0));
-                    intent.putExtra("items", items);
-                    intent.putExtra("index", 0);
-                    startActivity(intent);
+                    if (title.equals("Commentaires")) {
 
 
+                        final ArrayList<Commentaire> items = commentaireDAO.findByAutor(user.nom + " " + user.prenom);
+                        if (items != null && items.size() > 0) {
+                            intent = new Intent(getApplicationContext(), CommentaireActivity.class);
+                            intent.putExtra("item", items.get(0));
+                            intent.putExtra("items", items);
+                            intent.putExtra("index", 0);
+                            startActivity(intent);
+                        }
+                    }
+                    if (title.equals("Réservation")) {
+                        final ArrayList<Reservation> resaItems = reservationDAO.findByNom(user.nom, user.prenom);
+                        if (resaItems != null && resaItems.size() > 0) {
+                            intent = new Intent(getApplicationContext(), LivreActivity.class);
+                            intent.putExtra("items", toOuvrages(resaItems));
+                            intent.putExtra("index", 0);
+                            intent.putExtra("item", resaItems.get(0).livre);
+                            intent.putExtra("emailReservation", resaItems.get(0).email);
+                            startActivity(intent);
+                        }
+                    }
+                    if (title.equals("Empurnts")) {
+                        Toast.makeText(ProfilActivity.this, getString(R.string.upcoming), Toast.LENGTH_SHORT).show();
+                    } else {
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            });
-        }
-
-        //TODO synchronisation
-        final ArrayList<Reservation> resaItems = reservationDAO.findByNom(user.nom, user.prenom);
-        resaBtn.setVisibility(View.INVISIBLE);
-        if (resaItems != null && resaItems.size() > 0) {
-            resaBtn.setVisibility(View.VISIBLE);
-            resaBtn.setOnClickListener(new Button.OnClickListener() {
-
-                public void onClick(View view) {
-                    Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-                    intent.putExtra("items", toOuvrages(resaItems));
-                    intent.putExtra("index", 0);
-                    intent.putExtra("item", resaItems.get(0).livre);
-                    intent.putExtra("emailReservation", resaItems.get(0).email);
-                    startActivity(intent);
+            }
+        });
 
 
-                }
-            });
-        }
-        if (prefs.getBoolean(BreizhLibConstantes.BETA, false)) {
-            empruntsBtn.setOnClickListener(new Button.OnClickListener() {
-
-                public void onClick(View view) {
-                    Toast.makeText(ProfilActivity.this, getString(R.string.upcoming), Toast.LENGTH_SHORT).show();
-                }
-            });
-        } else {
-            empruntsBtn.setVisibility(View.INVISIBLE);
-        }
     }
 
     private ArrayList<Livre> toOuvrages(ArrayList<Reservation> items) {

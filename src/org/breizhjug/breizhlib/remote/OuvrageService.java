@@ -1,8 +1,10 @@
 package org.breizhjug.breizhlib.remote;
 
 
+import android.content.ContentValues;
 import android.util.Log;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import org.acra.ErrorReporter;
 import org.breizhjug.breizhlib.exception.ResultException;
 import org.breizhjug.breizhlib.guice.ServerUrl;
@@ -14,6 +16,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+@Singleton
 public class OuvrageService extends Service<Livre> {
 
     private static final String TAG = "Breizhlib.OuvrageService";
@@ -46,6 +49,25 @@ public class OuvrageService extends Service<Livre> {
     public Livre find(String authCookie, String isbn) throws ResultException {
         return find(authCookie, URL_FIND_BOOKS, isbn);
     }
+    
+    public void update(Livre entity) {
+        List<Livre> tmpcache = new ArrayList<Livre>(cache);
+        Log.d("UPDATE","update entity : "+entity.titre +" "+tmpcache.size());
+
+            for(Livre livre : tmpcache){
+                if(livre.iSBN.equals(entity.iSBN)){
+                    Log.d("UPDATE","update livre : "+livre.titre + entity.nbCommentaire);
+                    cache.remove(livre);
+                    livre.nbCommentaire = entity.nbCommentaire;
+                    cache.add(entity);
+                }
+            }
+        db.beginTransaction();
+        db.update(entity);
+        db.endTransaction();
+        db.close();
+    }
+    
 
     private Livre find(String authCookie, String urlString, String isbn) throws ResultException {
         String result = queryPostRESTurl(authCookie, urlString, new Param("iSBN", isbn));
@@ -104,6 +126,7 @@ public class OuvrageService extends Service<Livre> {
 
                     BOOKS.add(livre);
                 }
+                Log.d("UPDATE","load livre : "+BOOKS.size());
                 return BOOKS;
             } catch (JSONException e) {
                 Log.e(TAG, "There was an error parsing the JSON", e);

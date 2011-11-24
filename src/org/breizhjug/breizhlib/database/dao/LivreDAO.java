@@ -30,4 +30,10 @@ public class LivreDAO extends AbstractDao {
             closeCursor();
         }
     }
+
+    public void save(Livre livre){
+        db.beginTransaction();
+        db.update(livre);
+        db.endTransaction();
+    }
 }

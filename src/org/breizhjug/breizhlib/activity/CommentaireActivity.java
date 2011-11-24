@@ -34,11 +34,12 @@ public class CommentaireActivity extends AbstractGDActivity {
 
         final PagedView pagedView = (PagedView) findViewById(R.id.paged_view);
         pagedView.setOnPageChangeListener(mOnPagedViewChangedListener);
+        mPageIndicatorOther = (PageIndicator) findViewById(R.id.page_indicator_other);
 
-
-        setActivePage(pagedView.getCurrentPage());
 
         initView(null);
+
+        setActivePage(pagedView.getCurrentPage());
         getActionBar().setTitle("Commentaires");
         addActionBarItem(ActionBarItem.Type.Refresh, R.id.action_bar_refresh);
 
@@ -73,7 +74,6 @@ public class CommentaireActivity extends AbstractGDActivity {
             @Override
             protected void onPostExecute(Boolean result) {
                 super.onPostExecute(result);
-                mPageIndicatorOther = (PageIndicator) findViewById(R.id.page_indicator_other);
                 mPageIndicatorOther.setDotCount(getAdapter().getCount());
             }
 

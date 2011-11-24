@@ -35,7 +35,7 @@ public abstract class Service<T extends Model> implements Cache {
     private static final String TAG = "Breizhlib.Service";
     private static final int CONNECTION_TIMEOUT = 20000;
     private static HttpClient httpclient = getHttpClient();
-    protected List<T> cache = null;
+    protected List<T> cache = new ArrayList<T>();
 
     @Inject
     protected JsonConverter converter;
@@ -57,18 +57,23 @@ public abstract class Service<T extends Model> implements Cache {
 
     public List<T> load(String authCookie) {
         try {
-            if (forceCall || (cache == null || cache.isEmpty())) {
+            Log.d("UPDATE","load cache : "+cache.size());
+            if (forceCall ||  cache.isEmpty()) {
                 List<T> entities = db.selectAll(getEntityClass());
-                if (forceCall || (entities == null || entities.isEmpty())) {
+                if (forceCall ||  entities.isEmpty()) {
                     forceCall = false;
                     Log.d(TAG, "load");
-                    cache = load(authCookie, url());
+                    this.cache = load(authCookie, url());
+                    Log.d("UPDATE","load service : "+cache.size());
+
                     updateDB(cache);
                 } else {
-                    cache = entities;
+                    this.cache = entities;
+                    Log.d("UPDATE","load  db : "+cache.size());
                     loadDB(cache);
                 }
             }
+            Log.d("UPDATE","load  : "+cache.size());
             return cache != null ? new ArrayList<T>(cache) : cache;
         } finally {
             db.close();
@@ -93,7 +98,7 @@ public abstract class Service<T extends Model> implements Cache {
         db.endTransaction();
     }
 
-    protected void update(T entity) {
+    public void update(T entity) {
     }
 
     protected abstract boolean isInDB(T entity);

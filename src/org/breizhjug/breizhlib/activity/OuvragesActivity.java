@@ -52,7 +52,6 @@ public class OuvragesActivity extends AbstractGDActivity implements SharedPrefer
                 initView(loaderItem);
                 return true;
             default:
-
                 return super.onHandleActionBarItemClick(item, position);
         }
     }

@@ -19,6 +19,7 @@ import org.breizhjug.breizhlib.activity.common.AbstractPagednActivity;
 import org.breizhjug.breizhlib.adapter.CommentairesAdapter;
 import org.breizhjug.breizhlib.adapter.OuvragesPagedAdapter;
 import org.breizhjug.breizhlib.database.dao.CommentaireDAO;
+import org.breizhjug.breizhlib.database.dao.LivreDAO;
 import org.breizhjug.breizhlib.model.Commentaire;
 import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.model.Utilisateur;
@@ -51,6 +52,8 @@ public class LivreActivity extends AbstractPagednActivity<Livre> {
     private ImageCache imageCache;
     @Inject
     private CommentaireDAO commentaireDAO;
+    @Inject
+    private LivreDAO livreDAO;
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -134,8 +137,10 @@ public class LivreActivity extends AbstractPagednActivity<Livre> {
 
 
     private void initCommentaires(Livre livre) {
+        Log.d("UPDATE","update commentaire");
         final ArrayList<Commentaire> commentaires = commentaireDAO.findByIsbn(livre.iSBN);
-
+        livre.nbCommentaire =  commentaires.size();
+        service.update(livre);
         commentaireItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                 Commentaire commentaire = (Commentaire) commentaireItems.getItemAtPosition(position);
@@ -158,7 +163,7 @@ public class LivreActivity extends AbstractPagednActivity<Livre> {
             String email = getIntent().getStringExtra("emailReservation");
             String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
             Utilisateur user = userService.find(authCookie);
-            if (user.email.equals(email)) {
+            if (user!= null && user.email.equals(email)) {
                 //TODO si l'utilisateeur est la personne qui a réservé l'ouvrage
                 //TODO lui permettre d'annuler la réservation
                 button.setText("Annuler");

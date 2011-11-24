@@ -1,5 +1,6 @@
 package org.breizhjug.breizhlib.guice;
 
+import com.google.inject.Singleton;
 import org.breizhjug.breizhlib.BreizhLib;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.adapter.*;
@@ -35,21 +36,21 @@ public class BreizhLibModule extends AbstractAndroidModule {
         bindConstant().annotatedWith(ServerUrl.class).to(BreizhLibConstantes.SERVER_URL);
 
 
-        bind(CommentaireService.class);
-        bind(OuvrageService.class);
-        bind(ReservationService.class);
-        bind(UtilisateurService.class);
-        bind(EmpruntService.class);
-        bind(JsonConverter.class);
-        bind(ImageCache.class);
-        bind(CacheManager.class);
-        bind(Database.class);
-        bind(Tracker.class);
-        bind(VersionTask.class);
-        bind(Authentification.class).to(GAEAuthentification.class);
-        bind(ReservationDAO.class);
-        bind(LivreDAO.class);
-        bind(CommentaireDAO.class);
+        bind(CommentaireService.class).in(Singleton.class);
+        bind(OuvrageService.class).in(Singleton.class);
+        bind(ReservationService.class).in(Singleton.class);
+        bind(UtilisateurService.class).in(Singleton.class);
+        bind(EmpruntService.class).in(Singleton.class);
+        bind(JsonConverter.class).in(Singleton.class);
+        bind(ImageCache.class).in(Singleton.class);
+        bind(CacheManager.class).in(Singleton.class);
+        bind(Database.class).in(Singleton.class);
+        bind(Tracker.class).in(Singleton.class);
+        bind(VersionTask.class).in(Singleton.class);
+        bind(Authentification.class).to(GAEAuthentification.class).in(Singleton.class);
+        bind(ReservationDAO.class).in(Singleton.class);
+        bind(LivreDAO.class).in(Singleton.class);
+        bind(CommentaireDAO.class).in(Singleton.class);
         //bind(SharedPreferences.class).toInstance(PreferenceManager.getDefaultSharedPreferences(application));
 
 

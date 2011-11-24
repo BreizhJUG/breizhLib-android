@@ -82,7 +82,7 @@ public class AvisActivity extends AbstractGDActivity {
                 String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
                 Commentaire result = null;
                 try {
-                    result = service.comment(authCookie, livre.iSBN, nom, avis, Integer.valueOf("" + rating.getRating()));
+                    result = service.comment(authCookie, livre.iSBN, nom, avis,  rating.getNumStars());
                 } catch (ResultException e) {
                     showError(e.result.msg, true);
                     finish();

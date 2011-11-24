@@ -70,7 +70,7 @@ public class ReservationService extends Service<Reservation> {
         return super.load(authCookie);
     }
 
-    protected void update(Reservation entity) {
+    public void update(Reservation entity) {
         db.update(entity);
         if (entity.livre != null) {
             Log.d(TAG, "update livre");

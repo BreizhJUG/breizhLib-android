@@ -27,6 +27,7 @@ public class Livre implements Serializable, Model {
     public boolean add;
     @Column
     public String etat;
+    public int nbCommentaire;
 
     public Livre() {
 

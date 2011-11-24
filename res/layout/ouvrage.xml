@@ -3,7 +3,8 @@
               android:orientation="horizontal"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-        >
+              android:padding="5dip">
+
 
     <ImageView
             android:id="@+id/img"
@@ -36,13 +37,6 @@
                       android:layout_height="wrap_content"
                 >
 
-            <ImageView
-                    android:id="@+id/etat"
-                    android:layout_width="30sp"
-                    android:layout_height="30sp"
-                    android:layout_gravity="center_vertical"
-                    android:padding="10px"
-                    />
             <TextView android:id="@+id/editeur"
                       android:layout_width="wrap_content"
                       android:layout_height="fill_parent"
@@ -52,5 +46,41 @@
         </LinearLayout>
 
     </LinearLayout>
+    <LinearLayout
+    		android:orientation="vertical"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:layout_centerVertical="true" android:layout_gravity="center_vertical">
+        <LinearLayout
+            			android:layout_height="fill_parent"
+            			android:orientation="horizontal"
+            			android:layout_width="wrap_content"
+            			android:isScrollContainer="false"
+            			android:gravity="center_vertical">
+            <TextView
+            				android:id="@+id/nb_commentaire"
+            				android:layout_width="wrap_content"
+            				android:layout_height="wrap_content"
+            				android:textSize="10sp"
+                            android:text="0"/>
+            			<ImageView
+            				android:id="@+id/com_img"
+            				android:layout_width="16px"
+            				android:layout_height="16px"
+            				android:src="@drawable/commentaire" />
+            		</LinearLayout>
+        <LinearLayout
+    			android:layout_height="fill_parent"
+    			android:orientation="horizontal"
+    			android:layout_width="wrap_content"
+    			android:isScrollContainer="false"
+    			android:gravity="center_vertical">
 
+    			<ImageView
+    				android:id="@+id/etat"
+    				android:layout_width="16px"
+    				android:layout_height="16px"
+    				android:src="@drawable/voyant_vert" />
+    		</LinearLayout>
+    </LinearLayout>
 </LinearLayout>
