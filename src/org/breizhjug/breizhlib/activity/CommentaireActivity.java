@@ -1,25 +1,27 @@
 package org.breizhjug.breizhlib.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
 import com.google.inject.Inject;
 import greendroid.widget.*;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.common.AbstractGDActivity;
+import org.breizhjug.breizhlib.activity.common.AbstractPagednActivity;
 import org.breizhjug.breizhlib.adapter.CommentairesPagedAdapter;
 import org.breizhjug.breizhlib.model.Commentaire;
+import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.remote.AsyncPageViewRemoteTask;
 import org.breizhjug.breizhlib.remote.CommentaireService;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
 
+import java.util.List;
 
-public class CommentaireActivity extends AbstractGDActivity {
 
-    private PageIndicator mPageIndicatorOther;
-
-    private static final int PAGE_COUNT = 7;
-    private static final int PAGE_MAX_INDEX = PAGE_COUNT - 1;
+public class CommentaireActivity extends AbstractPagednActivity<Commentaire> {
 
     @Inject
     private CommentaireService service;
@@ -27,22 +29,15 @@ public class CommentaireActivity extends AbstractGDActivity {
     private ImageCache imageCache;
 
 
+    @Override
+    protected Class<? extends Activity> getActivityClass() {
+        return CommentaireActivity.class;
+    }
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setActionBarContentView(R.layout.paged_view);
-
-        final PagedView pagedView = (PagedView) findViewById(R.id.paged_view);
-        pagedView.setOnPageChangeListener(mOnPagedViewChangedListener);
-        mPageIndicatorOther = (PageIndicator) findViewById(R.id.page_indicator_other);
-
-
-        initView(null);
-
-        setActivePage(pagedView.getCurrentPage());
         getActionBar().setTitle("Commentaires");
         addActionBarItem(ActionBarItem.Type.Refresh, R.id.action_bar_refresh);
-
     }
 
     @Override
@@ -68,13 +63,18 @@ public class CommentaireActivity extends AbstractGDActivity {
 
             @Override
             public PagedAdapter getAdapter() {
-                return new CommentairesPagedAdapter(CommentaireActivity.this, items);
+                List<Commentaire> commentaires = CommentaireActivity.this.items;
+                if(commentaires == null){
+                    commentaires = items;
+                }
+                return new CommentairesPagedAdapter(CommentaireActivity.this, commentaires);
             }
 
             @Override
             protected void onPostExecute(Boolean result) {
                 super.onPostExecute(result);
-                mPageIndicatorOther.setDotCount(getAdapter().getCount());
+                //mPageIndicatorOther.setDotCount(getAdapter().getCount());
+                pagedView.smoothScrollToPage(index);
             }
 
 
@@ -83,26 +83,6 @@ public class CommentaireActivity extends AbstractGDActivity {
             }
         };
         initTask.execute((Void) null);
+
     }
-
-
-    private void setActivePage(int page) {
-        mPageIndicatorOther.setActiveDot(page);
-    }
-
-    private PagedView.OnPagedViewChangeListener mOnPagedViewChangedListener = new PagedView.OnPagedViewChangeListener() {
-
-        @Override
-        public void onStopTracking(PagedView pagedView) {
-        }
-
-        @Override
-        public void onStartTracking(PagedView pagedView) {
-        }
-
-        @Override
-        public void onPageChanged(PagedView pagedView, int previousPage, int newPage) {
-            setActivePage(newPage);
-        }
-    };
 }

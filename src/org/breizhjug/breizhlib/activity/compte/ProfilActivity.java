@@ -102,7 +102,7 @@ public class ProfilActivity extends AbstractGDActivity {
         TextView content;
     }
 
-    ;
+
 
     protected JSONObject buildListItem(final String title, final String content)
             throws JSONException {

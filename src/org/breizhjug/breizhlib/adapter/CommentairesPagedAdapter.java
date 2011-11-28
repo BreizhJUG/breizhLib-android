@@ -32,7 +32,7 @@ public class CommentairesPagedAdapter extends PagedAdapter {
 
     @Override
     public int getCount() {
-        return commentaires.size() - 1;
+        return commentaires.size();
     }
 
     @Override
@@ -79,5 +79,8 @@ public class CommentairesPagedAdapter extends PagedAdapter {
 
         return convertView;
     }
+
+
+
 
 }

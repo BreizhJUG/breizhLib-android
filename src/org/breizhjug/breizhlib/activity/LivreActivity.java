@@ -204,7 +204,6 @@ public class LivreActivity extends AbstractPagednActivity<Livre> {
             }
         } else {
             button.setText(getString(R.string.indispoBtn));
-            button.setBackgroundColor(Color.RED);
         }
     }
 
@@ -242,7 +241,6 @@ public class LivreActivity extends AbstractPagednActivity<Livre> {
         } else {
             button.setText(getString(R.string.nonDispoBtn));
             button.setEnabled(false);
-            button.setBackgroundColor(Color.RED);
         }
     }
 
