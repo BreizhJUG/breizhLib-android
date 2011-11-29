@@ -153,7 +153,7 @@ public class LivreActivity extends AbstractPagednActivity<Livre> {
         });
 
         Log.d(TAG, livre.iSBN + " size :" + commentaires.size());
-        CommentairesAdapter commentairesAdapter = new CommentairesAdapter(this.getBaseContext(), commentaires);
+        CommentairesAdapter commentairesAdapter = new CommentairesAdapter(this.getBaseContext(), commentaires,false,R.layout.commentaire_item_short);
         commentaireItems.setAdapter(commentairesAdapter);
     }
 

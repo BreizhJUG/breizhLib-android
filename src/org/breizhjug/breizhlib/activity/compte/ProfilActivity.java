@@ -6,23 +6,24 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 import com.google.inject.Inject;
 import greendroid.widget.ActionBarItem;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.CommentaireActivity;
+import org.breizhjug.breizhlib.activity.EmpruntsActivity;
 import org.breizhjug.breizhlib.activity.LivreActivity;
 import org.breizhjug.breizhlib.activity.common.AbstractGDActivity;
 import org.breizhjug.breizhlib.adapter.InfoListAdapter;
 import org.breizhjug.breizhlib.database.dao.CommentaireDAO;
+import org.breizhjug.breizhlib.database.dao.EmpruntDAO;
 import org.breizhjug.breizhlib.database.dao.ReservationDAO;
-import org.breizhjug.breizhlib.model.Commentaire;
-import org.breizhjug.breizhlib.model.Livre;
-import org.breizhjug.breizhlib.model.Reservation;
-import org.breizhjug.breizhlib.model.Utilisateur;
+import org.breizhjug.breizhlib.model.*;
 import org.breizhjug.breizhlib.remote.UtilisateurService;
 import org.breizhjug.breizhlib.utils.images.Gravatar;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
@@ -53,6 +54,8 @@ public class ProfilActivity extends AbstractGDActivity {
     private CommentaireDAO commentaireDAO;
     @Inject
     private ReservationDAO reservationDAO;
+    @Inject
+    private EmpruntDAO empruntDAO;
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -103,7 +106,6 @@ public class ProfilActivity extends AbstractGDActivity {
     }
 
 
-
     protected JSONObject buildListItem(final String title, final String content)
             throws JSONException {
         return new JSONObject().put("title", title).put("content", content);
@@ -148,7 +150,7 @@ public class ProfilActivity extends AbstractGDActivity {
                 listItems.put(buildListItem("Réservations", user.reservationsLabel));
             }
 
-            listItems.put(buildListItem("Emprunt", ""));
+            //listItems.put(buildListItem("Emprunts", ""));
 
 
         } catch (JSONException e) {
@@ -186,7 +188,7 @@ public class ProfilActivity extends AbstractGDActivity {
                             startActivity(intent);
                         }
                     }
-                    if (title.equals("Réservation")) {
+                    if (title.equals("Réservations")) {
                         final ArrayList<Reservation> resaItems = reservationDAO.findByNom(user.nom, user.prenom);
                         if (resaItems != null && resaItems.size() > 0) {
                             intent = new Intent(getApplicationContext(), LivreActivity.class);
@@ -197,8 +199,15 @@ public class ProfilActivity extends AbstractGDActivity {
                             startActivity(intent);
                         }
                     }
-                    if (title.equals("Empurnts")) {
-                        Toast.makeText(ProfilActivity.this, getString(R.string.upcoming), Toast.LENGTH_SHORT).show();
+                    if (title.equals("Ouvrages")) {
+                        final ArrayList<Emprunt> empruntItems = empruntDAO.findByNom(user.nom, user.prenom);
+                        if (empruntItems != null && empruntItems.size() > 0) {
+                            intent = new Intent(getApplicationContext(), EmpruntsActivity.class);
+                            intent.putExtra("items", empruntToOuvrages(empruntItems));
+                            intent.putExtra("index", 0);
+                            intent.putExtra("item", empruntItems.get(0).livre);
+                            startActivity(intent);
+                        }
                     } else {
                         return;
                     }
@@ -215,6 +224,16 @@ public class ProfilActivity extends AbstractGDActivity {
         ArrayList<Livre> livres = new ArrayList<Livre>();
 
         for (Reservation item : items) {
+            livres.add(item.livre);
+        }
+
+        return livres;
+    }
+
+    private ArrayList<Livre> empruntToOuvrages(ArrayList<Emprunt> items) {
+        ArrayList<Livre> livres = new ArrayList<Livre>();
+
+        for (Emprunt item : items) {
             livres.add(item.livre);
         }
 

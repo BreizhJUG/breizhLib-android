@@ -6,6 +6,7 @@ import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.adapter.*;
 import org.breizhjug.breizhlib.database.Database;
 import org.breizhjug.breizhlib.database.dao.CommentaireDAO;
+import org.breizhjug.breizhlib.database.dao.EmpruntDAO;
 import org.breizhjug.breizhlib.database.dao.LivreDAO;
 import org.breizhjug.breizhlib.database.dao.ReservationDAO;
 import org.breizhjug.breizhlib.remote.*;
@@ -51,6 +52,7 @@ public class BreizhLibModule extends AbstractAndroidModule {
         bind(ReservationDAO.class).in(Singleton.class);
         bind(LivreDAO.class).in(Singleton.class);
         bind(CommentaireDAO.class).in(Singleton.class);
+        bind(EmpruntDAO.class).in(Singleton.class);
         //bind(SharedPreferences.class).toInstance(PreferenceManager.getDefaultSharedPreferences(application));
 
 
