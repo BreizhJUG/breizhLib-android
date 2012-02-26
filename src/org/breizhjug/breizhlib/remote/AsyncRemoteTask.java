@@ -73,7 +73,7 @@ public abstract class AsyncRemoteTask<T extends Model> extends AsyncTask<Void, V
     }
 
     public void displayEmptyMessage() {
-        Toast.makeText(context, "Aucune information ", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, R.string.no_info, Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -5,7 +5,7 @@ import android.database.Cursor;
 import fr.ybo.database.annotation.Column;
 import fr.ybo.database.annotation.Entity;
 import org.breizhjug.breizhlib.database.Database;
-
+import static org.breizhjug.breizhlib.model.Columns.*;
 import java.io.Serializable;
 
 @Entity
@@ -46,9 +46,9 @@ public class Reservation implements Serializable, Model {
     }
 
     public Reservation(Cursor cursor) {
-        nom = cursor.getString(cursor.getColumnIndex("nom"));
-        isbn = cursor.getString(cursor.getColumnIndex("isbn"));
-        prenom = cursor.getString(cursor.getColumnIndex("prenom"));
+        nom = cursor.getString(cursor.getColumnIndex(Columns.NOM));
+        isbn = cursor.getString(cursor.getColumnIndex(ISBN));
+        prenom = cursor.getString(cursor.getColumnIndex(PRENOM));
     }
 
     public void onLoad(Database db) {

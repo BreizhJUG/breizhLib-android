@@ -89,7 +89,7 @@ public class SearchActivity extends AbstractGDActivity {
         super.onCreate(savedInstanceState);
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         setActionBarContentView(R.layout.items_search);
-        getActionBar().setTitle("Recherche");
+        getActionBar().setTitle(getText(R.string.search_title));
 
 
         mSearchBox = (EditText) findViewById(R.id.editText);

@@ -20,6 +20,7 @@ import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.remote.CommentaireService;
 import roboguice.inject.InjectExtra;
 import roboguice.inject.InjectView;
+import static org.breizhjug.breizhlib.IntentConstantes.*;
 
 
 public class AvisActivity extends AbstractGDActivity {
@@ -34,7 +35,7 @@ public class AvisActivity extends AbstractGDActivity {
     RatingBar rating;
 
 
-    @InjectExtra("livre")
+    @InjectExtra(LIVRE)
     Livre livre;
 
     @Inject
@@ -58,9 +59,9 @@ public class AvisActivity extends AbstractGDActivity {
                 String nom = nomEdit.getText().toString();
 
                 if (avis == null || avis.length() == 0) {
-                    showError("Commentaite non renseigné", false);
+                    showError(R.string.commentaire_validation_msg, false);
                 } else if (nom == null || nom.length() == 0) {
-                    showError("Nom non renseigné", false);
+                    showError(R.string.nom_validation_msg, false);
                 } else {
                     sendAvis();
                 }
@@ -71,7 +72,7 @@ public class AvisActivity extends AbstractGDActivity {
     private void sendAvis() {
         final String avis = avisEdit.getText().toString();
         final String nom = nomEdit.getText().toString();
-        final ProgressDialog waitDialog = ProgressDialog.show(this, "Envoi de votre item", getString(R.string.chargement), true, true);
+        final ProgressDialog waitDialog = ProgressDialog.show(this,getString(R.string.commentaire_send),  getString(R.string.chargement), true, true);
 
         final AsyncTask<Void, Void, Commentaire> initTask = new AsyncTask<Void, Void, Commentaire>() {
 
@@ -94,11 +95,11 @@ public class AvisActivity extends AbstractGDActivity {
             protected void onPostExecute(Commentaire result) {
                 waitDialog.dismiss();
                 if (result == null) {
-                    showError("Erreur lors de l'envoi du item", true);
+                    showError(getString(R.string.commentaire_send_error), true);
                 } else {
                     Toast.makeText(AvisActivity.this, getString(R.string.commentaireSave), Toast.LENGTH_SHORT);
                     Intent intent = new Intent(getApplicationContext(), CommentaireActivity.class);
-                    intent.putExtra("item", result);
+                    intent.putExtra(ITEM, result);
                     startActivity(intent);
                     finish();
                 }

@@ -3,20 +3,20 @@ package org.breizhjug.breizhlib;
 
 public interface BreizhLibConstantes {
 
-    public static final String SERVER_URL = "http://2-0-0.breizh-lib.appspot.com/";
+    String SERVER_URL = "http://2-0-0.breizh-lib.appspot.com";
 
-    public static final String MARKET_URL = "market://details?id=org.breizhjug.breizhlib";
+    String MARKET_URL = "market://details?id=org.breizhjug.breizhlib";
 
-    public static final String UA_ACCOUNT = "UA-25249240-2";
+    String UA_ACCOUNT = "UA-25249240-2";
     /**
      * clés pour shared preferences.
      */
-    public static final String ACCOUNT_NAME = "accountName";
-    public static final String AUTH_COOKIE = "authCookie";
-    public static final String USER = "user";
-    public static final String USER_ADMIN = "userAdmin";
-    public static final String USER_NOM = "user_nom";
-    public static final String USER_PRENOM = "user_prenom";
-    public static final String GRID = "ouvrages_grid";
-    public static final String BETA = "beta";
+    String ACCOUNT_NAME = "accountName";
+    String AUTH_COOKIE = "authCookie";
+    String USER = "user";
+    String USER_ADMIN = "userAdmin";
+    String USER_NOM = "user_nom";
+    String USER_PRENOM = "user_prenom";
+    String GRID = "ouvrages_grid";
+    String BETA = "beta";
 }

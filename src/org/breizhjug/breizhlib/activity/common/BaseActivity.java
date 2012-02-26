@@ -14,6 +14,7 @@ import org.breizhjug.breizhlib.database.Database;
 import org.breizhjug.breizhlib.utils.IntentSupport;
 import org.breizhjug.breizhlib.utils.Tracker;
 import roboguice.activity.RoboActivity;
+import static org.breizhjug.breizhlib.BreizhLibConstantes.*;
 
 
 public class BaseActivity extends RoboActivity {
@@ -117,12 +118,12 @@ public class BaseActivity extends RoboActivity {
 
     private void onLogout() {
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(BreizhLibConstantes.AUTH_COOKIE, null);
-        editor.putString(BreizhLibConstantes.ACCOUNT_NAME, null);
-        editor.putString(BreizhLibConstantes.USER, null);
-        editor.putString(BreizhLibConstantes.USER_NOM, null);
-        editor.putString(BreizhLibConstantes.USER_PRENOM, null);
-        editor.putString(BreizhLibConstantes.USER_ADMIN, null);
+        editor.putString(AUTH_COOKIE, null);
+        editor.putString(ACCOUNT_NAME, null);
+        editor.putString(USER, null);
+        editor.putString(USER_NOM, null);
+        editor.putString(USER_PRENOM, null);
+        editor.putString(USER_ADMIN, null);
         editor.commit();
     }
 

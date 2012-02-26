@@ -11,6 +11,7 @@ import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.common.AbstractGDActivity;
 import roboguice.inject.InjectExtra;
 import roboguice.inject.InjectView;
+import static org.breizhjug.breizhlib.IntentConstantes.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -37,11 +38,11 @@ public abstract class AbstractNavigationActivity<T extends Serializable> extends
     @Nullable
     ImageView star5;
 
-    @InjectExtra("item")
+    @InjectExtra(ITEM)
     T item;
-    @InjectExtra("index")
+    @InjectExtra(INDEX)
     int index;
-    @InjectExtra(value = "items", optional = true)
+    @InjectExtra(value = ITEMS, optional = true)
     ArrayList<T> items;
 
 
@@ -85,18 +86,18 @@ public abstract class AbstractNavigationActivity<T extends Serializable> extends
 
     private void onPrevious() {
         Intent intent = new Intent(getApplicationContext(), getActivityClass());
-        intent.putExtra("item", items.get(index - 1));
-        intent.putExtra("items", items);
-        intent.putExtra("index", index - 1);
+        intent.putExtra(ITEM, items.get(index - 1));
+        intent.putExtra(ITEMS, items);
+        intent.putExtra(INDEX, index - 1);
         startActivity(intent);
         finish();
     }
 
     private void onNext() {
         Intent intent = new Intent(getApplicationContext(), getActivityClass());
-        intent.putExtra("item", items.get(index + 1));
-        intent.putExtra("items", items);
-        intent.putExtra("index", index + 1);
+        intent.putExtra(ITEM, items.get(index + 1));
+        intent.putExtra(ITEMS, items);
+        intent.putExtra(INDEX, index + 1);
         startActivity(intent);
         finish();
     }

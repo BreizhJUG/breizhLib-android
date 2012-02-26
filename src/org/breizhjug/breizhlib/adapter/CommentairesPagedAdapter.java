@@ -13,7 +13,7 @@ import org.breizhjug.breizhlib.activity.LivreActivity;
 import org.breizhjug.breizhlib.model.Commentaire;
 import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
-
+import static org.breizhjug.breizhlib.IntentConstantes.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,9 +61,9 @@ public class CommentairesPagedAdapter extends PagedAdapter {
                       Intent intent = new Intent(activity.getApplicationContext(), LivreActivity.class);
                       ArrayList<Livre> items = new ArrayList<Livre>();
                       items.add(commentaire.livre);
-                      intent.putExtra("items", items);
-                      intent.putExtra("index", 0);
-                      intent.putExtra("item", commentaire.livre);
+                      intent.putExtra(ITEMS, items);
+                      intent.putExtra(INDEX, 0);
+                      intent.putExtra(ITEM, commentaire.livre);
                       activity.startActivity(intent);
           }
               });

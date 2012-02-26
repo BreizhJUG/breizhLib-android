@@ -8,6 +8,7 @@ import fr.ybo.database.annotation.PrimaryKey;
 import org.breizhjug.breizhlib.database.Database;
 
 import java.io.Serializable;
+import static org.breizhjug.breizhlib.model.Columns.*;
 
 @Entity
 public class Livre implements Serializable, Model {
@@ -41,11 +42,11 @@ public class Livre implements Serializable, Model {
     }
 
     public Livre(Cursor cursor) {
-        note = cursor.getInt(cursor.getColumnIndex("note"));
-        editeur = cursor.getString(cursor.getColumnIndex("editeur"));
+        note = cursor.getInt(cursor.getColumnIndex(NOTE));
+        editeur = cursor.getString(cursor.getColumnIndex(EDITEUR));
         iSBN = cursor.getString(cursor.getColumnIndex("iSBN"));
-        imgUrl = cursor.getString(cursor.getColumnIndex("imgUrl"));
-        titre = cursor.getString(cursor.getColumnIndex("titre"));
+        imgUrl = cursor.getString(cursor.getColumnIndex(IMG_URL));
+        titre = cursor.getString(cursor.getColumnIndex(TITRE));
     }
 
     public void onLoad(Database db) {

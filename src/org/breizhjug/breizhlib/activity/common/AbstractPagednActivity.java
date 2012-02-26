@@ -10,6 +10,7 @@ import greendroid.widget.PagedView;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.common.AbstractGDActivity;
 import roboguice.inject.InjectExtra;
+import static org.breizhjug.breizhlib.IntentConstantes.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,11 +18,11 @@ import java.util.ArrayList;
 
 public abstract class AbstractPagednActivity<T extends Serializable> extends AbstractGDActivity {
 
-    @InjectExtra("item")
+    @InjectExtra(ITEM)
     protected T item;
-    @InjectExtra("index")
+    @InjectExtra(INDEX)
     protected int index;
-    @InjectExtra(value = "items", optional = true)
+    @InjectExtra(value = ITEMS, optional = true)
     protected ArrayList<T> items;
 
     protected PageIndicator mPageIndicatorOther;

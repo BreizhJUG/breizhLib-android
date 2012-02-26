@@ -14,7 +14,6 @@ import org.breizhjug.breizhlib.utils.IntentSupport;
 
 public abstract class AbstractGDActivity extends GDBaseActivity {
 
-
     protected LayoutInflater layoutInflater;
 
     public abstract void init(Intent intent);

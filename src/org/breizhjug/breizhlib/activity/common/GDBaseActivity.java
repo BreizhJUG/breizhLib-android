@@ -25,6 +25,7 @@ import roboguice.application.RoboApplication;
 import roboguice.event.EventManager;
 import roboguice.inject.ContextScope;
 import roboguice.inject.InjectorProvider;
+import static org.breizhjug.breizhlib.BreizhLibConstantes.*;
 
 
 public class GDBaseActivity extends GDActivity implements InjectorProvider {
@@ -89,6 +90,11 @@ public class GDBaseActivity extends GDActivity implements InjectorProvider {
         build.create().show();
     }
 
+    protected void showError(int resId, final boolean finish) {
+        showError(getString(resId), finish);
+    }
+
+
     @Override
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
@@ -142,12 +148,12 @@ public class GDBaseActivity extends GDActivity implements InjectorProvider {
 
     private void onLogout() {
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(BreizhLibConstantes.AUTH_COOKIE, null);
-        editor.putString(BreizhLibConstantes.ACCOUNT_NAME, null);
-        editor.putString(BreizhLibConstantes.USER, null);
-        editor.putString(BreizhLibConstantes.USER_NOM, null);
-        editor.putString(BreizhLibConstantes.USER_PRENOM, null);
-        editor.putString(BreizhLibConstantes.USER_ADMIN, null);
+        editor.putString(AUTH_COOKIE, null);
+        editor.putString(ACCOUNT_NAME, null);
+        editor.putString(USER, null);
+        editor.putString(USER_NOM, null);
+        editor.putString(USER_PRENOM, null);
+        editor.putString(USER_ADMIN, null);
         editor.commit();
     }
 

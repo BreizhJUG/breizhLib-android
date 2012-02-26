@@ -5,6 +5,7 @@ import android.database.Cursor;
 import fr.ybo.database.annotation.Column;
 import fr.ybo.database.annotation.Entity;
 import org.breizhjug.breizhlib.database.Database;
+import static org.breizhjug.breizhlib.model.Columns.*;
 
 import java.io.Serializable;
 
@@ -43,9 +44,9 @@ public class Emprunt implements Serializable, Model {
     }
 
     public Emprunt(Cursor cursor) {
-        nom = cursor.getString(cursor.getColumnIndex("nom"));
-        isbn = cursor.getString(cursor.getColumnIndex("isbn"));
-        prenom = cursor.getString(cursor.getColumnIndex("prenom"));
+        nom = cursor.getString(cursor.getColumnIndex(NOM));
+        isbn = cursor.getString(cursor.getColumnIndex(ISBN));
+        prenom = cursor.getString(cursor.getColumnIndex(PRENOM));
     }
 
     public void onLoad(Database db) {

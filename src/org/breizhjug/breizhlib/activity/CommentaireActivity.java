@@ -36,7 +36,7 @@ public class CommentaireActivity extends AbstractPagednActivity<Commentaire> {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActionBar().setTitle("Commentaires");
+        getActionBar().setTitle(getText(R.string.commentaires_title));
         addActionBarItem(ActionBarItem.Type.Refresh, R.id.action_bar_refresh);
     }
 

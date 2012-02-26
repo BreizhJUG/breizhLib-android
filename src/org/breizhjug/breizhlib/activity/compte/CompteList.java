@@ -14,6 +14,7 @@ import org.breizhjug.breizhlib.adapter.AccountsAdapter;
 import org.breizhjug.breizhlib.utils.Authentification;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
 import roboguice.inject.InjectView;
+import static org.breizhjug.breizhlib.IntentConstantes.*;
 
 import java.util.List;
 
@@ -49,14 +50,14 @@ public class CompteList extends AbstractGDActivity {
 
                     String account = (String) listView.getItemAtPosition(position);
                     Intent intent = new Intent(getApplicationContext(), AppInfo.class);
-                    intent.putExtra("account", account);
+                    intent.putExtra(ACCOUNT, account);
                     startActivity(intent);
                     finish();
                 }
             });
         } else {
             Intent pIntent = new Intent(this, ProfilActivity.class);
-            pIntent.putExtra("email", prefs.getString(BreizhLibConstantes.ACCOUNT_NAME, null));
+            pIntent.putExtra(EMAIL, prefs.getString(BreizhLibConstantes.ACCOUNT_NAME, null));
             startActivity(pIntent);
             finish();
         }

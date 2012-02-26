@@ -31,6 +31,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import roboguice.inject.InjectView;
+import static org.breizhjug.breizhlib.IntentConstantes.*;
 
 import java.util.ArrayList;
 
@@ -60,7 +61,7 @@ public class ProfilActivity extends AbstractGDActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActionBar().setTitle("Profil");
+        getActionBar().setTitle(getText(R.string.profil_title));
         getActionBar().addItem(ActionBarItem.Type.Settings, R.id.action_bar_settings);
         setActionBarContentView(R.layout.profil);
     }
@@ -182,9 +183,9 @@ public class ProfilActivity extends AbstractGDActivity {
                         final ArrayList<Commentaire> items = commentaireDAO.findByAutor(user.nom + " " + user.prenom);
                         if (items != null && items.size() > 0) {
                             intent = new Intent(getApplicationContext(), CommentaireActivity.class);
-                            intent.putExtra("item", items.get(0));
-                            intent.putExtra("items", items);
-                            intent.putExtra("index", 0);
+                            intent.putExtra(ITEM, items.get(0));
+                            intent.putExtra(ITEMS, items);
+                            intent.putExtra(INDEX, 0);
                             startActivity(intent);
                         }
                     }
@@ -192,9 +193,9 @@ public class ProfilActivity extends AbstractGDActivity {
                         final ArrayList<Reservation> resaItems = reservationDAO.findByNom(user.nom, user.prenom);
                         if (resaItems != null && resaItems.size() > 0) {
                             intent = new Intent(getApplicationContext(), LivreActivity.class);
-                            intent.putExtra("items", toOuvrages(resaItems));
-                            intent.putExtra("index", 0);
-                            intent.putExtra("item", resaItems.get(0).livre);
+                            intent.putExtra(ITEMS, toOuvrages(resaItems));
+                            intent.putExtra(INDEX, 0);
+                            intent.putExtra(ITEM, resaItems.get(0).livre);
                             intent.putExtra("emailReservation", resaItems.get(0).email);
                             startActivity(intent);
                         }
@@ -203,9 +204,9 @@ public class ProfilActivity extends AbstractGDActivity {
                         final ArrayList<Emprunt> empruntItems = empruntDAO.findByNom(user.nom, user.prenom);
                         if (empruntItems != null && empruntItems.size() > 0) {
                             intent = new Intent(getApplicationContext(), EmpruntsActivity.class);
-                            intent.putExtra("items", empruntToOuvrages(empruntItems));
-                            intent.putExtra("index", 0);
-                            intent.putExtra("item", empruntItems.get(0).livre);
+                            intent.putExtra(ITEMS, empruntToOuvrages(empruntItems));
+                            intent.putExtra(INDEX, 0);
+                            intent.putExtra(ITEM, empruntItems.get(0).livre);
                             startActivity(intent);
                         }
                     } else {

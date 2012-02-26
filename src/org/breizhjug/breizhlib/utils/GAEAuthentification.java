@@ -64,10 +64,12 @@ public class GAEAuthentification implements Authentification{
         try {
             // Get ACSID cookie
             DefaultHttpClient client = new DefaultHttpClient();
+            Log.d(TAG, "url : " + BreizhLibConstantes.SERVER_URL);
             String continueURL = BreizhLibConstantes.SERVER_URL;
             URI uri = new URI(BreizhLibConstantes.SERVER_URL + "/_ah/login?continue="
                     + URLEncoder.encode(continueURL, "UTF-8") + "&auth=" + authToken);
             HttpGet method = new HttpGet(uri);
+
             final HttpParams getParams = new BasicHttpParams();
             HttpClientParams.setRedirecting(getParams, false);
             method.setParams(getParams);

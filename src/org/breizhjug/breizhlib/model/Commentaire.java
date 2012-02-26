@@ -6,6 +6,7 @@ import fr.ybo.database.annotation.Column;
 import fr.ybo.database.annotation.Entity;
 import fr.ybo.database.annotation.PrimaryKey;
 import org.breizhjug.breizhlib.database.Database;
+import static org.breizhjug.breizhlib.model.Columns.*;
 
 import java.io.Serializable;
 
@@ -47,10 +48,10 @@ public class Commentaire implements Serializable, Model {
     }
 
     public Commentaire(Cursor cursor) {
-        note = cursor.getInt(cursor.getColumnIndex("note"));
-        nom = cursor.getString(cursor.getColumnIndex("nom"));
-        isbn = cursor.getString(cursor.getColumnIndex("isbn"));
-        commentaire = cursor.getString(cursor.getColumnIndex("commentaire"));
+        note = cursor.getInt(cursor.getColumnIndex(NOTE));
+        nom = cursor.getString(cursor.getColumnIndex(NOM));
+        isbn = cursor.getString(cursor.getColumnIndex(ISBN));
+        commentaire = cursor.getString(cursor.getColumnIndex(COMMENTAIRE));
     }
 
     public void onLoad(Database db) {

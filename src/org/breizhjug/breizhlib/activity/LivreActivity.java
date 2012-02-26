@@ -27,6 +27,7 @@ import org.breizhjug.breizhlib.remote.OuvrageService;
 import org.breizhjug.breizhlib.remote.ReservationService;
 import org.breizhjug.breizhlib.remote.UtilisateurService;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
+import static org.breizhjug.breizhlib.IntentConstantes.*;
 
 import java.util.ArrayList;
 
@@ -145,9 +146,9 @@ public class LivreActivity extends AbstractPagednActivity<Livre> {
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                 Commentaire commentaire = (Commentaire) commentaireItems.getItemAtPosition(position);
                 Intent intent = new Intent(getApplicationContext(), CommentaireActivity.class);
-                intent.putExtra("item", commentaire);
-                intent.putExtra("items", commentaires);
-                intent.putExtra("index", position);
+                intent.putExtra(ITEM, commentaire);
+                intent.putExtra(ITEMS, commentaires);
+                intent.putExtra(INDEX, position);
                 startActivity(intent);
             }
         });
@@ -160,18 +161,18 @@ public class LivreActivity extends AbstractPagednActivity<Livre> {
     private void initReservation(Button button, final Livre livre) {
         button.setEnabled(false);
         if (livre.etat.equals("RESERVE")) {
-            String email = getIntent().getStringExtra("emailReservation");
+            String email = getIntent().getStringExtra(EMAIL_RESERVATION);
             String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
             Utilisateur user = userService.find(authCookie);
             if (user!= null && user.email.equals(email)) {
                 //TODO si l'utilisateeur est la personne qui a réservé l'ouvrage
                 //TODO lui permettre d'annuler la réservation
-                button.setText("Annuler");
+                button.setText(getString(R.string.annuler));
                 button.setEnabled(true);
                 button.setOnClickListener(new Button.OnClickListener() {
 
                     public void onClick(View view) {
-                        Toast.makeText(LivreActivity.this.getApplicationContext(), "Annulation en cours", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LivreActivity.this.getApplicationContext(), getString(R.string.annulation_en_cours), Toast.LENGTH_SHORT).show();
                         reservationService.annuler(livre);
                     }
                 });
@@ -188,16 +189,14 @@ public class LivreActivity extends AbstractPagednActivity<Livre> {
 
                         public void onClick(View view) {
                             Intent intent = new Intent(getApplicationContext(), ReservationActivity.class);
-                            intent.putExtra("livre", livre);
+                            intent.putExtra(LIVRE, livre);
                             LivreActivity.this.startActivity(intent);
                         }
                     });
                 } else {
                     button.setOnClickListener(new Button.OnClickListener() {
-
                         public void onClick(View view) {
-
-                            Toast.makeText(LivreActivity.this.getApplicationContext(), "Vous devez être connecté", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LivreActivity.this.getApplicationContext(), getString(R.string.connexion_required), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -229,7 +228,7 @@ public class LivreActivity extends AbstractPagednActivity<Livre> {
                             } else {
                                 Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
                                 Toast.makeText(getApplicationContext(), getString(R.string.ajoutOK), Toast.LENGTH_SHORT).show();
-                                intent.putExtra("item", result);
+                                intent.putExtra(ITEM, result);
                                 LivreActivity.this.startActivity(intent);
                                 finish();
                             }

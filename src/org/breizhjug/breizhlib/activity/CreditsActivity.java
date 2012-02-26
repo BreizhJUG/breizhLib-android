@@ -23,7 +23,7 @@ public class CreditsActivity extends AbstractGDActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setActionBarContentView(R.layout.credits);
-        getActionBar().setTitle("BreizhLib");
+        getActionBar().setTitle(getText(R.string.credits_title));
         versionView = (TextView) findViewById(R.id.version);
         versionView.setText(getString(R.string.version) + " " + Version.version);
     }

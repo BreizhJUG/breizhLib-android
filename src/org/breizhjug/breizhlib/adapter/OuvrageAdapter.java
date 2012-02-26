@@ -68,7 +68,9 @@ public class OuvrageAdapter extends ArrayAdapter<Livre> {
            // nb_commentaire.setText(livre.nbCommentaire);
         } else{
             ImageView comm = (ImageView) view.findViewById(R.id.com_img);
-            comm.setVisibility(View.INVISIBLE);
+            if(comm != null){
+                comm.setVisibility(View.INVISIBLE);
+            }
             TextView  nb_commentaire = (TextView) view.findViewById(R.id.nb_commentaire);
             nb_commentaire.setText("");
         }

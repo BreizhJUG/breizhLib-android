@@ -31,7 +31,7 @@ public class Menu extends AbstractGDActivity {
         super.onCreate(savedInstanceState);
         setActionBarContentView(R.layout.main);
         getActionBar().setType(ActionBar.Type.Empty);
-        getActionBar().setTitle("BreizhLib");
+        getActionBar().setTitle(getText(R.string.menu_title));
         if (PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(BreizhLibConstantes.BETA, false)) {
             ActionBarItem item = addActionBarItem(ActionBarItem.Type.Search, R.id.action_bar_search);
         }

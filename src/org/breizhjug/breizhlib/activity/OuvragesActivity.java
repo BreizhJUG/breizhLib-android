@@ -19,6 +19,8 @@ import org.breizhjug.breizhlib.remote.AsyncRemoteTask;
 import org.breizhjug.breizhlib.remote.OuvrageService;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
 
+import static org.breizhjug.breizhlib.IntentConstantes.*;
+
 
 public class OuvragesActivity extends AbstractGDActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -39,7 +41,7 @@ public class OuvragesActivity extends AbstractGDActivity implements SharedPrefer
         modeGrid = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(BreizhLibConstantes.GRID, false);
         initView(null);
         addActionBarItem(ActionBarItem.Type.Refresh, R.id.action_bar_refresh);
-        getActionBar().setTitle("Ouvrages");
+        getActionBar().setTitle(getText(R.string.ouvrages_title));
     }
 
     @Override
@@ -112,9 +114,9 @@ public class OuvragesActivity extends AbstractGDActivity implements SharedPrefer
             public void onClick(int position) {
                 Livre livre = (Livre) ouvragesListView.getItemAtPosition(position);
                 Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-                intent.putExtra("items", items);
-                intent.putExtra("index", position);
-                intent.putExtra("item", livre);
+                intent.putExtra(ITEMS, items);
+                intent.putExtra(INDEX,position);
+                intent.putExtra(ITEM, livre);
                 OuvragesActivity.this.startActivity(intent);
             }
         };

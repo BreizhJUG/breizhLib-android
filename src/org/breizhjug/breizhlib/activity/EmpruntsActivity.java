@@ -17,6 +17,7 @@ import org.breizhjug.breizhlib.remote.AsyncRemoteTask;
 import org.breizhjug.breizhlib.remote.EmpruntService;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
 import roboguice.inject.InjectView;
+import static org.breizhjug.breizhlib.IntentConstantes.*;
 
 import java.util.ArrayList;
 
@@ -37,7 +38,7 @@ public class EmpruntsActivity extends AbstractGDActivity {
         super.onCreate(savedInstanceState);
         setActionBarContentView(R.layout.items);
         initView(null);
-        getActionBar().setTitle("Emprunts");
+        getActionBar().setTitle(getText(R.string.emprunts_title));
         addActionBarItem(ActionBarItem.Type.Refresh, R.id.action_bar_refresh);
 
     }
@@ -86,9 +87,9 @@ public class EmpruntsActivity extends AbstractGDActivity {
             public void onClick(int position) {
                 Emprunt emprunt = (Emprunt) empruntsListView.getItemAtPosition(position);
                 Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-                intent.putExtra("items", toOuvrages(items));
-                intent.putExtra("index", position);
-                intent.putExtra("item", emprunt.livre);
+                intent.putExtra(ITEMS, toOuvrages(items));
+                intent.putExtra(INDEX, position);
+                intent.putExtra(ITEM, emprunt.livre);
                 EmpruntsActivity.this.startActivity(intent);
             }
         };

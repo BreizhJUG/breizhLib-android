@@ -43,6 +43,23 @@
     </string>
     <string name="version">Version :</string>
 
+    <!-- Activity title -->
+    <string name="commentaires_title">Commentaires</string>
+    <string name="credits_title">BreizhLib</string>
+    <string name="emprunts_title">Emprunts</string>
+    <string name="menu_title">BreizhLib</string>
+    <string name="ouvrages_title">Ouvrages</string>
+    <string name="reservations_title">Réservations</string>
+    <string name="profil_title">Profil</string>
+    <string name="search_title">Recherche</string>
+
+
+
+
+
+
+
+
     <!-- contextMenu -->
     <string name="shareText">BreizhLib, l\'application Android pour vous faciliter l\'utilisation de la bibliothèque du
         BreizhJug : http://goo.gl/9JXfD
@@ -66,6 +83,8 @@
     <!-- avis -->
     <string name="nom">Nom :</string>
     <string name="avis">Votre Avis :</string>
+    <string name="commentaire_send">Envoi de votre commentaire</string>
+
 
     <!-- reservation -->
     <string name="prenom">Prenom :</string>
@@ -73,6 +92,9 @@
     <string name="reserverBtn">Réserver</string>
     <string name="no_reservation">Aucune réservation</string>
     <string name="send_data">Envoi des données</string>
+    <string name="annulation_en_cours">Annulation en cours</string>
+
+
 
 
     <!-- configuration -->
@@ -108,6 +130,13 @@
     <string name="avis_validation_msg">Avis non renseigné</string>
     <string name="prenom_validation_msg">Prénom non renseigné</string>
     <string name="email_validation_msg">Email non renseigné</string>
+    <string name="connexion_required">Vous devez être connecté</string>
+
+
+
+    <string name="commentaire_validation_msg">Commentaire non renseigné</string>
+    <string name="commentaire_send_error">Erreur lors de l\'envoi du commentaire</string>
+    <string name="no_info">Aucune information </string>
 
 
     <string name="connexion_required">Vous devez être connecté</string>

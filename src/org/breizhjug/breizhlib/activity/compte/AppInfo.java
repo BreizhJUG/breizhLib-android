@@ -12,6 +12,7 @@ import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.common.AbstractGDActivity;
 import org.breizhjug.breizhlib.utils.Authentification;
+import static org.breizhjug.breizhlib.IntentConstantes.*;
 
 public class AppInfo extends AbstractGDActivity {
 
@@ -23,7 +24,7 @@ public class AppInfo extends AbstractGDActivity {
 
     @Override
     public void init(Intent intent) {
-        String account = (String) intent.getExtras().get("account");
+        String account = (String) intent.getExtras().get(ACCOUNT);
         register(account);
     }
 
@@ -44,7 +45,7 @@ public class AppInfo extends AbstractGDActivity {
                     protected String doInBackground(Void... params) {
                         String auth_token = gAuth.getToken(AppInfo.this, acct);
                         String authCookie = gAuth.getAuthCookie(auth_token, AppInfo.this);
-                        Log.d(TAG, "" + authCookie);
+                        Log.d(TAG, authCookie);
                         return authCookie;
                     }
 

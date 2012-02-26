@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.google.inject.Inject;
 import greendroid.widget.ActionBarItem;
 import greendroid.widget.LoaderActionBarItem;
+import static org.breizhjug.breizhlib.IntentConstantes.*;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.common.AbstractGDActivity;
 import org.breizhjug.breizhlib.adapter.ReservationsAdapter;
@@ -40,7 +41,7 @@ public class ReservationsActivity extends AbstractGDActivity {
 
         reservationsListView = (ListView) findViewById(R.id.items);
         initView(null);
-        getActionBar().setTitle("Reservations");
+        getActionBar().setTitle(getText(R.string.reservations_title));
         addActionBarItem(ActionBarItem.Type.Refresh, R.id.action_bar_refresh);
 
     }
@@ -90,9 +91,9 @@ public class ReservationsActivity extends AbstractGDActivity {
             public void onClick(int position) {
                 Reservation reservation = (Reservation) reservationsListView.getItemAtPosition(position);
                 Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-                intent.putExtra("items", toOuvrages(items));
-                intent.putExtra("index", position);
-                intent.putExtra("item", reservation.livre);
+                intent.putExtra(ITEMS, toOuvrages(items));
+                intent.putExtra(INDEX, position);
+                intent.putExtra(ITEM, reservation.livre);
                 intent.putExtra("emailReservation", reservation.email);
                 ReservationsActivity.this.startActivity(intent);
             }
