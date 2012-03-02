@@ -85,17 +85,11 @@ public class ReservationsActivity extends AbstractGDActivity {
 
             @Override
             public ArrayAdapter<Reservation> getAdapter() {
-                return new ReservationsAdapter(ReservationsActivity.this.getBaseContext(), items, prefs);
+                return new ReservationsAdapter(ReservationsActivity.this.getBaseContext(), items);
             }
 
             public void onClick(int position) {
-                Reservation reservation = (Reservation) reservationsListView.getItemAtPosition(position);
-                Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-                intent.putExtra(ITEMS, toOuvrages(items));
-                intent.putExtra(INDEX, position);
-                intent.putExtra(ITEM, reservation.livre);
-                intent.putExtra("emailReservation", reservation.email);
-                ReservationsActivity.this.startActivity(intent);
+                startLivreActivity(position,items);
             }
 
             public void displayEmptyMessage() {
@@ -106,6 +100,16 @@ public class ReservationsActivity extends AbstractGDActivity {
 
         initTask.execute((Void) null);
 
+    }
+
+    private void startLivreActivity(int position, ArrayList<Reservation> items) {
+        Reservation reservation = (Reservation) reservationsListView.getItemAtPosition(position);
+        Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
+        intent.putExtra(ITEMS, toOuvrages(items));
+        intent.putExtra(INDEX, position);
+        intent.putExtra(ITEM, reservation.livre);
+        intent.putExtra(EMAIL_RESERVATION, reservation.email);
+        this.startActivity(intent);
     }
 
     private ArrayList<Livre> toOuvrages(ArrayList<Reservation> items) {

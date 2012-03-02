@@ -15,6 +15,9 @@ import org.breizhjug.breizhlib.remote.AsyncRemoteTask;
 import org.breizhjug.breizhlib.remote.CommentaireService;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
 import roboguice.inject.InjectView;
+
+import java.util.ArrayList;
+
 import static org.breizhjug.breizhlib.IntentConstantes.*;
 
 public class CommentairesActivity extends AbstractGDActivity {
@@ -49,14 +52,18 @@ public class CommentairesActivity extends AbstractGDActivity {
             }
 
             public void onClick(int position) {
-                Commentaire commentaire = (Commentaire) commentairesListView.getItemAtPosition(position);
-                Intent intent = new Intent(getApplicationContext(), CommentaireActivity.class);
-                intent.putExtra(ITEM, commentaire);
-                intent.putExtra(ITEMS, items);
-                intent.putExtra(INDEX, position);
-                startActivity(intent);
+                startCommentaireActivity(position,items);
             }
         };
         initTask.execute((Void) null);
+    }
+
+    private void startCommentaireActivity(int position, ArrayList<Commentaire> items) {
+        Commentaire commentaire = (Commentaire) commentairesListView.getItemAtPosition(position);
+        Intent intent = new Intent(getApplicationContext(), CommentaireActivity.class);
+        intent.putExtra(ITEM, commentaire);
+        intent.putExtra(ITEMS, items);
+        intent.putExtra(INDEX, position);
+        startActivity(intent);
     }
 }

@@ -6,6 +6,8 @@ import org.acra.ErrorReporter;
 import org.breizhjug.breizhlib.exception.ResultException;
 import org.breizhjug.breizhlib.guice.ServerUrl;
 import org.breizhjug.breizhlib.model.Commentaire;
+import org.breizhjug.breizhlib.utils.NetworkUtils;
+import org.breizhjug.breizhlib.utils.NetworkUtils.Param;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,7 +30,7 @@ public class CommentaireService extends Service<Commentaire> {
         Param paramNom = new Param("nom", nom);
         Param paramPrenom = new Param("content", content);
         Param paramEmail = new Param("note", note);
-        String result = queryPostRESTurl(authCookie, URL_COMMENT, param, paramNom, paramPrenom, paramEmail);
+        String result = NetworkUtils.post(authCookie, URL_COMMENT, param, paramNom, paramPrenom, paramEmail);
         try {
             JSONObject item = new JSONObject(result);
             Commentaire commentaire = converter.convertCommentaire(item);
@@ -50,7 +52,7 @@ public class CommentaireService extends Service<Commentaire> {
     @Override
     public List<Commentaire> load(String authCookie, String urlString) {
 
-        String result = queryRESTurl(authCookie, urlString);
+        String result = NetworkUtils.get(authCookie, urlString);
         ArrayList<Commentaire> commentaires = new ArrayList<Commentaire>();
         if (result != null) {
             Log.d("REST", result);

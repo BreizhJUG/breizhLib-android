@@ -3,11 +3,16 @@ package org.breizhjug.breizhlib;
 
 public interface BreizhLibConstantes {
 
-    String SERVER_URL = "http://2-0-0.breizh-lib.appspot.com";
+    String SERVER_URL = "http://dev.breizh-lib.appspot.com/";
 
     String MARKET_URL = "market://details?id=org.breizhjug.breizhlib";
 
     String UA_ACCOUNT = "UA-25249240-2";
+
+    String ACCOUNT_TYPE = "org.breizhjug.breizhlib";
+
+    String AUTHTOKEN_TYPE =  "org.breizhjug.breizhlib";
+
     /**
      * clés pour shared preferences.
      */

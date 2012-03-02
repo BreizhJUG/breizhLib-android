@@ -3,12 +3,20 @@ package org.breizhjug.breizhlib.remote;
 
 import android.content.ContentValues;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.acra.ErrorReporter;
+import org.breizhjug.breizhlib.R;
+import org.breizhjug.breizhlib.adapter.CommentairesAdapter;
+import org.breizhjug.breizhlib.database.dao.CommentaireDAO;
 import org.breizhjug.breizhlib.exception.ResultException;
 import org.breizhjug.breizhlib.guice.ServerUrl;
+import org.breizhjug.breizhlib.model.Commentaire;
 import org.breizhjug.breizhlib.model.Livre;
+import org.breizhjug.breizhlib.utils.NetworkUtils;
+import org.breizhjug.breizhlib.utils.NetworkUtils.Param;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,6 +36,9 @@ public class OuvrageService extends Service<Livre> {
     private final String URL_FIND_BOOKS = serverUrl + "api/find";
 
     private final String URL_ADD_BOOK = serverUrl + "api/add";
+
+    @Inject
+    private CommentaireDAO commentaireDAO;
 
     @Override
     public String url() {
@@ -70,9 +81,10 @@ public class OuvrageService extends Service<Livre> {
     
 
     private Livre find(String authCookie, String urlString, String isbn) throws ResultException {
-        String result = queryPostRESTurl(authCookie, urlString, new Param("iSBN", isbn));
+        Log.d(TAG, "url : " + urlString);
+        String result = NetworkUtils.post(authCookie, urlString, new Param("iSBN", isbn));
         Log.d(TAG, "" + result);
-        if (result != null) {
+        if (isJsonResult(result )) {
             try {
                 JSONObject item = new JSONObject(result);
                 Livre livre = converter.convertLivre(item);
@@ -91,12 +103,15 @@ public class OuvrageService extends Service<Livre> {
         return null;
     }
 
+
+
     public Livre add(String authCookie, String isbn) {
         return add(authCookie, URL_ADD_BOOK, isbn);
     }
 
+
     private Livre add(String authCookie, String urlString, String isbn) {
-        String result = queryPostRESTurl(authCookie, urlString, new Param("iSBN", isbn));
+        String result = NetworkUtils.post(authCookie, urlString, new Param("iSBN", isbn));
         Log.i(TAG, result);
         if (result != null) {
             try {
@@ -114,7 +129,7 @@ public class OuvrageService extends Service<Livre> {
 
     public List<Livre> load(String authCookie, String urlString) {
         Log.i(TAG, urlString);
-        String result = queryRESTurl(authCookie, urlString);
+        String result = NetworkUtils.get(authCookie, urlString);
         ArrayList<Livre> BOOKS = new ArrayList<Livre>();
         if (result != null) {
             try {
@@ -124,9 +139,15 @@ public class OuvrageService extends Service<Livre> {
                     JSONObject item = booksArray.getJSONObject(a);
                     livre = converter.convertLivre(item);
 
+
+                    final ArrayList<Commentaire> commentaires = commentaireDAO.findByIsbn(livre.iSBN);
+                    livre.nbCommentaire =  commentaires.size();
+                    update(livre);
+
+
                     BOOKS.add(livre);
                 }
-                Log.d("UPDATE","load livre : "+BOOKS.size());
+                Log.d("UPDATE", "load livre : " + BOOKS.size());
                 return BOOKS;
             } catch (JSONException e) {
                 Log.e(TAG, "There was an error parsing the JSON", e);
@@ -137,7 +158,7 @@ public class OuvrageService extends Service<Livre> {
 
     public List<Livre> search(String authCookie, String searchKey) {
         Log.i(TAG, URL_BOOKS_SEARCH);
-               String result = queryRESTurl(authCookie, URL_BOOKS_SEARCH+searchKey);
+               String result = NetworkUtils.get(authCookie, URL_BOOKS_SEARCH + searchKey);
                ArrayList<Livre> BOOKS = new ArrayList<Livre>();
                if (result != null) {
                    try {

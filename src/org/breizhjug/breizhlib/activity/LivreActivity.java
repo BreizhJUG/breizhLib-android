@@ -76,7 +76,7 @@ public class LivreActivity extends AbstractPagednActivity<Livre> {
         switch (item.getItemId()) {
             case R.id.action_bar_avis:
                 Intent pIntent = new Intent(getApplicationContext(), AvisActivity.class);
-                pIntent.putExtra("livre", LivreActivity.this.item);
+                pIntent.putExtra(LIVRE, LivreActivity.this.item);
                 LivreActivity.this.startActivity(pIntent);
 
                 return true;
@@ -144,18 +144,22 @@ public class LivreActivity extends AbstractPagednActivity<Livre> {
         service.update(livre);
         commentaireItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-                Commentaire commentaire = (Commentaire) commentaireItems.getItemAtPosition(position);
-                Intent intent = new Intent(getApplicationContext(), CommentaireActivity.class);
-                intent.putExtra(ITEM, commentaire);
-                intent.putExtra(ITEMS, commentaires);
-                intent.putExtra(INDEX, position);
-                startActivity(intent);
+                startCommentaireActivity(position, commentaires);
             }
         });
 
         Log.d(TAG, livre.iSBN + " size :" + commentaires.size());
         CommentairesAdapter commentairesAdapter = new CommentairesAdapter(this.getBaseContext(), commentaires,false,R.layout.commentaire_item_short);
         commentaireItems.setAdapter(commentairesAdapter);
+    }
+
+    private void startCommentaireActivity(int position, ArrayList<Commentaire> commentaires) {
+        Commentaire commentaire = (Commentaire) commentaireItems.getItemAtPosition(position);
+        Intent intent = new Intent(getApplicationContext(), CommentaireActivity.class);
+        intent.putExtra(ITEM, commentaire);
+        intent.putExtra(ITEMS, commentaires);
+        intent.putExtra(INDEX, position);
+        startActivity(intent);
     }
 
     private void initReservation(Button button, final Livre livre) {
@@ -194,6 +198,7 @@ public class LivreActivity extends AbstractPagednActivity<Livre> {
                         }
                     });
                 } else {
+                    button.setEnabled(false);
                     button.setOnClickListener(new Button.OnClickListener() {
                         public void onClick(View view) {
                             Toast.makeText(LivreActivity.this.getApplicationContext(), getString(R.string.connexion_required), Toast.LENGTH_SHORT).show();

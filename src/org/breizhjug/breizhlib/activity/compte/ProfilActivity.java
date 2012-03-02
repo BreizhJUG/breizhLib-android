@@ -46,7 +46,7 @@ public class ProfilActivity extends AbstractGDActivity {
     ListView profile_info;
 
     @Inject
-    SharedPreferences prefs;
+    private SharedPreferences prefs;
     @Inject
     private UtilisateurService service;
     @Inject

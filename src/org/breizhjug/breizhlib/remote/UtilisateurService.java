@@ -5,6 +5,7 @@ import android.util.Log;
 import com.google.inject.Inject;
 import org.breizhjug.breizhlib.guice.ServerUrl;
 import org.breizhjug.breizhlib.model.Utilisateur;
+import org.breizhjug.breizhlib.utils.NetworkUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -45,7 +46,7 @@ public class UtilisateurService extends Service<Utilisateur> {
         if (cache != null && cache.size() == 1) {
             return cache.get(0);
         } else {
-            String result = queryRESTurl(authCookie, urlString);
+            String result = NetworkUtils.get(authCookie, urlString);
             cache = new ArrayList<Utilisateur>(1);
             if (result != null) {
                 Log.d(TAG, result);

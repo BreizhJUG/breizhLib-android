@@ -21,9 +21,10 @@ import org.breizhjug.breizhlib.remote.OuvrageService;
 import org.breizhjug.breizhlib.remote.Service;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+import static org.breizhjug.breizhlib.IntentConstantes.*;
 
 public class SearchActivity extends AbstractGDActivity {
 
@@ -124,17 +125,21 @@ public class SearchActivity extends AbstractGDActivity {
 
         @Override
         public ArrayAdapter<Livre> getAdapter() {
-            return new OuvrageAdapter(SearchActivity.this.getBaseContext(), items, R.layout.ouvrage, prefs);
+            return new OuvrageAdapter(SearchActivity.this.getBaseContext(), items, R.layout.ouvrage);
         }
 
         public void onClick(int position) {
-            Livre livre = (Livre) ouvragesListView.getItemAtPosition(position);
-            Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-            intent.putExtra("items", items);
-            intent.putExtra("index", position);
-            intent.putExtra("item", livre);
-            SearchActivity.this.startActivity(intent);
+            startLivreActivity(position,items);
         }
+    }
+
+    private void startLivreActivity(int position, ArrayList<Livre> items) {
+        Livre livre = (Livre) ouvragesListView.getItemAtPosition(position);
+        Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
+        intent.putExtra(ITEMS, items);
+        intent.putExtra(INDEX, position);
+        intent.putExtra(ITEM, livre);
+        this.startActivity(intent);
     }
 
 }

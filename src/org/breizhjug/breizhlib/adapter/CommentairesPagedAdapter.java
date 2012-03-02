@@ -13,9 +13,11 @@ import org.breizhjug.breizhlib.activity.LivreActivity;
 import org.breizhjug.breizhlib.model.Commentaire;
 import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
-import static org.breizhjug.breizhlib.IntentConstantes.*;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.breizhjug.breizhlib.IntentConstantes.*;
 
 
 public class CommentairesPagedAdapter extends PagedAdapter {
@@ -57,16 +59,10 @@ public class CommentairesPagedAdapter extends PagedAdapter {
         text.setText(commentaire.livre.titre);
 
         text.setOnClickListener(new View.OnClickListener() {
-                  public void onClick(View view) {
-                      Intent intent = new Intent(activity.getApplicationContext(), LivreActivity.class);
-                      ArrayList<Livre> items = new ArrayList<Livre>();
-                      items.add(commentaire.livre);
-                      intent.putExtra(ITEMS, items);
-                      intent.putExtra(INDEX, 0);
-                      intent.putExtra(ITEM, commentaire.livre);
-                      activity.startActivity(intent);
-          }
-              });
+            public void onClick(View view) {
+                startLivreActivity(commentaire);
+            }
+        });
 
         text = (TextView) convertView.findViewById(R.id.user);
         text.setText(commentaire.nom);
@@ -80,7 +76,15 @@ public class CommentairesPagedAdapter extends PagedAdapter {
         return convertView;
     }
 
-
+    private void startLivreActivity(Commentaire commentaire) {
+        Intent intent = new Intent(activity.getApplicationContext(), LivreActivity.class);
+        ArrayList<Livre> items = new ArrayList<Livre>();
+        items.add(commentaire.livre);
+        intent.putExtra(ITEMS, items);
+        intent.putExtra(INDEX, 0);
+        intent.putExtra(ITEM, commentaire.livre);
+        activity.startActivity(intent);
+    }
 
 
 }

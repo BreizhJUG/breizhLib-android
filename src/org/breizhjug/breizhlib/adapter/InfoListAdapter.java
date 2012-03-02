@@ -9,11 +9,6 @@ import org.breizhjug.breizhlib.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/**
- * User: Guernion Sylvain
- * Date: 24/11/11
- * Time: 23:06
- */
 public class InfoListAdapter extends JsonListAdapter {
     public static final class ViewHolder {
         TextView title;

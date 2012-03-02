@@ -18,14 +18,14 @@ import java.util.List;
 
 public class OuvrageAdapter extends ArrayAdapter<Livre> {
 
-    SharedPreferences prefs;
+    @Inject
+    private static SharedPreferences prefs;
     @Inject
     private static ImageCache imageCache;
     int resource;
 
-    public OuvrageAdapter(Context context, List<Livre> ouvrages, int resource, SharedPreferences prefs) {
+    public OuvrageAdapter(Context context, List<Livre> ouvrages, int resource) {
         super(context, 0, ouvrages);
-        this.prefs = prefs;
         this.resource = resource;
     }
 
@@ -64,8 +64,8 @@ public class OuvrageAdapter extends ArrayAdapter<Livre> {
         if( livre.nbCommentaire > 0 ){
             ImageView comm = (ImageView) view.findViewById(R.id.com_img);
             comm.setVisibility(View.VISIBLE);
-           // TextView  nb_commentaire = (TextView) view.findViewById(R.id.nb_commentaire);
-           // nb_commentaire.setText(livre.nbCommentaire);
+            TextView  nb_commentaire = (TextView) view.findViewById(R.id.nb_commentaire);
+            nb_commentaire.setText(livre.nbCommentaire);
         } else{
             ImageView comm = (ImageView) view.findViewById(R.id.com_img);
             if(comm != null){

@@ -19,6 +19,8 @@ import org.breizhjug.breizhlib.remote.AsyncRemoteTask;
 import org.breizhjug.breizhlib.remote.OuvrageService;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
 
+import java.util.ArrayList;
+
 import static org.breizhjug.breizhlib.IntentConstantes.*;
 
 
@@ -108,21 +110,25 @@ public class OuvragesActivity extends AbstractGDActivity implements SharedPrefer
 
             @Override
             public ArrayAdapter<Livre> getAdapter() {
-                return new OuvrageAdapter(OuvragesActivity.this.getBaseContext(), items, finalResource, prefs);
+                return new OuvrageAdapter(OuvragesActivity.this.getBaseContext(), items, finalResource);
             }
 
             public void onClick(int position) {
-                Livre livre = (Livre) ouvragesListView.getItemAtPosition(position);
-                Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-                intent.putExtra(ITEMS, items);
-                intent.putExtra(INDEX,position);
-                intent.putExtra(ITEM, livre);
-                OuvragesActivity.this.startActivity(intent);
+                startLivreActyvity(position,items);
             }
         };
         initTask.execute((Void) null);
 
 
+    }
+
+    private void startLivreActyvity(int position, ArrayList<Livre> items) {
+        Livre livre = (Livre) ouvragesListView.getItemAtPosition(position);
+        Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
+        intent.putExtra(ITEMS, items);
+        intent.putExtra(INDEX,position);
+        intent.putExtra(ITEM, livre);
+        startActivity(intent);
     }
 
 

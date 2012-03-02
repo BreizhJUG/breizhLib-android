@@ -81,22 +81,26 @@ public class EmpruntsActivity extends AbstractGDActivity {
 
             @Override
             public ArrayAdapter<Emprunt> getAdapter() {
-                return new EmpruntsAdapter(EmpruntsActivity.this.getBaseContext(), items, prefs);
+                return new EmpruntsAdapter(EmpruntsActivity.this.getBaseContext(), items);
             }
 
             public void onClick(int position) {
-                Emprunt emprunt = (Emprunt) empruntsListView.getItemAtPosition(position);
-                Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-                intent.putExtra(ITEMS, toOuvrages(items));
-                intent.putExtra(INDEX, position);
-                intent.putExtra(ITEM, emprunt.livre);
-                EmpruntsActivity.this.startActivity(intent);
+                startLivreActivity(position,items);
             }
         };
 
 
         initTask.execute((Void) null);
 
+    }
+
+    private void startLivreActivity(int position, ArrayList<Emprunt> items) {
+        Emprunt emprunt = (Emprunt) empruntsListView.getItemAtPosition(position);
+        Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
+        intent.putExtra(ITEMS, toOuvrages(items));
+        intent.putExtra(INDEX, position);
+        intent.putExtra(ITEM, emprunt.livre);
+        this.startActivity(intent);
     }
 
     private ArrayList<Livre> toOuvrages(ArrayList<Emprunt> items) {

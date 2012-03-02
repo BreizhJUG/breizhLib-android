@@ -97,13 +97,11 @@ public class AvisActivity extends AbstractGDActivity {
                 if (result == null) {
                     showError(getString(R.string.commentaire_send_error), true);
                 } else {
-                    Toast.makeText(AvisActivity.this, getString(R.string.commentaireSave), Toast.LENGTH_SHORT);
-                    Intent intent = new Intent(getApplicationContext(), CommentaireActivity.class);
-                    intent.putExtra(ITEM, result);
-                    startActivity(intent);
-                    finish();
+                    startCommentaireActivity(result);
                 }
             }
+
+
         };
 
 
@@ -137,5 +135,13 @@ public class AvisActivity extends AbstractGDActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setActionBarContentView(R.layout.avis);
+    }
+
+    private void startCommentaireActivity(Commentaire result) {
+        Toast.makeText(AvisActivity.this, getString(R.string.commentaireSave), Toast.LENGTH_SHORT);
+        Intent intent = new Intent(getApplicationContext(), CommentaireActivity.class);
+        intent.putExtra(ITEM, result);
+        startActivity(intent);
+        finish();
     }
 }

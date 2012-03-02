@@ -18,13 +18,13 @@ import java.util.List;
 
 public class EmpruntsAdapter extends ArrayAdapter<Emprunt> {
 
-    SharedPreferences prefs;
+    @Inject
+    private static SharedPreferences prefs;
     @Inject
     private static ImageCache imageCache;
 
-    public EmpruntsAdapter(Context context, List<Emprunt> emprunts, SharedPreferences prefs) {
+    public EmpruntsAdapter(Context context, List<Emprunt> emprunts) {
         super(context, 0, emprunts);
-        this.prefs = prefs;
     }
 
 

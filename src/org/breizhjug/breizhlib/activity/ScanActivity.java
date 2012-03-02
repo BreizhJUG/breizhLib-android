@@ -16,7 +16,7 @@ import org.breizhjug.breizhlib.utils.scancode.IntentIntegrator;
 import org.breizhjug.breizhlib.utils.scancode.IntentResult;
 
 import java.util.ArrayList;
-
+import static org.breizhjug.breizhlib.IntentConstantes.*;
 
 public class ScanActivity extends AbstractGDActivity {
     private static final String TAG = "Breizhlib.ScanActivity";
@@ -46,14 +46,9 @@ public class ScanActivity extends AbstractGDActivity {
                 livre = service.find(prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null), isbn);
                 if (livre != null) {
                     Log.d(TAG, livre.titre);
-                    Intent intent = new Intent(ScanActivity.this, LivreActivity.class);
-                    ArrayList<Livre> items = new ArrayList<Livre>();
-                                         items.add(livre);
-                                         intent.putExtra("items", items);
-                    intent.putExtra("item", livre);
-                    intent.putExtra("index", 0);
-                    startActivity(intent);
-                    finish();
+                    startLivreActivity(livre);
+                } else {
+                    showError(getString(R.string.error_server_connexion), true);
                 }
             } catch (ResultException e) {
                 showError(e.result.msg, true);
@@ -63,6 +58,17 @@ public class ScanActivity extends AbstractGDActivity {
 
         }
     };
+
+    private void startLivreActivity(Livre livre) {
+        Intent intent = new Intent(this, LivreActivity.class);
+        ArrayList<Livre> items = new ArrayList<Livre>();
+        items.add(livre);
+        intent.putExtra(ITEMS, items);
+        intent.putExtra(ITEM, livre);
+        intent.putExtra(INDEX, 0);
+        startActivity(intent);
+        finish();
+    }
 
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {

@@ -8,6 +8,7 @@ import org.breizhjug.breizhlib.database.dao.LivreDAO;
 import org.breizhjug.breizhlib.guice.ServerUrl;
 import org.breizhjug.breizhlib.model.Emprunt;
 import org.breizhjug.breizhlib.model.Reservation;
+import org.breizhjug.breizhlib.utils.NetworkUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,7 +55,7 @@ public class EmpruntService extends Service<Emprunt> {
 
     public List<Emprunt> load(String authCookie, String urlString) {
         Log.d(TAG, urlString);
-        String result = queryRESTurl(authCookie, urlString);
+        String result = NetworkUtils.get(authCookie, urlString);
         ArrayList<Emprunt> BOOKS = new ArrayList<Emprunt>();
         if (result != null) {
             try {

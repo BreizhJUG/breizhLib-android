@@ -18,13 +18,13 @@ import java.util.List;
 
 public class ReservationsAdapter extends ArrayAdapter<Reservation> {
 
-    SharedPreferences prefs;
+    @Inject
+    private static SharedPreferences prefs;
     @Inject
     private static ImageCache imageCache;
 
-    public ReservationsAdapter(Context context, List<Reservation> reservations, SharedPreferences prefs) {
+    public ReservationsAdapter(Context context, List<Reservation> reservations) {
         super(context, 0, reservations);
-        this.prefs = prefs;
     }
 
 

@@ -17,6 +17,7 @@ import org.breizhjug.breizhlib.remote.ReservationService;
 import org.breizhjug.breizhlib.remote.Result;
 import roboguice.inject.InjectExtra;
 import roboguice.inject.InjectView;
+import static org.breizhjug.breizhlib.IntentConstantes.*;
 
 public class ReservationActivity extends AbstractGDActivity {
     private static final String TAG = "BreizhLib.ReservationActivity";
@@ -31,7 +32,7 @@ public class ReservationActivity extends AbstractGDActivity {
     @InjectView(R.id.send)
     Button button;
 
-    @InjectExtra("livre")
+    @InjectExtra(LIVRE)
     Livre livre;
     @Inject
     private ReservationService service;
@@ -98,9 +99,7 @@ public class ReservationActivity extends AbstractGDActivity {
                 if (!result.valid) {
                     showError(result.msg, true);
                 } else {
-                    Intent intent = new Intent(getApplicationContext(), Menu.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
+                    startMenuActivity();
                 }
             }
         };
@@ -108,6 +107,12 @@ public class ReservationActivity extends AbstractGDActivity {
         if (validate()) {
             initTask.execute();
         }
+    }
+
+    private void startMenuActivity() {
+        Intent intent = new Intent(getApplicationContext(), Menu.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     private boolean validate() {

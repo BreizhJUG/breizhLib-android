@@ -12,4 +12,13 @@ public interface IntentConstantes {
     String EMAIL = "email";
     String EMAIL_RESERVATION = "emailReservation";
     String ACCOUNT = "account";
+
+
+    /**
+     * Account
+     */
+    public static final String PASSWORD = "password";
+    public static final String USERNAME = "user";
+    public static final String CONFIRMCREDENTIALS = "confirmCredentials";
+    public static final String AUTHTOKEN_TYPE = "authtokenType";
 }

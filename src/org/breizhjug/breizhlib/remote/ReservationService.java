@@ -10,6 +10,8 @@ import org.breizhjug.breizhlib.database.dao.LivreDAO;
 import org.breizhjug.breizhlib.guice.ServerUrl;
 import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.model.Reservation;
+import org.breizhjug.breizhlib.utils.NetworkUtils;
+import org.breizhjug.breizhlib.utils.NetworkUtils.Param;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,7 +51,7 @@ public class ReservationService extends Service<Reservation> {
         Param paramNom = new Param("nom", nom);
         Param paramPrenom = new Param("prenom", prenom);
         Param paramEmail = new Param("email", email);
-        String result = queryPostRESTurl(authCookie, URL_RESA, param, paramNom, paramPrenom, paramEmail);
+        String result = NetworkUtils.post(authCookie, URL_RESA, param, paramNom, paramPrenom, paramEmail);
         Log.i(TAG, "reserver :  " + result);
 
         try {
@@ -80,7 +82,7 @@ public class ReservationService extends Service<Reservation> {
 
     public List<Reservation> load(String authCookie, String urlString) {
         Log.d(TAG, urlString);
-        String result = queryRESTurl(authCookie, urlString);
+        String result = NetworkUtils.get(authCookie, urlString);
         ArrayList<Reservation> BOOKS = new ArrayList<Reservation>();
         Log.i(TAG, result);
         if (result != null && result.length() > 2) {

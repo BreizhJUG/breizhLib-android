@@ -4,7 +4,9 @@ package org.breizhjug.breizhlib.utils;
 import android.accounts.*;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -15,6 +17,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
+import org.breizhjug.breizhlib.account.AuthentificatorActivity;
 
 import java.io.IOException;
 import java.net.URI;
@@ -100,7 +103,7 @@ public class GAEAuthentification implements Authentification{
         return null;
     }
 
-    public List<String> getGoogleAccounts(Context context) {
+    public List<String> getAccounts(Context context) {
         ArrayList<String> result = new ArrayList<String>();
         Account[] accounts = AccountManager.get(context).getAccounts();
         for (Account account : accounts) {
@@ -112,6 +115,11 @@ public class GAEAuthentification implements Authentification{
         return result;
     }
 
+
+    @Override
+    public Intent getAuthentificationIntent(Context context) {
+        return new Intent(Settings.ACTION_ADD_ACCOUNT);
+    }
 
     public GAEAuthentification() {
         super();
