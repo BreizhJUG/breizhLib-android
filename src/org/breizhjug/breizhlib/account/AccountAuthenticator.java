@@ -118,11 +118,7 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
      */
     @Override
     public String getAuthTokenLabel(String authTokenType) {
-        if (authTokenType.equals(BreizhLibConstantes.AUTHTOKEN_TYPE)) {
-            return mContext.getString(R.string.app_name);
-        }
         return null;
-
     }
 
     /**

@@ -10,6 +10,7 @@ import android.provider.Settings;
 import android.util.Log;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.params.HttpClientParams;
 import org.apache.http.cookie.Cookie;
@@ -17,6 +18,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
+import org.breizhjug.breizhlib.model.Utilisateur;
 import org.breizhjug.breizhlib.utils.authentification.Authentification;
 
 import java.io.IOException;
@@ -79,7 +81,7 @@ public class GAEAuthentification implements Authentification {
             HttpResponse res = client.execute(method);
             Header[] headers = res.getHeaders("Set-Cookie");
             Log.d(TAG, "reponse code : " + res.getStatusLine().getStatusCode());
-            if (res.getStatusLine().getStatusCode() != 302) {
+            if (res.getStatusLine().getStatusCode() != HttpStatus.SC_UNAUTHORIZED) {
                 Log.d("COOKIE", "erreur reponse : " + res.getStatusLine().getStatusCode());
                 AccountManager accountManager = AccountManager.get(context);
                 accountManager.invalidateAuthToken("com.google", authToken);
@@ -113,6 +115,11 @@ public class GAEAuthentification implements Authentification {
         }
 
         return result;
+    }
+
+    @Override
+    public void saveInfos(Utilisateur user, Context context) {
+        // nothing to do
     }
 
 

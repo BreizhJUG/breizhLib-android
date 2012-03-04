@@ -49,7 +49,7 @@ public class AppInfo extends AbstractGDActivity {
                     protected String doInBackground(Void... params) {
                         String auth_token = authentification.getToken(AppInfo.this, acct);
                         String authCookie = authentification.getAuthCookie(auth_token, AppInfo.this);
-                        Log.d(TAG, authCookie);
+                        Log.d(TAG, ""+authCookie);
                         return authCookie;
                     }
 

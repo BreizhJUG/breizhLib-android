@@ -4,25 +4,22 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.provider.Settings;
+import android.util.Base64;
 import android.util.Log;
-import org.apache.http.HttpEntity;
+import com.google.inject.Inject;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.cookie.Cookie;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.account.AuthentificatorActivity;
+import org.breizhjug.breizhlib.model.Utilisateur;
 import org.breizhjug.breizhlib.utils.NetworkUtils;
-import org.breizhjug.breizhlib.utils.authentification.Authentification;
-
-import static org.breizhjug.breizhlib.IntentConstantes.*;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,10 +27,16 @@ import java.util.List;
 public class BreizhLibAuthentification implements Authentification {
 
 
-    private static final String AUTH_URI = BreizhLibConstantes.SERVER_URL+"/authent";
+    private static final String AUTH_URI = BreizhLibConstantes.SERVER_URL + "/authentification";
     private static final String TAG = "BreizhLibAuthent";
     public static final int REGISTRATION_TIMEOUT = 30 * 1000; // ms
 
+    private Cookie authCookie;
+
+    @Inject
+    protected SharedPreferences prefs;
+
+    private static final String AUTH_COOKIE_NAME = "PLAY_SESSION";
 
     @Override
     public Intent getAuthentificationIntent(Context context) {
@@ -46,14 +49,26 @@ public class BreizhLibAuthentification implements Authentification {
         return BreizhLibConstantes.ACCOUNT_TYPE;
     }
 
+    ;
+
     @Override
     public String getToken(Context context, Account account) {
-        return "";
+        String cookie = prefs.getString(AUTH_COOKIE_NAME,"");
+        Log.d(TAG,"cookie : "+cookie);
+        return cookie;
     }
 
     @Override
     public String getAuthCookie(String authToken, Context context) {
-        return "";
+        Account[] accounts = AccountManager.get(context).getAccounts();
+        for (Account account : accounts) {
+            if (account.type.equals(getAccountType())) {
+               String password = AccountManager.get(context).getPassword(account);
+                authenticate(account.name, password,null,  context);
+            }
+        }
+       
+        return AUTH_COOKIE_NAME + "=" + authCookie.getValue();
     }
 
     @Override
@@ -62,44 +77,53 @@ public class BreizhLibAuthentification implements Authentification {
         Account[] accounts = AccountManager.get(context).getAccounts();
         for (Account account : accounts) {
             if (account.type.equals(getAccountType())) {
-                result.add(account.name);
+                result.add(AccountManager.get(context).getUserData(account,"email"));
             }
         }
         return result;
     }
 
+    @Override
+    public void saveInfos(Utilisateur user,Context context) {
+        Account[] accounts = AccountManager.get(context).getAccounts();
+        for (Account account : accounts) {
+            if (account.type.equals(getAccountType())) {
+                String password = AccountManager.get(context).getPassword(account);
+                AccountManager.get(context).setUserData(account,"email",user.email);
+                AccountManager.get(context).setUserData(account,"nom",user.nom);
+            }
+        }
+    }
+
 
     public boolean authenticate(String username, String password, Handler handler, Context context) {
         final HttpResponse resp;
-
-        final ArrayList<NameValuePair> params = new ArrayList();
-        params.add(new BasicNameValuePair(USERNAME, username));
-        params.add(new BasicNameValuePair(PASSWORD, password));
-        HttpEntity entity = null;
         try {
-            entity = new UrlEncodedFormEntity(params);
-        } catch (final UnsupportedEncodingException e) {
-            throw new AssertionError(e);
-        }
-        final HttpPost post = new HttpPost(AUTH_URI);
-        post.addHeader(entity.getContentType());
-        post.setEntity(entity);
 
-        try {
+
+            final HttpPost post = new HttpPost(AUTH_URI);
+            String basic = username + ":" + password;
+            String authToken =   "Basic " + Base64.encodeToString(basic.getBytes(), Base64.NO_WRAP);
+            post.setHeader("Authorization",authToken );
             resp = NetworkUtils.getHttpClient().execute(post);
-            if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-                if (Log.isLoggable(TAG, Log.VERBOSE)) {
-                    Log.v(TAG, "Successful authentication");
+            for (Cookie cookie : NetworkUtils.getHttpClient().getCookieStore().getCookies()) {
+                Log.d(TAG, cookie.getName() + " " + cookie.getValue());
+                if (AUTH_COOKIE_NAME.equals(cookie.getName())) {
+                    authCookie = cookie;
+                    prefs.edit().putString(BreizhLibConstantes.AUTH_COOKIE, AUTH_COOKIE_NAME + "=" + cookie.getValue()).commit();
                 }
+            }
+            Log.d(TAG, "StatusCode " + resp.getStatusLine().getStatusCode());
+            if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+                Log.d(TAG, "Successful authentication");
                 sendResult(true, handler, context);
                 return true;
             } else {
-                if (Log.isLoggable(TAG, Log.VERBOSE)) {
-                    Log.v(TAG, "Error authenticating" + resp.getStatusLine());
-                }
+                Log.d(TAG, "Error authenticating" + resp.getStatusLine());
                 sendResult(false, handler, context);
                 return false;
             }
+
         } catch (final IOException e) {
             if (Log.isLoggable(TAG, Log.VERBOSE)) {
                 Log.v(TAG, "IOException when getting authtoken", e);
@@ -145,8 +169,6 @@ public class BreizhLibAuthentification implements Authentification {
         t.start();
         return t;
     }
-
-
 
 
 }

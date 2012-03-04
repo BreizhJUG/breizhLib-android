@@ -9,6 +9,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ClientConnectionRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
@@ -32,10 +33,10 @@ import java.util.List;
 public class NetworkUtils {
 
     private static final int CONNECTION_TIMEOUT = 20000;
-    private static HttpClient httpclient = getHttpClient();
+    private static DefaultHttpClient httpclient = getHttpClient();
     private static final String TAG = "Breizhlib.NetWork";
 
-    public static HttpClient getHttpClient() {
+    public static DefaultHttpClient getHttpClient() {
         if (httpclient == null) {
             HttpParams myHttpParams = new BasicHttpParams();
             HttpConnectionParams.setConnectionTimeout(myHttpParams,
@@ -59,6 +60,7 @@ public class NetworkUtils {
             for (Param param : params) {
                 nameValuePairs.add(new BasicNameValuePair(param.key, param.value.toString()));
             }
+
 
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             httpPost.addHeader("Cookie", auth);

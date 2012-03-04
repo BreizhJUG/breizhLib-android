@@ -23,6 +23,7 @@ import org.breizhjug.breizhlib.database.dao.ReservationDAO;
 import org.breizhjug.breizhlib.model.*;
 import org.breizhjug.breizhlib.remote.UtilisateurService;
 import org.breizhjug.breizhlib.utils.IntentSupport;
+import org.breizhjug.breizhlib.utils.authentification.Authentification;
 import org.breizhjug.breizhlib.utils.images.Gravatar;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
 import org.json.JSONArray;
@@ -56,6 +57,8 @@ public class ProfilActivity extends AbstractGDActivity {
     private EmpruntDAO empruntDAO;
     @Inject
     private Converter converter;
+    @Inject
+    private Authentification authentification;
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -83,6 +86,7 @@ public class ProfilActivity extends AbstractGDActivity {
                 if (result == null) {
                     showError(getString(R.string.data_unavailable), true);
                 } else {
+                    authentification.saveInfos(result,getApplicationContext());
                     initView(result);
                 }
             }
@@ -125,14 +129,13 @@ public class ProfilActivity extends AbstractGDActivity {
         editor.putString(BreizhLibConstantes.USER, user.email);
         editor.putBoolean(BreizhLibConstantes.USER_ADMIN, user.isAdmin);
         editor.putString(BreizhLibConstantes.USER_NOM, user.nom);
-        editor.putString(BreizhLibConstantes.USER_PRENOM, user.prenom);
         editor.commit();
 
         final JSONArray listItems = new JSONArray();
         try {
             if (IsNotNullNorEmpty(user.nom)) {
-                listItems.put(buildListItem("Nom", user.nom + " " + user.prenom));
-                nom.setText(user.nom + " " + user.prenom);
+                listItems.put(buildListItem("Nom", user.nom));
+                nom.setText(user.nom);
             }
             if (IsNotNullNorEmpty(user.email)) {
                 listItems.put(buildListItem("Email", user.email));
