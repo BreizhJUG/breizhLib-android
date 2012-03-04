@@ -29,15 +29,45 @@ public class CommentaireActivity extends AbstractPagednActivity<Commentaire> {
     private ImageCache imageCache;
 
 
+    public void init(Intent intent) {
+        getActionBar().setTitle(getText(R.string.commentaires_title));
+        addActionBarItem(ActionBarItem.Type.Refresh, R.id.action_bar_refresh);
+    }
+
+    public void initView(final LoaderActionBarItem loaderItem) {
+
+        final PagedView pagedView = (PagedView) findViewById(R.id.paged_view);
+        final AsyncPageViewRemoteTask<Commentaire> initTask = new AsyncPageViewRemoteTask<Commentaire>(this, service, pagedView, prefs) {
+
+            @Override
+            public PagedAdapter getAdapter() {
+                List<Commentaire> commentaires = CommentaireActivity.this.items;
+                if(commentaires == null){
+                    commentaires = items;
+                }
+                return new CommentairesPagedAdapter(CommentaireActivity.this, commentaires);
+            }
+
+            @Override
+            protected void onPostExecute(Boolean result) {
+                super.onPostExecute(result);
+                pagedView.smoothScrollToPage(index);
+            }
+
+
+            public void onClick(int position) {
+
+            }
+        };
+        initTask.setDialogTitle(R.string.commentaires_title);
+        initTask.execute((Void) null);
+
+    }
+
+
     @Override
     protected Class<? extends Activity> getActivityClass() {
         return CommentaireActivity.class;
-    }
-
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getActionBar().setTitle(getText(R.string.commentaires_title));
-        addActionBarItem(ActionBarItem.Type.Refresh, R.id.action_bar_refresh);
     }
 
     @Override
@@ -52,37 +82,5 @@ public class CommentaireActivity extends AbstractPagednActivity<Commentaire> {
 
                 return super.onHandleActionBarItemClick(item, position);
         }
-    }
-
-    public void init(Intent intent) {
-    }
-
-    public void initView(final LoaderActionBarItem loaderItem) {
-        final PagedView pagedView = (PagedView) findViewById(R.id.paged_view);
-        final AsyncTask<Void, Void, Boolean> initTask = new AsyncPageViewRemoteTask<Commentaire>(this, service, pagedView, prefs) {
-
-            @Override
-            public PagedAdapter getAdapter() {
-                List<Commentaire> commentaires = CommentaireActivity.this.items;
-                if(commentaires == null){
-                    commentaires = items;
-                }
-                return new CommentairesPagedAdapter(CommentaireActivity.this, commentaires);
-            }
-
-            @Override
-            protected void onPostExecute(Boolean result) {
-                super.onPostExecute(result);
-                //mPageIndicatorOther.setDotCount(getAdapter().getCount());
-                pagedView.smoothScrollToPage(index);
-            }
-
-
-            public void onClick(int position) {
-
-            }
-        };
-        initTask.execute((Void) null);
-
     }
 }

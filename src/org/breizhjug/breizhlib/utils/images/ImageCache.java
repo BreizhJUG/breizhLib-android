@@ -18,6 +18,8 @@ public class ImageCache implements Cache {
 
     private static final String TAG = "Breizhlib.ImageCache";
 
+    private static final String JPG_EXT = ".jpg";
+
     private static ImageDownloader imageDownloader = ImageDownloader.getInstance();
 
     private String SD_PATH = Environment.getExternalStorageDirectory().toString();
@@ -85,7 +87,7 @@ public class ImageCache implements Cache {
     }
 
     private void saveImage(Bitmap bitmap, String isbn) throws FileNotFoundException {
-        File file = new File(SD_PATH + isbn + ".jpg");
+        File file = new File(SD_PATH + isbn + JPG_EXT);
         Bitmap thumb = Bitmap.createScaledBitmap(bitmap, 75, 100, true);
         thumb.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(file));
     }

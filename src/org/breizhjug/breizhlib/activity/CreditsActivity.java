@@ -9,22 +9,18 @@ import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.common.AbstractGDActivity;
 import org.breizhjug.breizhlib.utils.version.Version;
+import roboguice.inject.InjectView;
 
 
 public class CreditsActivity extends AbstractGDActivity {
 
+    @InjectView(R.id.version)
     TextView versionView;
 
     @Override
     public void init(Intent intent) {
-
-    }
-
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setActionBarContentView(R.layout.credits);
         getActionBar().setTitle(getText(R.string.credits_title));
-        versionView = (TextView) findViewById(R.id.version);
         versionView.setText(getString(R.string.version) + " " + Version.version);
     }
 

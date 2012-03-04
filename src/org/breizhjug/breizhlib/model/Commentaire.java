@@ -47,11 +47,13 @@ public class Commentaire implements Serializable, Model {
         this.isbn = livre.iSBN;
     }
 
-    public Commentaire(Cursor cursor) {
+    @Override
+    public Commentaire from(Cursor cursor) {
         note = cursor.getInt(cursor.getColumnIndex(NOTE));
         nom = cursor.getString(cursor.getColumnIndex(NOM));
         isbn = cursor.getString(cursor.getColumnIndex(ISBN));
         commentaire = cursor.getString(cursor.getColumnIndex(COMMENTAIRE));
+        return this;
     }
 
     public void onLoad(Database db) {

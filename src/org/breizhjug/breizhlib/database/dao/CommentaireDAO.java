@@ -16,16 +16,16 @@ public class CommentaireDAO extends AbstractDao {
         args.add(isbn);
         cursor = db.executeSelectQuery("SELECT Commentaire.* FROM Commentaire  WHERE Commentaire.isbn = :isbn", args);
         try {
-            final ArrayList<Commentaire> commentaires = new ArrayList<Commentaire>();
-            if (cursor != null) {
-                if (cursor.getCount() > 0) {
-                    cursor.moveToFirst();
-                    do {
-                        Commentaire commentaire = new Commentaire(cursor);
-                        commentaire.onLoad(db);
-                        commentaires.add(commentaire);
-                    } while (cursor.moveToNext());
-                }
+            ArrayList<Commentaire> commentaires = new ArrayList<Commentaire>();
+            if (cursor != null && cursor.getCount() > 0) {
+
+                cursor.moveToFirst();
+                do {
+                    Commentaire commentaire = new Commentaire().from(cursor);
+                    commentaire.onLoad(db);
+                    commentaires.add(commentaire);
+                } while (cursor.moveToNext());
+
                 closeCursor();
             }
             return commentaires;
@@ -40,16 +40,14 @@ public class CommentaireDAO extends AbstractDao {
         args.add(nom);
         cursor = db.executeSelectQuery("SELECT Commentaire.* FROM Commentaire  WHERE Commentaire.nom = :nom", args);
         try {
-            final ArrayList<Commentaire> commentaires = new ArrayList<Commentaire>();
-            if (cursor != null) {
-                if (cursor.getCount() > 0) {
-                    cursor.moveToFirst();
-                    do {
-                        Commentaire commentaire = new Commentaire(cursor);
-                        commentaire.onLoad(db);
-                        commentaires.add(commentaire);
-                    } while (cursor.moveToNext());
-                }
+            ArrayList<Commentaire> commentaires = new ArrayList<Commentaire>();
+            if (cursor != null && cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                do {
+                    Commentaire commentaire = new Commentaire().from(cursor);
+                    commentaire.onLoad(db);
+                    commentaires.add(commentaire);
+                } while (cursor.moveToNext());
                 closeCursor();
             }
             return commentaires;

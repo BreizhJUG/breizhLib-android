@@ -1,8 +1,7 @@
-package org.breizhjug.breizhlib.utils;
+package org.breizhjug.breizhlib.utils.authentification;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -12,16 +11,13 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.conn.params.ConnManagerParams;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.account.AuthentificatorActivity;
+import org.breizhjug.breizhlib.utils.NetworkUtils;
+import org.breizhjug.breizhlib.utils.authentification.Authentification;
 
 import static org.breizhjug.breizhlib.IntentConstantes.*;
 
@@ -46,6 +42,11 @@ public class BreizhLibAuthentification implements Authentification {
     }
 
     @Override
+    public String getAccountType() {
+        return BreizhLibConstantes.ACCOUNT_TYPE;
+    }
+
+    @Override
     public String getToken(Context context, Account account) {
         return "";
     }
@@ -60,11 +61,10 @@ public class BreizhLibAuthentification implements Authentification {
         ArrayList<String> result = new ArrayList<String>();
         Account[] accounts = AccountManager.get(context).getAccounts();
         for (Account account : accounts) {
-            if (account.type.equals(BreizhLibConstantes.ACCOUNT_TYPE)) {
+            if (account.type.equals(getAccountType())) {
                 result.add(account.name);
             }
         }
-
         return result;
     }
 

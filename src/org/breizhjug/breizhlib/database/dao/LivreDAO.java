@@ -13,16 +13,14 @@ public class LivreDAO extends AbstractDao {
         closeCursor();
         cursor = db.executeSelectQuery("SELECT Livre.* FROM Livre  WHERE Livre.etat = 'RESERVE' ", null);
         try {
-            final ArrayList<Livre> livres = new ArrayList<Livre>();
-            if (cursor != null) {
-                if (cursor.getCount() > 0) {
+            ArrayList<Livre> livres = new ArrayList<Livre>();
+            if (cursor != null && cursor.getCount() > 0 ) {
                     cursor.moveToFirst();
                     do {
-                        Livre livre = new Livre(cursor);
+                        Livre livre = new Livre().from(cursor);
                         livre.onLoad(db);
                         livres.add(livre);
                     } while (cursor.moveToNext());
-                }
                 closeCursor();
             }
             return livres;

@@ -20,15 +20,13 @@ public class EmpruntDAO extends AbstractDao {
         cursor = db.executeSelectQuery("SELECT Emprunt.* FROM Emprunt  WHERE Emprunt.nom = :nom AND Emprunt.prenom = :prenom", args);
         try {
             final ArrayList<Emprunt> items = new ArrayList<Emprunt>();
-            if (cursor != null) {
-                if (cursor.getCount() > 0) {
+            if (cursor != null && cursor.getCount() > 0) {
                     cursor.moveToFirst();
                     do {
-                        Emprunt emprunt = new Emprunt(cursor);
+                        Emprunt emprunt = new Emprunt().from(cursor);
                         emprunt.onLoad(db);
                         items.add(emprunt);
                     } while (cursor.moveToNext());
-                }
                 closeCursor();
             }
             return items;

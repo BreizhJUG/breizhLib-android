@@ -32,6 +32,7 @@ public class JsonConverter {
             livre.add = item.getBoolean("aAjouter");
             livre.etat = item.getString("etat");
             livre.note = getFacultatifInt(item, "note");
+            livre.nbCommentaire = getFacultatifInt(item, "nbCommentaire");
         }
         return livre;
     }

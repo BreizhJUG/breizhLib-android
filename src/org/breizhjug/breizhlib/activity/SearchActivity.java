@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.View;
@@ -20,10 +19,12 @@ import org.breizhjug.breizhlib.remote.AsyncRemoteTask;
 import org.breizhjug.breizhlib.remote.OuvrageService;
 import org.breizhjug.breizhlib.remote.Service;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
+import roboguice.inject.InjectView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import static org.breizhjug.breizhlib.IntentConstantes.*;
 
 public class SearchActivity extends AbstractGDActivity {
@@ -36,19 +37,33 @@ public class SearchActivity extends AbstractGDActivity {
     @Inject
     private ImageCache imageCache;
 
+    @InjectView(R.id.editText)
     private EditText mSearchBox;
-
+    @InjectView(R.id.button)
     private ImageButton mSearchButton;
+    @InjectView(R.id.items)
+    private ListView ouvragesListView;
+
 
 
     private String mSearchTerm;
-
 
     private SearchTask mTask;
 
     @Override
     public void init(Intent intent) {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        setActionBarContentView(R.layout.items_search);
+        getActionBar().setTitle(getText(R.string.search_title));
 
+        mSearchBox.setOnEditorActionListener(mOnEditorAction);
+        mSearchButton.setOnClickListener(mOnSearchButtonClick);
+
+        mTask = (SearchTask) getLastNonConfigurationInstance();
+        if ((mTask == null) || (mTask.getStatus() == AsyncTask.Status.FINISHED)) {
+            mTask = new SearchTask(this, service, ouvragesListView, prefs);
+        }
+        mTask.activity = this;
     }
 
     private final View.OnClickListener mOnSearchButtonClick = new View.OnClickListener() {
@@ -84,30 +99,7 @@ public class SearchActivity extends AbstractGDActivity {
             return false;
         }
     };
-    AbsListView ouvragesListView;
 
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        setActionBarContentView(R.layout.items_search);
-        getActionBar().setTitle(getText(R.string.search_title));
-
-
-        mSearchBox = (EditText) findViewById(R.id.editText);
-        mSearchBox.setOnEditorActionListener(mOnEditorAction);
-
-        mSearchButton = (ImageButton) findViewById(R.id.button);
-        mSearchButton.setOnClickListener(mOnSearchButtonClick);
-
-        ouvragesListView = (ListView) findViewById(R.id.items);
-
-        mTask = (SearchTask) getLastNonConfigurationInstance();
-        if ((mTask == null) || (mTask.getStatus() == AsyncTask.Status.FINISHED)) {
-            mTask = new SearchTask(this, service, ouvragesListView, prefs);
-        }
-        mTask.activity = this;
-
-    }
 
     private class SearchTask extends AsyncRemoteTask<Livre> {
 
@@ -129,7 +121,7 @@ public class SearchActivity extends AbstractGDActivity {
         }
 
         public void onClick(int position) {
-            startLivreActivity(position,items);
+            startLivreActivity(position, items);
         }
     }
 
@@ -139,7 +131,7 @@ public class SearchActivity extends AbstractGDActivity {
         intent.putExtra(ITEMS, items);
         intent.putExtra(INDEX, position);
         intent.putExtra(ITEM, livre);
-        this.startActivity(intent);
+        startActivity(intent);
     }
 
 }

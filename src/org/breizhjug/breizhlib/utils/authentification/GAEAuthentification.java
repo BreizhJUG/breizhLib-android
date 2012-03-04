@@ -1,4 +1,4 @@
-package org.breizhjug.breizhlib.utils;
+package org.breizhjug.breizhlib.utils.authentification;
 
 
 import android.accounts.*;
@@ -17,7 +17,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
-import org.breizhjug.breizhlib.account.AuthentificatorActivity;
+import org.breizhjug.breizhlib.utils.authentification.Authentification;
 
 import java.io.IOException;
 import java.net.URI;
@@ -26,7 +26,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GAEAuthentification implements Authentification{
+public class GAEAuthentification implements Authentification {
 
     private static final String TAG = "Breizhlib.GAEAuthentification";
 
@@ -107,7 +107,7 @@ public class GAEAuthentification implements Authentification{
         ArrayList<String> result = new ArrayList<String>();
         Account[] accounts = AccountManager.get(context).getAccounts();
         for (Account account : accounts) {
-            if (account.type.equals("com.google")) {
+            if (account.type.equals(getAccountType())) {
                 result.add(account.name);
             }
         }
@@ -119,6 +119,11 @@ public class GAEAuthentification implements Authentification{
     @Override
     public Intent getAuthentificationIntent(Context context) {
         return new Intent(Settings.ACTION_ADD_ACCOUNT);
+    }
+
+    @Override
+    public String getAccountType() {
+        return "com.google";
     }
 
     public GAEAuthentification() {

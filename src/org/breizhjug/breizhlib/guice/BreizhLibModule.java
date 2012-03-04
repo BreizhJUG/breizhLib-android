@@ -9,8 +9,11 @@ import org.breizhjug.breizhlib.database.dao.CommentaireDAO;
 import org.breizhjug.breizhlib.database.dao.EmpruntDAO;
 import org.breizhjug.breizhlib.database.dao.LivreDAO;
 import org.breizhjug.breizhlib.database.dao.ReservationDAO;
+import org.breizhjug.breizhlib.model.Converter;
 import org.breizhjug.breizhlib.remote.*;
 import org.breizhjug.breizhlib.utils.*;
+import org.breizhjug.breizhlib.utils.authentification.Authentification;
+import org.breizhjug.breizhlib.utils.authentification.BreizhLibAuthentification;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
 import org.breizhjug.breizhlib.utils.version.VersionTask;
 import org.breizhjug.breizhlib.view.CacheDialogPreference;
@@ -34,6 +37,7 @@ public class BreizhLibModule extends AbstractAndroidModule {
         bindConstant().annotatedWith(ServerUrl.class).to(BreizhLibConstantes.SERVER_URL);
 
 
+        bind(Converter.class).in(Singleton.class);
         bind(CommentaireService.class).in(Singleton.class);
         bind(OuvrageService.class).in(Singleton.class);
         bind(ReservationService.class).in(Singleton.class);

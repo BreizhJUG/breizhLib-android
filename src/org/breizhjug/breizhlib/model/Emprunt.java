@@ -43,10 +43,11 @@ public class Emprunt implements Serializable, Model {
         }
     }
 
-    public Emprunt(Cursor cursor) {
+    public Emprunt from(Cursor cursor) {
         nom = cursor.getString(cursor.getColumnIndex(NOM));
         isbn = cursor.getString(cursor.getColumnIndex(ISBN));
         prenom = cursor.getString(cursor.getColumnIndex(PRENOM));
+        return this;
     }
 
     public void onLoad(Database db) {

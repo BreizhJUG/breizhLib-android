@@ -18,16 +18,14 @@ public class ReservationDAO extends AbstractDao {
         args.add(prenom);
         cursor = db.executeSelectQuery("SELECT Reservation.* FROM Reservation  WHERE Reservation.nom = :nom AND Reservation.prenom = :prenom", args);
         try {
-            final ArrayList<Reservation> items = new ArrayList<Reservation>();
-            if (cursor != null) {
-                if (cursor.getCount() > 0) {
+            ArrayList<Reservation> items = new ArrayList<Reservation>();
+            if (cursor != null && cursor.getCount() > 0) {
                     cursor.moveToFirst();
                     do {
-                        Reservation resa = new Reservation(cursor);
+                        Reservation resa = new Reservation().from(cursor);
                         resa.onLoad(db);
                         items.add(resa);
                     } while (cursor.moveToNext());
-                }
                 closeCursor();
             }
             return items;

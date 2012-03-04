@@ -21,10 +21,8 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
-import org.breizhjug.breizhlib.utils.BreizhLibAuthentification;
+import org.breizhjug.breizhlib.utils.authentification.BreizhLibAuthentification;
 import roboguice.application.RoboApplication;
-import roboguice.event.EventManager;
-import roboguice.inject.ContextScope;
 import roboguice.inject.InjectorProvider;
 import static org.breizhjug.breizhlib.IntentConstantes.*;
 

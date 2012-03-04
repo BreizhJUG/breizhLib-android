@@ -43,7 +43,7 @@ public class AvisActivity extends AbstractGDActivity {
 
     @Override
     public void init(Intent intent) {
-
+        setActionBarContentView(R.layout.avis);
         rating.setRating(livre.note);
         rating.setMax(5);
         getActionBar().setTitle(livre.titre);
@@ -55,14 +55,7 @@ public class AvisActivity extends AbstractGDActivity {
         button.setOnClickListener(new Button.OnClickListener() {
 
             public void onClick(View view) {
-                String avis = avisEdit.getText().toString();
-                String nom = nomEdit.getText().toString();
-
-                if (avis == null || avis.length() == 0) {
-                    showError(R.string.commentaire_validation_msg, false);
-                } else if (nom == null || nom.length() == 0) {
-                    showError(R.string.nom_validation_msg, false);
-                } else {
+                if(!validate()){
                     sendAvis();
                 }
             }
@@ -132,10 +125,6 @@ public class AvisActivity extends AbstractGDActivity {
         return true;
     }
 
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setActionBarContentView(R.layout.avis);
-    }
 
     private void startCommentaireActivity(Commentaire result) {
         Toast.makeText(AvisActivity.this, getString(R.string.commentaireSave), Toast.LENGTH_SHORT);

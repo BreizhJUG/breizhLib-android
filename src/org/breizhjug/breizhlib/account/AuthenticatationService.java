@@ -4,11 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-/**
- * User: Guernion Sylvain
- * Date: 26/02/12
- * Time: 22:56
- */
+
 public class AuthenticatationService extends Service {
 
     @Override

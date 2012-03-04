@@ -13,6 +13,7 @@ import static org.breizhjug.breizhlib.IntentConstantes.*;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.common.AbstractGDActivity;
 import org.breizhjug.breizhlib.adapter.ReservationsAdapter;
+import org.breizhjug.breizhlib.model.Converter;
 import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.model.Reservation;
 import org.breizhjug.breizhlib.remote.AsyncRemoteTask;
@@ -32,43 +33,20 @@ public class ReservationsActivity extends AbstractGDActivity {
     private ReservationService service;
     @Inject
     private ImageCache imageCache;
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setActionBarContentView(R.layout.items);
-
-        reservationsListView = (ListView) findViewById(R.id.items);
-        initView(null);
-        getActionBar().setTitle(getText(R.string.reservations_title));
-        addActionBarItem(ActionBarItem.Type.Refresh, R.id.action_bar_refresh);
-
-    }
-
-
-    @Override
-    public boolean onHandleActionBarItemClick(ActionBarItem item, int position) {
-        switch (item.getItemId()) {
-            case R.id.action_bar_refresh:
-                final LoaderActionBarItem loaderItem = (LoaderActionBarItem) item;
-                service.clearDBCache();
-                initView(loaderItem);
-
-                return true;
-            default:
-
-                return super.onHandleActionBarItemClick(item, position);
-        }
-    }
+    @Inject
+    private Converter converter;
 
     @Override
     public void init(Intent intent) {
+        setActionBarContentView(R.layout.items);
+        initView(null);
+        getActionBar().setTitle(getText(R.string.reservations_title));
+        addActionBarItem(ActionBarItem.Type.Refresh, R.id.action_bar_refresh);
     }
 
     public void initView(final LoaderActionBarItem loaderItem) {
 
-        final AsyncTask<Void, Void, Boolean> initTask = new AsyncRemoteTask<Reservation>(this, service, reservationsListView, prefs) {
+        final AsyncRemoteTask<Reservation> initTask = new AsyncRemoteTask<Reservation>(this, service, reservationsListView, prefs) {
 
             @Override
             protected void onPostExecute(Boolean result) {
@@ -97,7 +75,7 @@ public class ReservationsActivity extends AbstractGDActivity {
             }
         };
 
-
+        initTask.setDialogTitle(R.string.reservations_title);
         initTask.execute((Void) null);
 
     }
@@ -105,22 +83,26 @@ public class ReservationsActivity extends AbstractGDActivity {
     private void startLivreActivity(int position, ArrayList<Reservation> items) {
         Reservation reservation = (Reservation) reservationsListView.getItemAtPosition(position);
         Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-        intent.putExtra(ITEMS, toOuvrages(items));
+        intent.putExtra(ITEMS, converter.toOuvrages(items));
         intent.putExtra(INDEX, position);
         intent.putExtra(ITEM, reservation.livre);
         intent.putExtra(EMAIL_RESERVATION, reservation.email);
         this.startActivity(intent);
     }
 
-    private ArrayList<Livre> toOuvrages(ArrayList<Reservation> items) {
-        ArrayList<Livre> livres = new ArrayList<Livre>();
-
-        for (Reservation item : items) {
-            livres.add(item.livre);
+    @Override
+    public boolean onHandleActionBarItemClick(ActionBarItem item, int position) {
+        switch (item.getItemId()) {
+            case R.id.action_bar_refresh:
+                final LoaderActionBarItem loaderItem = (LoaderActionBarItem) item;
+                service.clearDBCache();
+                initView(loaderItem);
+                return true;
+            default:
+                return super.onHandleActionBarItemClick(item, position);
         }
-
-        return livres;
     }
+
 
 
 }

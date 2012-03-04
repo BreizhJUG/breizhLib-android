@@ -26,11 +26,17 @@ public abstract class AsyncRemoteTask<T extends Model> extends AsyncTask<Void, V
     private ProgressDialog waitDialog;
     Activity context;
 
+   private int dialogueTitle = R.string.chargement;
+
     public AsyncRemoteTask(final Activity context, Service<T> service, AbsListView listView, SharedPreferences prefs) {
         this.service = service;
         this.listView = listView;
         this.prefs = prefs;
         this.context = context;
+    }
+    
+    public void setDialogTitle(int dialogueTitle){
+       this.dialogueTitle = dialogueTitle;
     }
 
     @Override
@@ -49,7 +55,7 @@ public abstract class AsyncRemoteTask<T extends Model> extends AsyncTask<Void, V
                 context.finish();
             }
         });
-        waitDialog.setTitle(context.getString(R.string.chargement));
+        waitDialog.setTitle(context.getString(dialogueTitle));
         waitDialog.setMessage(context.getString(R.string.recherche));
         waitDialog.show();
     }

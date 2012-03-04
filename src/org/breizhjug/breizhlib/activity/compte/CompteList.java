@@ -11,10 +11,9 @@ import com.google.inject.internal.Nullable;
 import greendroid.widget.ActionBarItem;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
-import org.breizhjug.breizhlib.account.AuthentificatorActivity;
 import org.breizhjug.breizhlib.activity.common.AbstractGDActivity;
 import org.breizhjug.breizhlib.adapter.AccountsAdapter;
-import org.breizhjug.breizhlib.utils.Authentification;
+import org.breizhjug.breizhlib.utils.authentification.Authentification;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
 import roboguice.inject.InjectView;
 

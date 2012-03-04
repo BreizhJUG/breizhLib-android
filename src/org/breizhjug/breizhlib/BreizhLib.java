@@ -25,6 +25,7 @@ public class BreizhLib extends RoboInjectableApplication {
 
     @Inject
     private VersionTask checkVersion;
+
     public GDApplication gdapp = new GDApplication(){
         @Override
            public Class<?> getHomeActivityClass() {

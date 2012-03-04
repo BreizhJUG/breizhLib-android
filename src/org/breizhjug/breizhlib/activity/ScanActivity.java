@@ -32,9 +32,6 @@ public class ScanActivity extends AbstractGDActivity {
         IntentIntegrator.initiateScan(this);
     }
 
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     public DialogInterface.OnClickListener mSend = new DialogInterface.OnClickListener() {
 

@@ -57,6 +57,8 @@ public class ProfilActivity extends AbstractGDActivity {
     private ReservationDAO reservationDAO;
     @Inject
     private EmpruntDAO empruntDAO;
+    @Inject
+    private Converter converter;
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -193,7 +195,7 @@ public class ProfilActivity extends AbstractGDActivity {
                         final ArrayList<Reservation> resaItems = reservationDAO.findByNom(user.nom, user.prenom);
                         if (resaItems != null && resaItems.size() > 0) {
                             intent = new Intent(getApplicationContext(), LivreActivity.class);
-                            intent.putExtra(ITEMS, toOuvrages(resaItems));
+                            intent.putExtra(ITEMS, converter.toOuvrages(resaItems));
                             intent.putExtra(INDEX, 0);
                             intent.putExtra(ITEM, resaItems.get(0).livre);
                             intent.putExtra("emailReservation", resaItems.get(0).email);
@@ -204,7 +206,7 @@ public class ProfilActivity extends AbstractGDActivity {
                         final ArrayList<Emprunt> empruntItems = empruntDAO.findByNom(user.nom, user.prenom);
                         if (empruntItems != null && empruntItems.size() > 0) {
                             intent = new Intent(getApplicationContext(), EmpruntsActivity.class);
-                            intent.putExtra(ITEMS, empruntToOuvrages(empruntItems));
+                            intent.putExtra(ITEMS, converter.empruntToOuvrages(empruntItems));
                             intent.putExtra(INDEX, 0);
                             intent.putExtra(ITEM, empruntItems.get(0).livre);
                             startActivity(intent);
@@ -221,24 +223,6 @@ public class ProfilActivity extends AbstractGDActivity {
 
     }
 
-    private ArrayList<Livre> toOuvrages(ArrayList<Reservation> items) {
-        ArrayList<Livre> livres = new ArrayList<Livre>();
 
-        for (Reservation item : items) {
-            livres.add(item.livre);
-        }
-
-        return livres;
-    }
-
-    private ArrayList<Livre> empruntToOuvrages(ArrayList<Emprunt> items) {
-        ArrayList<Livre> livres = new ArrayList<Livre>();
-
-        for (Emprunt item : items) {
-            livres.add(item.livre);
-        }
-
-        return livres;
-    }
 
 }

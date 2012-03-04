@@ -1,4 +1,4 @@
-package org.breizhjug.breizhlib.utils;
+package org.breizhjug.breizhlib.utils.authentification;
 
 import android.accounts.Account;
 import android.app.Activity;
@@ -21,4 +21,6 @@ public interface Authentification {
     List<String> getAccounts(Context context);
 
     Intent getAuthentificationIntent(Context context);
+    
+    String getAccountType();
 }

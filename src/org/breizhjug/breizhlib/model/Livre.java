@@ -28,6 +28,7 @@ public class Livre implements Serializable, Model {
     public boolean add;
     @Column
     public String etat;
+
     public int nbCommentaire;
 
     public Livre() {
@@ -41,12 +42,13 @@ public class Livre implements Serializable, Model {
         this.iSBN = iSBN;
     }
 
-    public Livre(Cursor cursor) {
+    public Livre from(Cursor cursor) {
         note = cursor.getInt(cursor.getColumnIndex(NOTE));
         editeur = cursor.getString(cursor.getColumnIndex(EDITEUR));
         iSBN = cursor.getString(cursor.getColumnIndex("iSBN"));
         imgUrl = cursor.getString(cursor.getColumnIndex(IMG_URL));
         titre = cursor.getString(cursor.getColumnIndex(TITRE));
+        return this;
     }
 
     public void onLoad(Database db) {

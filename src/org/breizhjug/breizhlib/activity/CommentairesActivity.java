@@ -31,20 +31,14 @@ public class CommentairesActivity extends AbstractGDActivity {
     @Inject
     private ImageCache imageCache;
 
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setActionBarContentView(R.layout.items);
-        commentairesListView = (ListView) findViewById(R.id.items);
-
-        initView();
-        getActionBar().setTitle(getText(R.string.commentaires_title));
-    }
-
     public void init(Intent intent) {
+        setActionBarContentView(R.layout.items);
+        getActionBar().setTitle(getText(R.string.commentaires_title));
+        initView();
     }
 
     public void initView() {
-        final AsyncTask<Void, Void, Boolean> initTask = new AsyncRemoteTask<Commentaire>(this, service, commentairesListView, prefs) {
+        final AsyncRemoteTask<Commentaire> initTask = new AsyncRemoteTask<Commentaire>(this, service, commentairesListView, prefs) {
 
             @Override
             public ArrayAdapter<Commentaire> getAdapter() {
@@ -55,6 +49,7 @@ public class CommentairesActivity extends AbstractGDActivity {
                 startCommentaireActivity(position,items);
             }
         };
+        initTask.setDialogTitle(R.string.commentaires_title);
         initTask.execute((Void) null);
     }
 

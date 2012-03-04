@@ -72,7 +72,9 @@ public class OuvrageAdapter extends ArrayAdapter<Livre> {
                 comm.setVisibility(View.INVISIBLE);
             }
             TextView  nb_commentaire = (TextView) view.findViewById(R.id.nb_commentaire);
-            nb_commentaire.setText("");
+            if(nb_commentaire != null){
+                nb_commentaire.setText("");
+            }
         }
 
 

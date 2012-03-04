@@ -5,13 +5,14 @@ import android.accounts.AccountManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.util.Log;
 import com.google.inject.Inject;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.common.AbstractGDActivity;
-import org.breizhjug.breizhlib.utils.Authentification;
+import org.breizhjug.breizhlib.utils.authentification.Authentification;
+import roboguice.inject.InjectExtra;
+
 import static org.breizhjug.breizhlib.IntentConstantes.*;
 
 public class AppInfo extends AbstractGDActivity {
@@ -20,11 +21,14 @@ public class AppInfo extends AbstractGDActivity {
     @Inject
     private SharedPreferences prefs;
     @Inject
-    private Authentification gAuth;
+    private Authentification authentification;
+
+    @InjectExtra(ACCOUNT)
+    private String account;
 
     @Override
     public void init(Intent intent) {
-        String account = (String) intent.getExtras().get(ACCOUNT);
+        setActionBarContentView(R.layout.app_info);
         register(account);
     }
 
@@ -36,15 +40,15 @@ public class AppInfo extends AbstractGDActivity {
         editor.commit();
 
         AccountManager mgr = AccountManager.get(getApplicationContext());
-        Account[] accts = mgr.getAccountsByType("com.google");
+        Account[] accts = mgr.getAccountsByType(authentification.getAccountType());
         for (final Account acct : accts) {
             if (acct.name.equals(accountName)) {
                 final AsyncTask<Void, Void, String> initTask = new AsyncTask<Void, Void, String>() {
 
                     @Override
                     protected String doInBackground(Void... params) {
-                        String auth_token = gAuth.getToken(AppInfo.this, acct);
-                        String authCookie = gAuth.getAuthCookie(auth_token, AppInfo.this);
+                        String auth_token = authentification.getToken(AppInfo.this, acct);
+                        String authCookie = authentification.getAuthCookie(auth_token, AppInfo.this);
                         Log.d(TAG, authCookie);
                         return authCookie;
                     }
@@ -66,9 +70,5 @@ public class AppInfo extends AbstractGDActivity {
         }
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setActionBarContentView(R.layout.app_info);
-    }
+
 }

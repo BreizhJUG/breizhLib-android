@@ -39,7 +39,8 @@ public class ReservationActivity extends AbstractGDActivity {
 
     @Override
     public void init(Intent intent) {
-
+        setActionBarContentView(R.layout.reserver);
+        initView();
     }
 
     public void initView() {
@@ -57,8 +58,6 @@ public class ReservationActivity extends AbstractGDActivity {
                 onSend(livre.iSBN, prenom.getText().toString(), nom.getText().toString(), email.getText().toString());
             }
         });
-
-
     }
 
     private void onSend(final String isbn, final String prenom, final String nom, final String email) {
@@ -81,7 +80,7 @@ public class ReservationActivity extends AbstractGDActivity {
                         ReservationActivity.this.finish();
                     }
                 });
-                waitDialog.setTitle(ReservationActivity.this.getString(R.string.chargement));
+                waitDialog.setTitle(livre.titre);
                 waitDialog.setMessage(getString(R.string.send_data));
                 waitDialog.show();
             }
@@ -131,9 +130,4 @@ public class ReservationActivity extends AbstractGDActivity {
         return true;
     }
 
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setActionBarContentView(R.layout.reserver);
-        initView();
-    }
 }

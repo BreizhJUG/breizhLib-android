@@ -27,6 +27,7 @@ import static org.breizhjug.breizhlib.IntentConstantes.*;
 public class OuvragesActivity extends AbstractGDActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String TAG = "Breizhlib.OuvragesActivity";
+
     private AbsListView ouvragesListView;
 
     private boolean modeGrid;
@@ -37,29 +38,6 @@ public class OuvragesActivity extends AbstractGDActivity implements SharedPrefer
     @Inject
     private OuvrageService service;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        modeGrid = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(BreizhLibConstantes.GRID, false);
-        initView(null);
-        addActionBarItem(ActionBarItem.Type.Refresh, R.id.action_bar_refresh);
-        getActionBar().setTitle(getText(R.string.ouvrages_title));
-    }
-
-    @Override
-    public boolean onHandleActionBarItemClick(ActionBarItem item, int position) {
-        Log.d("ActionBar ", "" + item.getItemId());
-        switch (item.getItemId()) {
-            case R.id.action_bar_refresh:
-                final LoaderActionBarItem loaderItem = (LoaderActionBarItem) item;
-                service.clearDBCache();
-                initView(loaderItem);
-                return true;
-            default:
-                return super.onHandleActionBarItemClick(item, position);
-        }
-    }
-
 
     @Override
     protected void onResume() {
@@ -69,6 +47,10 @@ public class OuvragesActivity extends AbstractGDActivity implements SharedPrefer
 
     @Override
     public void init(Intent intent) {
+        modeGrid = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(BreizhLibConstantes.GRID, false);
+        initView(null);
+        addActionBarItem(ActionBarItem.Type.Refresh, R.id.action_bar_refresh);
+        getActionBar().setTitle(getText(R.string.ouvrages_title));
     }
 
     public void initView(final LoaderActionBarItem loaderItem) {
@@ -80,8 +62,6 @@ public class OuvragesActivity extends AbstractGDActivity implements SharedPrefer
             ((GridView) ouvragesListView).setNumColumns(4);
             resource = R.layout.ouvrage_simple;
         } else {
-
-
             if (prefs.getBoolean("beta", false)) {
                 setActionBarContentView(R.layout.items_search);
                 EditText editText = (EditText) findViewById(R.id.editText);
@@ -93,7 +73,7 @@ public class OuvragesActivity extends AbstractGDActivity implements SharedPrefer
         }
 
         final int finalResource = resource;
-        final AsyncTask<Void, Void, Boolean> initTask = new AsyncRemoteTask<Livre>(this, service, ouvragesListView, prefs) {
+        final AsyncRemoteTask<Livre> initTask = new AsyncRemoteTask<Livre>(this, service, ouvragesListView, prefs) {
 
             @Override
             protected void onPostExecute(Boolean result) {
@@ -117,6 +97,7 @@ public class OuvragesActivity extends AbstractGDActivity implements SharedPrefer
                 startLivreActyvity(position,items);
             }
         };
+        initTask.setDialogTitle(R.string.ouvrages_title);
         initTask.execute((Void) null);
 
 
@@ -136,6 +117,20 @@ public class OuvragesActivity extends AbstractGDActivity implements SharedPrefer
         if (s.equals(BreizhLibConstantes.GRID)) {
             Log.d(TAG, "grid " + s);
             modeGrid = sharedPreferences.getBoolean(BreizhLibConstantes.GRID, false);
+        }
+    }
+
+    @Override
+    public boolean onHandleActionBarItemClick(ActionBarItem item, int position) {
+        Log.d("ActionBar ", "" + item.getItemId());
+        switch (item.getItemId()) {
+            case R.id.action_bar_refresh:
+                final LoaderActionBarItem loaderItem = (LoaderActionBarItem) item;
+                service.clearDBCache();
+                initView(loaderItem);
+                return true;
+            default:
+                return super.onHandleActionBarItemClick(item, position);
         }
     }
 }

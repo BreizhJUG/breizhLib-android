@@ -138,13 +138,6 @@ public class OuvrageService extends Service<Livre> {
                 for (int a = 0; a < booksArray.length(); a++) {
                     JSONObject item = booksArray.getJSONObject(a);
                     livre = converter.convertLivre(item);
-
-
-                    final ArrayList<Commentaire> commentaires = commentaireDAO.findByIsbn(livre.iSBN);
-                    livre.nbCommentaire =  commentaires.size();
-                    update(livre);
-
-
                     BOOKS.add(livre);
                 }
                 Log.d("UPDATE", "load livre : " + BOOKS.size());

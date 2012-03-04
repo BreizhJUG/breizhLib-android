@@ -53,39 +53,18 @@ public class LivreActivity extends AbstractPagednActivity<Livre> {
     private ImageCache imageCache;
     @Inject
     private CommentaireDAO commentaireDAO;
-    @Inject
-    private LivreDAO livreDAO;
 
 
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
+
+    @Override
+    public void init(Intent intent) {
         if (!item.add && prefs.getString(BreizhLibConstantes.ACCOUNT_NAME, null) != null) {
             if (prefs.getString(BreizhLibConstantes.USER, null) != null) {
                 getActionBar().addItem(ActionBarItem.Type.Compose, R.id.action_bar_avis);
             }
         }
     }
-
-    @Override
-    public void init(Intent intent) {
-
-    }
-
-    @Override
-    public boolean onHandleActionBarItemClick(ActionBarItem item, int position) {
-        switch (item.getItemId()) {
-            case R.id.action_bar_avis:
-                Intent pIntent = new Intent(getApplicationContext(), AvisActivity.class);
-                pIntent.putExtra(LIVRE, LivreActivity.this.item);
-                LivreActivity.this.startActivity(pIntent);
-
-                return true;
-            default:
-
-                return super.onHandleActionBarItemClick(item, position);
-        }
-    }
-
 
     public void initView(final LoaderActionBarItem loaderItem) {
         final PagedView pagedView = (PagedView) findViewById(R.id.paged_view);
@@ -99,15 +78,11 @@ public class LivreActivity extends AbstractPagednActivity<Livre> {
                 item = (Livre) getItem(position);
                 if (item != null)
                     initView(convertView, item);
-
                 return convertView;
             }
         };
-
         pagedView.setAdapter(adapter);
         mPageIndicatorOther.setDotCount(adapter.getCount());
-
-
     }
 
 
@@ -131,7 +106,6 @@ public class LivreActivity extends AbstractPagednActivity<Livre> {
         } else {
             initReservation(addBtn, item);
         }
-
         initCommentaires(item);
 
     }
@@ -153,14 +127,7 @@ public class LivreActivity extends AbstractPagednActivity<Livre> {
         commentaireItems.setAdapter(commentairesAdapter);
     }
 
-    private void startCommentaireActivity(int position, ArrayList<Commentaire> commentaires) {
-        Commentaire commentaire = (Commentaire) commentaireItems.getItemAtPosition(position);
-        Intent intent = new Intent(getApplicationContext(), CommentaireActivity.class);
-        intent.putExtra(ITEM, commentaire);
-        intent.putExtra(ITEMS, commentaires);
-        intent.putExtra(INDEX, position);
-        startActivity(intent);
-    }
+
 
     private void initReservation(Button button, final Livre livre) {
         button.setEnabled(false);
@@ -190,11 +157,8 @@ public class LivreActivity extends AbstractPagednActivity<Livre> {
                 button.setEnabled(true);
                 if (prefs.getString(BreizhLibConstantes.USER, null) != null) {
                     button.setOnClickListener(new Button.OnClickListener() {
-
                         public void onClick(View view) {
-                            Intent intent = new Intent(getApplicationContext(), ReservationActivity.class);
-                            intent.putExtra(LIVRE, livre);
-                            LivreActivity.this.startActivity(intent);
+                            startReservationActivity(livre);
                         }
                     });
                 } else {
@@ -231,10 +195,8 @@ public class LivreActivity extends AbstractPagednActivity<Livre> {
                             if (result == null) {
                                 showError(getString(R.string.add_error), true);
                             } else {
-                                Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
                                 Toast.makeText(getApplicationContext(), getString(R.string.ajoutOK), Toast.LENGTH_SHORT).show();
-                                intent.putExtra(ITEM, result);
-                                LivreActivity.this.startActivity(intent);
+                                startLivreActivity(result);
                                 finish();
                             }
                         }
@@ -245,6 +207,44 @@ public class LivreActivity extends AbstractPagednActivity<Livre> {
         } else {
             button.setText(getString(R.string.nonDispoBtn));
             button.setEnabled(false);
+        }
+    }
+
+    private void startLivreActivity(Livre result) {
+        Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
+        intent.putExtra(ITEM, result);
+        this.startActivity(intent);
+    }
+
+    private void startReservationActivity(Livre livre) {
+        Intent intent = new Intent(getApplicationContext(), ReservationActivity.class);
+        intent.putExtra(LIVRE, livre);
+        startActivity(intent);
+    }
+
+    private void startCommentaireActivity(int position, ArrayList<Commentaire> commentaires) {
+        Commentaire commentaire = (Commentaire) commentaireItems.getItemAtPosition(position);
+        Intent intent = new Intent(getApplicationContext(), CommentaireActivity.class);
+        intent.putExtra(ITEM, commentaire);
+        intent.putExtra(ITEMS, commentaires);
+        intent.putExtra(INDEX, position);
+        startActivity(intent);
+    }
+
+    private void startAvisActivity() {
+        Intent pIntent = new Intent(getApplicationContext(), AvisActivity.class);
+        pIntent.putExtra(LIVRE, item);
+        LivreActivity.this.startActivity(pIntent);
+    }
+
+    @Override
+    public boolean onHandleActionBarItemClick(ActionBarItem item, int position) {
+        switch (item.getItemId()) {
+            case R.id.action_bar_avis:
+                startAvisActivity();
+                return true;
+            default:
+                return super.onHandleActionBarItemClick(item, position);
         }
     }
 

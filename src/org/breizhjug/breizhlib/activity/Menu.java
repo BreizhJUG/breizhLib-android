@@ -23,12 +23,6 @@ public class Menu extends AbstractGDActivity {
 
     @Override
     public void init(Intent intent) {
-        loadMenu();
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setActionBarContentView(R.layout.main);
         getActionBar().setType(ActionBar.Type.Empty);
         getActionBar().setTitle(getText(R.string.menu_title));
@@ -36,13 +30,13 @@ public class Menu extends AbstractGDActivity {
             ActionBarItem item = addActionBarItem(ActionBarItem.Type.Search, R.id.action_bar_search);
         }
         addActionBarItem(ActionBarItem.Type.Info, R.id.action_bar_info);
-
+        loadMenu();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        init(getIntent());
+       // loadMenu();
     }
 
     protected void loadMenu() {

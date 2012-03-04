@@ -45,10 +45,11 @@ public class Reservation implements Serializable, Model {
         }
     }
 
-    public Reservation(Cursor cursor) {
+    public Reservation from(Cursor cursor) {
         nom = cursor.getString(cursor.getColumnIndex(Columns.NOM));
         isbn = cursor.getString(cursor.getColumnIndex(ISBN));
         prenom = cursor.getString(cursor.getColumnIndex(PRENOM));
+        return this;
     }
 
     public void onLoad(Database db) {

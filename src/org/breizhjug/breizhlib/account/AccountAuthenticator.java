@@ -7,7 +7,8 @@ import android.os.Bundle;
 import com.google.inject.Inject;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
-import org.breizhjug.breizhlib.utils.BreizhLibAuthentification;
+import org.breizhjug.breizhlib.utils.authentification.BreizhLibAuthentification;
+
 import static org.breizhjug.breizhlib.IntentConstantes.*;
 
 

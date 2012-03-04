@@ -10,6 +10,7 @@ import org.acra.ErrorReporter;
 import org.breizhjug.breizhlib.model.Commentaire;
 import org.breizhjug.breizhlib.model.Emprunt;
 import org.breizhjug.breizhlib.model.Livre;
+import org.breizhjug.breizhlib.model.Reservation;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -56,11 +57,13 @@ public class Database extends DataBaseHelper {
     @Override
     protected Map<Integer, UpgradeDatabase> getUpgrades() {
         if (mapUpgrades == null) {
-            mapUpgrades = new HashMap<Integer, UpgradeDatabase>(3);
+            mapUpgrades = new HashMap<Integer, UpgradeDatabase>(4);
             mapUpgrades.put(0, new UpgradeDatabaseWithError() {
                 public void myUpgrade(SQLiteDatabase db) {
                     getBase().getTable(Livre.class).createTable(db);
                     getBase().getTable(Commentaire.class).createTable(db);
+                    getBase().getTable(Emprunt.class).createTable(db);
+                    getBase().getTable(Reservation.class).createTable(db);
                 }
             });
             mapUpgrades.put(1, new UpgradeDatabaseWithError() {
@@ -73,6 +76,12 @@ public class Database extends DataBaseHelper {
                 public void myUpgrade(SQLiteDatabase db) {
                     getBase().getTable(Emprunt.class).dropTable(db);
                     getBase().getTable(Emprunt.class).createTable(db);
+                }
+            });
+            mapUpgrades.put(3, new UpgradeDatabaseWithError() {
+                public void myUpgrade(SQLiteDatabase db) {
+                    getBase().getTable(Reservation.class).dropTable(db);
+                    getBase().getTable(Reservation.class).createTable(db);
                 }
             });
         }
