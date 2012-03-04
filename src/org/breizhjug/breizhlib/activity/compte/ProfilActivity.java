@@ -15,9 +15,6 @@ import com.google.inject.Inject;
 import greendroid.widget.ActionBarItem;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
-import org.breizhjug.breizhlib.activity.CommentaireActivity;
-import org.breizhjug.breizhlib.activity.EmpruntsActivity;
-import org.breizhjug.breizhlib.activity.LivreActivity;
 import org.breizhjug.breizhlib.activity.common.AbstractGDActivity;
 import org.breizhjug.breizhlib.adapter.InfoListAdapter;
 import org.breizhjug.breizhlib.database.dao.CommentaireDAO;
@@ -25,13 +22,13 @@ import org.breizhjug.breizhlib.database.dao.EmpruntDAO;
 import org.breizhjug.breizhlib.database.dao.ReservationDAO;
 import org.breizhjug.breizhlib.model.*;
 import org.breizhjug.breizhlib.remote.UtilisateurService;
+import org.breizhjug.breizhlib.utils.IntentSupport;
 import org.breizhjug.breizhlib.utils.images.Gravatar;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import roboguice.inject.InjectView;
-import static org.breizhjug.breizhlib.IntentConstantes.*;
 
 import java.util.ArrayList;
 
@@ -184,32 +181,19 @@ public class ProfilActivity extends AbstractGDActivity {
 
                         final ArrayList<Commentaire> items = commentaireDAO.findByAutor(user.nom + " " + user.prenom);
                         if (items != null && items.size() > 0) {
-                            intent = new Intent(getApplicationContext(), CommentaireActivity.class);
-                            intent.putExtra(ITEM, items.get(0));
-                            intent.putExtra(ITEMS, items);
-                            intent.putExtra(INDEX, 0);
-                            startActivity(intent);
+                            startActivity(IntentSupport.newCommentaireIntent(getApplicationContext(), items.get(0), 0, items));
                         }
                     }
                     if (title.equals("Réservations")) {
                         final ArrayList<Reservation> resaItems = reservationDAO.findByNom(user.nom, user.prenom);
                         if (resaItems != null && resaItems.size() > 0) {
-                            intent = new Intent(getApplicationContext(), LivreActivity.class);
-                            intent.putExtra(ITEMS, converter.toOuvrages(resaItems));
-                            intent.putExtra(INDEX, 0);
-                            intent.putExtra(ITEM, resaItems.get(0).livre);
-                            intent.putExtra("emailReservation", resaItems.get(0).email);
-                            startActivity(intent);
+                            startActivity(IntentSupport.newLivreIntent(getApplicationContext(), converter.toOuvrages(resaItems), 0, resaItems.get(0)));
                         }
                     }
                     if (title.equals("Ouvrages")) {
                         final ArrayList<Emprunt> empruntItems = empruntDAO.findByNom(user.nom, user.prenom);
                         if (empruntItems != null && empruntItems.size() > 0) {
-                            intent = new Intent(getApplicationContext(), EmpruntsActivity.class);
-                            intent.putExtra(ITEMS, converter.empruntToOuvrages(empruntItems));
-                            intent.putExtra(INDEX, 0);
-                            intent.putExtra(ITEM, empruntItems.get(0).livre);
-                            startActivity(intent);
+                            startActivity(IntentSupport.newEmpruntsIntent(getApplicationContext(), converter.empruntToOuvrages(empruntItems), 0, empruntItems.get(0).livre));
                         }
                     } else {
                         return;
@@ -222,7 +206,6 @@ public class ProfilActivity extends AbstractGDActivity {
 
 
     }
-
 
 
 }

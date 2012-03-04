@@ -1,8 +1,6 @@
 package org.breizhjug.breizhlib.activity;
 
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.google.inject.Inject;
@@ -16,11 +14,11 @@ import org.breizhjug.breizhlib.model.Emprunt;
 import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.remote.AsyncRemoteTask;
 import org.breizhjug.breizhlib.remote.EmpruntService;
-import org.breizhjug.breizhlib.utils.images.ImageCache;
 import roboguice.inject.InjectView;
-import static org.breizhjug.breizhlib.IntentConstantes.*;
 
 import java.util.ArrayList;
+
+import static org.breizhjug.breizhlib.utils.IntentSupport.newLivreIntent;
 
 
 public class EmpruntsActivity extends AbstractGDActivity {
@@ -64,7 +62,9 @@ public class EmpruntsActivity extends AbstractGDActivity {
             }
 
             public void onClick(int position) {
-                startLivreActivity(position,items);
+                Emprunt emprunt = (Emprunt) empruntsListView.getItemAtPosition(position);
+                ArrayList<Livre> itemsL = converter.empruntToOuvrages(items);
+                startActivity(newLivreIntent(getApplicationContext(), itemsL, position, emprunt.livre));
             }
         };
 
@@ -72,17 +72,6 @@ public class EmpruntsActivity extends AbstractGDActivity {
         initTask.execute((Void) null);
 
     }
-
-    private void startLivreActivity(int position, ArrayList<Emprunt> items) {
-        Emprunt emprunt = (Emprunt) empruntsListView.getItemAtPosition(position);
-        Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-        intent.putExtra(ITEMS, converter.empruntToOuvrages(items));
-        intent.putExtra(INDEX, position);
-        intent.putExtra(ITEM, emprunt.livre);
-        this.startActivity(intent);
-    }
-
-
 
 
     @Override

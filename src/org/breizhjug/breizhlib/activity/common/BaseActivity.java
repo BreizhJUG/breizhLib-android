@@ -7,9 +7,6 @@ import android.view.MenuItem;
 import com.google.inject.Inject;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
-import org.breizhjug.breizhlib.activity.ConfigurationActivity;
-import org.breizhjug.breizhlib.activity.Menu;
-import org.breizhjug.breizhlib.activity.compte.CompteList;
 import org.breizhjug.breizhlib.database.Database;
 import org.breizhjug.breizhlib.utils.IntentSupport;
 import org.breizhjug.breizhlib.utils.Tracker;
@@ -18,7 +15,7 @@ import static org.breizhjug.breizhlib.BreizhLibConstantes.*;
 
 
 public class BaseActivity extends RoboActivity {
-    public static final String ACTION_LOGOUT = "org.breizhjug.breizhlib.LOGOUT";
+
 
     protected BroadcastReceiver receiver;
     @Inject
@@ -69,7 +66,7 @@ public class BaseActivity extends RoboActivity {
     @Override
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
-        String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
+        String authCookie = prefs.getString(AUTH_COOKIE, null);
         if (authCookie == null) {
             MenuItem item = (MenuItem) menu.findItem(R.id.connexion);
             String message = getString(R.string.connexion);
@@ -84,19 +81,14 @@ public class BaseActivity extends RoboActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(getApplicationContext(), Menu.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
         switch (item.getItemId()) {
             case R.id.connexion:
                 String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
                 if (authCookie == null) {
-                    Intent pIntent = new Intent(getApplicationContext(), CompteList.class);
-                    pIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(pIntent);
+                    startActivity(IntentSupport.newComptesIntent(getApplicationContext()));
                 } else {
                     onLogout();
-                    startActivity(intent);
+                    startActivity(IntentSupport.newMenuIntent(getApplicationContext()));
                 }
                 return true;
             case R.id.quitter:
@@ -107,9 +99,7 @@ public class BaseActivity extends RoboActivity {
                 startActivity(pIntent);
                 return true;
             case R.id.parametre:
-                pIntent = new Intent(getApplicationContext(), ConfigurationActivity.class);
-                pIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(pIntent);
+                startActivity(IntentSupport.newConfigurationIntent(getApplicationContext()));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

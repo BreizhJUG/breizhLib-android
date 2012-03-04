@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,7 +16,9 @@ import org.breizhjug.breizhlib.remote.ReservationService;
 import org.breizhjug.breizhlib.remote.Result;
 import roboguice.inject.InjectExtra;
 import roboguice.inject.InjectView;
-import static org.breizhjug.breizhlib.IntentConstantes.*;
+
+import static org.breizhjug.breizhlib.IntentConstantes.LIVRE;
+import static org.breizhjug.breizhlib.utils.IntentSupport.*;
 
 public class ReservationActivity extends AbstractGDActivity {
     private static final String TAG = "BreizhLib.ReservationActivity";
@@ -98,7 +99,7 @@ public class ReservationActivity extends AbstractGDActivity {
                 if (!result.valid) {
                     showError(result.msg, true);
                 } else {
-                    startMenuActivity();
+                    startActivity(newMenuIntent(getApplicationContext()));
                 }
             }
         };
@@ -108,23 +109,18 @@ public class ReservationActivity extends AbstractGDActivity {
         }
     }
 
-    private void startMenuActivity() {
-        Intent intent = new Intent(getApplicationContext(), Menu.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-    }
 
     private boolean validate() {
         if (email == null || email.length() == 0) {
-            showError(getString(R.string.email_validation_msg), false);
+            showError(getString(R.string.email_validation_msg));
             return false;
         }
         if (prenom == null || prenom.length() == 0) {
-            showError(getString(R.string.prenom_validation_msg), false);
+            showError(getString(R.string.prenom_validation_msg));
             return false;
         }
         if (nom == null || nom.length() == 0) {
-            showError(getString(R.string.nom_validation_msg), false);
+            showError(getString(R.string.nom_validation_msg));
             return false;
         }
         return true;

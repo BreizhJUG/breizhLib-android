@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,7 +19,9 @@ import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.remote.CommentaireService;
 import roboguice.inject.InjectExtra;
 import roboguice.inject.InjectView;
-import static org.breizhjug.breizhlib.IntentConstantes.*;
+
+import static org.breizhjug.breizhlib.IntentConstantes.ITEM;
+import static org.breizhjug.breizhlib.IntentConstantes.LIVRE;
 
 
 public class AvisActivity extends AbstractGDActivity {
@@ -55,7 +56,7 @@ public class AvisActivity extends AbstractGDActivity {
         button.setOnClickListener(new Button.OnClickListener() {
 
             public void onClick(View view) {
-                if(!validate()){
+                if (!validate()) {
                     sendAvis();
                 }
             }
@@ -65,7 +66,7 @@ public class AvisActivity extends AbstractGDActivity {
     private void sendAvis() {
         final String avis = avisEdit.getText().toString();
         final String nom = nomEdit.getText().toString();
-        final ProgressDialog waitDialog = ProgressDialog.show(this,getString(R.string.commentaire_send),  getString(R.string.chargement), true, true);
+        final ProgressDialog waitDialog = ProgressDialog.show(this, getString(R.string.commentaire_send), getString(R.string.chargement), true, true);
 
         final AsyncTask<Void, Void, Commentaire> initTask = new AsyncTask<Void, Void, Commentaire>() {
 
@@ -76,7 +77,7 @@ public class AvisActivity extends AbstractGDActivity {
                 String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
                 Commentaire result = null;
                 try {
-                    result = service.comment(authCookie, livre.iSBN, nom, avis,  rating.getNumStars());
+                    result = service.comment(authCookie, livre.iSBN, nom, avis, rating.getNumStars());
                 } catch (ResultException e) {
                     showError(e.result.msg, true);
                     finish();
@@ -90,7 +91,9 @@ public class AvisActivity extends AbstractGDActivity {
                 if (result == null) {
                     showError(getString(R.string.commentaire_send_error), true);
                 } else {
+                    Toast.makeText(AvisActivity.this, getString(R.string.commentaireSave), Toast.LENGTH_SHORT);
                     startCommentaireActivity(result);
+                    finish();
                 }
             }
 
@@ -115,11 +118,11 @@ public class AvisActivity extends AbstractGDActivity {
 
     private boolean validate() {
         if (nomEdit == null || nomEdit.length() == 0) {
-            showError(getString(R.string.nom_validation_msg), false);
+            showError(getString(R.string.nom_validation_msg));
             return false;
         }
         if (avisEdit == null || avisEdit.length() == 0) {
-            showError(getString(R.string.avis_validation_msg), false);
+            showError(getString(R.string.avis_validation_msg));
             return false;
         }
         return true;
@@ -127,10 +130,8 @@ public class AvisActivity extends AbstractGDActivity {
 
 
     private void startCommentaireActivity(Commentaire result) {
-        Toast.makeText(AvisActivity.this, getString(R.string.commentaireSave), Toast.LENGTH_SHORT);
         Intent intent = new Intent(getApplicationContext(), CommentaireActivity.class);
         intent.putExtra(ITEM, result);
         startActivity(intent);
-        finish();
     }
 }

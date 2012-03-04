@@ -7,11 +7,6 @@ import android.content.Intent;
 
 import java.util.List;
 
-/**
- * User: Guernion Sylvain
- * Date: 16/11/11
- * Time: 22:20
- */
 public interface Authentification {
 
     String getToken(Context context, Account account);

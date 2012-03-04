@@ -17,8 +17,8 @@ public interface IntentConstantes {
     /**
      * Account
      */
-    public static final String PASSWORD = "password";
-    public static final String USERNAME = "user";
-    public static final String CONFIRMCREDENTIALS = "confirmCredentials";
-    public static final String AUTHTOKEN_TYPE = "authtokenType";
+    String PASSWORD = "password";
+    String USERNAME = "user";
+    String CONFIRMCREDENTIALS = "confirmCredentials";
+    String AUTHTOKEN_TYPE = "authtokenType";
 }

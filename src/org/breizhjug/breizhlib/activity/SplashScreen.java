@@ -1,7 +1,6 @@
 package org.breizhjug.breizhlib.activity;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,6 +8,8 @@ import com.google.inject.Inject;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.common.BaseActivity;
 import org.breizhjug.breizhlib.remote.SyncManager;
+
+import static org.breizhjug.breizhlib.utils.IntentSupport.newMenuIntent;
 
 public class SplashScreen extends BaseActivity {
 
@@ -24,10 +25,7 @@ public class SplashScreen extends BaseActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case STOPSPLASH:
-                    //remove SplashScreen from view
-                    Intent intent = new Intent(SplashScreen.this, Menu.class);
-                    startActivity(intent);
-
+                    startActivity(newMenuIntent(getApplicationContext()));
                     break;
             }
             finish();

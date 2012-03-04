@@ -3,7 +3,6 @@ package org.breizhjug.breizhlib.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import com.google.inject.Inject;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
@@ -16,7 +15,8 @@ import org.breizhjug.breizhlib.utils.scancode.IntentIntegrator;
 import org.breizhjug.breizhlib.utils.scancode.IntentResult;
 
 import java.util.ArrayList;
-import static org.breizhjug.breizhlib.IntentConstantes.*;
+
+import static org.breizhjug.breizhlib.utils.IntentSupport.newLivreIntent;
 
 public class ScanActivity extends AbstractGDActivity {
     private static final String TAG = "Breizhlib.ScanActivity";
@@ -43,7 +43,10 @@ public class ScanActivity extends AbstractGDActivity {
                 livre = service.find(prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null), isbn);
                 if (livre != null) {
                     Log.d(TAG, livre.titre);
-                    startLivreActivity(livre);
+                    ArrayList<Livre> items = new ArrayList<Livre>();
+                    items.add(livre);
+                    startActivity(newLivreIntent(ScanActivity.this, items, 0, livre));
+                    finish();
                 } else {
                     showError(getString(R.string.error_server_connexion), true);
                 }
@@ -55,17 +58,6 @@ public class ScanActivity extends AbstractGDActivity {
 
         }
     };
-
-    private void startLivreActivity(Livre livre) {
-        Intent intent = new Intent(this, LivreActivity.class);
-        ArrayList<Livre> items = new ArrayList<Livre>();
-        items.add(livre);
-        intent.putExtra(ITEMS, items);
-        intent.putExtra(ITEM, livre);
-        intent.putExtra(INDEX, 0);
-        startActivity(intent);
-        finish();
-    }
 
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {

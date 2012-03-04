@@ -1,27 +1,23 @@
 package org.breizhjug.breizhlib.activity;
 
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.google.inject.Inject;
 import greendroid.widget.ActionBarItem;
 import greendroid.widget.LoaderActionBarItem;
-import static org.breizhjug.breizhlib.IntentConstantes.*;
 import org.breizhjug.breizhlib.R;
 import org.breizhjug.breizhlib.activity.common.AbstractGDActivity;
 import org.breizhjug.breizhlib.adapter.ReservationsAdapter;
 import org.breizhjug.breizhlib.model.Converter;
-import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.model.Reservation;
 import org.breizhjug.breizhlib.remote.AsyncRemoteTask;
 import org.breizhjug.breizhlib.remote.ReservationService;
+import static org.breizhjug.breizhlib.utils.IntentSupport.*;
+
 import org.breizhjug.breizhlib.utils.images.ImageCache;
 import roboguice.inject.InjectView;
-
-import java.util.ArrayList;
 
 
 public class ReservationsActivity extends AbstractGDActivity {
@@ -67,7 +63,8 @@ public class ReservationsActivity extends AbstractGDActivity {
             }
 
             public void onClick(int position) {
-                startLivreActivity(position,items);
+                Reservation reservation = (Reservation) reservationsListView.getItemAtPosition(position);
+                startActivity(newLivreIntent(getApplicationContext(), converter.toOuvrages(items), position, reservation));
             }
 
             public void displayEmptyMessage() {
@@ -80,15 +77,6 @@ public class ReservationsActivity extends AbstractGDActivity {
 
     }
 
-    private void startLivreActivity(int position, ArrayList<Reservation> items) {
-        Reservation reservation = (Reservation) reservationsListView.getItemAtPosition(position);
-        Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-        intent.putExtra(ITEMS, converter.toOuvrages(items));
-        intent.putExtra(INDEX, position);
-        intent.putExtra(ITEM, reservation.livre);
-        intent.putExtra(EMAIL_RESERVATION, reservation.email);
-        this.startActivity(intent);
-    }
 
     @Override
     public boolean onHandleActionBarItemClick(ActionBarItem item, int position) {
@@ -102,7 +90,6 @@ public class ReservationsActivity extends AbstractGDActivity {
                 return super.onHandleActionBarItemClick(item, position);
         }
     }
-
 
 
 }

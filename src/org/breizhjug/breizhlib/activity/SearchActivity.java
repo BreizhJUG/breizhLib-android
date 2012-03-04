@@ -21,11 +21,10 @@ import org.breizhjug.breizhlib.remote.Service;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
 import roboguice.inject.InjectView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static org.breizhjug.breizhlib.IntentConstantes.*;
+import static org.breizhjug.breizhlib.utils.IntentSupport.newLivreIntent;
 
 public class SearchActivity extends AbstractGDActivity {
 
@@ -43,7 +42,6 @@ public class SearchActivity extends AbstractGDActivity {
     private ImageButton mSearchButton;
     @InjectView(R.id.items)
     private ListView ouvragesListView;
-
 
 
     private String mSearchTerm;
@@ -121,17 +119,8 @@ public class SearchActivity extends AbstractGDActivity {
         }
 
         public void onClick(int position) {
-            startLivreActivity(position, items);
+            Livre livre = (Livre) ouvragesListView.getItemAtPosition(position);
+            startActivity(newLivreIntent(getApplicationContext(), items, position, livre));
         }
     }
-
-    private void startLivreActivity(int position, ArrayList<Livre> items) {
-        Livre livre = (Livre) ouvragesListView.getItemAtPosition(position);
-        Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-        intent.putExtra(ITEMS, items);
-        intent.putExtra(INDEX, position);
-        intent.putExtra(ITEM, livre);
-        startActivity(intent);
-    }
-
 }

@@ -2,9 +2,7 @@ package org.breizhjug.breizhlib.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +17,6 @@ import org.breizhjug.breizhlib.activity.common.AbstractPagednActivity;
 import org.breizhjug.breizhlib.adapter.CommentairesAdapter;
 import org.breizhjug.breizhlib.adapter.OuvragesPagedAdapter;
 import org.breizhjug.breizhlib.database.dao.CommentaireDAO;
-import org.breizhjug.breizhlib.database.dao.LivreDAO;
 import org.breizhjug.breizhlib.model.Commentaire;
 import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.model.Utilisateur;
@@ -27,9 +24,11 @@ import org.breizhjug.breizhlib.remote.OuvrageService;
 import org.breizhjug.breizhlib.remote.ReservationService;
 import org.breizhjug.breizhlib.remote.UtilisateurService;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
-import static org.breizhjug.breizhlib.IntentConstantes.*;
 
 import java.util.ArrayList;
+
+import static org.breizhjug.breizhlib.IntentConstantes.EMAIL_RESERVATION;
+import static org.breizhjug.breizhlib.utils.IntentSupport.*;
 
 
 public class LivreActivity extends AbstractPagednActivity<Livre> {
@@ -53,8 +52,6 @@ public class LivreActivity extends AbstractPagednActivity<Livre> {
     private ImageCache imageCache;
     @Inject
     private CommentaireDAO commentaireDAO;
-
-
 
 
     @Override
@@ -112,21 +109,21 @@ public class LivreActivity extends AbstractPagednActivity<Livre> {
 
 
     private void initCommentaires(Livre livre) {
-        Log.d("UPDATE","update commentaire");
+        Log.d("UPDATE", "update commentaire");
         final ArrayList<Commentaire> commentaires = commentaireDAO.findByIsbn(livre.iSBN);
-        livre.nbCommentaire =  commentaires.size();
+        livre.nbCommentaire = commentaires.size();
         service.update(livre);
         commentaireItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-                startCommentaireActivity(position, commentaires);
+                Commentaire commentaire = (Commentaire) commentaireItems.getItemAtPosition(position);
+                startActivity(newCommentaireIntent(getApplicationContext(), commentaire, position, commentaires));
             }
         });
 
         Log.d(TAG, livre.iSBN + " size :" + commentaires.size());
-        CommentairesAdapter commentairesAdapter = new CommentairesAdapter(this.getBaseContext(), commentaires,false,R.layout.commentaire_item_short);
+        CommentairesAdapter commentairesAdapter = new CommentairesAdapter(this.getBaseContext(), commentaires, false, R.layout.commentaire_item_short);
         commentaireItems.setAdapter(commentairesAdapter);
     }
-
 
 
     private void initReservation(Button button, final Livre livre) {
@@ -135,7 +132,7 @@ public class LivreActivity extends AbstractPagednActivity<Livre> {
             String email = getIntent().getStringExtra(EMAIL_RESERVATION);
             String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
             Utilisateur user = userService.find(authCookie);
-            if (user!= null && user.email.equals(email)) {
+            if (user != null && user.email.equals(email)) {
                 //TODO si l'utilisateeur est la personne qui a réservé l'ouvrage
                 //TODO lui permettre d'annuler la réservation
                 button.setText(getString(R.string.annuler));
@@ -158,7 +155,7 @@ public class LivreActivity extends AbstractPagednActivity<Livre> {
                 if (prefs.getString(BreizhLibConstantes.USER, null) != null) {
                     button.setOnClickListener(new Button.OnClickListener() {
                         public void onClick(View view) {
-                            startReservationActivity(livre);
+                            startActivity(newReservationIntent(getApplicationContext(), livre));
                         }
                     });
                 } else {
@@ -196,7 +193,7 @@ public class LivreActivity extends AbstractPagednActivity<Livre> {
                                 showError(getString(R.string.add_error), true);
                             } else {
                                 Toast.makeText(getApplicationContext(), getString(R.string.ajoutOK), Toast.LENGTH_SHORT).show();
-                                startLivreActivity(result);
+                                startActivity(newLivreIntent(getApplicationContext(), null, 0, result));
                                 finish();
                             }
                         }
@@ -210,41 +207,15 @@ public class LivreActivity extends AbstractPagednActivity<Livre> {
         }
     }
 
-    private void startLivreActivity(Livre result) {
-        Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-        intent.putExtra(ITEM, result);
-        this.startActivity(intent);
-    }
-
-    private void startReservationActivity(Livre livre) {
-        Intent intent = new Intent(getApplicationContext(), ReservationActivity.class);
-        intent.putExtra(LIVRE, livre);
-        startActivity(intent);
-    }
-
-    private void startCommentaireActivity(int position, ArrayList<Commentaire> commentaires) {
-        Commentaire commentaire = (Commentaire) commentaireItems.getItemAtPosition(position);
-        Intent intent = new Intent(getApplicationContext(), CommentaireActivity.class);
-        intent.putExtra(ITEM, commentaire);
-        intent.putExtra(ITEMS, commentaires);
-        intent.putExtra(INDEX, position);
-        startActivity(intent);
-    }
-
-    private void startAvisActivity() {
-        Intent pIntent = new Intent(getApplicationContext(), AvisActivity.class);
-        pIntent.putExtra(LIVRE, item);
-        LivreActivity.this.startActivity(pIntent);
-    }
 
     @Override
-    public boolean onHandleActionBarItemClick(ActionBarItem item, int position) {
-        switch (item.getItemId()) {
+    public boolean onHandleActionBarItemClick(ActionBarItem pItem, int position) {
+        switch (pItem.getItemId()) {
             case R.id.action_bar_avis:
-                startAvisActivity();
+                startActivity(newAvisIntent(getApplicationContext(), item));
                 return true;
             default:
-                return super.onHandleActionBarItemClick(item, position);
+                return super.onHandleActionBarItemClick(pItem, position);
         }
     }
 

@@ -79,7 +79,6 @@ public class CommentaireActivity extends AbstractPagednActivity<Commentaire> {
                 initView(loaderItem);
                 return true;
             default:
-
                 return super.onHandleActionBarItemClick(item, position);
         }
     }

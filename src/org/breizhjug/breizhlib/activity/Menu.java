@@ -2,7 +2,6 @@ package org.breizhjug.breizhlib.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,8 +12,8 @@ import greendroid.widget.ActionBar;
 import greendroid.widget.ActionBarItem;
 import org.breizhjug.breizhlib.BreizhLibConstantes;
 import org.breizhjug.breizhlib.R;
-import org.breizhjug.breizhlib.activity.compte.CompteList;
 import org.breizhjug.breizhlib.activity.common.AbstractGDActivity;
+import org.breizhjug.breizhlib.activity.compte.CompteList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +35,7 @@ public class Menu extends AbstractGDActivity {
     @Override
     protected void onResume() {
         super.onResume();
-       // loadMenu();
+        // loadMenu();
     }
 
     protected void loadMenu() {

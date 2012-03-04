@@ -2,8 +2,6 @@ package org.breizhjug.breizhlib.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.*;
@@ -19,9 +17,7 @@ import org.breizhjug.breizhlib.remote.AsyncRemoteTask;
 import org.breizhjug.breizhlib.remote.OuvrageService;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
 
-import java.util.ArrayList;
-
-import static org.breizhjug.breizhlib.IntentConstantes.*;
+import static org.breizhjug.breizhlib.utils.IntentSupport.newLivreIntent;
 
 
 public class OuvragesActivity extends AbstractGDActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -94,22 +90,12 @@ public class OuvragesActivity extends AbstractGDActivity implements SharedPrefer
             }
 
             public void onClick(int position) {
-                startLivreActyvity(position,items);
+                Livre livre = (Livre) ouvragesListView.getItemAtPosition(position);
+                startActivity(newLivreIntent(getApplicationContext(), items, position, livre));
             }
         };
         initTask.setDialogTitle(R.string.ouvrages_title);
         initTask.execute((Void) null);
-
-
-    }
-
-    private void startLivreActyvity(int position, ArrayList<Livre> items) {
-        Livre livre = (Livre) ouvragesListView.getItemAtPosition(position);
-        Intent intent = new Intent(getApplicationContext(), LivreActivity.class);
-        intent.putExtra(ITEMS, items);
-        intent.putExtra(INDEX,position);
-        intent.putExtra(ITEM, livre);
-        startActivity(intent);
     }
 
 

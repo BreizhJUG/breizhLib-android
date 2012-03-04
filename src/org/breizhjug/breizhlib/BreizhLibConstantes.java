@@ -3,6 +3,7 @@ package org.breizhjug.breizhlib;
 
 public interface BreizhLibConstantes {
 
+    String ACTION_LOGOUT = "org.breizhjug.breizhlib.LOGOUT";
     String SERVER_URL = "http://dev.breizh-lib.appspot.com/";
 
     String MARKET_URL = "market://details?id=org.breizhjug.breizhlib";
