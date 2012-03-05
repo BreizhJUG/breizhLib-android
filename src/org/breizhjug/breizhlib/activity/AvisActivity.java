@@ -17,10 +17,12 @@ import org.breizhjug.breizhlib.exception.ResultException;
 import org.breizhjug.breizhlib.model.Commentaire;
 import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.remote.CommentaireService;
+import org.breizhjug.breizhlib.utils.IntentSupport;
 import roboguice.inject.InjectExtra;
 import roboguice.inject.InjectView;
 
-import static org.breizhjug.breizhlib.IntentConstantes.ITEM;
+import java.util.ArrayList;
+
 import static org.breizhjug.breizhlib.IntentConstantes.LIVRE;
 
 
@@ -52,15 +54,12 @@ public class AvisActivity extends AbstractGDActivity {
         String nom = prefs.getString(BreizhLibConstantes.USER_NOM, "") + " " +
                 prefs.getString(BreizhLibConstantes.USER_PRENOM, "");
         nomEdit.setText(nom);
+    }
 
-        button.setOnClickListener(new Button.OnClickListener() {
-
-            public void onClick(View view) {
-                if (!validate()) {
-                    sendAvis();
-                }
-            }
-        });
+    public void onSend(View view) {
+        if (validate()) {
+            sendAvis();
+        }
     }
 
     private void sendAvis() {
@@ -72,8 +71,6 @@ public class AvisActivity extends AbstractGDActivity {
 
             @Override
             protected Commentaire doInBackground(Void... params) {
-
-
                 String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
                 Commentaire result = null;
                 try {
@@ -91,8 +88,10 @@ public class AvisActivity extends AbstractGDActivity {
                 if (result == null) {
                     showError(getString(R.string.commentaire_send_error), true);
                 } else {
-                    Toast.makeText(AvisActivity.this, getString(R.string.commentaireSave), Toast.LENGTH_SHORT);
-                    startCommentaireActivity(result);
+                    Toast.makeText(AvisActivity.this, getString(R.string.commentaireSave), Toast.LENGTH_SHORT).show();
+                    ArrayList<Commentaire> items = new ArrayList<Commentaire>();
+                    items.add(result);
+                    startActivity(IntentSupport.newCommentaireIntent(getApplicationContext(), result, 0, items));
                     finish();
                 }
             }
@@ -128,10 +127,4 @@ public class AvisActivity extends AbstractGDActivity {
         return true;
     }
 
-
-    private void startCommentaireActivity(Commentaire result) {
-        Intent intent = new Intent(getApplicationContext(), CommentaireActivity.class);
-        intent.putExtra(ITEM, result);
-        startActivity(intent);
-    }
 }

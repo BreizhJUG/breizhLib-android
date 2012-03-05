@@ -14,8 +14,6 @@ public class Reservation implements Serializable, Model {
     @Column
     public String nom;
     @Column
-    public String prenom;
-    @Column
     public String isbn;
 
     public String email;
@@ -27,17 +25,15 @@ public class Reservation implements Serializable, Model {
 
     }
 
-    public Reservation(String nom, String prenom, String imgUrl, String iSBN, String titre) {
+    public Reservation(String nom,String imgUrl, String iSBN, String titre) {
         this.nom = nom;
-        this.prenom = prenom;
         this.livre = new Livre(titre, iSBN, "", imgUrl);
         this.livre.etat = "RESERVE";
         this.isbn = livre.iSBN;
     }
 
-    public Reservation(String nom, String prenom, Livre livre) {
+    public Reservation(String nom,  Livre livre) {
         this.nom = nom;
-        this.prenom = prenom;
         this.livre = livre;
         if (livre != null) {
             this.livre.etat = "RESERVE";
@@ -48,7 +44,6 @@ public class Reservation implements Serializable, Model {
     public Reservation from(Cursor cursor) {
         nom = cursor.getString(cursor.getColumnIndex(Columns.NOM));
         isbn = cursor.getString(cursor.getColumnIndex(ISBN));
-        prenom = cursor.getString(cursor.getColumnIndex(PRENOM));
         return this;
     }
 

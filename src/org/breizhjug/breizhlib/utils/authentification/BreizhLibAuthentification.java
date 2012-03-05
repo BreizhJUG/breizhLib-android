@@ -77,7 +77,8 @@ public class BreizhLibAuthentification implements Authentification {
         Account[] accounts = AccountManager.get(context).getAccounts();
         for (Account account : accounts) {
             if (account.type.equals(getAccountType())) {
-                result.add(AccountManager.get(context).getUserData(account,"email"));
+                String email = AccountManager.get(context).getUserData(account,"email");
+                result.add(email== null?account.name:account.name);
             }
         }
         return result;
@@ -88,7 +89,6 @@ public class BreizhLibAuthentification implements Authentification {
         Account[] accounts = AccountManager.get(context).getAccounts();
         for (Account account : accounts) {
             if (account.type.equals(getAccountType())) {
-                String password = AccountManager.get(context).getPassword(account);
                 AccountManager.get(context).setUserData(account,"email",user.email);
                 AccountManager.get(context).setUserData(account,"nom",user.nom);
             }

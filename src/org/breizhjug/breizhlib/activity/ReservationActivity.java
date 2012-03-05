@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,8 +29,6 @@ public class ReservationActivity extends AbstractGDActivity {
     EditText email;
     @InjectView(R.id.nomEdit)
     EditText nom;
-    @InjectView(R.id.prenomEdit)
-    EditText prenom;
     @InjectView(R.id.send)
     Button button;
 
@@ -46,22 +45,17 @@ public class ReservationActivity extends AbstractGDActivity {
 
     public void initView() {
         getActionBar().setTitle(livre.titre);
-        prenom.setText(prefs.getString(BreizhLibConstantes.USER_PRENOM, null));
-
         nom.setText(prefs.getString(BreizhLibConstantes.USER_NOM, null));
 
         email.setText(prefs.getString(BreizhLibConstantes.USER, null));
         email.setEnabled(false);
-
-        button.setOnClickListener(new Button.OnClickListener() {
-
-            public void onClick(View view) {
-                onSend(livre.iSBN, prenom.getText().toString(), nom.getText().toString(), email.getText().toString());
-            }
-        });
     }
 
-    private void onSend(final String isbn, final String prenom, final String nom, final String email) {
+    public void onSend(View view) {
+        onSendReservation(livre.iSBN, nom.getText().toString(), email.getText().toString());
+    }
+
+    private void onSendReservation(final String isbn, final String nom, final String email) {
         final AsyncTask<Void, Void, Result> initTask = new AsyncTask<Void, Void, Result>() {
             private ProgressDialog waitDialog;
 
@@ -89,7 +83,7 @@ public class ReservationActivity extends AbstractGDActivity {
             @Override
             protected Result doInBackground(Void... params) {
                 String authCookie = prefs.getString(BreizhLibConstantes.AUTH_COOKIE, null);
-                Result result = service.reserver(authCookie, isbn, nom, prenom, email);
+                Result result = service.reserver(authCookie, isbn, nom, email);
                 return result;
             }
 
@@ -115,10 +109,7 @@ public class ReservationActivity extends AbstractGDActivity {
             showError(getString(R.string.email_validation_msg));
             return false;
         }
-        if (prenom == null || prenom.length() == 0) {
-            showError(getString(R.string.prenom_validation_msg));
-            return false;
-        }
+
         if (nom == null || nom.length() == 0) {
             showError(getString(R.string.nom_validation_msg));
             return false;

@@ -19,9 +19,6 @@ import java.util.ArrayList;
 
 public abstract class AbstractNavigationActivity<T extends Serializable> extends AbstractGDActivity {
 
-    @InjectView(R.id.nav)
-    @Nullable
-    LinearLayout nav;
     @InjectView(R.id.star1)
     @Nullable
     ImageView star1;
@@ -50,37 +47,23 @@ public abstract class AbstractNavigationActivity<T extends Serializable> extends
 
 
     protected void initNavigation() {
-        Button previous = (Button) nav.getChildAt(0);
-        Button next = (Button) nav.getChildAt(1);
+
 
         if (items != null) {
             if (index > 0) {
-                previous.setOnClickListener(new Button.OnClickListener() {
 
-                    public void onClick(View view) {
-                        onPrevious();
-                    }
-                });
             } else {
-                previous.setEnabled(false);
+
             }
 
 
             if (items.size() - 1 > index) {
-                next.setOnClickListener(new Button.OnClickListener() {
 
-                    public void onClick(View view) {
-                        onNext();
-                    }
-                });
             } else {
-                next.setEnabled(false);
+
             }
         } else {
-            nav.setEnabled(false);
-            nav.setVisibility(View.INVISIBLE);
-            previous.setEnabled(false);
-            next.setEnabled(false);
+
         }
     }
 

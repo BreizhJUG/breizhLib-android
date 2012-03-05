@@ -59,6 +59,8 @@ public class CommentairesAdapter extends ArrayAdapter<Commentaire> {
             imageCache.getFromCache(commentaire.livre.iSBN, commentaire.livre.imgUrl, icone);
         }
 
+
+
         return view;
     }
 }

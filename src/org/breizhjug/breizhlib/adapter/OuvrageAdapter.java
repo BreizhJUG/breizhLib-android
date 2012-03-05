@@ -61,22 +61,25 @@ public class OuvrageAdapter extends ArrayAdapter<Livre> {
             }
         }
 
-        if( livre.nbCommentaire > 0 ){
+        if (livre.nbCommentaire > 0) {
             ImageView comm = (ImageView) view.findViewById(R.id.com_img);
-            comm.setVisibility(View.VISIBLE);
-            TextView  nb_commentaire = (TextView) view.findViewById(R.id.nb_commentaire);
-            nb_commentaire.setText(livre.nbCommentaire);
-        } else{
+            if (comm != null) {
+                comm.setVisibility(View.VISIBLE);
+            }
+            TextView nb_commentaire = (TextView) view.findViewById(R.id.nb_commentaire);
+            if (nb_commentaire != null) {
+                nb_commentaire.setText(livre.nbCommentaire);
+            }
+        } else {
             ImageView comm = (ImageView) view.findViewById(R.id.com_img);
-            if(comm != null){
+            if (comm != null) {
                 comm.setVisibility(View.INVISIBLE);
             }
-            TextView  nb_commentaire = (TextView) view.findViewById(R.id.nb_commentaire);
-            if(nb_commentaire != null){
+            TextView nb_commentaire = (TextView) view.findViewById(R.id.nb_commentaire);
+            if (nb_commentaire != null) {
                 nb_commentaire.setText("");
             }
         }
-
 
 
         ImageView icone = (ImageView) view.findViewById(R.id.img);

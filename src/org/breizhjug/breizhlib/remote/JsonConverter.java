@@ -51,7 +51,7 @@ public class JsonConverter {
         Reservation reservation = null;
         if (item != null) {
             Livre livre = convertLivre(item.getJSONObject("livre"));
-            reservation = new Reservation(item.getString("nom"), item.getString("prenom"), livre);
+            reservation = new Reservation(item.getString("nom"), livre);
             reservation.email = item.getString("user") ;
         }
         return reservation;
@@ -88,7 +88,7 @@ public class JsonConverter {
         Emprunt emprunt = null;
         if (item != null) {
             Livre livre = convertLivre(item.getJSONObject("livre"));
-            emprunt = new Emprunt(item.getString("nom"), item.getString("prenom"), livre);
+            emprunt = new Emprunt(item.getString("nom"), getFacultatifString(item,"prenom"), livre);
         }
         return emprunt;
     }

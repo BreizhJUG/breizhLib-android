@@ -20,7 +20,7 @@ public abstract class AbstractGDActivity extends GDBaseActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActionBar().setTitle("...");
+        //getActionBar().setTitle("...");
         layoutInflater = this.getLayoutInflater();
         final AsyncTask<Void, Void, Boolean> initTask = new AsyncTask<Void, Void, Boolean>() {
 

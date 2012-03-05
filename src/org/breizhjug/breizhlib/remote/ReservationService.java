@@ -46,12 +46,11 @@ public class ReservationService extends Service<Reservation> {
         return Reservation.class;
     }
 
-    public Result reserver(String authCookie, String isbn, String nom, String prenom, String email) {
+    public Result reserver(String authCookie, String isbn, String nom,String email) {
         Param param = new Param("id", isbn);
         Param paramNom = new Param("nom", nom);
-        Param paramPrenom = new Param("prenom", prenom);
         Param paramEmail = new Param("email", email);
-        String result = NetworkUtils.post(authCookie, URL_RESA, param, paramNom, paramPrenom, paramEmail);
+        String result = NetworkUtils.post(authCookie, URL_RESA, param, paramNom, paramEmail);
         Log.i(TAG, "reserver :  " + result);
 
         try {

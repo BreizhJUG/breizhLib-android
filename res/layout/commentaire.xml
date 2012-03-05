@@ -4,17 +4,17 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
         >
-    <include android:id="@+id/nav" layout="@layout/navigation"/>
-
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   android:orientation="horizontal"
                   android:layout_width="fill_parent"
                   android:layout_height="wrap_content"
+                  android:padding="5dip"
             >
+
         <ImageView
                 android:id="@+id/img"
-                android:layout_width="100sp"
-                android:layout_height="100sp"
+                android:layout_width="70sp"
+                android:layout_height="70sp"
                 android:layout_gravity="center_vertical"
                 android:padding="10px"
                 android:src="@drawable/no_photo"
@@ -24,68 +24,33 @@
                       android:orientation="vertical"
                       android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
+                      android:layout_gravity="center_vertical"
+                      android:paddingLeft="10px"
                 >
+            <TextView android:id="@+id/titre"
+                      android:layout_width="fill_parent"
+                      android:layout_height="fill_parent"
+                      android:textSize="16px"
+                      android:textStyle="bold"
+                      android:text="titre"
+                    />
 
             <TextView android:id="@+id/user"
                       android:layout_width="fill_parent"
                       android:layout_height="fill_parent"
+                      android:text="user"
                     />
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                          android:orientation="horizontal"
-                          android:layout_width="fill_parent"
-                          android:layout_height="wrap_content"
-                    >
-                <ImageView
-                        android:id="@+id/star1"
-                        android:layout_width="30sp"
-                        android:layout_height="30sp"
-                        android:layout_gravity="center_vertical"
-                        android:padding="10px"
-                        android:src="@drawable/sth"
-                        />
-                <ImageView
-                        android:id="@+id/star2"
-                        android:layout_width="30sp"
-                        android:layout_height="30sp"
-                        android:layout_gravity="center_vertical"
-                        android:padding="10px"
-                        android:src="@drawable/sth"
-                        />
-                <ImageView
-                        android:id="@+id/star3"
-                        android:layout_width="30sp"
-                        android:layout_height="30sp"
-                        android:layout_gravity="center_vertical"
-                        android:padding="10px"
-                        android:src="@drawable/sth"
-                        />
-                <ImageView
-                        android:id="@+id/star4"
-                        android:layout_width="30sp"
-                        android:layout_height="30sp"
-                        android:layout_gravity="center_vertical"
-                        android:padding="10px"
-                        android:src="@drawable/sth"
-                        />
-                <ImageView
-                        android:id="@+id/star5"
-                        android:layout_width="30sp"
-                        android:layout_height="30sp"
-                        android:layout_gravity="center_vertical"
-                        android:padding="10px"
-                        android:src="@drawable/sth"
-                        />
-            </LinearLayout>
+            <include android:id="@+id/stars" layout="@layout/stars"/>
+
 
         </LinearLayout>
+
     </LinearLayout>
-
-
     <TextView android:id="@+id/description"
               android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
+              android:layout_height="fill_parent"
               android:gravity="left"
+              android:padding="10px"
+              android:text="description"
             />
-
-
 </LinearLayout>

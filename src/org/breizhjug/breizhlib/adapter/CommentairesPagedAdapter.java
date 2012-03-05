@@ -1,7 +1,6 @@
 package org.breizhjug.breizhlib.adapter;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -9,7 +8,6 @@ import android.widget.TextView;
 import com.google.inject.Inject;
 import greendroid.widget.PagedAdapter;
 import org.breizhjug.breizhlib.R;
-import org.breizhjug.breizhlib.activity.LivreActivity;
 import org.breizhjug.breizhlib.model.Commentaire;
 import org.breizhjug.breizhlib.model.Livre;
 import org.breizhjug.breizhlib.utils.images.ImageCache;
@@ -17,7 +15,7 @@ import org.breizhjug.breizhlib.utils.images.ImageCache;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.breizhjug.breizhlib.IntentConstantes.*;
+import static org.breizhjug.breizhlib.utils.IntentSupport.newLivreIntent;
 
 
 public class CommentairesPagedAdapter extends PagedAdapter {
@@ -52,7 +50,7 @@ public class CommentairesPagedAdapter extends PagedAdapter {
 
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = activity.getLayoutInflater().inflate(R.layout.commentaire_item, parent, false);
+            convertView = activity.getLayoutInflater().inflate(R.layout.commentaire, parent, false);
         }
         final Commentaire commentaire = (Commentaire) getItem(position);
         TextView text = (TextView) convertView.findViewById(R.id.titre);
@@ -60,7 +58,9 @@ public class CommentairesPagedAdapter extends PagedAdapter {
 
         text.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                startLivreActivity(commentaire);
+                ArrayList<Livre> items = new ArrayList<Livre>();
+                items.add(commentaire.livre);
+                activity.startActivity(newLivreIntent(activity.getApplicationContext(), items, 0, commentaire.livre));
             }
         });
 
@@ -73,18 +73,34 @@ public class CommentairesPagedAdapter extends PagedAdapter {
         ImageView icone = (ImageView) convertView.findViewById(R.id.img);
         imageCache.getFromCache(commentaire.livre.iSBN, commentaire.livre.imgUrl, icone);
 
+        initStars(convertView, commentaire.note);
+
         return convertView;
     }
 
-    private void startLivreActivity(Commentaire commentaire) {
-        Intent intent = new Intent(activity.getApplicationContext(), LivreActivity.class);
-        ArrayList<Livre> items = new ArrayList<Livre>();
-        items.add(commentaire.livre);
-        intent.putExtra(ITEMS, items);
-        intent.putExtra(INDEX, 0);
-        intent.putExtra(ITEM, commentaire.livre);
-        activity.startActivity(intent);
+    protected void initStars(View convertView, int note) {
+        ImageView star1 = (ImageView) convertView.findViewById(R.id.star1);
+
+        ImageView star2 = (ImageView) convertView.findViewById(R.id.star2);
+
+        ImageView star3 = (ImageView) convertView.findViewById(R.id.star3);
+
+        ImageView star4 = (ImageView) convertView.findViewById(R.id.star4);
+
+        ImageView star5 = (ImageView) convertView.findViewById(R.id.star5);
+        switch (note) {
+            case 0:
+                star1.setVisibility(View.INVISIBLE);
+            case 1:
+                star2.setVisibility(View.INVISIBLE);
+            case 2:
+                star3.setVisibility(View.INVISIBLE);
+            case 3:
+                star4.setVisibility(View.INVISIBLE);
+            case 4:
+                star5.setVisibility(View.INVISIBLE);
+            case 5:
+                break;
+        }
     }
-
-
 }

@@ -4,12 +4,14 @@
               android:padding="5sp"
               android:orientation="horizontal"
               android:clickable="true"
-              android:focusable="true">
+              android:focusable="true"
+              android:background="@drawable/list_item_background">
 
     <ImageView android:id="@+id/icon"
                android:layout_width="36sp"
                android:layout_height="36sp"
-               android:layout_gravity="center_vertical"/>
+               android:layout_gravity="center_vertical"
+               android:src="@drawable/no_photo"/>
 
     <TextView android:id="@+id/name"
               android:layout_width="fill_parent"
@@ -19,7 +21,6 @@
               android:layout_marginLeft="5sp"
               android:layout_gravity="center_vertical"
               android:gravity="center"
-              android:textColor="#FFFFFF"
               android:text="button"/>
 
 </LinearLayout>

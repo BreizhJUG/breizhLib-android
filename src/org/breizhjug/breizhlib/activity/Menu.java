@@ -26,7 +26,7 @@ public class Menu extends AbstractGDActivity {
         getActionBar().setType(ActionBar.Type.Empty);
         getActionBar().setTitle(getText(R.string.menu_title));
         if (PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(BreizhLibConstantes.BETA, false)) {
-            ActionBarItem item = addActionBarItem(ActionBarItem.Type.Search, R.id.action_bar_search);
+            addActionBarItem(ActionBarItem.Type.Search, R.id.action_bar_search);
         }
         addActionBarItem(ActionBarItem.Type.Info, R.id.action_bar_info);
         loadMenu();
@@ -40,11 +40,12 @@ public class Menu extends AbstractGDActivity {
 
     protected void loadMenu() {
 
-        GridView grid = (GridView) findViewById(R.id.grilleBoutons);
-        grid.setNumColumns(1);
         List<Bouton> boutons = new ArrayList<Bouton>();
-        grid.setAdapter(getBoutonAdapter(boutons));
-
+        GridView grid = (GridView) findViewById(R.id.grilleBoutons);
+        if (grid != null) {
+            grid.setNumColumns(1);
+            grid.setAdapter(getBoutonAdapter(boutons));
+        }
         Intent intent = null;
 
         intent = new Intent(getApplicationContext(), OuvragesActivity.class);

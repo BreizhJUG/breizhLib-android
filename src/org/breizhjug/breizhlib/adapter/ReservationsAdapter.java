@@ -42,7 +42,7 @@ public class ReservationsAdapter extends ArrayAdapter<Reservation> {
         text.setText(reservation.livre.titre);
 
         text = (TextView) view.findViewById(R.id.nom);
-        text.setText(reservation.nom + " " + reservation.prenom);
+        text.setText(reservation.nom);
 
         ImageView icone = (ImageView) view.findViewById(R.id.img);
         imageCache.getFromCache(reservation.livre.iSBN, reservation.livre.imgUrl, icone);

@@ -7,18 +7,18 @@
         >
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                      android:orientation="horizontal"
-                      android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                >
-            <Button
-                    android:id="@+id/add"
-                    android:layout_width="0dip"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"
-                    />
+                  android:orientation="horizontal"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+            >
+        <Button
+                android:id="@+id/add"
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                />
 
-        </LinearLayout>
+    </LinearLayout>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   android:orientation="horizontal"
                   android:layout_width="fill_parent"
@@ -47,11 +47,13 @@
                       android:layout_height="fill_parent"
                       android:textSize="16px"
                       android:textStyle="bold"
+                      android:text="titre"
                     />
 
             <TextView android:id="@+id/editeur"
                       android:layout_width="fill_parent"
                       android:layout_height="fill_parent"
+                      android:text="editeur"
                     />
 
             <include android:id="@+id/stars" layout="@layout/stars"/>

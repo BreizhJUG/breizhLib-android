@@ -32,13 +32,16 @@ public class AccountsAdapter extends ArrayAdapter<String> {
 
         if (view == null) {
             LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = vi.inflate(R.layout.app_info, null);
+            view = vi.inflate(R.layout.profil, null);
         }
 
-        TextView text = (TextView) view.findViewById(R.id.welcomme);
+        TextView text = (TextView) view.findViewById(R.id.nom);
         text.setText(email);
 
         ImageView icone = (ImageView) view.findViewById(R.id.avatar);
+        if(email == null){
+            email = "";
+        }
         imageCache.download(Gravatar.getImage(email), icone);
         return view;
     }
