@@ -188,13 +188,13 @@ public class ProfilActivity extends AbstractGDActivity {
                         }
                     }
                     if (title.equals("Réservations")) {
-                        final ArrayList<Reservation> resaItems = reservationDAO.findByNom(user.nom, user.prenom);
+                        final ArrayList<Reservation> resaItems = reservationDAO.findByNom(user.nom);
                         if (resaItems != null && resaItems.size() > 0) {
                             startActivity(IntentSupport.newLivreIntent(getApplicationContext(), converter.toOuvrages(resaItems), 0, resaItems.get(0)));
                         }
                     }
                     if (title.equals("Ouvrages")) {
-                        final ArrayList<Emprunt> empruntItems = empruntDAO.findByNom(user.nom, user.prenom);
+                        final ArrayList<Emprunt> empruntItems = empruntDAO.findByNom(user.nom);
                         if (empruntItems != null && empruntItems.size() > 0) {
                             startActivity(IntentSupport.newEmpruntsIntent(getApplicationContext(), converter.empruntToOuvrages(empruntItems), 0, empruntItems.get(0).livre));
                         }

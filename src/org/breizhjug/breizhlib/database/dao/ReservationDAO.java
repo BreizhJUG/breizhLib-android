@@ -11,12 +11,11 @@ public class ReservationDAO extends AbstractDao {
     private static final String TAG = "BreizhLib.ReservationDAODAO";
 
 
-    public ArrayList<Reservation> findByNom(String nom, String prenom) {
+    public ArrayList<Reservation> findByNom(String nom) {
         closeCursor();
         List<String> args = new ArrayList<String>();
         args.add(nom);
-        args.add(prenom);
-        cursor = db.executeSelectQuery("SELECT Reservation.* FROM Reservation  WHERE Reservation.nom = :nom AND Reservation.prenom = :prenom", args);
+        cursor = db.executeSelectQuery("SELECT Reservation.* FROM Reservation  WHERE Reservation.nom = :nom", args);
         try {
             ArrayList<Reservation> items = new ArrayList<Reservation>();
             if (cursor != null && cursor.getCount() > 0) {
